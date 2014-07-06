@@ -1,0 +1,70 @@
+kitpages_cms:
+    block:
+        template:
+            template_list:
+                standard:
+                    class: 'App\SiteBundle\Form\Block\Standard'
+                    name: 'Standard'
+                    twig: 'AppSiteBundle:Block:form/standard.html.twig'
+                image:
+                    class: 'App\SiteBundle\Form\Block\Image'
+                    name: 'Image'
+                    twig: 'AppSiteBundle:Block:form/image.html.twig'
+
+        renderer:
+            standard:
+                default:
+                    type: 'twig'
+                    twig: 'AppSiteBundle:Block:renderer/standard/default.html.twig'
+            image:
+                default:
+                    type: 'twig'
+                    twig: 'AppSiteBundle:Block:renderer/image/default.html.twig'
+                banner:
+                    type: 'twig'
+                    twig: 'AppSiteBundle:Block:renderer/image/banner.html.twig'
+
+    page:
+        layout_list:
+            default:
+                renderer_twig: 'AppSiteBundle:Page:template/default.html.twig'
+                data_form_class: '\App\SiteBundle\Form\Page\PageLayoutEditDefault'
+                data_form_twig: 'AppSiteBundle:Page:form/page-layout-edit-default.html.twig'
+                zone_list:
+                    main:
+                        renderer: 'default'
+                        authorized_block_template_list : ['standard']
+            home:
+                renderer_twig: 'AppSiteBundle:Page:template/home.html.twig'
+                data_form_class: '\App\SiteBundle\Form\Page\PageLayoutEditDefault'
+                data_form_twig: 'AppSiteBundle:Page:form/page-layout-edit-default.html.twig'
+        default_twig: '::base.html.twig'
+
+kitpages_file:
+    tmp_dir: %kernel.root_dir%/../web/data/tmp
+    type_list:
+        image:
+            resize:
+                form: 'kit_file.image.resize.form'
+                form_twig: 'KitpagesFileBundle:ActionOnFile:Image/Resize/form.html.twig'
+                handler_form: 'kit_file.image.resize.form.handler'
+                library: 'imagine.gd'
+
+kitpages_file_system:
+    file_system_list:
+        kitpagesFile:
+            local:
+                directory_public: %kernel.root_dir%/../web
+                directory_private: %kernel.root_dir%/../web
+                base_url: %base_url%
+parameters:
+    base.url: %base_url%
+    kitpages_cms.cms.blockManager:  App\KitPagesBundle\Model\BlockManager
+    kitpages_cms.pageListener.class: App\KitPagesBundle\EventListener\PageListener
+
+services:
+    kitpages_locale.locale_listener:
+        class: App\KitPagesBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }

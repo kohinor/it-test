@@ -1,0 +1,26 @@
+app_solr_search:
+    path:     /search
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchAll }
+app_solr_search_promotion:
+    path:     /promotion/{promotion}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchPromotion }
+
+app_solr_search_brand:
+    path:     /brand/{brand}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchBrand }
+
+app_solr_search_gender_brand:
+    path:     /{gender}/brand/{brand}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderBrand }
+    
+app_solr_search_gender:
+    path:     /{gender}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGender }
+    
+app_solr_search_gender_category:
+    path:     /{gender}/category/{category}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderCategory }
+    
+app_solr_search_category:
+    path:     /category/{category}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchCategory }

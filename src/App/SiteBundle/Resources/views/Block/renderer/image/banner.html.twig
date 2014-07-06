@@ -1,0 +1,12 @@
+{% autoescape false %}
+{% set img = data.media.mainImage.0.default|default('') %}
+{% if img %}
+    {% if data.root.block_url|default('') %}<a href="{{data.root.block_url}}">{% endif %}
+    <img src="{{img.url}}" />
+    {% if data.root.block_url|default('') %}</a>{% endif %}
+{% elseif data.root.title|default('') %}
+    {% if data.root.block_url|default('') %}<a href="{{data.root.block_url}}">{% endif %}
+    {% if data.root.title|default('') %}{{ data.root.title }}{% endif %}
+    {% if data.root.block_url|default('') %}</a>{% endif %}
+{% endif %}
+{% endautoescape %}

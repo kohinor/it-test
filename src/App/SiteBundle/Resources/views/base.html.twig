@@ -1,0 +1,102 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ app.request.locale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>{{ kitCmsPageData.root.metaTitle|default(kitMeta.title|default("Italica")) }}</title>
+    <meta name="description" content="{{ kitCmsPageData.root.metaDescription|default(kitMeta.description|default("")) }}">
+    <meta name="author" content="{{ kitCmsPageData.root.author|default("") }}">
+    <meta name="keywords" content="{{ kitCmsPageData.root.metaKeywords|default("") }}">
+    
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=1024">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="stylesheet" href="/css/common.css" type="text/css" />
+    {% block stylesheets %}{% endblock %}
+    {% block kitpages_cms_stylesheets %}{% endblock %}
+</head>
+
+<body>
+  {% block kitpages_cms_toolbar %}{% endblock %}
+<div id="container">
+  <div id="head" class="clearfix" >
+    <div id="logo">
+        <h1><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</h4>
+    </div>          
+    <div id="top-links">
+        {% if app.user %}
+            <span><a href="{{ path('fos_user_profile_show') }}">{{ 'italica.account'|trans({}, 'messages') }}</a> | 
+            <a href="{{ path('fos_user_security_logout') }}">{{ 'italica.logout'|trans({}, 'messages') }}</a></span>
+        {%else%}
+            <span><a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
+            <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
+        {% endif %}
+        <span><a href="/en/ ">{{ 'English'|trans }}</a> | <a href="/fr/">{{ 'French'|trans({}, 'messages') }}</a></span>
+    </div>
+    <div id="quick-search">
+        <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}">
+            <input name="term" placeholder="Find products by name" type="text">
+
+            <button class="search-button" title="Go" type="submit">
+            <span>&nbsp;</span></button>
+        </form>
+    </div>	
+    <div id="top-promo">
+        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-top-promo', 'authorizedBlockTemplateList': ['image'], 'renderer': 'banner'} )) }}             
+    </div>
+    <div id="nav-main">
+      {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+        'slug': app.request.locale|default('en') ~ '-main',
+        'cssClass': "app-navigation-main",
+        'currentPageSlug':kitCmsPage.slug|default(''),
+        'startDepth':1 ,
+        'endDepth':3} )) }}
+    </div>
+    <div id="mini-basket">
+        {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}	
+
+    </div>
+  </div>
+        
+  <div id="main"> 
+  <div id="breadcrumbs" >{% block breadcrumbs %}<p style="text-align: center">{{ 'welcome.message'|trans}}<p> {% endblock %}</div>
+  {% block flashes %}{% endblock %}
+  
+    {% block body %}{% endblock %}
+  </div>
+        
+  <div id="newsletters" class="clearfix">
+    <form>
+    <input name="newsletter" placeholder="Provide your email" type="text" >
+    <input type="submit" value="{{ 'Subscribe'|trans }}" />
+    </form>
+  </div>
+  <div id="nav-foot" class="clearfix">
+    {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+                    'slug': app.request.locale|default('en') ~ '-footer',
+                    'cssClass': "kit-cms-navigation-footer",
+                    'currentPageSlug':kitCmsPage.slug|default('')} )) }}
+
+    <div>
+      <p style="text-align:right;">© 2014 Italica </p>
+    </div>
+
+  </div>
+</div>  
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/search.js"></script>
+  {% block javascripts %}{% endblock %}
+  {% block kitpages_cms_javascripts %}{% endblock %}
+  <script>
+    setTimeout(function() { $('.layout-flash-error').fadeOut(); }, 8000);
+    setTimeout(function() { $('.layout-flash').fadeOut(); }, 5000);
+  </script>
+</body>
+</html>

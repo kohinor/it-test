@@ -1,0 +1,26 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="column grid-12">
+        <div class="home-banner" >
+   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
+</div>
+            <div class="home-banner-nav">
+                <label>{{ 'italica.brands'|trans({}, 'messages') }}</label>
+                <div>
+{{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+        'slug': app.request.locale|default('en') ~ '-brand',
+        'cssClass': "app-navigation-main",
+        'currentPageSlug':kitCmsPage.slug|default(''),
+        'startDepth':1 ,
+        'endDepth':3} )) }}
+         <p class="home-banner-nav-p"><a href="/{{ app.request.locale }}/brands">{{ 'italica.all.brands'|trans({}, 'messages') }}</a></p>
+         </div>
+</div>
+    <div class="home-banner">
+   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
+   </div>
+</div>
+</div>
+{% endblock body %}

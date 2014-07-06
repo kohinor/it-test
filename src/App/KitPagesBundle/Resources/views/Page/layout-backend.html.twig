@@ -1,0 +1,34 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/appkitpages/css/common.css') }}"  media="screen" />
+{% endblock stylesheets %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    
+        <div class="kit-cms kit-cms-toolbar">
+        {#{% render 'KitpagesCmsBundle:Toolbar:widgetToolbar'%}#}
+        {{ render(controller('KitpagesCmsBundle:Toolbar:widgetToolbar')) }}
+        {% if (kitCmsViewMode is defined) and ( (kitCmsViewMode == 2) or (kitCmsViewMode == 3) ) %}
+            {#{% render 'KitpagesCmsBundle:Page:widgetToolbar' with {'page':kitCmsPage} %}#}
+            {{ render(controller('KitpagesCmsBundle:Page:widgetToolbar', { 'page':kitCmsPage } )) }}
+        {% endif %}
+        </div>
+        <script>
+            $(document).ready(function() {
+                $(".kit-cms-delete-button > a").click(function(e) {
+                    var response = confirm("{{ 'messages.confirm.delete'|trans }}");
+                    if (!response) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
+    
+{% endblock content %}
+

@@ -1,0 +1,125 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+{% block breadcrumbs %}
+<ul>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
+    <li>{{ 'Search'|trans }} </li>
+</ul>
+{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="column grid-3">
+        <div class="filter">
+            <h3>Filters</h3>
+            {{ gender | raw }}
+            {{ promotion | raw }}
+            {{ category1 | raw }}
+            {{ category2 | raw }}
+            {{ size | raw }}
+
+            {{ color | raw }}
+            {{ brand | raw }}
+            {{ material | raw }}
+            {{ delivery | raw }}
+            
+  <div class = "filter-box">
+    <div class="filter-header open">
+        {{ 'Price'|trans}}
+    </div>
+    <form>
+        <input type="text" style="width:70px;" name="fromPrice" placeholder="0" value="{{ app.request.query.get('fromPrice') }}"> - 
+        <input type="text"  style="width:70px;" name="toPrice" placeholder="10000" value="{{ app.request.query.get('toPrice') }}"> 
+        <button type="submit" class="done-price" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">Filter</button>
+    </form>         
+</div>
+            
+        </div>
+</div>
+        
+       
+ 
+<div class="column grid-9">
+    <div class="summary row clearfix">
+	<div class="column grid-3 sort-by">
+        Sort by
+          <select class="done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
+            <option value="none" >none</option>
+            <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>Price High To Low</option>
+            <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>Price Low To High</option>
+            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>Title A To Z</option>
+            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>Title Z To A</option>	
+	  </select>
+         </div>
+        <div class="column grid-3 summary-total">
+            <strong>Found {{ pagination.getTotalItemCount }} item(s)</strong>
+	</div>
+	
+<div class="pager-pages" style="display:inline-block;  width:220px;text-align:right;">
+
+         {{ knp_pagination_render(pagination) }} 
+
+</div>		
+
+
+	</div>
+    {% set item = 0 %}
+    {% for article in pagination %}
+    {% if item == 0 %}
+        <div class="row" >
+    {% endif %}
+    <div class="product-box column grid-3" style="text-align:center;">
+        <a class="product-image" href=""><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{article.name }}" width='200px' height='250px' /></a>
+        <div style="text-transform:uppercase;"><a title="{{article.name }}" href="">{{article.brand[0]|default('unbranded') }}</a></div>
+        <span class="online-price">{{article.name }}</span>
+    	<p style="color:#000" >&euro;{{article.price }}</p>	
+    </div>
+    {% set item = item+1 %}
+    {% if item == 3 %}
+        </div>
+        {% set item = 0 %}
+    {% endif %}
+    {% endfor %}
+    <div class="row">
+        <div class="column grid-9" style="text-align:center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    </div>
+
+ </div>
+{% endblock body %}
+ 
+{% block javascripts %}
+    <script>
+    $(document).ready(function(){ 
+    {% for facet in facets %}
+       {% set add = true %}
+       {% for field, attribute in app.request.get('_route_params') %}
+          {% if field == facet.field or facet.field == 'locale' %}
+              {% set add = false %}
+          {% endif %}
+        {% endfor %}
+        {% if add %}
+            italica.search.addFacet('{{ facet.facet }}','{{ facet.field }}');
+        {% endif %}
+    {% endfor %}
+    {% if app.request.query.get('term') %}
+        italica.search.term = '{{ app.request.query.get('term') }}';
+    {% endif %}
+    {% if app.request.query.get('toPrice') %}
+        italica.search.priceTo = '{{ app.request.query.get('toPrice') }}';
+    {% endif %}
+    {% if app.request.query.get('fromPrice') %}
+        italica.search.priceFrom= '{{ app.request.query.get('fromPrice') }}';
+    {% endif %}
+    {% if app.request.query.get('sort') %}
+        italica.search.sort = '{{ app.request.query.get('sort') }}';
+    {% endif %}
+    {% if app.request.query.get('direction') %}
+        italica.search.direction = '{{ app.request.query.get('direction') }}';
+    {% endif %}
+});
+</script>
+{% endblock %}
+

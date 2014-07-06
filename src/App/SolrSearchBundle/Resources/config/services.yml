@@ -1,0 +1,23 @@
+parameters:
+#    app_solr_search.example.class: App\SolrSearchBundle\Example
+
+services:
+    solr.update.service:
+        class: App\SolrSearchBundle\Service\SolrUpdateService
+        arguments: ["@solarium.client"]
+        
+    solr.query.service:
+        class: App\SolrSearchBundle\Service\SolrQueryService
+        arguments: ["@solarium.client"]
+        
+    solr.listener.update:
+        class: App\SolrSearchBundle\EventListener\UpdateSolrProduct
+        arguments: ["@solarium.client", "@solr.update.service"]
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+
+    solr.listener.persist:
+        class: App\SolrSearchBundle\EventListener\UpdateSolrProduct
+        arguments: ["@solarium.client", "@solr.update.service"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

@@ -1,0 +1,58 @@
+<div class="kit-cms-toolbar-top kit-cms-toolbar-main">
+    <ul class="kit-cms-toolbar-top-actions">
+        <li>
+            <a href="{{ path('sylius_backend_index') }}">Dashboard</a>
+        </li>
+        <li>
+            <a href="{{ path('kitpages_cms_nav_publish', { 'kitpages_target' : target }) }}">
+                {% if isNavPublished == false %}<img src="{{asset("bundles/kitpagescms/icon/warning.png")}}" height="14"/>{%endif%}
+                Publish Navigation
+            </a>
+        </li>
+        <li class="kit-cms-advanced">
+            <a class="kit-cms-modal-open kit-cms-publish-all" href="{{ path('kitpages_cms_nav_publish_all', { 'kitpages_target' : target }) }}">
+                <img src="{{asset("bundles/kitpagescms/icon/publish.png")}}" height="14" /> Publish all pages and navigation
+            </a>
+        </li>
+    </ul>
+    <a class="kit-cms-advanced-mode-button">Advanced mode off</a>
+    <script>
+        $('.kit-cms-publish-all').click(function(e) {
+            var response = confirm("Do you confirm you want to publish all pages and the navigation ?");
+            if (!response) {
+                e.preventDefault();
+                $('.kit-cms-modal-open > a').kitCmsModal("close");
+                $('a.kit-cms-modal-open').kitCmsModal("close");
+            }
+        });
+        $(".kit-cms-advanced-mode-button").click(function() {
+            var el = $(this);
+            $(".kit-cms-advanced").toggle();
+            $(".kit-cms-form .kit-cms-advanced").parent().toggle();
+            $(this).toggleClass('kit-cms-advanced-mode-button-selected');
+            if (el.hasClass("kit-cms-advanced-mode-button-selected")) {
+                el.html("Advanced mode on");
+            } else {
+                el.html("Advanced mode off");
+            }
+        });
+        {% if is_granted('ROLE_CMS_SUPERADMIN') is empty %}
+        $(document).ready(function() {
+            $(".kit-cms-advanced").hide();
+            $(".kit-cms-form .kit-cms-advanced").parent().hide();
+        });
+        {% endif %}
+    </script>
+    <ul class="kit-cms-toolbar-top-context-switch">
+        <li {% if kitCmsViewMode == 1 %}class="kit-cms-selected"{% endif %}>
+            <a href="{{ path('kitpages_cms_admin_view_mode_change', { 'viewMode': 1, 'kitpages_target' : target , 'context': 'production'}) }}">Production</a>
+        </li>
+        <li {% if kitCmsViewMode == 2 %}class="kit-cms-selected"{% endif %}>
+            <a href="{{ path('kitpages_cms_admin_view_mode_change', { 'viewMode': 2, 'kitpages_target' : target, 'context': 'preview' }) }}">Preview</a>
+        </li>
+        <li {% if kitCmsViewMode == 3 %}class="kit-cms-selected"{% endif %}>
+            <a href="{{ path('kitpages_cms_admin_view_mode_change', { 'viewMode': 3, 'kitpages_target' : target, 'context': 'edit' }) }}">Edit</a>
+        </li>
+    </ul>
+    <div style="clear:both;"></div>
+</div>

@@ -1,0 +1,36 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    test: ~
+    default_locale:  "en"
+    session:
+        storage_id: session.storage.mock_file
+
+swiftmailer:
+    disable_delivery: true
+
+sylius_money:
+    currency: EUR
+    locale: en_US
+
+sylius_payments:
+    gateways:
+        cc:     Credit Card
+        test:   Test
+        stripe: Stripe
+
+doctrine_cache:
+    providers:
+        sylius_settings:
+            type: array
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        firephp:
+            type:  firephp
+            level: info

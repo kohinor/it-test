@@ -1,0 +1,51 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block breadcrumbs %} 
+<ul>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
+    <li><a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
+</ul>
+
+{% endblock %}
+
+{% block fos_user_content %}
+<div class="column grid-6">
+    <div class="highlight">
+    <h3>{{ 'italica.forgot.password'|trans({}, 'messages') }}</h3>
+    <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
+    <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
+    </div>
+    <div class="highlight">
+    <h3>{{ 'italica.new.customer'|trans({}, 'messages') }}</h3>
+    <p>{{ 'italica.new.customer.experience'|trans({}, 'messages') }}</p>
+    <p>
+    <a class="tertiary-link" href="{{ path('fos_user_registration_register') }}">{{ 'italica.create.account'|trans({}, 'messages') }}</a>
+    </p>
+    </div>
+</div>
+<div class="column grid-6">
+    <h2>{{ 'italica.login'|trans({}, 'messages') }}</h2>
+    {% if error %}
+        <div class="error">{{ error|trans }}</div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post" id="login">
+        <div class="clearfix">
+            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        </div>
+
+        <div class="clearfix">
+            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="password" id="password" name="_password" />
+        </div>
+
+        <div class="clearfix">
+            <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="checkbox" id="remember_me" name="_remember_me" checked />
+        </div>
+        <input type="hidden" name="_target_path" value="{{targetPath|default('')}}"/>
+        <label></label><input type="submit" class="submit" value="{{ 'Login'|trans() }}" />
+    </form>
+    </div>
+{% endblock %}

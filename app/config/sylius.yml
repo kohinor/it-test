@@ -1,0 +1,3 @@
+parameters:
+  sylius.menu_builder.frontend.class: App\SyliusWebBundle\Menu\FrontendMenuBuilder
+  sylius.menu_builder.backend.class: App\SyliusWebBundle\Menu\BackendMenuBuilder

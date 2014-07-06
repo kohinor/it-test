@@ -1,0 +1,20 @@
+{% autoescape false %}
+<div class="app-block-standard [[cms:parameter:firstLastClass]] {{data.root.block_presentation|default('')}}">
+    {% set img = data.media.mainImage.0.default|default('') %}
+    {% if data.root.title|default('') %}<h2>{{data.root.title}}</h2>{% endif %}
+    {% if data.root.subtitle|default('') %}<h3>{{data.root.subtitle}}</h3>{% endif %}
+
+    {% if img %}
+        {% if data.root.image_url|default('') %}<a href="{{data.root.image_url}}">{% endif %}
+        <img src="{{img.url}}" class="" style="display: block;float:left"/>
+        {% if data.root.image_url|default('') %}</a>{% endif %}
+    {% endif %}
+        
+
+    {% if data.root.mainContent|default('') %}<div>{{data.root.mainContent}}</div>{%endif%}
+
+   
+    <div style="clear:both;"></div>
+    {% if data.root.displaySeparator|default('NO') == "YES" %}<div class="app-separator"></div>{% endif %}
+</div>
+{% endautoescape %}

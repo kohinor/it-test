@@ -1,0 +1,6 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+{% block body %}
+{{ render(controller('KitpagesCmsBundle:Page:widgetZone', {'location_in_page': 'main', 'page':kitCmsPage})) }}             
+
+<div style="clear:both;"></div>
+{% endblock body %}

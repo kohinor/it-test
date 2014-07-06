@@ -1,0 +1,41 @@
+{% extends 'KitpagesCmsBundle:Block:edit.html.twig' %}
+
+{% block editData %}
+
+{{ form_row(
+    form.data.root.title,
+    {'help' : "Title of the block (title level 1)"}
+) }}
+
+{{ form_row(
+    form.data.root.subtitle,
+    {'help' : "Sub title of the block (title level 2)"}
+) }}
+
+<div>
+    <label>Upload Umage</label>
+    {{ form_widget(form.data.root.media_mainImage) }}
+    {{ render(controller('KitpagesCmsBundle:Block:uploadWidget', {'blockId':id, 'fieldId': 'kitpagesCmsEditBlock_data_root_media_mainImage', parameterList:{'multi': false, 'publishParent': false}} )) }}
+    <div class="kit-cms-form-help">access to url in an editor: [[cms:mediaField:mainImage.NUM.default.url]]</div>
+</div>
+
+
+{{ form_row(
+    form.data.root.image_url,
+    {'help' : "Url to go when a user click on the image"}
+) }}
+
+{{ form_row(
+    form.data.root.mainContent,
+    {'help' : "Content displayed around the image"}
+) }}
+
+{{ form_row(
+    form.data.root.displaySeparator,
+    {'help' : "do you want to display a line under your content ?"}
+) }}
+
+
+
+{% endblock editData %}
+

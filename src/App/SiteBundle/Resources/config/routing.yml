@@ -1,0 +1,5 @@
+default:
+    pattern:  /
+    defaults: { _controller: AppSiteBundle:Default:index }
+
+

@@ -1,0 +1,32 @@
+{% if idname != 'category2' or (results.facetSet.facet('category1')|length <= 1) %}
+{% if results and results.facetSet.facet(idname)|length > 1 %}
+<div class = "filter-box">
+    <div class="filter-header open">
+    {% if idname == 'category2' or idname == 'category1' %}
+        {{ 'category'|capitalize|trans}}
+    {% else %}
+        {{ idname|capitalize|trans}}
+    {% endif %}
+    </div>
+    <form>
+        <div {% if idname != 'gender' and idname != 'promotion' %} class="filter-option" {% endif %}>
+        <fieldset>
+            
+            <div class="checkboxes clearfix">
+            {% for facet, value in results.facetSet.facet(idname) %}
+                {% if facet is not null and facet != '' and facet|length > 0 and idname != 'material' or facet|length > 2 %}
+                
+                <label class="checkbox">
+                    <input type="checkbox" name="{{ idname }}" value="{{ facet }}" {% for facetTag in facets %}{% if facetTag.facet == facet %} checked="checked" {% endif %}{% endfor %}> 
+                    <span>{{ facet|capitalize|trans }}</span>
+                </label>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </fieldset>
+        </div>
+        <button type="submit" class="done" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">Filter</button>
+    </form>         
+</div>
+{% endif %}
+{% endif %}

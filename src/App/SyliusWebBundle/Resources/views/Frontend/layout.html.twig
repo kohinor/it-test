@@ -1,0 +1,18 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+
+{% block body %}
+    {% block main %}
+    <div class="column grid-3" style="width:244px;">
+    <div class="sidebar highlight" >
+        {% block sidebar %}               
+        {% endblock %}
+    </div>
+    </div>
+    <div class="column grid-1">&nbsp;</div>
+     <div class="column grid-7">
+                {% block content %}
+                {% endblock %}
+     </div>
+
+        {% endblock %}
+{% endblock %}

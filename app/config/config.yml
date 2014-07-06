@@ -1,0 +1,129 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: @SyliusCoreBundle/Resources/config/app/main.yml }
+    - { resource: kitpages.yml }
+    - { resource: sylius.yml }
+
+framework:
+    translator:      { fallback: %sylius.locale% }
+    secret:          %sylius.secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] }
+    default_locale:  "%sylius.locale%"
+    trusted_proxies: ~
+    session:         ~
+
+twig:
+    globals:
+        cms:
+            type: service
+            id: kitpages.cms.model.cmsManager
+            layout: AppSiteBundle::base.html.twig
+        base_url: "%base_url%"
+        google_analytics_ua: "%google_analytics_ua%"
+    exception_controller:  App\SiteBundle\Controller\ExceptionController::showAction
+    
+    form:
+        resources:
+            - 'SyliusWebBundle::forms.html.twig'
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        ['SyliusWebBundle']
+    filters:
+        cssrewrite: ~
+
+doctrine:
+    dbal:
+        driver:   %sylius.database.driver%
+        host:     %sylius.database.host%
+        port:     %sylius.database.port%
+        dbname:   %sylius.database.name%
+        user:     %sylius.database.user%
+        password: %sylius.database.password%
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    gedmo_loggable:
+                        type: annotation
+                        prefix: Gedmo\Loggable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                        is_bundle: false
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_translator:
+                        type: annotation
+                        prefix: Gedmo\Translator\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                        alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
+           
+doctrine_phpcr:
+    session:
+        backend:
+            type: doctrinedbal
+        workspace: default
+        username: ''
+        password: ''
+    odm:
+        auto_mapping: true
+
+swiftmailer:
+    transport: %sylius.mailer.transport%
+    host:      %sylius.mailer.host%
+    username:  %sylius.mailer.user%
+    password:  %sylius.mailer.password%
+    spool:     { type: memory }
+
+lexik_translation:
+    fallback_locale:      en
+    managed_locales:      [en,fr]
+
+a2lix_translation_form:
+    locales: [en,fr]
+    
+sylius_product:
+    classes:
+        product:
+            form: App\SyliusCoreBundle\Form\Type\ProductType           
+            
+nelmio_solarium:
+    endpoints:
+        default:
+            dsn: http://uk2.opensolr.com/solr/italica_test
+            timeout: 5
+    clients:
+        default:
+            endpoints: [default]
+            
+knp_paginator:
+    page_range: 18                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: AppSolrSearchBundle:SolrSearch:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig 
