@@ -1,8 +1,8 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 {% block breadcrumbs %}
 <ul>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li>{{ 'Search'|trans }} </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
+    <li>{{ 'Search'|trans({}, 'messages') }} </li>
 </ul>
 {% endblock %}
 
@@ -24,14 +24,16 @@
             {{ delivery | raw }}
             
   <div class = "filter-box">
-    <div class="filter-header open">
+    <div class="filter-header open" data-key="price">
         {{ 'Price'|trans}}
     </div>
+    <div id="filters-price" >
     <form>
         <input type="text" style="width:70px;" name="fromPrice" placeholder="0" value="{{ app.request.query.get('fromPrice') }}"> - 
         <input type="text"  style="width:70px;" name="toPrice" placeholder="10000" value="{{ app.request.query.get('toPrice') }}"> 
-        <button type="submit" class="done-price" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">Filter</button>
-    </form>         
+        <button type="submit" class="done-price" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">{{ 'Filter'|trans({}, 'messages') }}</button>
+    </form> 
+    </div>
 </div>
             
         </div>
@@ -45,17 +47,17 @@
         Sort by
           <select class="done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
             <option value="none" >none</option>
-            <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>Price High To Low</option>
-            <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>Price Low To High</option>
-            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>Title A To Z</option>
-            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>Title Z To A</option>	
+            <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Price High To Low'|trans({}, 'messages') }}</option>
+            <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'Price Low To High'|trans({}, 'messages') }}</option>
+            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'Title A To Z'|trans({}, 'messages') }}</option>
+            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Title Z To A'|trans({}, 'messages') }}</option>	
 	  </select>
          </div>
         <div class="column grid-3 summary-total">
             <strong>Found {{ pagination.getTotalItemCount }} item(s)</strong>
 	</div>
 	
-<div class="pager-pages" style="display:inline-block;  width:220px;text-align:right;">
+<div class="column grid-3 " style="text-align:right;">
 
          {{ knp_pagination_render(pagination) }} 
 
@@ -63,31 +65,36 @@
 
 
 	</div>
+    {% if pagination|length >0 %}
     {% set item = 0 %}
     {% for article in pagination %}
     {% if item == 0 %}
         <div class="row" >
     {% endif %}
-    <div class="product-box column grid-3" style="text-align:center;">
-        <a class="product-image" href=""><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{article.name }}" width='200px' height='250px' /></a>
-        <div style="text-transform:uppercase;"><a title="{{article.name }}" href="">{{article.brand[0]|default('unbranded') }}</a></div>
-        <span class="online-price">{{article.name }}</span>
-    	<p style="color:#000" >&euro;{{article.price }}</p>	
+    <div class="product-box column grid-2-25" >
+        <a class="product-image" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{article.name }}" /></a>
+        <div style="text-transform:uppercase;"><a title="{{article.name }}" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
+        <span class="online-title">{{article.name }}</span>
+    	<p class="online-price" >&euro;{{article.price }}</p>	
     </div>
     {% set item = item+1 %}
-    {% if item == 3 %}
+    {% if item == 4 %}
         </div>
         {% set item = 0 %}
     {% endif %}
     {% endfor %}
     <div class="row">
-        <div class="column grid-9" style="text-align:center">
+        <div class="column grid-9-5" style="text-align:center">
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
+    {% else %}
+        <p style="text-align:center;">{{ 'italica.no.products.found'|trans({}, 'messages') }}</p>
+    {% endif %}
     </div>
 
  </div>
+<p>&nbsp;</p>
 {% endblock body %}
  
 {% block javascripts %}

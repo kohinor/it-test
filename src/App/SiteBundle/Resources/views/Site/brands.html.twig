@@ -1,0 +1,26 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+{% block breadcrumbs %}
+<ul>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
+    <li>{{ 'Brands'|trans({}, 'messages') }} </li>
+</ul>
+{% endblock %}
+
+
+{% block body %}
+{% set numberInColumn = brands|length / 4 %} 
+<div class="row"><span class="title"><h3>{{ 'List of Brands'|trans({}, 'messages') }}</h3></span></div>
+<div class="row">
+    <div class="column grid-3">
+    {% set currentNumber = 0 %}
+    {% for brand in brands %}
+        <p><a href="{{ path('app_solr_search_brand', {'_locale': app.request.locale, 'brand': brand.name}) }}">{{ brand.name|trans({}, 'messages') }}</a></p>
+        {% set currentNumber = currentNumber+1 %}
+        {% if currentNumber >= numberInColumn %}
+            </div>
+            <div class="column grid-3">
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock body %}

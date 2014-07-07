@@ -9,7 +9,7 @@ app_kit_site:
         
 kitpages_cms:
     resource: "@KitpagesCmsBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/administration
+    prefix: /{_locale}/administration/cms
     requirements:
         _locale: en|fr
         
@@ -26,7 +26,7 @@ kitpages_cms_page_view_lang:
 
 sylius_web:
     resource: @SyliusWebBundle/Resources/config/routing/main.yml
-    prefix: /{_locale}
+    prefix: /{_locale}/
     requirements:
         _locale: en|fr
 

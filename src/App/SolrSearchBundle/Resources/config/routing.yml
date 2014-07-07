@@ -12,15 +12,33 @@ app_solr_search_brand:
 app_solr_search_gender_brand:
     path:     /{gender}/brand/{brand}
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderBrand }
-    
+    requirements:
+        gender: women|men
+        
 app_solr_search_gender:
     path:     /{gender}
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGender }
-    
+    requirements:
+        gender: women|men
+        
 app_solr_search_gender_category:
     path:     /{gender}/category/{category}
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderCategory }
-    
+    requirements:
+        gender: women|men
+        
 app_solr_search_category:
     path:     /category/{category}
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchCategory }
+    
+app_solr_search_gender_promotion:
+    path:     /{gender}/promotion/{promotion}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderPromotion }
+    requirements:
+        gender: women|men
+        
+app_solr_search_gender_promotion_category:
+    path:     /{gender}/promotion/{promotion}/category/{category}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderPromotionCategory }
+    requirements:
+        gender: women|men

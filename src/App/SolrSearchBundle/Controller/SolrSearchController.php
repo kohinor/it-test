@@ -106,7 +106,7 @@ class SolrSearchController extends Controller
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice, $endPrice);
         $facets = $this->getFacetsFromRequest($request, $facets);
         $this->get('solr.query.service')->setFacets($query, $facets);
-        $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 18);
+        $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
         //$request = $client->createRequest($query);
         //print (string)$request;
         return array('pagination' => $paginator, 'facets' => $facets);
@@ -167,6 +167,25 @@ class SolrSearchController extends Controller
     
     public function searchAllAction(Request $request)
     {
+        $bindings = $this->getFacetSearchResult($request, $facets);
+        $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
+        return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
+    }
+    
+    public function searchGenderPromotionAction(Request $request, $gender, $promotion)
+    {
+        $facets['gender'] = $gender;
+        $facets['promotion'] = $promotion;
+        $bindings = $this->getFacetSearchResult($request, $facets);
+        $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
+        return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
+    }
+    
+    public function searchGenderPromotionCategoryAction(Request $request, $gender, $promotion, $category)
+    {
+        $facets['gender'] = $gender;
+        $facets['promotion'] = $promotion;
+        $facets['category1'] = $category;
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);

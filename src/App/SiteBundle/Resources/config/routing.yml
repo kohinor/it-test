@@ -1,5 +1,21 @@
 default:
     pattern:  /
-    defaults: { _controller: AppSiteBundle:Default:index }
-
-
+    defaults: { _controller: AppSiteBundle:Site:index }
+    
+app_site_brand:
+    pattern:  /{_locale}/brands
+    defaults: { _controller: AppSiteBundle:Site:brandList }
+    requirements:
+        _locale: en|fr
+        
+app_site_latest:
+    pattern:  /{_locale}/latest/{limit}
+    defaults: { _controller: AppSiteBundle:Site:getLatestProducts }
+    requirements:
+        _locale: en|fr
+        
+app_site_product:
+    pattern:  /{_locale}/product/{slug}
+    defaults: { _controller: AppSiteBundle:Site:getProduct }
+    requirements:
+        _locale: en|fr

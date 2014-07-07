@@ -1,13 +1,28 @@
 {% if idname != 'category2' or (results.facetSet.facet('category1')|length <= 1) %}
 {% if results and results.facetSet.facet(idname)|length > 1 %}
+{% if idname == 'gender' or idname == 'promotion' or idname == 'color' or idname == 'size' %}
+    {% set class = 'label-short' %}
+{% else %}
+    {% set class = 'label-long' %}
+{% endif %}
 <div class = "filter-box">
-    <div class="filter-header open">
+    <div class="filter-header open" data-key="{{ idname }}">
     {% if idname == 'category2' or idname == 'category1' %}
-        {{ 'category'|capitalize|trans}}
+        {{ 'category'|capitalize|trans({}, 'messages')}}
     {% else %}
-        {{ idname|capitalize|trans}}
+        {{ idname|capitalize|trans({}, 'messages')}}
     {% endif %}
+        {% set clearFilters = false %}
+        {% for facetTag in facets %}
+            {% if facetTag.field == idname %}
+                {% set clearFilters = true %}
+            {% endif %}
+        {% endfor %}
+        {% if clearFilters %}
+            <span class="clear-filters" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">&nbsp;&nbsp;({{ 'clear all'|trans({}, 'messages') }})</span>
+        {% endif %}
     </div>
+    <div id="filters-{{ idname }}" class='{{ class }}'>
     <form>
         <div {% if idname != 'gender' and idname != 'promotion' %} class="filter-option" {% endif %}>
         <fieldset>
@@ -18,15 +33,16 @@
                 
                 <label class="checkbox">
                     <input type="checkbox" name="{{ idname }}" value="{{ facet }}" {% for facetTag in facets %}{% if facetTag.facet == facet %} checked="checked" {% endif %}{% endfor %}> 
-                    <span>{{ facet|capitalize|trans }}</span>
+                    <span>{{ facet|capitalize|trans({}, 'messages') }}</span>
                 </label>
                 {% endif %}
             {% endfor %}
             </div>
         </fieldset>
         </div>
-        <button type="submit" class="done" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">Filter</button>
-    </form>         
+        <button type="submit" class="done" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">{{ 'Filter'|trans({}, 'messages') }}</button>
+    </form>  
+    </div>
 </div>
 {% endif %}
 {% endif %}

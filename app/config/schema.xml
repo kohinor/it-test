@@ -16,8 +16,8 @@
    <field name="image" type="string" indexed="true" stored="true" />
    <field name="delivery" type="facet_field" indexed="true" stored="true" />
    <field name="locale" type="facet_field" indexed="true" stored="true" />
-   <field name="brand" type="facet_field" indexed="true" stored="true"/>
-   <field name="material" type="facet_field" indexed="true" stored="true"/>
+   <field name="brand" type="facet_field" indexed="true" stored="true" multiValued="true"/>
+   <field name="material" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="spell" type="spell" indexed="true" stored="true" multiValued="true"/>
    <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
    <dynamicField name="*_s"  type="string"  indexed="true"  stored="true"/>

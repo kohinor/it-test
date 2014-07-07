@@ -1,0 +1,9 @@
+<div class="product-box column grid-2-5" >    
+    <a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}">
+        <img  src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
+    </a>       
+    <a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}"><span class="online-title">{{ product.translate(locale).name|default(product.name) }}</span></a>
+    <p><a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}">
+        <span class="online-price">{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</span>
+    </a></p>
+</div>

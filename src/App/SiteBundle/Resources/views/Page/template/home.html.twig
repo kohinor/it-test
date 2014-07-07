@@ -23,4 +23,10 @@
    </div>
 </div>
 </div>
+<div class="row" style="margin-top:10px;border-bottom: 1px solid #ccc; margin-bottom:10px;">
+    <h4 style="margin-bottom: 2px;">New In store</h4>
+</div>
+<div class="row">
+    {{ render(url('app_site_latest', { '_locale': app.request.locale, 'limit': 5})) }}
+</div>
 {% endblock body %}

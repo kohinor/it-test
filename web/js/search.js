@@ -35,6 +35,15 @@ var italica = {
                 italica.redirect(url);
                 return false;
             }
+            if($clicked.hasClass('clear-filters')){
+                var url = $clicked.attr('data-url');
+                var key = $clicked.attr('data-key');
+                $('input[name=' + key + ']').each(function() {
+                    italica.search.removeFacet(key, $(this).val());
+                });
+                italica.redirect(url);
+                return false;
+            }
             if($clicked.hasClass('done')){
                 var key = $clicked.attr('data-key');
                 var url = $clicked.attr('data-url');
@@ -214,3 +223,12 @@ var italica = {
 
 $('.filter').on('click',italica.general.clickHandler);
 $('.sort-by').on('change',italica.general.clickHandler);
+
+$('.filter-header').on('click', function($this){
+    var key = $(this).attr('data-key');
+     if ( $( "#filters-"+key ).is( ":hidden" ) ) {
+        $( "#filters-"+key ).slideDown();
+    } else {
+        $( "#filters-"+key ).slideUp();
+    }
+});

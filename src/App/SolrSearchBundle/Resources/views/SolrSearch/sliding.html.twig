@@ -2,20 +2,19 @@
 
 {% if pageCount > 1 %}
 <div class="pagination">
-    <span>{{ 'Page'|trans }} {{ current }} of {{ pagesInRange|length }} |</span>
     {% if first is defined and current != first %}
         <span class="first">
-            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">&lt;&lt;</a>
+            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">&lt;</a>
         </span>
     {% endif %}
 
     {% if previous is defined %}
         <span class="previous">
-            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">{{ 'Previous'|trans }}</a>
+            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">{{ 'Previous'|trans }}</a> |
         </span>
     {% endif %}
 
- {#   {% for page in pagesInRange %}
+    {% for page in pagesInRange %}
         {% if page != current %}
             <span class="page">
                 <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
@@ -25,16 +24,16 @@
         {% endif %}
 
     {% endfor %}
-#}
+
     {% if next is defined %}
         <span class="next">
-            <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'Next'|trans }}</a>
+          | <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'Next'|trans }}</a>
         </span>
     {% endif %}
 
     {% if last is defined and current != last %}
         <span class="last">
-            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">&gt;&gt;</a>
+            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">&gt;</a>
         </span>
     {% endif %}
 </div>

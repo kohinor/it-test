@@ -44,7 +44,7 @@ class SolrUpdateService
         $attributes = array();
         foreach ($product->getAttributes() as $attribute) {
             if ($attributeName == $attribute->getPresentation()) {
-                $attributes = $attribute->getValue();
+                $attributes[] = $attribute->getValue();
             }
         }
         return $attributes;
