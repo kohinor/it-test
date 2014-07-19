@@ -14,6 +14,7 @@ web/media/*
 web/data/
 web/en/
 web/fr/
+web/uploads
 
 bin/behat
 bin/doctrine*

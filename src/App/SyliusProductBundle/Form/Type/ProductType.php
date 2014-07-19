@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SyliusCoreBundle\Form\Type;
+namespace App\SyliusProductBundle\Form\Type;
 
 use Sylius\Bundle\CoreBundle\Form\Type\ProductType as BaseProductType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class ProductType extends BaseProductType
         parent::buildForm($builder, $options);
 
         $builder->add('translations', 'a2lix_translations_gedmo', array(
-                'translatable_class' => "Sylius\Component\Core\Model\Product"
+                'translatable_class' => "App\SyliusProductBundle\Entity\Product"
             ))
         ;
     }

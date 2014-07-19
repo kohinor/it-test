@@ -1,0 +1,76 @@
+<?php
+
+namespace App\SiteBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\SiteBundle\Entity\NewsletterRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="newsletter")
+ */
+class Newsletter
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    protected $email;
+    
+    /**
+     * @ORM\Column(name="men", type="boolean")
+     */
+    protected $men;
+    
+    
+    /**
+     * @ORM\Column(name="women", type="boolean")
+     */
+    protected $women;
+    
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+    
+   
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @ORM\PrePersist
+     * @return LiveAccessCategory
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdDate;
+    }
+}

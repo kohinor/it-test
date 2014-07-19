@@ -23,17 +23,28 @@ class SiteController extends Controller
         return $this->render('AppSiteBundle:Site:brands.html.twig', array('brands' =>  $taxonRepository->getTaxonsAsList($taxonomy)));
     }
     
-    public function getLatestProductsAction(Request $request, $limit = 5)
+    public function subscriptionAction(Request $request, $url = '/')
     {
-        $repository = $this->container->get('sylius.repository.product');
-        $products = $repository->findLatest($limit);
-        return $this->render('SyliusWebBundle:Frontend/Product:latest.html.twig', array('locale' => $request->attributes->get('_locale'),'products' =>  $products ));
-    }
-    
-    public function getProductAction(Request $request, $slug)
-    {
-        $repository = $this->container->get('sylius.repository.product');
-        $product = $repository->findOneBy(array('slug' => $slug)); 
-        return $this->render('SyliusWebBundle:Frontend/Product:show.html.twig', array('locale' => $request->attributes->get('_locale'),'product' =>  $product ));
+        $newsletter = new \App\SiteBundle\Entity\Newsletter();
+        $form = $this->createForm(new \App\SiteBundle\Form\Type\NewsletterType(), $newsletter);
+        if ($request->getMethod() === 'POST' && $request->request->has($form->getname())) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->persist($newsletter);
+                $this->getDoctrine()->getManager()->flush();
+                $this->get('session')->getFlashBag()->add('success', 'newsletter.subscribed');
+            } else {
+                foreach ($form->getErrors() as $error){
+                    $this->get('session')->getFlashBag()->add('error', $error->getMessage());
+                }
+            }
+            $url = $request->request->get('path') ? $request->request->get('path') : $this->generateUrl('default');
+            return $this->redirect($url, 301);
+        }
+        $bindings = array(
+            'form' => $form->createView(),
+            'path' => $url
+        );
+        return $this->render('AppSiteBundle:Newsletter:form.html.twig', $bindings);
     }
 }

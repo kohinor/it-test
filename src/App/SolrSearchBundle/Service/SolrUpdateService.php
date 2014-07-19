@@ -22,10 +22,8 @@ class SolrUpdateService
     public function updateSolrProduct(\Sylius\Component\Core\Model\Product $product)
     {
             $update = $this->client->createUpdate();
-            foreach (array('en', 'fr') as $locale) {
-                $document = $this->getSolrDocument($update->createDocument(), $product, $locale);
-                $update->addDocument($document);
-            }
+            $document = $this->getSolrDocument($update->createDocument(), $product);
+            $update->addDocument($document);
             $this->client->update($update);
     }
     
@@ -86,15 +84,15 @@ class SolrUpdateService
      * @param string $locale
      * @return type
      */
-    public function getSolrDocument( $doc, \Sylius\Component\Core\Model\Product $product, $locale)
+    public function getSolrDocument( $doc, \Sylius\Component\Core\Model\Product $product)
     {
-        $name = $product->translate($locale)->getName();
-        $doc->locale = $locale;
-        $doc->id  = $product->getId().$locale;
-        $doc->name = $name ? $name : $product->getName();
+        $name = $product->translate('fr')->getName();
+        $doc->id  = $product->getId();
+        $doc->name_en = $product->getName();
+        $doc->name_fr = $name ? $name : $product->getName();
         $doc->slug = $product->getSlug();
-        $doc->price = $product->getPrice()/100; ;
-        $doc->sale_price = 0;
+        $doc->price = $product->getPrice();
+        $doc->rrp = $product->getRrp() ? $product->getRrp() : $product->getPrice();
         $doc->image = $product->getImage()->getPath();
         $doc->brand = $this->getAttribute($product, 'Brand');
         $doc->color = $this->getOptions($product, 'Color');

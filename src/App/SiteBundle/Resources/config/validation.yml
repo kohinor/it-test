@@ -1,0 +1,12 @@
+App\SiteBundle\Entity\Newsletter:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email]
+            errorPath: port
+            message: 'not.unique.email'
+    properties:
+        email:
+            - NotBlank:
+                  message: 'invalid.email'
+            - Email:
+                  message: 'invalid.email'

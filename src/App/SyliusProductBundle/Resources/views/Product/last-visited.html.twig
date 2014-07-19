@@ -1,0 +1,10 @@
+{% if products|length > 0 %}
+<h3>Resently Viewed Products</h3>
+<div class="row">
+    {% for product in products %}
+        {% if loop.index < 6 %}
+            {% include 'SyliusWebBundle:Frontend/Product:_singleBox.html.twig' with {'locale': locale } %}
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

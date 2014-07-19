@@ -9,7 +9,7 @@
 
 {% block body %}
 {% set numberInColumn = brands|length / 4 %} 
-<div class="row"><span class="title"><h3>{{ 'List of Brands'|trans({}, 'messages') }}</h3></span></div>
+<div><h3>{{ 'List of Brands'|trans({}, 'messages') }}</h3></div>
 <div class="row">
     <div class="column grid-3">
     {% set currentNumber = 0 %}

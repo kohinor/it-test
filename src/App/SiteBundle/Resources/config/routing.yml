@@ -8,14 +8,8 @@ app_site_brand:
     requirements:
         _locale: en|fr
         
-app_site_latest:
-    pattern:  /{_locale}/latest/{limit}
-    defaults: { _controller: AppSiteBundle:Site:getLatestProducts }
-    requirements:
-        _locale: en|fr
-        
-app_site_product:
-    pattern:  /{_locale}/product/{slug}
-    defaults: { _controller: AppSiteBundle:Site:getProduct }
+app_site_newsletter:
+    pattern:  /{_locale}/newsletter
+    defaults: { _controller: AppSiteBundle:Site:subscription }
     requirements:
         _locale: en|fr

@@ -28,4 +28,31 @@ function visible(menutabnumber){
     });
 }
 
+$(document).ready(function(){ 
+
+	$(".container").imagezoomsl({ 
+		
+		descarea: ".big-caption", 				
+		zoomrange: [1.68, 10],
+		zoomstart: 5,
+		cursorshadeborder: "5px solid black",
+		magnifiereffectanimate: "fadeIn",	
+	});
+  
+
+	$(".tmb-caption img").click(function(){
+
+	    var that = this;
+		$(".container").fadeOut(600, function(){
+		
+			$(this).attr("src", 	   $(that).attr("data-src"))
+                               .attr("data-large", $(that).attr("data-tmb-large"))
+                               .fadeIn(1000);				
+		});
+
+	    return false;
+	});  
+
+});
+
 

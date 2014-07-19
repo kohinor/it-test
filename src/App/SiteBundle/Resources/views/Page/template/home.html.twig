@@ -23,10 +23,31 @@
    </div>
 </div>
 </div>
-<div class="row" style="margin-top:10px;border-bottom: 1px solid #ccc; margin-bottom:10px;">
-    <h4 style="margin-bottom: 2px;">New In store</h4>
+<div class="row">
+    <div class="column grid-7">
+    {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
+        'request': app.request,
+        'gender':'women',
+        'limit':3 } )) }}
+    </div>
+    <div class="column grid-5">
+    <div class="home-new-in">
+        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-new-in-women'} )) }}
+    </div>
+    </div>
 </div>
 <div class="row">
-    {{ render(url('app_site_latest', { '_locale': app.request.locale, 'limit': 5})) }}
+    <div class="column grid-5">
+    <div class="home-new-in">
+    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-new-in-men'} )) }}
+    </div>
+    </div>
+    <div class="column grid-7">
+    {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
+        'request': app.request,
+        'gender':'men',
+        'limit':3 } )) }}
+    </div>
+    
 </div>
 {% endblock body %}

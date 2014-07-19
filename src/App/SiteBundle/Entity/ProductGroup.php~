@@ -1,0 +1,30 @@
+<?php
+
+namespace App\SyliusProductBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="sylius_product_group")
+ */
+class ProductGroup
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    protected $name;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="App\SyliusProductBundle\Entity\Product", mappedBy="group")
+    */
+    protected $products;
+}

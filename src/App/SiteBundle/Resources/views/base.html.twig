@@ -59,22 +59,28 @@
     </div>
     <div id="mini-basket">
         {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}	
-
     </div>
   </div>
         
   <div id="main"> 
-  <div id="breadcrumbs" >{% block breadcrumbs %}<p style="text-align: center">{{ 'welcome.message'|trans}}<p> {% endblock %}</div>
-  {% block flashes %}{% endblock %}
+    <div id="breadcrumbs" >{% block breadcrumbs %}<p style="text-align: center">{{ 'welcome.message'|trans}}<p> {% endblock %}</div>
+    {% block flashes %}
+        {% for type in ['success', 'error', 'fos_user_success'] %}
+            {% for flash in app.session.flashbag.get(type) %}
+                <div class="alert alert-{{ type == 'fos_user_success' ? 'success' : type == 'error' ? 'danger' : type == 'notice' ? 'warning' : type }}">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    {{ flash|trans }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endblock %}
   
     {% block body %}{% endblock %}
   </div>
         
   <div id="newsletters" class="clearfix">
-    <form>
-    <input name="newsletter" placeholder="Provide your email" type="text" >
-    <input type="submit" value="{{ 'Subscribe'|trans }}" />
-    </form>
+            {{ render(controller('AppSiteBundle:Site:subscription',{
+            'url': app.request.uri})) }}
   </div>
   <div id="nav-foot" class="clearfix">
     {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
@@ -89,7 +95,8 @@
   </div>
 </div>  
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+  <script src="/js/zoomsl-3.0.min.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/search.js"></script>
   {% block javascripts %}{% endblock %}

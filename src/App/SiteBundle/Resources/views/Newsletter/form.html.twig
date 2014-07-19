@@ -1,0 +1,11 @@
+
+<form action="{{ path('app_site_newsletter') }}" method="post">
+    <span>{{ 'men'|trans }}</span>  
+    {{ form_widget(form.men) }}
+    <span>{{ 'women'|trans }}</span> 
+    {{ form_widget(form.women) }}
+    {{ form_widget(form.email) }}
+    <input type="hidden" name='path' value='{{ path }}' />
+    {{ form_rest(form) }}
+    <input type="submit" value="{{ 'subscribe'|trans }}" />
+</form>

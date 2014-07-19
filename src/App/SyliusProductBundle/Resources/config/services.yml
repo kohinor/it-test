@@ -1,0 +1,7 @@
+services:
+    app.repository.newsletter:
+        class: App\SiteBundle\Entity\NewsletterRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - App\SiteBundle\Entity\Newsletter

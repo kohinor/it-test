@@ -68,20 +68,15 @@
     {% if pagination|length >0 %}
     {% set item = 0 %}
     {% for article in pagination %}
-    {% if item == 0 %}
-        <div class="row" >
-    {% endif %}
-    <div class="product-box column grid-2-25" >
-        <a class="product-image" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{article.name }}" /></a>
-        <div style="text-transform:uppercase;"><a title="{{article.name }}" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
-        <span class="online-title">{{article.name }}</span>
-    	<p class="online-price" >&euro;{{article.price }}</p>	
-    </div>
-    {% set item = item+1 %}
-    {% if item == 4 %}
-        </div>
-        {% set item = 0 %}
-    {% endif %}
+        {% if item == 0 %}
+            <div class="row" >
+        {% endif %}
+        {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
+        {% set item = item+1 %}
+        {% if item == 4 %}
+            </div>
+            {% set item = 0 %}
+        {% endif %}
     {% endfor %}
     <div class="row">
         <div class="column grid-9-5" style="text-align:center">

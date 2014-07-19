@@ -55,6 +55,9 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         entity_managers:
             default:
+                metadata_cache_driver: memcache
+                query_cache_driver: memcache
+                result_cache_driver: memcache
                 auto_mapping: true
                 mappings:
                     gedmo_loggable:
@@ -101,17 +104,12 @@ lexik_translation:
     managed_locales:      [en,fr]
 
 a2lix_translation_form:
-    locales: [en,fr]
-    
-sylius_product:
-    classes:
-        product:
-            form: App\SyliusCoreBundle\Form\Type\ProductType           
+    locales: [en,fr]      
             
 nelmio_solarium:
     endpoints:
         default:
-            dsn: http://uk2.opensolr.com/solr/italica_test
+            dsn: http://ec2-europe-west-ireland.opensolr.com/solr/italica
             timeout: 5
     clients:
         default:
@@ -127,3 +125,34 @@ knp_paginator:
     template:
         pagination: AppSolrSearchBundle:SolrSearch:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig 
+        
+sylius_product:
+    driver: doctrine/orm
+    classes:
+        product:
+            model: App\SyliusProductBundle\Entity\Product
+            form: App\SyliusProductBundle\Form\Type\ProductType
+            repository: App\SyliusProductBundle\Entity\ProductRepository
+            
+sylius_variation:
+    classes:
+        product:
+          variant:
+              model: App\SyliusProductBundle\Entity\ProductVariant
+              form: App\SyliusProductBundle\Form\Type\ProductVariantType
+                    
+liip_imagine:
+    data_root: %kernel.root_dir%/../web/media/image
+    filter_sets:
+        sylius_small:
+            filters:
+                thumbnail: { size: [60, 72], mode: outbound }
+        sylius_medium:
+            filters:
+                thumbnail: { size: [150, 180], mode: outbound }
+        sylius_large:
+            filters:
+                thumbnail: { size: [300, 360], mode: outbound }
+        sylius_x_large:
+            filters:
+                thumbnail: { size: [1024, 1228], mode: outbound }

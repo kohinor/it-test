@@ -1,0 +1,7 @@
+services:
+    sylius.repository.product.group:
+        class: App\SyliusProductBundle\Entity\ProductGroupRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - App\SyliusProductBundle\Entity\ProductGroup

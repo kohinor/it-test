@@ -31,10 +31,10 @@ class SolrProductUpdateCommand extends ContainerAwareCommand
         $output->writeln(sprintf("Found <info> %d </info> products", count($products)));
         $step = 0;
         foreach($products as $product) {
-            foreach(array('en','fr') as $locale) {
+            if (!$product->getMasterVariant()) continue;                
                 try {
                     $output->writeln('<info>productId</info> '. $product->getSlug());
-                    $document = $this->getContainer()->get('solr.update.service')->getSolrDocument($update->createDocument(), $product, $locale);
+                    $document = $this->getContainer()->get('solr.update.service')->getSolrDocument($update->createDocument(), $product);
                     $buffer->addDocument($document);
                     $step = $step+1;
                     if ($step == 1000) {
@@ -42,9 +42,7 @@ class SolrProductUpdateCommand extends ContainerAwareCommand
                     }
                 } catch(\Solarium_Client_HttpException $e) {
                    $output->writeln('<error>error</error> '. $e->getMessage());
-                }
-            }
-            
+                }            
         };
         $buffer->flush();
         $output->writeln('done');

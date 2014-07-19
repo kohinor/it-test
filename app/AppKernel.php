@@ -26,11 +26,11 @@ class AppKernel extends Kernel
             new App\UserBundle\AppUserBundle(),
             new App\LexikTranslationBundle\AppLexikTranslationBundle(),
             new App\SyliusWebBundle\AppSyliusWebBundle(),
-            new App\SyliusCoreBundle\AppSyliusCoreBundle(),
             new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             new Nelmio\SolariumBundle\NelmioSolariumBundle(),
             new App\SolrSearchBundle\AppSolrSearchBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new App\SyliusProductBundle\AppSyliusProductBundle(),
             
         );
 

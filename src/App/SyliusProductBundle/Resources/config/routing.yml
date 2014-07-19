@@ -1,0 +1,27 @@
+app_site_product:
+    pattern:  /product/{slug}
+    defaults: { _controller: AppSyliusProductBundle:Product:getProduct }
+    
+app_site_product_group_list:
+    pattern:  /administration/product-group
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:getGroupsList }
+    
+app_site_product_group_delete:
+    pattern:  /administration/product-group/delete/{id}
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:deleteGroup }
+    
+app_site_product_group_product_delete:
+    pattern:  /administration/product-group/{id}/delete/{productId}
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:deleteGroupProduct }
+    
+app_site_product_group_edit:
+    pattern:  /administration/product-group/edit/{id}
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:editGroup }
+
+app_site_product_group_create:
+    pattern:  /administration/product-group/add
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:editGroup, id:null }
+    
+app_site_product_group_view:
+    pattern:  /administration/product-group/{id}
+    defaults: { _controller: AppSyliusProductBundle:ProductGroup:viewGroup }

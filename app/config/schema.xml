@@ -2,10 +2,11 @@
 <schema name="opensolr-default" version="1.4">
  <fields>
    <field name="id" type="string" indexed="true" stored="true" required="true" /> 
-   <field name="name" type="text_general" indexed="true" stored="true" required="true" />
+   <field name="name_en" type="text_general" indexed="true" stored="true" required="true" />
+   <field name="name_fr" type="text_general" indexed="true" stored="true" required="true" />
    <field name="slug" type="text_general" indexed="true" stored="true" required="true" />
-   <field name="price" type="float" indexed="true" stored="true" />
-   <field name="sale_price" type="float" indexed="true" stored="true" />
+   <field name="price" type="int" indexed="true" stored="true" />
+   <field name="rrp" type="int" indexed="true" stored="true" />
    <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
    <field name="color" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="size" type="facet_field" indexed="true" stored="true" multiValued="true"/>
@@ -15,7 +16,6 @@
    <field name="promotion" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="image" type="string" indexed="true" stored="true" />
    <field name="delivery" type="facet_field" indexed="true" stored="true" />
-   <field name="locale" type="facet_field" indexed="true" stored="true" />
    <field name="brand" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="material" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="spell" type="spell" indexed="true" stored="true" multiValued="true"/>
@@ -44,7 +44,7 @@
    <dynamicField name="*" type="ignored" multiValued="true" />
  </fields>
  <uniqueKey>id</uniqueKey>
- <defaultSearchField>text</defaultSearchField>
+ <defaultSearchField>name_en</defaultSearchField>
  <solrQueryParser defaultOperator="AND"/>
  <copyField source="*_t" dest="text" />
  <copyField source="*_txt" dest="text" />

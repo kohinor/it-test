@@ -1,0 +1,3 @@
+{% for article in results %}
+    {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
+{% endfor %}

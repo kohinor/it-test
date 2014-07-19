@@ -11,6 +11,50 @@ use Knp\Menu\ItemInterface;
  */
 class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilder
 {
+    
+    protected function addAssortmentMenu(ItemInterface $menu, array $childOptions, $section)
+    {
+        $child = $menu
+            ->addChild('assortment', $childOptions)
+            ->setLabel($this->translate(sprintf('sylius.backend.menu.%s.assortment', $section)))
+        ;
+
+        $child->addChild('taxonomies', array(
+            'route' => 'sylius_backend_taxonomy_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-folder-close'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.taxonomies', $section)));
+
+        $child->addChild('products', array(
+            'route' => 'sylius_backend_product_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.products', $section)));
+
+        $child->addChild('inventory', array(
+            'route' => 'sylius_backend_inventory_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-tasks'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.stockables', $section)));
+
+        $child->addChild('options', array(
+            'route' => 'sylius_backend_product_option_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.options', $section)));
+
+        $child->addChild('product_attributes', array(
+            'route' => 'sylius_backend_product_attribute_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-list-alt'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.attributes', $section)));
+
+        $child->addChild('prototypes', array(
+            'route' => 'sylius_backend_product_prototype_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-compressed'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.prototypes', $section)));
+        
+        $child->addChild('product_groups', array(
+            'route' => 'app_site_product_group_list',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.product_groups', $section)));
+    }
+
     /**
      * Add content menu.
      *

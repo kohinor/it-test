@@ -1,0 +1,76 @@
+<?php
+
+namespace App\SyliusProductBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\SyliusProductBundle\Entity\ProductSizeGuideFieldRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="sylius_product_size_guide_field")
+ */
+class ProductSizeGuideField
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    protected $name;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\SyliusProductBundle\Entity\ProductSizeGuide", inversedBy="fields")
+     * @ORM\JoinColumn(name="size_guide_id", referencedColumnName="id")
+     */
+    protected $sizeGuide;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="App\SyliusProductBundle\Entity\ProductSizeGuideValue", mappedBy="field")
+    */
+    protected $values;
+    
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+    
+     /**
+     * Set createdAt
+     *
+     * @ORM\PrePersist
+     * @return LiveAccessCategory
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+}

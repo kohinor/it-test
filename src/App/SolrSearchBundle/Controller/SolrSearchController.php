@@ -6,13 +6,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SolrSearchController extends Controller
 {
-    protected function getFacets($locale, $facets)
+    
+    public function searchNewInAction(Request $request, $gender)
+    {
+        $facets['gender'] = $gender;
+        $facets['promotion'] = 'new';
+        
+        $client = $this->get('solarium.client');
+        $query = $this->get('solr.query.service')->getSolrQuery($client, '*');
+        $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
+        $query->setRows(3);
+        $resultset = $client->select($query);        
+        $bindings = array('results' => $resultset);
+        
+        return $this->render('AppSolrSearchBundle:SolrSearch:new-in.html.twig', $bindings);
+    }
+    
+    protected function getFacets($facets)
     {
         $facetCollection = array();
-        $facet = new \stdClass();
-        $facet->field = 'locale';
-        $facet->facet = $locale;
-        $facetCollection[] = $facet;
         foreach ($facets as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $fieldValue) {
@@ -70,7 +82,7 @@ class SolrSearchController extends Controller
             $facets['category2'] = explode(',', $catTwo);
         }
 
-        return $this->getFacets($request->attributes->get('_locale'), $facets);                
+        return $this->getFacets($facets);                
     }
     
     public function getFacetSearchResult(Request $request, $facets)
@@ -78,7 +90,7 @@ class SolrSearchController extends Controller
         $term  = $request->query->get('term');
         $client = $this->get('solarium.client');            
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term);
-        $facetsCollection = $this->getFacets($request->getLocale(), $facets);
+        $facetsCollection = $this->getFacets($facets);
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
         $resultset = $client->select($query);
         $facets = $this->getFacetsFromRequest($request);
