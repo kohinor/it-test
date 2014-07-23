@@ -6,12 +6,14 @@ use Sylius\Component\Core\Model\Product as SyliusCoreProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\SyliusProductBundle\Entity\ProductVariant;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Sylius\Component\Core\Model\ProductInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="sylius_product")
  */
-class Product extends SyliusCoreProduct
+class Product extends SyliusCoreProduct implements ProductInterface, Translatable
 {
     /**
      *
@@ -25,23 +27,18 @@ class Product extends SyliusCoreProduct
      */
     protected $group;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="App\SyliusProductBundle\Entity\ProductSizeGuide")
-     * @ORM\JoinColumn(name="size_guide_id", referencedColumnName="id")
-     */
-    protected $size;
     
     public function setPartnerId($partnerId)
     {
         $this->partnerId = $partnerId;
         return $this;
     }
-    
+
     public function getPartnerId()
     {
         return $this->partnerId;
     }
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -49,7 +46,7 @@ class Product extends SyliusCoreProduct
         $this->setMasterVariant(new ProductVariant());
         $this->variantSelectionMethod = self::VARIANT_SELECTION_MATCH;
     }
-    
+
     /**
      * Set group
      *

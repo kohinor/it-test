@@ -5,12 +5,11 @@
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ app.request.locale }}"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>{{ kitCmsPageData.root.metaTitle|default(kitMeta.title|default("Italica")) }}</title>
-    <meta name="description" content="{{ kitCmsPageData.root.metaDescription|default(kitMeta.description|default("")) }}">
+    <title>{{ kitCmsPageData.root.metaTitle|default(kitMeta.title|default("Italica")) }}{% block title %}{% endblock %}</title>
+    <meta name="description" content="{{ kitCmsPageData.root.metaDescription|default(kitMeta.description|default("")) }}{% block description %}{% endblock %}">
     <meta name="author" content="{{ kitCmsPageData.root.author|default("") }}">
-    <meta name="keywords" content="{{ kitCmsPageData.root.metaKeywords|default("") }}">
+    <meta name="keywords" content="{{ kitCmsPageData.root.metaKeywords|default("") }}{% block keywords %}{% endblock %}">
     
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="viewport" content="width=1024">
@@ -23,6 +22,7 @@
 <body>
   {% block kitpages_cms_toolbar %}{% endblock %}
 <div id="container">
+  <div class="modal" style="display:none;">{% block overlay %}{% endblock %}</div>
   <div id="head" class="clearfix" >
     <div id="logo">
         <h1><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
@@ -36,7 +36,7 @@
             <span><a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
             <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
         {% endif %}
-        <span><a href="/en/ ">{{ 'English'|trans }}</a> | <a href="/fr/">{{ 'French'|trans({}, 'messages') }}</a></span>
+        <span><a href="{{ app.request.get('path') |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
     </div>
     <div id="quick-search">
         <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}">
@@ -94,11 +94,11 @@
 
   </div>
 </div>  
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-  <script src="/js/zoomsl-3.0.min.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/search.js"></script>
+  <script async type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script async type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+  <script async src="/js/zoomsl-3.0.min.js"></script>
+  <script async src="/js/common.js"></script>
+  <script async src="/js/search.js"></script>
   {% block javascripts %}{% endblock %}
   {% block kitpages_cms_javascripts %}{% endblock %}
   <script>

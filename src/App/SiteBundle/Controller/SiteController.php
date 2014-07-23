@@ -25,8 +25,8 @@ class SiteController extends Controller
     
     public function subscriptionAction(Request $request, $url = '/')
     {
-        $newsletter = new \App\SiteBundle\Entity\Newsletter();
-        $form = $this->createForm(new \App\SiteBundle\Form\Type\NewsletterType(), $newsletter);
+        $newsletter = new \App\SiteBundle\Entity\Subscription();
+        $form = $this->createForm(new \App\SiteBundle\Form\Type\SubscriptionType(), $newsletter);
         if ($request->getMethod() === 'POST' && $request->request->has($form->getname())) {
             $form->bind($request);
             if ($form->isValid()) {
@@ -45,6 +45,6 @@ class SiteController extends Controller
             'form' => $form->createView(),
             'path' => $url
         );
-        return $this->render('AppSiteBundle:Newsletter:form.html.twig', $bindings);
+        return $this->render('AppSiteBundle:Subscription:form.html.twig', $bindings);
     }
 }

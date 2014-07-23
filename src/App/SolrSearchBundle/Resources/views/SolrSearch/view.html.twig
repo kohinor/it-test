@@ -1,8 +1,38 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
-{% block breadcrumbs %}
+
+{% block keywords %}
+    
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+{% block description %}
+
+{% endblock %}
+{% block breadcrumbs %}        
 <ul>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
-    <li>{{ 'Search'|trans({}, 'messages') }} </li>
+    {% if app.request.get('promotion') and app.request.get('gender') %}
+        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
+        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title  }} </li>
+    {% elseif app.request.get('brand') and  app.request.get('gender') %}
+        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
+        <li>{{ app.request.get('brand')|trans({}, 'messages')|title  }} </li>
+    {% elseif app.request.get('category') and  app.request.get('gender') %}
+        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
+        <li>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+    {% elseif app.request.get('promotion') %}
+        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title }} </li>
+    {% elseif app.request.get('brand') %}
+        <li>{{ app.request.get('brand')|trans({}, 'messages')|title }} </li>
+    {% elseif app.request.get('gender')%}
+        <li>{{ app.request.get('gender')|trans({}, 'messages')|title }} </li>
+    {% elseif app.request.get('category')%}
+        <li>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+    {% else %}
+        <li>{{ 'Search'|trans({}, 'messages') }} </li>    
+    {% endif %}
 </ul>
 {% endblock %}
 

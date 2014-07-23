@@ -1,8 +1,10 @@
 {% extends cms.layout %}
 
 {% block kitpages_cms_stylesheets %}
+    {% if is_granted('ROLE_CMS_ADMIN') %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/kitpagescms/css/common.css') }}"  media="screen" />
+    {% endif %}
 {% endblock kitpages_cms_stylesheets %}
 
 {% block kitpages_cms_toolbar %}

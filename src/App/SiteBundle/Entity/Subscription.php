@@ -6,11 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\SiteBundle\Entity\NewsletterRepository")
+ * @ORM\Entity(repositoryClass="App\SiteBundle\Entity\SubscriptionRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="newsletter")
  */
-class Newsletter
+class Subscription
 {
     /**
      * @ORM\Id
@@ -55,7 +55,7 @@ class Newsletter
      * Set createdAt
      *
      * @ORM\PrePersist
-     * @return LiveAccessCategory
+     * @return Subscription
      */
     public function setCreatedAt()
     {
@@ -78,7 +78,7 @@ class Newsletter
      * Set email
      *
      * @param string $email
-     * @return Newsletter
+     * @return Subscription
      */
     public function setEmail($email)
     {
@@ -101,7 +101,7 @@ class Newsletter
      * Set men
      *
      * @param boolean $men
-     * @return Newsletter
+     * @return Subscription
      */
     public function setMen($men)
     {
@@ -124,7 +124,7 @@ class Newsletter
      * Set women
      *
      * @param boolean $women
-     * @return Newsletter
+     * @return Subscription
      */
     public function setWomen($women)
     {

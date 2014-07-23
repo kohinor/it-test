@@ -31,7 +31,7 @@ class AppKernel extends Kernel
             new App\SolrSearchBundle\AppSolrSearchBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new App\SyliusProductBundle\AppSyliusProductBundle(),
-            
+            new App\CartBundle\AppCartBundle(),
         );
 
         return array_merge(parent::registerBundles(), $bundles);

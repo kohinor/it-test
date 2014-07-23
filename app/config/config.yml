@@ -140,6 +140,11 @@ sylius_variation:
           variant:
               model: App\SyliusProductBundle\Entity\ProductVariant
               form: App\SyliusProductBundle\Form\Type\ProductVariantType
+
+sylius_cart:
+    classes:
+        item:
+            controller: App\CartBundle\Controller\CartItemController
                     
 liip_imagine:
     data_root: %kernel.root_dir%/../web/media/image

@@ -1,4 +1,4 @@
-App\SiteBundle\Entity\Newsletter:
+App\SiteBundle\Entity\Subscription:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [email]

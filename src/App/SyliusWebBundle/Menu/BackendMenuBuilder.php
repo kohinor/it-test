@@ -53,6 +53,38 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             'route' => 'app_site_product_group_list',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.product_groups', $section)));
+        $child->addChild('product_size_guide', array(
+            'route' => 'app_site_product_size_guide_list',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.product_size_guide', $section)));
+    }
+    
+    /**
+     * Add customers menu.
+     *
+     * @param ItemInterface $menu
+     * @param array         $childOptions
+     * @param string        $section
+     */
+    protected function addCustomersMenu(ItemInterface $menu, array $childOptions, $section)
+    {
+        $child = $menu
+            ->addChild('customer', $childOptions)
+            ->setLabel($this->translate(sprintf('sylius.backend.menu.%s.customer', $section)))
+        ;
+
+        $child->addChild('users', array(
+            'route' => 'sylius_backend_user_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-user'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.users', $section)));
+        $child->addChild('groups', array(
+            'route' => 'sylius_backend_group_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-home'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.groups', $section)));
+        $child->addChild('subscriptions', array(
+            'route' => 'app_site_subscription_list',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-home'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.subscriptions', $section)));
     }
 
     /**

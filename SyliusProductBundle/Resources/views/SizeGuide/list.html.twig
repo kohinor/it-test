@@ -1,0 +1,84 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+{% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
+{% from 'SyliusWebBundle:Backend/Macros:misc.html.twig' import pagination %}
+{% from 'SyliusWebBundle:Backend/Product:macros.html.twig' import list %}
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+
+{% block topbar %}
+<ol class="breadcrumb">
+    <li>{{ 'sylius.breadcrumb.assortment'|trans }}</li>
+    <li>{{ 'sylius.breadcrumb.product.size.guide.index'|trans }}</a></li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="actions-menu">
+        {{ buttons.create(path('app_site_product_size_guide_create'), 'sylius.product.size.guide.create'|trans) }}
+    </div>
+    <h1><i class="glyphicon glyphicon-th-list"></i> {{ 'sylius.product.size.guide.index_header'|trans|raw }}</h1>
+</div>
+<form class="form-inline form-filter" action="" method="get" >
+    <div class="form-group">
+        <label class="sr-only control-label" for="criteria_name">Name</label>
+        <input id="criteria_name" class="form-control" type="text" placeholder="Name" name="criteria[name]">
+        <label class="sr-only control-label" for="criteria_name">Brand</label>
+        <input id="criteria_name" class="form-control" type="text" placeholder="Brand" name="criteria[brand]">
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <i class="glyphicon glyphicon-search"></i>
+        Filter
+    </button>
+</form>
+
+{{ pagination(sizeGuides) }}
+
+
+{% if sizeGuides|length > 0 %}
+<table class="sylius-products-table table table-bordered">
+    <thead>
+        <tr>
+            <th class="id">{{ sylius_resource_sort('id', '#id') }}</th>
+            <th class="info">{{ sylius_resource_sort('name', 'sylius.product.size.guide.name'|trans) }}</th>
+            <th class="info">{{ sylius_resource_sort('brand', 'sylius.product.size.guide.brand'|trans) }}</th>
+            <th class="info">{{ sylius_resource_sort('gender', 'sylius.product.size.guide.gender'|trans) }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for sizeGuide in sizeGuides %}
+        <tr id="{{ sizeGuide.id }}">
+            <td class="id">
+                {{ sizeGuide.id }}
+            </td>
+            <td class="info">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <a class="name"
+                               href="{{ path('app_site_product_size_guide_view', {'id': sizeGuide.id}) }}">
+                                {{ sizeGuide.name }}
+                            </a>                           
+                        </h5>
+                        
+                    </div>
+                </div>
+            </td>
+            <td class="info">{{ sizeGuide.brand }} </td>
+            <td class="info">{{ sizeGuide.gender }} </td>
+            <td class="center-text">
+                {{ buttons.edit(path('app_site_product_size_guide_edit', {'id': sizeGuide.id})) }}
+                {{ buttons.delete(path('app_site_product_size_guide_delete', {'id': sizeGuide.id})) }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+{{ alerts.info('sylius.product.size.guide.no_results'|trans) }}
+{% endif %}
+
+{{ pagination(sizeGuides) }}
+
+{% endblock %}

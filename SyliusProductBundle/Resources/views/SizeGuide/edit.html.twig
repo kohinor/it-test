@@ -1,0 +1,32 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+{% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
+{% from 'SyliusWebBundle:Backend/Macros:misc.html.twig' import pagination %}
+{% from 'SyliusWebBundle:Backend/Product:macros.html.twig' import list %}
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+
+{% block topbar %}
+<ol class="breadcrumb">
+    <li>{{ 'sylius.breadcrumb.assortment'|trans }}</li>
+    <li><a href="{{ path('app_site_product_size_guide_list') }}">{{ 'sylius.breadcrumb.product.size_guide.index'|trans }}</a></li>
+    <li>{{ sizeGuide.name|trans|raw  }}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="actions-menu">
+        {% if sizeGuide.id %}
+        {{ buttons.edit(path('app_site_product_size_guide_edit', {'id': sizeGuide.id})) }}
+        {% endif %}
+    </div>
+    <h1><i class="glyphicon glyphicon-th-list"></i> {{ sizeGuide.name |trans|raw }}</h1>
+</div>
+<div>
+    <h3>Create/edit new size guide</h3>
+    <form action="" method="POST" enctype="multipart/form-data" >
+       {{ form_widget(form) }}
+       <input type="Submit" value="Save" />
+    </form>
+</div>
+{% endblock %}

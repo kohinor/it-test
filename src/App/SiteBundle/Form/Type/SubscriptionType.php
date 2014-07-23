@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class NewsletterType extends AbstractType
+class SubscriptionType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -36,7 +36,7 @@ class NewsletterType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class' => "App\SiteBundle\Entity\Newsletter"
+                'data_class' => "App\SiteBundle\Entity\Subscription"
             ))
         ;
     }

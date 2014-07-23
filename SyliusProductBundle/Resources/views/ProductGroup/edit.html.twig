@@ -1,0 +1,32 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+{% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
+{% from 'SyliusWebBundle:Backend/Macros:misc.html.twig' import pagination %}
+{% from 'SyliusWebBundle:Backend/Product:macros.html.twig' import list %}
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+
+{% block topbar %}
+<ol class="breadcrumb">
+    <li>{{ 'sylius.breadcrumb.assortment'|trans }}</li>
+    <li><a href="{{ path('app_site_product_group_list') }}">{{ 'sylius.breadcrumb.product.group.index'|trans }}</a></li>
+    <li>{{ group.name|trans|raw  }}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="actions-menu">
+        {% if group.id %}
+        {{ buttons.edit(path('app_site_product_group_edit', {'id': group.id})) }}
+        {% endif %}
+    </div>
+    <h1><i class="glyphicon glyphicon-th-list"></i> {{ group.name |trans|raw }}</h1>
+</div>
+<div>
+    <h3>Create/edit new group</h3>
+    <form action="" method="POST" enctype="multipart/form-data" >
+       {{ form_widget(form) }}
+       <input type="Submit" value="Save" />
+    </form>
+</div>
+{% endblock %}

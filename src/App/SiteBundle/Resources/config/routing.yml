@@ -1,15 +1,15 @@
-default:
-    pattern:  /
-    defaults: { _controller: AppSiteBundle:Site:index }
-    
 app_site_brand:
-    pattern:  /{_locale}/brands
+    pattern:  /brands
     defaults: { _controller: AppSiteBundle:Site:brandList }
-    requirements:
-        _locale: en|fr
         
-app_site_newsletter:
-    pattern:  /{_locale}/newsletter
+app_site_subscription:
+    pattern:  /subscription
     defaults: { _controller: AppSiteBundle:Site:subscription }
-    requirements:
-        _locale: en|fr
+        
+app_site_subscription_list:
+    pattern:  /administration/subscription/list
+    defaults: { _controller: AppSiteBundle:Subscription:getSubscriptionsList }
+    
+app_site_subscription_delete:
+    pattern:  /administration/subscription/delete/{id}
+    defaults: { _controller: AppSiteBundle:Subscription:deleteSubscription }

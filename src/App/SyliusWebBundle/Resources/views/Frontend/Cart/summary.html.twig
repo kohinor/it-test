@@ -1,12 +1,10 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 
-{% import 'SyliusWebBundle:Frontend/Macros:alerts.html.twig' as alerts %}
-
 {% form_theme form _self %}
 
 {% block body %}
 <div class="page-header">
-<h1>{{ 'sylius.cart.summary_header'|trans|raw }}</h1>
+    <h3>{{ 'sylius.cart.summary_header'|trans|raw }}</h3>
 </div>
 
 {% if not cart.empty %}
@@ -80,7 +78,7 @@
 </div>
 </form>
 {% else %}
-    {{ alerts.info('sylius.cart.empty'|trans) }}
+    {{ 'sylius.cart.empty'|trans }}
 {% endif %}
 
 {% endblock %}

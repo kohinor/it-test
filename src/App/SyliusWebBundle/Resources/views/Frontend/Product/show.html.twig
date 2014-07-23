@@ -1,7 +1,45 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 
-{% set form = sylius_cart_form({'product': product}) %}
+{% block keywords %}
+    
+{% endblock %}
 
+{% block title %}
+    {{ product.translate(app.request.locale).name|default(product.name)|title }}
+{% endblock %}
+{% block description %}
+    {{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages') }}
+{% endblock %}
+
+{% set form = sylius_cart_form({'product': product}) %}
+{% set brand = 'unknown' %}
+{% set gender = null %}
+{% for taxon in product.taxons %}
+    {% if taxon.name == 'Women' %}
+        {% set gender = 'women' %}
+    {% endif %}
+    {% if taxon.parent.name == 'Brand' %}
+        {% set brand = taxon.name %}
+    {% endif %}
+{% endfor %}
+
+{% block breadcrumbs %}
+    <ul>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
+    {% if gender %}
+        <li><a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> </li>
+        <li><a href="{{ path('app_solr_search_gender_brand', {'gender':gender, 'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
+    {% else %}
+        <li><a href="{{ path('app_solr_search_brand', {'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
+    {% endif %}
+    <li>{{ product.translate(app.request.locale).name|default(product.name)|title  }} </li>
+    </ul>
+{% endblock %}
+{% block overlay %}
+   {% if gender %}    
+   {{ render(controller('AppSyliusProductBundle:SizeGuide:getSizeGuide', {'request': app.request, 'brand': brand, 'gender': gender} )) }}             
+   {% endif %}
+{% endblock %}
 {% block body %}
 <div class="row">
    <div class="column grid-10" style="margin:0px;"> 
@@ -43,6 +81,7 @@
                 {% endif %}
             </div>
             <div class="product-form">
+                <a href="javascript:void(0);" class="modal-show">Size Guide</a>
                 <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
                 {% if product.hasVariants %}
                     <div class="col-md-6">
@@ -155,13 +194,6 @@
                 {% endfor %}
             {% endif %}
         {% endfor %}
-        {% if product.masterVariant.isInStock() %}
-                {% for option in product.masterVariant.getOptions() %}
-                    {% if option.presentation == 'Size' %}
-                        $('#sylius_cart_item_variant_leter-size option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
     });
 </script>
 {% endblock %}

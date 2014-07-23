@@ -1,0 +1,84 @@
+<?php
+
+namespace App\SyliusProductBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use App\SyliusProductBundle\Entity\ProductVariant;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="sylius_product_size")
+ */
+class ProductSize
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(name="uk_size", type="string", length=255)
+     */
+    protected $ukSize;
+    
+    /**
+     * @ORM\Column(name="us_size", type="string", length=255)
+     */
+    protected $usSize;
+    
+    /**
+     * @ORM\Column(name="waist", type="string", length=255)
+     */
+    protected $waist;
+    
+    /**
+     * @ORM\Column(name="bust", type="string", length=255)
+     */
+    protected $bust;
+    
+    /**
+     * @ORM\Column(name="hips", type="string", length=255)
+     */
+    protected $hips;
+    
+    /**
+     * @ORM\Column(name="fr_size", type="string", length=255)
+     */
+    protected $frSize;
+    
+    /**
+     * @ORM\Column(name="eu_size", type="string", length=255)
+     */
+    protected $euSize;
+    
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+    
+     /**
+     * Set createdAt
+     *
+     * @ORM\PrePersist
+     * @return LiveAccessCategory
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdDate;
+    }
+}

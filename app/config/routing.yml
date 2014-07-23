@@ -1,3 +1,10 @@
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /en/
+        permanent: true
+        
 app_sylius_product:
     resource: "@AppSyliusProductBundle/Resources/config/routing.yml"
     prefix: /{_locale}/
@@ -12,6 +19,9 @@ app_solr_search:
    
 app_kit_site:
     resource: "@AppSiteBundle/Resources/config/routing.yml"
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr
         
 kitpages_cms:
     resource: "@KitpagesCmsBundle/Resources/config/routing.yml"

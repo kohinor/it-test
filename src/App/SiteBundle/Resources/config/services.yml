@@ -1,7 +1,7 @@
 services:
-    sylius.repository.product.group:
-        class: App\SyliusProductBundle\Entity\ProductGroupRepository
+    app.repository.subscription:
+        class: App\SiteBundle\Entity\SubscriptionRepository
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
-            - App\SyliusProductBundle\Entity\ProductGroup
+            - App\SiteBundle\Entity\Subscription
