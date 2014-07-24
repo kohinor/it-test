@@ -1,14 +1,14 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 
 {% block keywords %}
-    
+    {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
 
 {% block title %}
-
+  {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
 {% block description %}
-
+    {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
 {% block breadcrumbs %}        
 <ul>

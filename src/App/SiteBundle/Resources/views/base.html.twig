@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=1024">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="/css/common.css" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" type="text/css" />
+            
     {% block stylesheets %}{% endblock %}
     {% block kitpages_cms_stylesheets %}{% endblock %}
 </head>
@@ -36,7 +38,7 @@
             <span><a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
             <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
         {% endif %}
-        <span><a href="{{ app.request.get('path') |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
+        <span><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
     </div>
     <div id="quick-search">
         <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}">

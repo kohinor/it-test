@@ -411,7 +411,7 @@ text-transform: uppercase; }
     height: 30px;
     border-bottom: 2px solid rgb(0,0,0); 
     float:left;
-    width:810px;
+    width:790px;
 }
 
 #nav-main li.navigation-level3 {
@@ -543,7 +543,7 @@ background-color: rgb(255,255,255); }
 /* basket-button */
 
 #mini-basket {
-    width:150px;
+    width:170px;
     height: 30px;
     border-bottom: 2px solid rgb(0,0,0); 
     float:right;

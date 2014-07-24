@@ -1,14 +1,30 @@
 {% set product = item.variant.product %}
+{% set variant = item.variant %}
 <tr>
-    <td class="col-md-1">{{ loop.index }}</td>
     <td>
-        {{ include('SyliusWebBundle:Frontend/Product:_variant.html.twig', {'variant': item.variant}) }}
+        <a href="{{ path('sylius_cart_item_remove', {'id': item.id}) }}" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+    </td>
+    <td>
+        <a href="{{ path('app_site_product', {'slug':product.slug}) }}" class="thumbnail pull-left" style="margin-right: 15px;">
+            <img src="{{ product.image ? product.image.path|imagine_filter('sylius_small', true) : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
+        </a>
+    </td>
+    <td>
+        <div>
+            <a href="{{ path('app_site_product', {'slug':product.slug}) }}"><strong>{{ product.name }}</strong></a>
+            {% if variant.presentation is not empty %}
+                <strong>{{ variant.presentation }}</strong>
+            {% elseif product.hasOptions %}
+                <ul class="list-unstyled">
+                    {% for option in variant.options %}
+                        <li><strong>{{ option.presentation }}</strong>: {{ option.value }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
     </td>
     <td class="col-md-2">
         {{ form_row(form.items[loop.index0].quantity, {'label': false}) }}
-    </td>
-    <td class="col-md-1">
-        <a href="{{ path('sylius_cart_item_remove', {'id': item.id}) }}" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
     </td>
     <td class="col-md-1">
         {{ item.unitPrice|sylius_price }}

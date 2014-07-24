@@ -111,7 +111,7 @@ class ProductGroup
      * Set createdAt
      *
      * @ORM\PrePersist
-     * @return LiveAccessCategory
+     * @return ProductGroup
      */
     public function setCreatedAt()
     {

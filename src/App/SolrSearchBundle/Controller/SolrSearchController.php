@@ -3,6 +3,7 @@ namespace App\SolrSearchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SolrSearchController extends Controller
 {
@@ -108,7 +109,7 @@ class SolrSearchController extends Controller
         return $bindings;
     }
     
-    public function getResultsPaginator(Request $request, $facets)
+    public function getResultsPaginator(Request $request, $initialFacets)
     {
         $client = $this->get('solarium.client');
         $term  = $request->query->get('term');
@@ -116,13 +117,61 @@ class SolrSearchController extends Controller
         $endPrice = $request->query->get('toPrice') ? $request->query->get('toPrice') : 10000;
         $page  = $request->query->get('page') ? $request->query->get('page') : 1;
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice, $endPrice);
-        $facets = $this->getFacetsFromRequest($request, $facets);
+        $facets = $this->getFacetsFromRequest($request, $initialFacets);
         $this->get('solr.query.service')->setFacets($query, $facets);
         $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
-        //$request = $client->createRequest($query);
-        //print (string)$request;
+        $solrRequest = $client->createRequest($query);
+        if (count($initialFacets) == count($facets)) {
+            $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;
+        } else {
+            $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_REFINMENT;
+        }
+        $this->addSearchLog($term, $solrRequest->getUri(), $page, $facets, $paginator, $type);
         return array('pagination' => $paginator, 'facets' => $facets);
         
+    }
+    
+    public function addSearchLog($term, $query, $page, $facets, $resultset, $type, $aggr = true)
+    {
+        if ($page > 1) {
+            $aggr = false;
+        }
+        $searchLog = new \App\SolrSearchBundle\Entity\SearchLog($this->get('request')->getClientIp(true));
+        $searchLog->setAggregate($aggr);
+        $searchLog->setQuery($query);
+        $searchLog->setTerm($term);
+        $user = $this->getUser();
+        if ($user && $user instanceof UserInterface 
+                && ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') || $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))) {
+            $searchLog->setUser($user);
+        }
+        $searchLog->setType($type);
+        
+        //add facets
+        foreach ($facets as $facet) {
+            $facetLog = new \App\SolrSearchBundle\Entity\FacetLog();
+            $facetLog->setFacet($facet->facet);
+            $facetLog->setField($facet->field);
+            $facetLog->setSearch($searchLog);
+            $searchLog->addFacet($facetLog);   
+            $this->getDoctrine()->getManager()->persist($facetLog);
+        }
+        
+        //add productIds
+        $productSlugs = array();
+        foreach ($resultset as $result) {
+            $productSlugs[] = $result['slug'];
+            $productSearchLog = new \App\SolrSearchBundle\Entity\ProductSearchLog();
+            $productSearchLog->setProductId($result['id']);
+            $productSearchLog->setSearch($searchLog);
+            $searchLog->addProductId($productSearchLog);
+            $this->getDoctrine()->getManager()->persist($productSearchLog);
+        }
+        
+        $searchLog->setResult(json_encode($productSlugs));
+        $this->getDoctrine()->getManager()->persist($searchLog);
+        $this->getDoctrine()->getManager()->flush();
+        return null;
     }
 
     public function searchPromotionAction(Request $request, $promotion)

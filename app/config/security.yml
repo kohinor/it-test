@@ -17,15 +17,15 @@ security:
             pattern:     /administration/.*
             form_login:
                 provider:     fos_userbundle
-                login_path:   /administration/login
-                check_path:   /administration/login-check
-                failure_path: /administration/login
-                default_target_path: /administration/dashboard
+                login_path:   /en/administration/login
+                check_path:   /en/administration/login-check
+                failure_path: /en/administration/login
+                default_target_path: /en/administration/dashboard
                 use_forward:  false
                 use_referer:  true
             logout:
-                path:   /administration/logout
-                target: /administration/login
+                path:   /en/administration/logout
+                target: /en/administration/login
             anonymous: true
 
         main:
