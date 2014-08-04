@@ -1,0 +1,25 @@
+{% import 'SyliusWebBundle:Frontend/Macros:buttons.html.twig' as buttons %}
+{% extends 'SyliusWebBundle:Frontend/Account:layout.html.twig' %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<ul>
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
+    <li><i class="icon-triangle-right"></i> {{ 'sylius.account.order.details'|trans }} </li>
+</ul>
+</div>
+{% endblock %}
+{% block content %}
+    <h4>{{ 'sylius.account.order.details'|trans }}</h4>
+    {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
+     
+    {% if order.isInvoiceAvailable %}
+    {{ buttons.btn(
+        path('sylius_account_order_invoice', {'number': order.number}),
+        'sylius.account.order.download_invoice',
+        'order-' ~ order.number ~ '-invoice',
+        'file'
+    ) }}
+    {% endif %}
+{% endblock %}

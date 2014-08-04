@@ -28,30 +28,11 @@ var italica = {
                 italica.redirect(url);
                 return false;
             }
-            if($clicked.hasClass('done-price')){
-                var url = $clicked.attr('data-url');
-                italica.search.priceTo = $('input[name=toPrice]').val();
-                italica.search.priceFrom = $('input[name=fromPrice]').val();
-                italica.redirect(url);
-                return false;
-            }
             if($clicked.hasClass('clear-filters')){
                 var url = $clicked.attr('data-url');
                 var key = $clicked.attr('data-key');
                 $('input[name=' + key + ']').each(function() {
                     italica.search.removeFacet(key, $(this).val());
-                });
-                italica.redirect(url);
-                return false;
-            }
-            if($clicked.hasClass('done')){
-                var key = $clicked.attr('data-key');
-                var url = $clicked.attr('data-url');
-                $('input[name=' + key + ']').each(function() {
-                    italica.search.removeFacet(key, $(this).val());
-                });
-                $('input[name=' + key + ']:checked').each(function(){
-                    italica.search.addFacet($(this).val(),key);
                 });
                 italica.redirect(url);
                 return false;
@@ -64,8 +45,9 @@ var italica = {
         direction: null,
         page: 1,
         term: null,
-        priceFrom: 0,
-        priceTo: 10000,
+        price: '0;10000',
+        priceTo: 0,
+        priceFrom: 10000,
         addFacet: function(facet, field) {
             facet = {
                 facet: facet,
@@ -98,6 +80,7 @@ var italica = {
     },
     redirect: function(url) {
         console.log(url);
+        console.log(italica.search);
         var param = [];
         if (italica.search.term){
             param.push('term='+italica.search.term);
@@ -112,11 +95,8 @@ var italica = {
 
             }
         }
-        if (italica.search.priceTo){
-            param.push('toPrice='+italica.search.priceTo);
-        }
-        if (italica.search.priceFrom){
-            param.push('fromPrice='+italica.search.priceFrom);
+        if (italica.search.price){
+            param.push('price='+italica.search.price);
         }
         var color = [];
         var size = [];
@@ -214,21 +194,33 @@ var italica = {
         if (category2.length > 0) {
             url = url+'&category2='+category2.join(',');
         }
-        console.log(italica.search.facets);
-        console.log(color);
-        console.log(url);
         window.location = url;
     }
 };
 
+$(document).ready(function(){
+$('.filter input[type=checkbox]').click(function(e) {
+   var url = $(this).attr('data-url');
+   var name = $(this).attr('name');
+   var value = $(this).attr('value');
+   if($(this).is(":checked")) {
+     italica.search.addFacet(value, name);
+     italica.redirect(url);
+   }else{
+     italica.search.removeFacet(name, value);
+     console.log(italica.search.facets);
+     italica.redirect(url);
+   }
+
+});
+$('#fromPrice').change(function() {
+    var url = $(this).attr('data-url');
+    italica.search.price = $(this).val();
+    italica.redirect(url);
+    return false;
+ });
+ 
 $('.filter').on('click',italica.general.clickHandler);
 $('.sort-by').on('change',italica.general.clickHandler);
 
-$('.filter-header').on('click', function($this){
-    var key = $(this).attr('data-key');
-     if ( $( "#filters-"+key ).is( ":hidden" ) ) {
-        $( "#filters-"+key ).slideDown();
-    } else {
-        $( "#filters-"+key ).slideUp();
-    }
 });

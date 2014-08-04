@@ -3,13 +3,15 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-<div class="product-box column grid-2-25" >
+<div class="product-box grid-3" >
     <a class="product-image" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
     <div style="text-transform:uppercase;"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
-    <span class="online-title">{{ title }}</span>
+    <div><span class="online-title">{{ title }}</span></div>
     {% if article.rrp|default(0) > article.price %}
-        <div class="old-price" >{{ 'RRP'|trans({}, 'messages') }}: {{article.rrp|sylius_price }}</div>
-        <div class="sale-price" >{{ 'New Price'|trans({}, 'messages') }}: {{article.price|sylius_price }}</div>
+        <div>
+        <span class="old-price" >{{article.rrp|sylius_price }}</span>
+        <span class="sale-price" >{{article.price|sylius_price }}</span>
+        </div>
     {% else %}
         <div class="online-price" >{{article.price|sylius_price }}</div>
     {% endif %}

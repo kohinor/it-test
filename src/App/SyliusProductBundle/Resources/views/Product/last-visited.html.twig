@@ -2,7 +2,7 @@
 <h3>Resently Viewed Products</h3>
 <div class="row">
     {% for product in products %}
-        {% if loop.index < 8 %}
+        {% if loop.index < 7 %}
             {% include 'SyliusWebBundle:Frontend/Product:_singleBox.html.twig' with {'locale': locale } %}
         {% endif %}
     {% endfor %}

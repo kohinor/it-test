@@ -10,38 +10,58 @@
 {% block description %}
     {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
-{% block breadcrumbs %}        
+{% block breadcrumbs %}  
+<div class="breadcrumbs">
 <ul>
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
-        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
-        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title  }} </li>
+        <li><i class="icon-triangle-right"></i>
+        {% set genders = app.request.get('gender')|split(',') %}
+        {% for gender in genders %}
+            <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> 
+        {% endfor %}
+        </li> 
+        <li><i class="icon-triangle-right"></i> {{ app.request.get('promotion')|trans({}, 'messages')|title  }} </li>
     {% elseif app.request.get('brand') and  app.request.get('gender') %}
-        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
-        <li>{{ app.request.get('brand')|trans({}, 'messages')|title  }} </li>
+        <li><i class="icon-triangle-right"></i>
+        {% set genders = app.request.get('gender')|split(',') %}
+        {% for gender in genders %}
+            <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> 
+        {% endfor %}
+        </li> 
+        <li><i class="icon-triangle-right"></i> {{ app.request.get('brand')|trans({}, 'messages')|title  }} </li>
     {% elseif app.request.get('category') and  app.request.get('gender') %}
-        <li><a href="{{ path('app_solr_search_gender', {'gender':app.request.get('gender')}) }}">{{ app.request.get('gender')|trans({}, 'messages')|title  }}</a> </li>
-        <li>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+        <li><i class="icon-triangle-right"></i>
+        {% set genders = app.request.get('gender')|split(',') %}
+        {% for gender in genders %}
+            <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a>  
+        {% endfor %}
+        </li> 
+        <li> <i class="icon-triangle-right"></i>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('promotion') %}
-        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title }} </li>
+        <li> <i class="icon-triangle-right"></i>{{ app.request.get('promotion')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('brand') %}
-        <li>{{ app.request.get('brand')|trans({}, 'messages')|title }} </li>
+        <li><i class="icon-triangle-right"></i> {{ app.request.get('brand')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('gender')%}
-        <li>{{ app.request.get('gender')|trans({}, 'messages')|title }} </li>
+        <li><i class="icon-triangle-right"></i> {{ app.request.get('gender')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('category')%}
-        <li>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+        <li><i class="icon-triangle-right"></i> {{ app.request.get('category')|trans({}, 'messages')|title }} </li>
     {% else %}
-        <li>{{ 'Search'|trans({}, 'messages') }} </li>    
+        <li><i class="icon-triangle-right"></i> {{ 'Search'|trans({}, 'messages') }} </li>    
     {% endif %}
 </ul>
+</div>
 {% endblock %}
 
 
 {% block body %}
 <div class="row">
     <div class="column grid-3">
+        <div class="summary" style="padding-bottom: 12px; padding-top: 12px;">
+            <span class="summary-total" style="margin-left:10px;">Refactor by</span>
+        </div>
         <div class="filter">
-            <h3>Filters</h3>
             {{ gender | raw }}
             {{ promotion | raw }}
             {{ category1 | raw }}
@@ -55,13 +75,11 @@
             
   <div class = "filter-box">
     <div class="filter-header open" data-key="price">
-        {{ 'Price'|trans}}
+        <i class="icon-arrow-right"></i> {{ 'Price'|trans}}
     </div>
     <div id="filters-price" >
     <form>
-        <input type="text" style="width:70px;" name="fromPrice" placeholder="0" value="{{ app.request.query.get('fromPrice') }}"> - 
-        <input type="text"  style="width:70px;" name="toPrice" placeholder="10000" value="{{ app.request.query.get('toPrice') }}"> 
-        <button type="submit" class="done-price" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">{{ 'Filter'|trans({}, 'messages') }}</button>
+        <input type="text" id="fromPrice" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" name="fromPrice" value="{{ app.request.query.get('price') }}"> 
     </form> 
     </div>
 </div>
@@ -72,9 +90,16 @@
        
  
 <div class="column grid-9">
-    <div class="summary row clearfix">
-	<div class="column grid-3 sort-by">
-        Sort by
+  <div style="margin-left:10px;">
+    <div class="row" style="margin-bottom:5px; padding:10px;">
+        {{ render(controller('KitpagesCmsBundle:Block:widget', 
+                    {'slug': app.request.locale|default('en') ~ '-'~app.request.get('promotion')~'-'~app.request.get('gender')~'-'~app.request.get('category')~'-'~app.request.get('brand')}
+                  )) }}
+    </div>
+    <div class="summary row">
+	<div class="column grid-3">
+        <div class="sort-by">
+        Sort By
           <select class="done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
             <option value="none" >none</option>
             <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Price High To Low'|trans({}, 'messages') }}</option>
@@ -83,11 +108,12 @@
             <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Title Z To A'|trans({}, 'messages') }}</option>	
 	  </select>
          </div>
-        <div class="column grid-3 summary-total">
+         </div>
+        <div class="column grid-4 summary-total">
             <strong>Found {{ pagination.getTotalItemCount }} item(s)</strong>
 	</div>
 	
-<div class="column grid-3 " style="text-align:right;">
+<div class="column grid-5 " style="text-align:right;">
 
          {{ knp_pagination_render(pagination) }} 
 
@@ -108,8 +134,8 @@
             {% set item = 0 %}
         {% endif %}
     {% endfor %}
-    <div class="row">
-        <div class="column grid-9-5" style="text-align:center">
+    <div class="row summary">
+        <div class="column grid-12" style="text-align:center">
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
@@ -117,7 +143,7 @@
         <p style="text-align:center;">{{ 'italica.no.products.found'|trans({}, 'messages') }}</p>
     {% endif %}
     </div>
-
+   </div>
  </div>
 <p>&nbsp;</p>
 {% endblock body %}
@@ -139,11 +165,11 @@
     {% if app.request.query.get('term') %}
         italica.search.term = '{{ app.request.query.get('term') }}';
     {% endif %}
-    {% if app.request.query.get('toPrice') %}
-        italica.search.priceTo = '{{ app.request.query.get('toPrice') }}';
-    {% endif %}
-    {% if app.request.query.get('fromPrice') %}
-        italica.search.priceFrom= '{{ app.request.query.get('fromPrice') }}';
+    {% if app.request.query.get('price') %}
+        italica.search.price = '{{ app.request.query.get('price') }}';
+        {% set price = app.request.query.get('price')|split(';') %}
+        italica.search.priceTo = '{{ price[0] }}';
+        italica.search.priceFrom = '{{ price[1] }}';
     {% endif %}
     {% if app.request.query.get('sort') %}
         italica.search.sort = '{{ app.request.query.get('sort') }}';
@@ -151,6 +177,23 @@
     {% if app.request.query.get('direction') %}
         italica.search.direction = '{{ app.request.query.get('direction') }}';
     {% endif %}
+    $("#fromPrice").ionRangeSlider({
+    min: 0,
+    max: 1000,
+    from: italica.search.priceTo,
+    to: italica.search.priceFrom,
+    type: 'double',
+    step: 5,
+    postfix: " €",
+    hasGrid: true
+});
+
+$('.irs-slider').on("mouseup", function (e) {
+    var url = $('#fromPrice').attr('data-url');
+    italica.search.price = $('#fromPrice').val();
+    italica.redirect(url);
+    return false;                   
+});
 });
 </script>
 {% endblock %}

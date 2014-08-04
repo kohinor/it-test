@@ -5,6 +5,7 @@ namespace App\SyliusProductBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProductController extends Controller
@@ -21,10 +22,11 @@ class ProductController extends Controller
         $lastVisited = $session->get('lastVisited')?$session->get('lastVisited'):array();
         $lastVisited[] = $product->getId();
         $lastVisited = array_unique($lastVisited);
-        if (count($lastVisited) > 8 ) {
+        if (count($lastVisited) > 6 ) {
             $lastVisited = array_slice($lastVisited, 1);
         }
         $session->set('lastVisited', $lastVisited);
+
         return $this->render('SyliusWebBundle:Frontend/Product:show.html.twig', array('locale' => $request->attributes->get('_locale'),'product' =>  $product ));
     }
     
@@ -43,9 +45,16 @@ class ProductController extends Controller
     
     public function getProductsByGroupAction(Request $request, $groupId)
     {
+        $response = new Response();
+        $response->setETag(md5($request->getContent()));
+        $response->setLastModified(new \DateTime('today midnight'));
+        $response->setPublic();
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
         $productRepository = $this->container->get('sylius.repository.product');
         $products = $productRepository->findByGroupId($groupId);
-        return $this->render('AppSyliusProductBundle:Product:other.html.twig', array('locale' => $request->attributes->get('_locale'), 'slug' => $request->attributes->get('slug'),'products' =>  $products ));
+        return $this->render('AppSyliusProductBundle:Product:other.html.twig', array('locale' => $request->attributes->get('_locale'), 'slug' => $request->attributes->get('slug'),'products' =>  $products ), $response);
     }
     
     public function getLastVisitedAction(Request $request)

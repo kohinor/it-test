@@ -2,6 +2,8 @@ parameters:
 #    app_solr_search.example.class: App\SolrSearchBundle\Example
 
 services:
+    cache:
+        class: Doctrine\Common\Cache\ApcCache
     solr.update.service:
         class: App\SolrSearchBundle\Service\SolrUpdateService
         arguments: ["@solarium.client"]

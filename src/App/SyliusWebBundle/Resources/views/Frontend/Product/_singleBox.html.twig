@@ -1,12 +1,14 @@
-<div class="product-box column grid-1-5" >    
-    <a class="product-image" href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}">
-        <img  src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
+<div class="product-box column grid-2" >    
+    <a class="product-image" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+        <img  src="{{ product.image ? product.image.path|imagine_filter('home') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
     </a>       
-    <a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}"><span class="online-title">{{ product.translate(locale).name|default(product.name) }}</span></a>
-    <a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}">
+    <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><span class="online-title">{{ product.translate(locale|default('en')).name|default(product.name) }}</span></a></div>
+    <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"></div>
         {% if product.rrp > product.price %}
-            <div class="old-price" >{{ 'RRP'|trans({}, 'messages') }}: {{product.rrp|sylius_price }}</div>
-            <div class="sale-price" >{{ 'New Price'|trans({}, 'messages') }}: {{ sylius_calculate_price(product.masterVariant)|sylius_price }}</div>
+            <div>
+            <span class="old-price" >{{product.rrp|sylius_price }}</span>
+            <span class="sale-price" >{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</span>
+            </div>
         {% else %}
             <div class="online-price" >{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</div>
         {% endif %}

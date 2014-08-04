@@ -4,21 +4,28 @@ namespace App\SolrSearchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class SolrSearchController extends Controller
-{
-    
-    public function searchNewInAction(Request $request, $gender)
+{   
+    public function searchNewInAction(Request $request, $gender, $limit = 3)
     {
         $facets['gender'] = $gender;
         $facets['promotion'] = 'new';
-        
+                
         $client = $this->get('solarium.client');
         $query = $this->get('solr.query.service')->getSolrQuery($client, '*');
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
-        $query->setRows(3);
-        $resultset = $client->select($query);        
-        $bindings = array('results' => $resultset);
+        $query->setRows($limit);
+        
+        $key =  implode('-', $facets);
+        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
+            $resultset = $client->select($query);
+            $cache->save($key, $resultset);
+        }
+        $bindings = array('results' => $resultset, 'locale' => $request->attributes->get('_locale'));
         
         return $this->render('AppSolrSearchBundle:SolrSearch:new-in.html.twig', $bindings);
     }
@@ -93,7 +100,15 @@ class SolrSearchController extends Controller
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term);
         $facetsCollection = $this->getFacets($facets);
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
-        $resultset = $client->select($query);
+        
+        $key = 'facets-'.implode('-', $facets);
+        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
+            $resultset = $client->select($query);
+            $cache->save($key, $resultset);
+        }
+  
         $facets = $this->getFacetsFromRequest($request);
         $bindings = array(
                 'size' => $this->getFacetTemplate('size', 'size', $resultset, $facets),
@@ -113,13 +128,25 @@ class SolrSearchController extends Controller
     {
         $client = $this->get('solarium.client');
         $term  = $request->query->get('term');
-        $startPrice = $request->query->get('fromPrice') ? $request->query->get('fromPrice') : 0;
-        $endPrice = $request->query->get('toPrice') ? $request->query->get('toPrice') : 10000;
+        $price = $request->query->get('price') ? explode(';', $request->query->get('price')) : null;
+        
+        $startPrice = $price ? $price[0] : 0;
+        $endPrice = $price ? $price[1] : 10000;
         $page  = $request->query->get('page') ? $request->query->get('page') : 1;
-        $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice, $endPrice);
+        $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice*100, $endPrice*100);
         $facets = $this->getFacetsFromRequest($request, $initialFacets);
         $this->get('solr.query.service')->setFacets($query, $facets);
-        $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
+        $keyFacets = array();
+        foreach($facets as $facet) {
+            $keyFacets[] = $facet->facet;
+        }
+        $key = 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice;
+        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
+        $paginator = $cache->fetch($key);
+        if (!$paginator) {
+            $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
+            $cache->save($key, $paginator);
+        }
         $solrRequest = $client->createRequest($query);
         if (count($initialFacets) == count($facets)) {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;
@@ -177,6 +204,7 @@ class SolrSearchController extends Controller
     public function searchPromotionAction(Request $request, $promotion)
     {
         $facets['promotion'] = $promotion;
+       
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -187,6 +215,7 @@ class SolrSearchController extends Controller
     public function searchBrandAction(Request $request, $brand)
     {
         $facets['brand'] = $brand;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -196,6 +225,7 @@ class SolrSearchController extends Controller
     {
         $facets['gender'] = $gender;
         $facets['brand'] = $brand;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -204,6 +234,7 @@ class SolrSearchController extends Controller
     public function searchGenderAction(Request $request, $gender)
     {
         $facets['gender'] = $gender;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -213,6 +244,7 @@ class SolrSearchController extends Controller
     {
         $facets['gender'] = $gender;
         $facets['category1'] = $category;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -221,6 +253,7 @@ class SolrSearchController extends Controller
     public function searchCategoryAction(Request $request, $category)
     {
         $facets['category1'] = $category;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -228,8 +261,9 @@ class SolrSearchController extends Controller
     
     public function searchAllAction(Request $request)
     {
-        $bindings = $this->getFacetSearchResult($request, $facets);
-        $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
+        
+        $bindings = $this->getFacetSearchResult($request);
+        $bindings = array_merge($this->getResultsPaginator($request, array()), $bindings);   
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
     }
     
@@ -237,6 +271,7 @@ class SolrSearchController extends Controller
     {
         $facets['gender'] = $gender;
         $facets['promotion'] = $promotion;
+        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
@@ -247,6 +282,7 @@ class SolrSearchController extends Controller
         $facets['gender'] = $gender;
         $facets['promotion'] = $promotion;
         $facets['category1'] = $category;
+ 
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);

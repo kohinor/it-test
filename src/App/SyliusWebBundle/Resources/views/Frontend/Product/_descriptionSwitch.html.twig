@@ -1,0 +1,38 @@
+<ul>
+    <li class="slide-header">
+        <span class="title">{{ 'sylius.product.description'|trans({}, 'messages') }}</span>
+    </li>
+    <li class="slide-body" style="display:inline;">
+        <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
+        {% if product.attributes|length > 0 %}
+            {% for attribute in product.attributes %}
+                <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
+            {% endfor %}
+        {% endif %}
+        <p><label>{{ 'Barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }} - {{ product.getMasterVariant().barcode }}</p>
+    </li>
+    {% if product.shippingCategory %}
+    <li class="slide-header">
+        <span class="title">Delivery</span>
+    </li>
+    <li class="slide-body">
+        <p>Delivery: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
+        <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
+    </li>
+    {% endif %}
+    <li class="slide-header">
+        <span class="title">Returns</span>
+    </li>
+    <li class="slide-body">
+        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-return', 'authorizedBlockTemplateList': ['standard']} )) }}
+    </li>
+    <li class="share">
+        <span class="title">Share: </span>
+        <span class='st_facebook'></span>
+        <span class='st_twitter'></span>
+        <span class='st_pinterest' ></span>
+        <span class='st_vkontakte'></span>
+        <span class='st_googleplus'></span>
+        <span class='st_email'></span>
+    </li>
+</ul>

@@ -4,6 +4,7 @@ namespace App\SyliusProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SizeGuideController extends Controller
 {
@@ -11,12 +12,19 @@ class SizeGuideController extends Controller
     {
         $repository = $this->container->get('sylius.repository.product_size_guide');
         $sizeGuide = $repository->findBy(array('brand' => $brand, 'gender' => $gender)); 
-        return $this->render('AppSyliusProductBundle:SizeGuide:size-guide.html.twig', array('locale' => $request->attributes->get('_locale'),'size_guides' =>  $sizeGuide));
+        
+        $response = new Response();
+        $response->setETag(md5($this->get('request')->getContent()));
+        $response->setLastModified(new \DateTime('today midnight'));
+        $response->setPublic();
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+        
+        return $this->render('AppSyliusProductBundle:SizeGuide:size-guide.html.twig', array('locale' => $request->attributes->get('_locale'),'size_guides' =>  $sizeGuide), $response);
     }
     
-    
-    
-    
+
     public function getSizeGuideListAction(Request $request)
     {
         $repository = $this->container->get('sylius.repository.product_size_guide');

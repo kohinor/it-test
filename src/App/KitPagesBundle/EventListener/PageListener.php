@@ -69,7 +69,7 @@ class PageListener {
         //$baseUrl = rtrim($request->getBaseUrl(), '/');
         $requestUri = $request->getRequestUri();
         $requestUriParse = parse_url($requestUri);
-        $relativeRequestUri = $requestUriParse['path'];
+        $relativeRequestUri = str_replace('app_dev.php/', '', $requestUriParse['path']);
         //$relativeRequestUri = str_replace($baseUrl, '', $requestUri);
         $relativeRequestUri = '/'.ltrim($relativeRequestUri, '/');
 

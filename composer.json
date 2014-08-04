@@ -29,7 +29,6 @@
         "friendsofsymfony/user-bundle":         "@dev",
         "knplabs/knp-gaufrette-bundle":         "@dev",
         "knplabs/knp-snappy-bundle":            "@dev",
-        "liip/doctrine-cache-bundle":           "@dev",
         "mathiasverraes/money":                 "@dev",
         "pagerfanta/pagerfanta":                "@dev",
         "white-october/pagerfanta-bundle":      "@dev",
@@ -40,7 +39,8 @@
         "lexik/translation-bundle":              "@dev",
         "a2lix/translation-form-bundle":        "1.*@dev",
         "nelmio/solarium-bundle":               "2.*",
-        "knplabs/knp-paginator-bundle":         "2.4.*@dev"
+        "knplabs/knp-paginator-bundle":         "2.4.*@dev",
+        "symfony/icu":                          "1.1.*"
     },
     "require-dev": {
         "behat/behat":                       "~3.0",

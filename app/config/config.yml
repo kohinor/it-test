@@ -55,9 +55,13 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         entity_managers:
             default:
-                metadata_cache_driver: apc
-                query_cache_driver: memcache
-                result_cache_driver: memcache
+                metadata_cache_driver: array
+                query_cache_driver:
+                    type: service
+                    id: doctrine_cache.providers.file_cache_doctrine
+                result_cache_driver:
+                    type: service
+                    id: doctrine_cache.providers.file_cache_doctrine
                 auto_mapping: true
                 mappings:
                     gedmo_loggable:
@@ -125,7 +129,7 @@ knp_paginator:
     template:
         pagination: AppSolrSearchBundle:SolrSearch:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig 
-        
+
 sylius_product:
     driver: doctrine/orm
     classes:
@@ -149,15 +153,30 @@ sylius_cart:
 liip_imagine:
     data_root: %kernel.root_dir%/../web/media/image
     filter_sets:
+        home:
+           filters:
+                thumbnail: { size: [130, 156], mode: outbound } 
         sylius_small:
             filters:
-                thumbnail: { size: [60, 72], mode: outbound }
+                thumbnail: { size: [58, 70], mode: outbound }
         sylius_medium:
             filters:
-                thumbnail: { size: [150, 180], mode: outbound }
+                thumbnail: { size: [160, 192], mode: outbound }
         sylius_large:
             filters:
                 thumbnail: { size: [300, 360], mode: outbound }
         sylius_x_large:
             filters:
                 thumbnail: { size: [1024, 1228], mode: outbound }
+
+doctrine_cache:
+    providers:
+        file_cache:
+            file_system:
+                extension: ch
+                directory: %kernel.cache_dir%/site_cache
+        file_cache_doctrine:
+            file_system:
+                extension: ch
+                directory: %kernel.cache_dir%/site_doctrine
+

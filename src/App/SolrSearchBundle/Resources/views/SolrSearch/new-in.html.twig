@@ -1,3 +1,21 @@
 {% for article in results %}
-    {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
+    {% if locale == 'fr' %}
+        {% set title = article.name_fr %}
+    {% else %}
+        {% set title = article.name_en %}
+    {% endif %}
+    <div class="product-box grid-4" >
+        <a class="product-image" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('home') : 'http://placehold.it/120x96' }}" alt="{{ title }}" /></a>
+        <div style="text-transform:uppercase;"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
+        <div><span class="online-title">{{ title }}</span></div>
+        {% if article.rrp|default(0) > article.price %}
+            <div>
+            <span class="old-price" >{{article.rrp|sylius_price }}</span>
+            <span class="sale-price" >{{article.price|sylius_price }}</span>
+            </div>
+        {% else %}
+            <div class="online-price" >{{article.price|sylius_price }}</div>
+        {% endif %}
+    </div>
+    
 {% endfor %}

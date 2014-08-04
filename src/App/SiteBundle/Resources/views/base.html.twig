@@ -13,8 +13,11 @@
     
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="viewport" content="width=1024">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">        
     <link rel="stylesheet" href="/css/common.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.skinNice.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.css"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" type="text/css" />
             
     {% block stylesheets %}{% endblock %}
@@ -23,84 +26,158 @@
 
 <body>
   {% block kitpages_cms_toolbar %}{% endblock %}
-<div id="container">
-  <div class="modal" style="display:none;">{% block overlay %}{% endblock %}</div>
-  <div id="head" class="clearfix" >
-    <div id="logo">
-        <h1><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
-        <h4>&nbsp;&nbsp;&nbsp;&nbsp;{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</h4>
-    </div>          
-    <div id="top-links">
-        {% if app.user %}
-            <span><a href="{{ path('fos_user_profile_show') }}">{{ 'italica.account'|trans({}, 'messages') }}</a> | 
-            <a href="{{ path('fos_user_security_logout') }}">{{ 'italica.logout'|trans({}, 'messages') }}</a></span>
-        {%else%}
-            <span><a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
-            <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
-        {% endif %}
-        <span><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
-    </div>
-    <div id="quick-search">
-        <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}">
-            <input name="term" placeholder="Find products by name" type="text">
-
-            <button class="search-button" title="Go" type="submit">
-            <span>&nbsp;</span></button>
-        </form>
-    </div>	
-    <div id="top-promo">
-        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-top-promo', 'authorizedBlockTemplateList': ['image'], 'renderer': 'banner'} )) }}             
-    </div>
-    <div id="nav-main">
-      {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-        'slug': app.request.locale|default('en') ~ '-main',
-        'cssClass': "app-navigation-main",
-        'currentPageSlug':kitCmsPage.slug|default(''),
-        'startDepth':1 ,
-        'endDepth':3} )) }}
-    </div>
-    <div id="mini-basket">
-        {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}	
+  <div class="modal" style="display:none;z-index:9999">{% block overlay %}{% endblock %}</div>
+  <div class="topbar" >
+    <h5>{{ 'top.site.promotion'|trans }}</h5>
+  </div>
+  <div id="head">
+    <div class="container">
+      <div class="row">
+        <div class="column grid-4">
+          <div id="top-promo">{{ 'welcome.message'|trans }}</div>
+          <div id="top-registration">
+            {% if app.user %}
+              <span><i class="icon-user"></i> <a href="{{ path('fos_user_profile_show') }}">{{ 'italica.account'|trans({}, 'messages') }}</a> | 
+              <i class="icon-signout"></i> <a href="{{ path('fos_user_security_logout') }}">{{ 'italica.logout'|trans({}, 'messages') }}</a></span>
+            {%else%}
+              <span><i class="icon-signin"></i> <a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
+              <i class="icon-user"></i> <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
+            {% endif %}
+          </div>
+          <div id="top-facebook">
+            <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fshopitalica.com&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;appId=470003536403147" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+          </div>
+        </div>
+        <div class="column grid-4">
+          <div id="logo">
+            <h1><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
+            <h4>&nbsp;&nbsp;&nbsp;&nbsp;{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</h4>
+          </div>  
+        </div>
+        <div class="column grid-4">
+          <div id="top-links">
+            {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+            <span><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
+          </div>
+          <div id="mini-basket">
+            {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}	
+          </div>
+          <div id="quick-search">
+            <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}">
+              <input name="term" placeholder="Find products by name" type="text">
+              <button class="search-button" title="Go" type="submit">
+              <span>&nbsp;</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="nav-main">
+        {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+          'slug': app.request.locale|default('en') ~ '-main',
+          'cssClass': "app-navigation-main",
+          'currentPageSlug':kitCmsPage.slug|default(''),
+          'startDepth':1 ,
+          'endDepth':3} )) }}
+      </div>
     </div>
   </div>
-        
+  <div id="promo-row">
+    <div class="container">
+      <div class="row">
+        <div class="column grid-4"><div class="promo-block">10% off on selected items</div></div>
+        <div class="column grid-4"><div class="promo-block middle">Free delivery on all orders</div></div>
+        <div class="column grid-4"><div class="promo-block">15% off on more than 5 items</div></div>
+      </div>
+    </div>
+  </div>
+   
   <div id="main"> 
-    <div id="breadcrumbs" >{% block breadcrumbs %}<p style="text-align: center">{{ 'welcome.message'|trans}}<p> {% endblock %}</div>
-    {% block flashes %}
+    <div class="container">
+      {% block breadcrumbs %}{% endblock %}
+      {% block flashes %}
         {% for type in ['success', 'error', 'fos_user_success'] %}
-            {% for flash in app.session.flashbag.get(type) %}
-                <div class="alert alert-{{ type == 'fos_user_success' ? 'success' : type == 'error' ? 'danger' : type == 'notice' ? 'warning' : type }}">
-                    <a class="close" data-dismiss="alert" href="#">×</a>
-                    {{ flash|trans }}
-                </div>
-            {% endfor %}
+          {% for flash in app.session.flashbag.get(type) %}
+            <div class="alert alert-{{ type == 'fos_user_success' ? 'success' : type == 'error' ? 'danger' : type == 'notice' ? 'warning' : type }}">
+              <a class="close" data-dismiss="alert" href="#">×</a>
+              {{ flash|trans }}
+            </div>
+          {% endfor %}
         {% endfor %}
-    {% endblock %}
-  
-    {% block body %}{% endblock %}
+      {% endblock %}
+      {% block body %}{% endblock %}
+    </div>
   </div>
-        
-  <div id="newsletters" class="clearfix">
+  
+  <div class="footer-saparator"></div>
+  <div id="footer" >
+    <div class="container" >
+      <div class="row">
+        <div class="column grid-6">
+          <div id="nav-foot">
+            {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+                'slug': app.request.locale|default('en') ~ '-footer',
+                'cssClass': "kit-cms-navigation-footer",
+                'currentPageSlug':kitCmsPage.slug|default('')} )) }}
+
+          </div>
+        </div>
+        <div class="column grid-1-5 social-block">
+          <h4>Follow Us</h4> 
+          <div class="icons">
+            <a href="#"><i class="icon-twitter"></i></a>
+            <a href="#"><i class="icon-facebook"></i></a>
+            <a href="#"><i class="icon-google-plus"></i></a>
+            <a href="#"><i class="icon-vk"></i></a>
+            <a href="#"><i class="icon-pinterest"></i></a>
+            <a href="#"><i class="icon-linkedin"></i></a>
+          </div>
+          <div class="call-us">
+            <h4>Call Us</h4>
+            <p>+7(888)888888</p>
+          </div>
+        </div>
+        <div class="column grid-4">
+          <div id="newsletters">
             {{ render(controller('AppSiteBundle:Site:subscription',{
             'url': app.request.uri})) }}
-  </div>
-  <div id="nav-foot" class="clearfix">
-    {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                    'slug': app.request.locale|default('en') ~ '-footer',
-                    'cssClass': "kit-cms-navigation-footer",
-                    'currentPageSlug':kitCmsPage.slug|default('')} )) }}
-
-    <div>
-      <p style="text-align:right;">© 2014 Italica </p>
+          </div>
+          <div class="payments">
+            <h4>We Accept</h4>
+            <img src="/img/americanexpress.png" />
+            <img src="/img/maestro.png" />
+            <img src="/img/mastercard.png" />
+            <img src="/img/visa.png" />
+            <img src="/img/paypal.png" />
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="copyright">
+      <span>© 2014 Italica </span>
     </div>
-
   </div>
-</div>  
-  <script async type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<div id="cookie-div">
+    <div class="message">
+        <p>
+            {{ 'app.site.cookie.message'|trans|raw }} <a href="/{{ app.request.locale }}/privacy-policy">{{ 'app.site.cookie.link'|trans }}</a>.
+            </p>
+    </div>
+        <div class="cookie-button">
+            <button class="acceptCookie">Accept</button>
+        </div>
+</div>
+  <script defer type="text/javascript">var switchTo5x=true;</script>
+  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+  <script type="text/javascript">stLight.options({publisher: "f95283f4-a8a1-48ac-85ff-d2fc2e213be5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
   <script async type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-  <script async src="/js/zoomsl-3.0.min.js"></script>
-  <script async src="/js/common.js"></script>
-  <script async src="/js/search.js"></script>
+  <script asyn type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script asyn type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script asyn type="text/javascript" src="/slick/slick.min.js"></script>
+  <script asyn type="text/javascript" src="/js/ion.rangeSlider.min.js"></script>
+  <script defer src="/js/zoomsl-3.0.min.js"></script>
+  <script defer src="/js/common.js"></script>
+  <script defer src="/js/search.js"></script>
+  
   {% block javascripts %}{% endblock %}
   {% block kitpages_cms_javascripts %}{% endblock %}
   <script>

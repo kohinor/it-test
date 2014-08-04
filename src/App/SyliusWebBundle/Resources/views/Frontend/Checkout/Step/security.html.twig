@@ -1,0 +1,56 @@
+{% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ 'sylius.checkout.security.header'|trans|raw }}</h2>
+</div>
+
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
+<div class="row">
+    <div class="column grid-4"  style="border-right: 1px dashed #d1d1d1; height:250px;">
+        <form action="{{ path('fos_user_security_check') }}" method="post" class="form-horizontal">
+                <fieldset>
+                    <h5>{{ 'sylius.checkout.security.existing_customer'|trans }}</h5>
+                    <div class="form-group">
+                        <label for="username" class="control-label col-lg-3">{{ 'sylius.form.login.email'|trans }}</label>
+                        <div class="controls col-lg-9">
+                            <input type="text" id="username" name="_username" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="password" class="control-label col-lg-3">{{ 'sylius.form.login.password'|trans }}</label>
+                        <div class="controls col-lg-9">
+                            <input type="password" id="password" name="_password" class="form-control" />
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-actions">
+                    <input type="submit" class="button" name="login" value="{{ 'sylius.checkout.security.login'|trans }}" />
+                </div>
+            </form>
+    </div>
+    <div class="column grid-4">
+        <form action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" method="post" novalidate class="form-horizontal">
+            <fieldset>
+                <h5>{{ 'sylius.checkout.security.new_customer'|trans }}</h5>
+                {{ form_widget(registration_form) }}
+            </fieldset>
+            <div class="form-actions">
+                <input type="submit" class="button" value="{{ 'sylius.checkout.security.register'|trans }}" />
+            </div>
+        </form>
+    </div>
+    <div class="column grid-4">
+    <div class="highlight">
+        <p>{{ 'italica.required.fields'|trans({}, 'messages') }}</p>
+    </div>
+    <div class="highlight">
+        <h3>{{ 'italica.why.to.register'|trans({}, 'messages') }}</h3>
+        <ul>
+            <li><p>{{ 'italica.why.to.register.benefit1'|trans({}, 'messages') }}</p></li>
+            <li><p>{{ 'italica.why.to.register.benefit2'|trans({}, 'messages') }}</p></li>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}

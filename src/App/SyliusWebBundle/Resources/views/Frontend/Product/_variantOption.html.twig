@@ -1,0 +1,62 @@
+{% if product.hasVariants %}
+    {% if product.isVariantSelectionMethodChoice %}
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for variant in product.variants if variant.available %}
+                <tr>
+                    <td>
+                        {% if variant.presentation is empty %}
+                        <ul class="unstyled">
+                            {% for option in variant.options %}
+                            <li><strong>{{ option.presentation|trans({}, 'messages') }}</strong>: {{ option.value|trans({}, 'messages') }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            {{ variant.presentation|trans({}, 'messages') }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="label label-success">{{ sylius_calculate_price(variant)|sylius_price }}</span>
+                    </td>
+                    <td>
+                    {% if sylius_inventory_is_available(variant) %}
+                        {{ form_widget(form.variant[loop.index0]) }}
+                    {% else %}
+                        <span class="label label-warning">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+            {{ form_widget(form._token) }}
+        {% else %}
+            <div class="column grid-6">
+                {{ form_widget(form.variant) }}
+                <div>
+                {% if gender and brand %}
+                    <a href="javascript:void(0);" class="modal-show button" style="margin-top:20px;">Size Guide</a>
+               {% endif %}
+               </div>
+            </div>
+            <div class="column grid-6" >
+        {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+        {{ form_widget(form._token) }}
+        </div>
+        {% endif %}
+{% endif %}
+
+{% if not product.hasVariants and sylius_inventory_is_available(product.masterVariant) %}
+    <div class="column grid-12" >
+        {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+        {{ form_widget(form._token) }}
+        </div>
+{% endif %}

@@ -1,11 +1,13 @@
 {% extends 'SyliusWebBundle:Frontend/Account:layout.html.twig' %}
 {% block breadcrumbs %} 
+<div class="breadcrumbs">
 {% trans_default_domain 'menu' %}
 <ul>
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><a href="{{ path("fos_user_profile_edit") }}">{{ 'sylius.frontend.menu.account.profile'|trans }}</a> </li>
+    <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_profile_edit") }}">{{ 'sylius.frontend.menu.account.profile'|trans }}</a> </li>
 </ul>
-
+</div>
 {% endblock %}
 {% block content %}
 <h3>{{ 'sylius.form.frontend.profile.title'|trans }}</h3>

@@ -2,51 +2,41 @@
 
 {% block body %}
 <div class="row">
-    <div class="column grid-12">
-        <div class="home-banner" >
+  <div class="column grid-6 home-banner">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
-</div>
-            <div class="home-banner-nav">
-                <label>{{ 'italica.brands'|trans({}, 'messages') }}</label>
-                <div>
-{{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-        'slug': app.request.locale|default('en') ~ '-brand',
-        'cssClass': "app-navigation-main",
-        'currentPageSlug':kitCmsPage.slug|default(''),
-        'startDepth':1 ,
-        'endDepth':3} )) }}
-         <p class="home-banner-nav-p"><a href="/{{ app.request.locale }}/brands">{{ 'italica.all.brands'|trans({}, 'messages') }}</a></p>
-         </div>
-</div>
-    <div class="home-banner">
+  </div>
+  <div class="column grid-6 home-banner">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
-   </div>
-</div>
+  </div>
 </div>
 <div class="row">
-    <div class="column grid-7">
+    <div class="brand-slider">
+        <div><h2>Prada</h2></div>
+        <div><h2>Gucci</h2></div>
+        <div><h2>Valentino</h2></div>
+        <div><h2>Roxy</h2></div>
+        <div><h2>Rip Curl</h2></div>
+        <div><h2>Coast</h2></div>
+        <div><h2>Hobbs</h2></div>
+        <div><h2>Burberry</h2></div>
+    </div>
+</div>
+<div class="row">
+    <div class="column grid-6">
+    <div class="new-in-link" style="clear:both;"><a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">New Arrivals for Women</a></div>
+    
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'women',
-        'limit':3 } )) }}
+        'limit':6 } )) }}
     </div>
-    <div class="column grid-5">
-    <div class="home-new-in">
-        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-new-in-women'} )) }}
-    </div>
-    </div>
-</div>
-<div class="row">
-    <div class="column grid-5">
-    <div class="home-new-in">
-    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-new-in-men'} )) }}
-    </div>
-    </div>
-    <div class="column grid-7">
+    <div class="column grid-6">
+    <div class="new-in-link" style="clear:both;"><a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">New Arrivals for Men</a></div>
+    
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'men',
-        'limit':3 } )) }}
+        'limit':6 } )) }}
     </div>
     
 </div>

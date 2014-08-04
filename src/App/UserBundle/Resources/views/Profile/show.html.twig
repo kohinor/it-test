@@ -1,10 +1,12 @@
 {% extends 'SyliusWebBundle:Frontend/Account:layout.html.twig' %}
 {% block breadcrumbs %} 
+<div class="breadcrumbs">
 <ul>
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
-    <li><a href="{{ path("sylius_account_homepage") }}">{{ 'sylius.account.title'|trans }}</a> </li>
+    <li><i class="icon-triangle-right"></i> <a href="{{ path("sylius_account_homepage") }}">{{ 'sylius.account.title'|trans }}</a> </li>
 </ul>
-
+</div>
 {% endblock %}
 {% block content %}
 <h3>{{ 'sylius.account.home.welcome'|trans }}</h3>

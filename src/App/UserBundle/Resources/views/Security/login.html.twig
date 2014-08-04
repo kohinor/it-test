@@ -1,11 +1,13 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block breadcrumbs %} 
+<div class="breadcrumbs">
 <ul>
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
+    <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
 </ul>
-
+</div>
 {% endblock %}
 
 {% block fos_user_content %}

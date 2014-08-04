@@ -10,3 +10,43 @@
     RewriteRule ^(.*)$ app_dev.php [QSA,L]
 </IfModule>
 
+
+# 
+# associate .js with "text/javascript" type (if not present in mime.conf)
+# 
+AddType text/javascript .js
+
+# 
+# configure mod_expires
+# 
+# URL: http://httpd.apache.org/docs/2.2/mod/mod_expires.html
+# 
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 seconds"
+    ExpiresByType image/x-icon "access plus 2692000 seconds"
+    ExpiresByType image/jpeg "access plus 2692000 seconds"
+    ExpiresByType image/png "access plus 2692000 seconds"
+    ExpiresByType image/gif "access plus 2692000 seconds"
+    ExpiresByType application/x-shockwave-flash "access plus 2692000 seconds"
+   # ExpiresByType text/css "access plus 2692000 seconds"
+   # ExpiresByType text/javascript "access plus 2692000 seconds"
+    ExpiresByType application/x-javascript "access plus 2692000 seconds"
+    ExpiresByType application/xhtml+xml "access plus 600 seconds"
+</IfModule>
+
+# 
+# configure mod_headers
+# 
+# URL: http://httpd.apache.org/docs/2.2/mod/mod_headers.html
+# 
+<IfModule mod_headers.c>
+    <FilesMatch "\\.(ico|jpe?g|png|gif|swf|css|js)$">
+        Header set Cache-Control "max-age=2692000, public"
+    </FilesMatch>
+    <FilesMatch "\\.(x?html?|php)$">
+        Header set Cache-Control "max-age=600, private, must-revalidate"
+    </FilesMatch>
+    Header unset ETag
+    Header unset Last-Modified
+</IfModule>
