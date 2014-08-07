@@ -29,6 +29,8 @@
     
 {% block breadcrumbs %}
     <div class="breadcrumbs">
+    <div class="row">
+    <div class="column grid-10">
     <ul>
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
@@ -40,6 +42,11 @@
     {% endif %}
     <li><i class="icon-triangle-right"></i> {{ product.translate(app.request.locale).name|default(product.name)|title  }} </li>
     </ul>
+    </div>
+    <div class="column grid-2" style="padding-top:5px;">
+        <a href="javascript:void(0);" class="back">{{ 'Back to the search'| trans({}, 'messages') }} <i class="icon-triangle-right"></i></a>
+    </div>
+    </div>
     </div>
 {% endblock %}
 {% block overlay %}
@@ -109,6 +116,8 @@
                     {% endif %}
                     </div>
                 </div>
+                <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
+                <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
         </div>  
         {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}    
@@ -127,7 +136,13 @@
             $("#sylius_cart_item_variant_leter-size option[value="+this.value+"]").attr('disabled', 'disabled');
         });
         {% for variant in product.getVariants() %}
-            {% if variant.isInStock() %}
+            {% if variant.isAvailableOnDemand() %}
+                {% for option in variant.getOptions() %}
+                    {% if option.presentation == 'Size' %}
+                        $('#sylius_cart_item_variant_leter-size option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');
+                    {% endif %}
+                {% endfor %}
+            {% elseif variant.isInStock() %}
                 {% for option in variant.getOptions() %}
                     {% if option.presentation == 'Size' %}
                         $('#sylius_cart_item_variant_leter-size option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');

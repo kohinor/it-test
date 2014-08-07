@@ -6,6 +6,11 @@ $(document).ready(function(){
             showsubmenu(this, menutabnumber);
         });
     }
+    $('a.back').click(function(){
+        parent.history.back();
+        return false;
+    });
+    
     
 });
 $(document).ready(function(){
@@ -122,6 +127,27 @@ $(document).ready(function(){
                 $('#sylius-billing-address-container').hide();
             }
         });
+        
+    $('#sylius_cart_item_variant select').on('change', function(event){
+        var value = $('select option:selected').text();
+        var slug = $('#product-slug').val();
+        var locale = $('#locale').val();
+        $.ajax({
+            type: 'post',
+            url: '/'+locale+'/product/'+slug+'/stock/',
+            data: {
+                  option: value,
+                  json: 'true'
+                 },
+            dataType: 'json',
+            success: function(data) {
+                if (data.code=='200' ){
+                    $('#product-stock').html(data.html);
+                }
+            }
+        });
+        return false;
+    });
 });
 
 $(document).ready(function() {

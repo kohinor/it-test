@@ -1,3 +1,27 @@
 parameters:
   sylius.menu_builder.frontend.class: App\SyliusWebBundle\Menu\FrontendMenuBuilder
   sylius.menu_builder.backend.class: App\SyliusWebBundle\Menu\BackendMenuBuilder
+
+sylius_product:
+    driver: doctrine/orm
+    classes:
+        product:
+            model: App\SyliusProductBundle\Entity\Product
+            form: App\SyliusProductBundle\Form\Type\ProductType
+            repository: App\SyliusProductBundle\Entity\ProductRepository
+            
+sylius_variation:
+    classes:
+        product:
+          variant:
+              model: App\SyliusProductBundle\Entity\ProductVariant
+              form: App\SyliusProductBundle\Form\Type\ProductVariantType
+
+sylius_cart:
+    classes:
+        item:
+            controller: App\CartBundle\Controller\CartItemController
+
+sylius_inventory:
+    backorders: false
+    track_inventory: true

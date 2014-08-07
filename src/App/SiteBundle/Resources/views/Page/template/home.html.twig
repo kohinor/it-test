@@ -2,41 +2,61 @@
 
 {% block body %}
 <div class="row">
-  <div class="column grid-6 home-banner">
+  <div class="column grid-5 home-banner">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
   </div>
-  <div class="column grid-6 home-banner">
+  <div class="column grid-2" style="text-align: center;">
+      <div style="border-left:1px dashed #d1d1d1; border-right:1px dashed #d1d1d1;">
+      <div><img src="/img/hugo-boss-logo.png" width="100px"></div>
+      <div><img src="/img/hermes-logo.png" width="100px"></div>
+      <div><img src="/img/versace-jeans-logo.png" width="100px"></div>
+      </div>
+  </div>
+  <div class="column grid-5 home-banner">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
   </div>
 </div>
 <div class="row">
     <div class="brand-slider">
-        <div><h2>Prada</h2></div>
-        <div><h2>Gucci</h2></div>
-        <div><h2>Valentino</h2></div>
-        <div><h2>Roxy</h2></div>
-        <div><h2>Rip Curl</h2></div>
-        <div><h2>Coast</h2></div>
-        <div><h2>Hobbs</h2></div>
-        <div><h2>Burberry</h2></div>
+        <div><img src="/img/burberry-logo.png" width="150px"></div>
+        <div><img src="/img/calvin-klein-logo.png" width="150px"></div>
+        <div><img src="/img/chanel-logo.png" width="150px"></div>
+        <div><img src="/img/gucci-logo.png" width="150px"></div>
+        <div><img src="/img/louis-vuitton-logo.png" width="150px"></div>
+        <div><img src="/img/marc-jacobs-logo.png" width="150px"></div>
+        <div><img src="/img/michael-kors-logo.png" width="150px"></div>
+        <div><img src="/img/roberto-cavalli-logo.png" width="150px"></div>
+        <div><img src="/img/valentino-logo.png" width="150px"></div>
     </div>
 </div>
-<div class="row">
-    <div class="column grid-6">
-    <div class="new-in-link" style="clear:both;"><a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">New Arrivals for Women</a></div>
-    
+<div class="row" style="margin-top:15px;">
+    <div class="column grid-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'women',
-        'limit':6 } )) }}
+        'limit':4 } )) }}
     </div>
-    <div class="column grid-6">
-    <div class="new-in-link" style="clear:both;"><a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">New Arrivals for Men</a></div>
-    
+    <div class="column grid-3">
+        <div class="new-in-link">
+            <br /><br /><br /><br />
+            <a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">
+                <p>New Arrivals</p><p> for</p><p> Women</p></a>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:15px;">
+    <div class="column grid-3">
+    <div class="new-in-link">
+        <br /><br /><br /><br />
+        <a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">
+            <p>New Arrivals</p><p> for</p><p> Men</p></a>
+    </div>
+    </div>
+    <div class="column grid-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'men',
-        'limit':6 } )) }}
+        'limit':4 } )) }}
     </div>
     
 </div>

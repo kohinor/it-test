@@ -2,6 +2,10 @@ app_site_product:
     pattern:  /product/{slug}
     defaults: { _controller: AppSyliusProductBundle:Product:getProduct }
     
+app_site_product_stock:
+    pattern:  /product/{slug}/stock/
+    defaults: { _controller: AppSyliusProductBundle:Product:getProductStock } 
+    
 app_site_product_group_list:
     pattern:  /administration/product-group
     defaults: { _controller: AppSyliusProductBundle:ProductGroup:getGroupsList }

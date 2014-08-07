@@ -18,7 +18,7 @@ class SolrSearchController extends Controller
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         $query->setRows($limit);
         
-        $key =  implode('-', $facets);
+        $key =  implode('-', $facets).$limit;
         $cache   = $this->container->get('doctrine_cache.providers.file_cache');
         $resultset = $cache->fetch($key);
         if (!$resultset) {

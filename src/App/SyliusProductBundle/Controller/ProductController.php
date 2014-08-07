@@ -71,4 +71,34 @@ class ProductController extends Controller
         }
         return $this->render('AppSyliusProductBundle:Product:last-visited.html.twig', array('locale' => $request->attributes->get('_locale'),'products' =>  $products ));
     }
+    
+    public function getProductStockAction($slug)
+    {
+        $repository = $this->container->get('sylius.repository.product');
+        $product = $repository->findOneBy(array('slug' => $slug)); 
+        if (!$product) {
+            return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 404), 404);
+        }
+        $availableOnDemand = false;
+        foreach ($product->getVariants() as $variant) {
+            foreach ($variant->getOptions() as $option) {
+                if ($option->getValue() == $this->get('request')->request->get('option')) {
+                    $availableOnDemand = $variant->isAvailableOnDemand();
+                    if ($variant->getOnHand() > 1) {
+                        $html = $variant->getOnHand().' '.$this->get('translator')->trans('items in stock');
+                    } else if($variant->getOnHand() == 1) {
+                        $html = $this->get('translator')->trans('Only one item left');
+                    }
+                    if ($variant->getOnHand() > 0) {
+                        return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 200, 'html' => $html), 200);
+                    }
+                }
+            }
+        }
+        $html = '<span style="color:#c60105;">'.$this->get('translator')->trans('The item is sold out').'</span>';
+        if ($availableOnDemand) {
+            $html .= '<br /><br />'. $this->get('translator')->trans('You still can pre-order this item');
+        }
+        return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 200, 'html' => $html), 200);
+    }
 }

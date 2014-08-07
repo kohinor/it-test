@@ -3,7 +3,7 @@
         <img  src="{{ product.image ? product.image.path|imagine_filter('home') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
     </a>       
     <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><span class="online-title">{{ product.translate(locale|default('en')).name|default(product.name) }}</span></a></div>
-    <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"></div>
+    <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
         {% if product.rrp > product.price %}
             <div>
             <span class="old-price" >{{product.rrp|sylius_price }}</span>
@@ -13,4 +13,5 @@
             <div class="online-price" >{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</div>
         {% endif %}
     </a>
+    <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}" class="small-button-buy">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
 </div>

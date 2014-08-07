@@ -127,7 +127,9 @@
         {% if item == 0 %}
             <div class="row" >
         {% endif %}
+        <div class="product-box grid-3" >
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
+        </div>
         {% set item = item+1 %}
         {% if item == 4 %}
             </div>
