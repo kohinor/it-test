@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.skinNice.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.css"/>
-    <link rel="stylesheet" href="//bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" type="text/css" />
             
     {% block stylesheets %}{% endblock %}
     {% block kitpages_cms_stylesheets %}{% endblock %}
@@ -28,25 +28,35 @@
   {% block kitpages_cms_toolbar %}{% endblock %}
   <div class="modal" style="display:none;z-index:9999">{% block overlay %}{% endblock %}</div>
   <div class="topbar" >
-    <h5>{{ 'top.site.promotion'|trans }}</h5>
+      <div class="container">
+          <div class="row">
+              <div class="column grid-3">
+                  <div id="top-links" style="text-align:left">
+                  {% if app.user %}
+                    <span><i class="icon-user"></i> <a href="{{ path('fos_user_profile_show') }}">{{ 'italica.account'|trans({}, 'messages') }}</a> | 
+                    <i class="icon-signout"></i> <a href="{{ path('fos_user_security_logout') }}">{{ 'italica.logout'|trans({}, 'messages') }}</a></span>
+                  {%else%}
+                    <span><i class="icon-signin"></i> <a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
+                    <i class="icon-user"></i> <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
+                  {% endif %}
+                  </div>
+              </div>
+              <div class="column grid-5">&nbsp;
+              </div>
+              <div class="column grid-4">
+                  <div id="top-links" style="text-align:right">
+                    {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+                    <span><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
   <div id="head">
     <div class="container">
       <div class="row">
         <div class="column grid-4">
           <div id="top-promo">{{ 'welcome.message'|trans }}</div>
-          <div id="top-registration">
-            {% if app.user %}
-              <span><i class="icon-user"></i> <a href="{{ path('fos_user_profile_show') }}">{{ 'italica.account'|trans({}, 'messages') }}</a> | 
-              <i class="icon-signout"></i> <a href="{{ path('fos_user_security_logout') }}">{{ 'italica.logout'|trans({}, 'messages') }}</a></span>
-            {%else%}
-              <span><i class="icon-signin"></i> <a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}">{{ 'italica.login'|trans({}, 'messages') }}</a> |
-              <i class="icon-user"></i> <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.register'|trans({}, 'messages') }}</a></span>
-            {% endif %}
-          </div>
-          <div id="top-facebook">
-            <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fshopitalica.com&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;appId=470003536403147" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
-          </div>
         </div>
         <div class="column grid-4">
           <div id="logo">
@@ -55,10 +65,6 @@
           </div>  
         </div>
         <div class="column grid-4">
-          <div id="top-links">
-            {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
-            <span><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a> | <a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></span>
-          </div>
           <div id="mini-basket">
             {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}	
           </div>
@@ -169,8 +175,7 @@
   <script defer type="text/javascript">var switchTo5x=true;</script>
   <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
   <script type="text/javascript">stLight.options({publisher: "f95283f4-a8a1-48ac-85ff-d2fc2e213be5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-  <script async type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-  <script asyn type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script asyn type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script asyn type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script asyn type="text/javascript" src="/slick/slick.min.js"></script>
   <script asyn type="text/javascript" src="/js/ion.rangeSlider.min.js"></script>

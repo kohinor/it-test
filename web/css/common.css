@@ -367,20 +367,13 @@ table tbody tr:nth-child(odd) td {
 }
 
 #logo {
-    padding-top: 40px;
+    padding: 20px;
     text-align: center; }
 
 #logo h1, #logo h4 {
     margin-bottom: 0em;
     letter-spacing: 4px;
 }
-
-#top-links {
-padding-top:15px;
-font-size: 11px;
-text-align: right;
-text-transform: uppercase;
-letter-spacing: 1px;}
 
 #top-links li {
     float: left;
@@ -403,8 +396,6 @@ letter-spacing: 1px;}
     margin: 0;
     padding-left: 40px;
 }
-#top-links span {
-    margin-left: 32px; }
 
 
 /* search */
@@ -452,8 +443,8 @@ letter-spacing: 1px;}
 
 #top-promo {
     font-size: 1.2em;
-    letter-spacing: 3px;
-    padding-top: 15px;
+    letter-spacing: 1px;
+    padding: 20px;
     text-align: left;
     text-transform: uppercase;
 }
