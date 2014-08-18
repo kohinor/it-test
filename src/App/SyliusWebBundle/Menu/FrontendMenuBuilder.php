@@ -41,7 +41,7 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
     {
         $menu = $this->factory->createItem('root', array(
             'childrenAttributes' => array(
-                'class' => 'nav nav-pills'
+                'class' => 'nav'
             )
         ));
 
@@ -57,8 +57,8 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.main.cart', array(
                 '%items%' => $cartTotals['items'],
                 '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
-            ))),
-            'labelAttributes' => array('icon' => 'icon-shopping-cart icon-large')
+            )), 'class' => 'btn btn-danger'),
+            'labelAttributes' => array('icon' => 'fa fa-shopping-cart')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],
             '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
@@ -106,4 +106,29 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
 
         return $menu;
     }
+    
+    /**
+     * Builds frontend currency menu.
+     *
+     * @return ItemInterface
+     */
+    public function createCurrencyMenu()
+    {
+        $menu = $this->factory->createItem('root', array(
+            'childrenAttributes' => array(
+                'class' => 'nav navbar-nav'
+            )
+        ));
+
+        foreach ($this->exchangeRateRepository->findAll() as $exchangeRate) {
+            $menu->addChild($exchangeRate->getCurrency(), array(
+                'route' => 'sylius_currency_change',
+                'routeParameters' => array('currency' => $exchangeRate->getCurrency()),
+                'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.currency', array('%currency%' => $exchangeRate->getCurrency()))),
+            ))->setLabel(Intl::getCurrencyBundle()->getCurrencySymbol($exchangeRate->getCurrency()));
+        }
+
+        return $menu;
+    }
+
 }

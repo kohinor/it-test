@@ -1,0 +1,27 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block breadcrumbs %} 
+<ul class="breadcrumb" style="margin-bottom:0">
+    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
+    <li><i class="icon-triangle-right"></i> <a href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }}</a> </li>
+</ul>
+{% endblock %}
+
+{% block fos_user_content %}
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="col-lg-12">
+<form class="form-horizontal" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+  <fieldset>  
+        {% if invalid_username is defined %}
+            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        {% endif %}
+   <div class="form-group" >
+        <label for="username">{{ 'resetting.request.username'|trans }}</label>
+        <input type="text" id="username" name="username" required="required" />
+        <button type="submit" class="btn btn-primary btn-sm">{{ 'resetting.request.submit'|trans }}</button>
+    </div>
+  </fieldset>
+</form>
+</div>
+{% endblock fos_user_content %}

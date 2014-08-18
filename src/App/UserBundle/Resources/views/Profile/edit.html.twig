@@ -1,22 +1,26 @@
 {% extends 'SyliusWebBundle:Frontend/Account:layout.html.twig' %}
 {% block breadcrumbs %} 
-<div class="breadcrumbs">
 {% trans_default_domain 'menu' %}
-<ul>
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
     <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_profile_edit") }}">{{ 'sylius.frontend.menu.account.profile'|trans }}</a> </li>
 </ul>
-</div>
 {% endblock %}
 {% block content %}
-<h3>{{ 'sylius.form.frontend.profile.title'|trans }}</h3>
-{% trans_default_domain 'FOSUserBundle' %}
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
+<form class="form-horizontal" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
     <fieldset>
+        <legend>{{ 'sylius.form.frontend.profile.title'|trans }}</legend>
         {{ form_widget(form) }}
     </fieldset>
     {{ form_rest(form) }}
-    <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        {% trans_default_domain 'FOSUserBundle' %}
+        <button type="submit" class="btn btn-primary btn-sm">{{ 'profile.edit.submit'|trans }}</button>
+      </div>
+    </div>
+        
+    </div>
 </form>
 {% endblock content %}

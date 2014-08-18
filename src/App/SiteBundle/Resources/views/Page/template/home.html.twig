@@ -1,18 +1,38 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 
+{% block breadcrumbs %}
+    <div class="row">
+  <div class="col-lg-4">
+  <div class="panel panel-default">
+    <div class="panel-body text-center text-primary"> 10% off on selected items </div>
+  </div>
+  </div>
+  <div class="col-lg-4">
+  <div class="panel panel-default">
+    <div class="panel-body text-center text-primary"> Free delivery on all orders </div>
+  </div>
+  </div>
+  <div class="col-lg-4">
+  <div class="panel panel-default">
+    <div class="panel-body text-center text-primary"> 15% off on more than 5 items </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
 {% block body %}
+
 <div class="row">
-  <div class="column grid-5 home-banner">
+  <div class="col-lg-5">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
   </div>
-  <div class="column grid-2" style="text-align: center;">
+  <div class="col-lg-2" style="text-align: center;">
       <div style="border-left:1px dashed #d1d1d1; border-right:1px dashed #d1d1d1;">
       <div><img src="/img/hugo-boss-logo.png" width="100px"></div>
       <div><img src="/img/hermes-logo.png" width="100px"></div>
       <div><img src="/img/versace-jeans-logo.png" width="100px"></div>
       </div>
   </div>
-  <div class="column grid-5 home-banner">
+  <div class="col-lg-5">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
   </div>
 </div>
@@ -30,29 +50,35 @@
     </div>
 </div>
 <div class="row" style="margin-top:15px;">
-    <div class="column grid-9">
+    <div class="col-lg-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'women',
         'limit':4 } )) }}
     </div>
-    <div class="column grid-3">
-        <div class="new-in-link">
-            <br /><br /><br /><br />
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-body text-center">
+            <br /><br /><br />
             <a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">
                 <p>New Arrivals</p><p> for</p><p> Women</p></a>
+            <br /><br /><br />
+            </div>
         </div>
     </div>
 </div>
 <div class="row" style="margin-top:15px;">
-    <div class="column grid-3">
-    <div class="new-in-link">
-        <br /><br /><br /><br />
+    <div class="col-lg-3">
+    <div class="panel panel-default">
+         <div class="panel-body text-center">
+        <br /><br /><br />
         <a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">
             <p>New Arrivals</p><p> for</p><p> Men</p></a>
+        <br /><br /><br />
+        </div>
     </div>
     </div>
-    <div class="column grid-9">
+    <div class="col-lg-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
         'request': app.request,
         'gender':'men',

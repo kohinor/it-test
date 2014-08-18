@@ -10,13 +10,11 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<ul>
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
     <li><i class="icon-triangle-right"></i> {{ 'sylius.account.address.create'|trans }} </li>
 </ul>
-</div>
 {% endblock %}
     
 {% block content %}

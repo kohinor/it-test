@@ -11,8 +11,7 @@
     {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
 {% block breadcrumbs %}  
-<div class="breadcrumbs">
-<ul>
+<ul class="breadcrumb" style="margin-bottom:0">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
@@ -51,7 +50,6 @@
         <li><i class="icon-triangle-right"></i> {{ 'Search'|trans({}, 'messages') }} </li>    
     {% endif %}
 </ul>
-</div>
 {% endblock %}
 
 

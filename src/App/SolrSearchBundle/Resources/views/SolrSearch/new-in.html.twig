@@ -1,5 +1,5 @@
 {% for article in results %}
-    <div class="product-box grid-3" >
+    <div class="col-lg-3 text-center" >
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': locale , 'article': article }%}
     </div>   
 {% endfor %}

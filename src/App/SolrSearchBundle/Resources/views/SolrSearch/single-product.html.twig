@@ -8,11 +8,11 @@
 <div><span class="online-title">{{ title }}</span></div>
 {% if article.rrp|default(0) > article.price %}
     <div>
-    <span class="old-price" >{{article.rrp|sylius_price }}</span>
-    <span class="sale-price" >{{article.price|sylius_price }}</span>
+    <span class="" ><strike>{{article.rrp|sylius_price }}</strike></span>
+    <span class="text-primary" ><strong>{{article.price|sylius_price }}</strong></span>
     </div>
 {% else %}
-    <div class="online-price" >{{article.price|sylius_price }}</div>
+    <div class="text-primary" ><strong>{{article.price|sylius_price }}</strong></div>
 {% endif %}
-<div><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="small-button-buy">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
+<div><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="btn btn-sm btn-primary">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
     

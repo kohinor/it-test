@@ -1,13 +1,27 @@
-{% if navigation %}<ul {% if root %} class="{{navigationCssClass}}" {% endif %} >
+{% if navigation %}
+<ul class=" nav{% if root %} {{navigationCssClass}} {% if navigation|length >0 and level is defined and level == 3 %} dropdown-menu{% endif %} {% endif %}">
     {# warning, don't split for and <li> in 2 lines. It removes spaces between two <li> then we can use display: inline-block;#}
-    {% for navigationElem in navigation %}<li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%}navigation-level{{navigationElem.level}} navigation-slug-{{navigationElem.slug}} not-select not-current">
+    {% for navigationElem in navigation %}
+        <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
+        {% if navigationElem.children|length > 0 and navigationElem.level == 3 %}    
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                {{navigationElem.title}}
+                <b class="caret"></b>
+            </a>
+        {% else %}
             {% if navigationElem.url == '' %}
-                <div class="navigation-nolink">{{navigationElem.title}}</div>
+                <div >{{navigationElem.title}}</div>
             {% else %}
                 <a href="{{navigationElem.url}}" >{{navigationElem.title}}</a>
             {% endif %}
-            {% include 'AppKitPagesBundle:Nav:navigation.html.twig' with {'navigation': navigationElem.children, 'navigationSlug':navigationSlug, 'root':false } %}
-        </li>{% endfor %}
+        {% endif %}
+            {% if navigationElem.level < 4 %}
+              {% include 'AppKitPagesBundle:Nav:navigation.html.twig' with {'navigation': navigationElem.children, 'navigationSlug':navigationSlug, 'root':true, 'navigationCssClass': navigationCssClass, 'level': navigationElem.level } %}
+            {% else %}
+                {% include 'AppKitPagesBundle:Nav:navigation.html.twig' with {'navigation': navigationElem.children, 'navigationSlug':navigationSlug, 'root':false, 'navigationCssClass': navigationCssClass, 'level': navigationElem.level } %}
+            {% endif %}
+        </li>
+    {% endfor %}
 </ul>
 {%endif%}
 
