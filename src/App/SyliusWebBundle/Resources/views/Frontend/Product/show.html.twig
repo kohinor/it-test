@@ -28,25 +28,21 @@
 {% endblock %}
     
 {% block breadcrumbs %}
-    <div class="breadcrumbs">
-    <div class="row">
-    <div class="column grid-10">
-    <ul>
+    <div class="col-lg-10">
+    <ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
     {% if gender %}
-        <li><i class="icon-triangle-right"></i> <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> </li>
-        <li><i class="icon-triangle-right"></i> <a href="{{ path('app_solr_search_gender_brand', {'gender':gender, 'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
+        <li><a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> </li>
+        <li><a href="{{ path('app_solr_search_gender_brand', {'gender':gender, 'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
     {% else %}
-        <li><i class="icon-triangle-right"></i> <a href="{{ path('app_solr_search_brand', {'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
+        <li><a href="{{ path('app_solr_search_brand', {'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
     {% endif %}
-    <li><i class="icon-triangle-right"></i> {{ product.translate(app.request.locale).name|default(product.name)|title  }} </li>
+    <li>{{ product.translate(app.request.locale).name|default(product.name)|title  }} </li>
     </ul>
     </div>
-    <div class="column grid-2" style="padding-top:5px;">
-        <a href="javascript:void(0);" class="back">{{ 'Back to the search'| trans({}, 'messages') }} <i class="icon-triangle-right"></i></a>
-    </div>
-    </div>
+    <div class="col-lg-2" style="padding-top:5px;">
+        <a href="javascript:void(0);" class="back">{{ 'Back to the search'| trans({}, 'messages') }} <i class="fa fa-arrow-right"></i></a>
     </div>
 {% endblock %}
 {% block overlay %}
@@ -56,72 +52,75 @@
 {% endblock %}
 {% block body %}
 <div class="row">
-    <div class="column grid-5">   
+    <div class="col-lg-5">   
     <div class="row">
-        <div class="column grid-2">
+        <div class="col-lg-2">
             {% if product.images|length > 0 %}
             <div class="tmb-caption">
                 {% for image in product.images %}
                     <div class="wp-caption">
-                        <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
+                        <img class="thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
                     </div>
                 {% endfor %}
             </div>
             {% endif %}
         </div>
-        <div class="column grid-10">
-            <img  class="container" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+        <div class="col-lg-10">
+            <img class="container" style="padding:0; margin:0; width:300px;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
         </div>
     </div>
     <div class="row">
-        <div class="column grid-12" style="border-top:1px dashed #d1d1d1;">
-            <div class="title">{{ 'Other Options'|trans({}, 'messages') }}</div>
+        <div class="col-lg-12">
+            <h4 class="title">
+                <span class="text">{{ 'Other'|trans({}, 'messages') }} <b>{{ 'Options'|trans({}, 'messages') }}</b></span>
+            </h4>
             {{ render(controller( 'AppSyliusProductBundle:Product:getProductsByGroup', {
             'request': app.request,
             'groupId': product.getGroup().id} )) }}
         </div>
     </div>   
     </div>    
-        <div class="column grid-7">
-          <div class="product-info">
-            <span class="brand-title">{{ brand }}</span>
-            <br style="clear:both" />
-            <h3 style="text-align:left;" class="no-transform">{{ product.translate(app.request.locale).name|default(product.name) }}</h3>
-            <div class="product-short-description">
+        <div class="col-lg-7">
+            <span class="brand-label">{{ brand }}</span>
+            <h3  class="no-transform">{{ product.translate(app.request.locale).name|default(product.name) }}</h3>
+               
                 <p>{{ product.translate(app.request.locale).shortDescription|default(product.shortDescription)|raw }}</p>
-            </div>
-            <div class="product-price">
+            <div class="row">
+                <div class="col-lg-7"></div>
+            <div class="col-lg-5">
+                <p >
                 {% if product.rrp > product.price %}
-                    <div class="old-price">{{ 'RRP'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
-                    <div>{{ 'Shop Price'|trans({}, 'messages') }}: <span>{{product.price|sylius_price }}</span></div>
+                    <div >{{ 'RRP'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
+                    <div>{{ 'Shop Price'|trans({}, 'messages') }}: <span><b>{{product.price|sylius_price }}</b></span></div>
                 {% else %}
-                    {{ 'Shop Price'|trans({}, 'messages') }}: <span class="online-price">{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</span> 
+                    {{ 'Shop Price'|trans({}, 'messages') }}: <span><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
                 {% endif %}
+            </p>
             </div>
-            <div class="product-form">
-                <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
-                <div class="row">  
-                    <div class="column grid-8">
+            </div>
+            <div class="well panel panel-default">
+            <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
+                <fieldset>  
                     {% include 'AppSyliusWebBundle:Frontend/Product:_variantOption.html.twig' %}
-                    </div>
-                    <div class="column grid-4">
+                    <div class="form-group">
                     {% if not product.hasVariants and not sylius_inventory_is_available(product.masterVariant) %}
                         <span class="label label-warning">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
                     {% else %}
+                        <div class="col-lg-9 col-lg-offset-3">
                         {% if sylius_is_restricted(product) %}
-                        <button disabled="disabled" class="button-buy"><i class="icon-shopping-cart icon-white icon-large"></i> {{ 'sylius.product_not_available_in_zone'|trans({}, 'messages') }}</button>
+                        <button disabled="disabled" class="btn btn-danger"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.product_not_available_in_zone'|trans({}, 'messages') }}</button>
                         {% else %}
-                            <button type="submit" class="button-buy"><i class="icon-shopping-cart icon-white icon-large"></i> {{ 'sylius.add_to_cart'|trans({}, 'messages') }}</button>
+                            <button type="submit" class="btn btn-danger "><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.add_to_cart'|trans({}, 'messages') }}</button>
                         {% endif %}
+                        </div>
                     {% endif %}
                     </div>
-                </div>
+                </fieldset>
                 <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
                 <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
         </div>  
-        {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}    
-      </div>      
+        {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}        
     </div>
     </div>
 {{ render(controller( 'AppSyliusProductBundle:Product:getLastVisited', {'request': app.request} )) }}

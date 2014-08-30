@@ -39,25 +39,23 @@
             {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
             {{ form_widget(form._token) }}
         {% else %}
-            <div class="column grid-6">
+        <div class="row">
+        <div class="col-lg-8">
                 {{ form_widget(form.variant) }}
-                <div>
+                {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+                {{ form_widget(form._token) }}
+        </div>
+        <div class="col-lg-4">
                 {% if gender and brand %}
-                    <a href="javascript:void(0);" class="modal-show button" style="margin-top:20px;">Size Guide</a>
+                    <a href="javascript:void(0);" class="modal-show btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Size Guide</a>
                {% endif %}
-               </div>
-            </div>
-            <div class="column grid-6" >
-        {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
-        {{ form_widget(form._token) }}
-                    <div id="product-stock" ></div>
+               <div id="product-stock" class="panel-body"></div>
+        </div>
         </div>
         {% endif %}
 {% endif %}
 
 {% if not product.hasVariants and sylius_inventory_is_available(product.masterVariant) %}
-    <div class="column grid-12" >
         {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
         {{ form_widget(form._token) }}
-        </div>
 {% endif %}

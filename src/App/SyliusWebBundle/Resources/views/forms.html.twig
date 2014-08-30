@@ -1,22 +1,22 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block choice_widget_collapsed %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control input-sm'}) %}
 {{ parent() }}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control input-sm'}) %}
 {{ parent() }}
 {% endblock textarea_widget %}
 
 {% block form_widget_simple %}
 {% spaceless %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control input-sm'}) %}
     {% set type = type|default('text') %}
 
     {% if 'file' == type %}
-        <span class="btn-primary btn-lg file-overlay"><i class="icon-folder-open"></i> {{ 'sylius.form.choose_file'|trans }}</span>
+        <span class="btn-primary file-overlay"><i class="fa fa-folder-open"></i> {{ 'sylius.form.choose_file'|trans }}</span>
     {% endif %}
     {{ parent() }}
 {% endspaceless %}
@@ -24,14 +24,14 @@
 
 {% block form_label %}
 {% spaceless %}
-    {% set label_attr = label_attr|merge({'class': label_attr.class|default('col-lg-2') ~ ' control-label'}) %}
+    {% set label_attr = label_attr|merge({'class': label_attr.class|default('col-lg-3') ~ ' control-label'}) %}
     {{ parent() }}
 {% endspaceless %}
 {% endblock form_label %}
 
 {% block money_widget %}
 {% spaceless %}
-    <div class="input-group">
+    <div class="input-group  input-group-sm">
         <span class="input-group-addon">{{ money_pattern|replace({'{{ widget }}': ''}) }}</span>
         {{ block('form_widget_simple') }}
     </div>
@@ -40,7 +40,7 @@
 
 {% block percent_widget %}
 {% spaceless %}
-    <div class="input-group">
+    <div class="input-group  input-group-sm">
         <span class="input-group-addon">%</span>
         {{ block('form_widget_simple') }}
     </div>
@@ -89,7 +89,7 @@
 {% spaceless %}
     <div class="form-group{% if errors|length > 0 %} has-error{% endif %}">
         {{ form_label(form) }}
-        <div class="col-lg-10">
+        <div class="col-lg-9">
         {{ form_widget(form) }}
         {% for error in errors %}
             <span class="help-block form-error">
@@ -132,40 +132,3 @@
         </div>
     {% endspaceless %}
 {% endblock %}
-            
-{% block a2lix_translations_widget %}
-    <div class="multilanguage-form-container">
-        {% set locales = form.vars.locales %}
-        {% if fields is defined %}
-            {% set locales = form.vars.default_locale|merge(locales) %}
-        {% endif %}
-        {% if locales|length > 1 %}
-            <ul class="nav nav-tabs">
-                {% for locale in locales %}
-                    <li {% if loop.first %}class="active"{% endif %}><a href="#{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
-                {% endfor %}
-            </ul>
-            <div class="tab-content">
-                {% for locale in locales %}
-                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="{{ locale }}">
-                        {% if (fields is defined) and (form.vars.default_locale[0] == locale) %}
-                            {% for field in fields %}
-                                {{ form_row(field) }}
-                            {% endfor %}
-                        {% else %}
-                            {% for translationsLocale in form if (translationsLocale.vars.name == locale) %}
-                                {{ form_widget(translationsLocale) }}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% elseif (fields is defined) %}
-            {% for field in fields %}
-                {{ form_row(field) }}
-            {% endfor %}
-        {% endif %}
-    </div>
-{% endblock %}
-
-

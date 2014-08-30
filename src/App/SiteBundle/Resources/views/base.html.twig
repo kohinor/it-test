@@ -11,13 +11,13 @@
     <meta name="author" content="{{ kitCmsPageData.root.author|default("") }}">
     <meta name="keywords" content="{{ kitCmsPageData.root.metaKeywords|default("") }}{% block keywords %}{% endblock %}">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">     
     <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.skinNice.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.css"/>
     <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css" />
             
     {% block stylesheets %}{% endblock %}
     {% block kitpages_cms_stylesheets %}{% endblock %}
@@ -25,10 +25,11 @@
 
 <body>
   {% block kitpages_cms_toolbar %}{% endblock %}
-  <div class="navbar navbar-default navbar-fixed-top">
+  <header class="navbar navbar-static-top" style="box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3); background:#242424;">
+        <div class="container">
         <div class="navbar-collapse collapse" id="navbar-main">
-                  <div class="container">
-            <div class="col-lg-3">
+          <div class="col-lg-5 col-md-5 col-sm-5">  
+            <div class="col-lg-6 col-md-5 col-sm-5">
             <ul class="nav nav navbar-nav">
             {% if app.user %}
                 <li> <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> {{ 'italica.account'|trans({}, 'messages') }}</a> </li>
@@ -39,43 +40,61 @@
               {% endif %}
             </ul>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-6 col-md-6 col-sm-6">
             <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:5px">
               <div class="input-group">
-                <input class="form-control  input-sm" name="term" placeholder="Find products by name" type="text">
+                <input class="form-control  input-sm" name="term" placeholder="Find product" type="text">
               <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
             </div>
             </form>
               </div>
-            <div class="col-lg-2">
+           </div>
+           <div class="col-lg-7 col-md-7 col-sm-7">
+            <div class="col-lg-3 col-md-3 col-sm-3">
               {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-4 col-md-4 col-sm-4">
             <ul class="nav navbar-nav">
             <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
             <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
           </ul>
           </div>
-            <div class="col-lg-2">
+            <div class="col-lg-5 col-md-5 col-sm-5">
               {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
             </div>
         </div>
+        </div>
       </div>
-    </div>
-  <div class="container">
-      <div class="page-header" style='background: radial-gradient(ellipse farthest-corner at center center , rgba(255, 255, 255, 0.6) 0%, #fcfcfc 75%) repeat scroll 0px 0%, url("/img/bg.jpg") repeat scroll 0px 0px transparent;'>
-        <div class="row" >
-          <div class="col-lg-4"><p><br/></p><p class="text-center" >{{ 'welcome.message'|trans }}</p></div>
+    </header>
+    <div style="  margin-bottom:50px;background: none repeat scroll 0 0 #fff;box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2); border-radius:10px;" class="container">
+            
+        <div class="page-header" >
+          
+          <div class="row" >
+          <div class="col-lg-4">
+                  <h4 class="text-center  text-uppercase" >{{ 'welcome.message'|trans }}</h4></div>
           <div class="col-lg-4 text-center" style='margin-bottom:0px;'>
             <h1 class="text-uppercase text-danger" style="margin-bottom:0px;letter-spacing: 3px;"><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
             <p class="lead" class="letter-spacing: 1px;">{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</p>
           </div>
-          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+    <div class=" text-center"> <strong>15% off on more than 5 items</strong></div>
+    <hr />
+    <div class=" text-center"><strong>Free Delivery on all orders</strong> </div>
+        
+                  
+              </div>
         </div>
   
-            <div class="bs-component">
-              <div class="navbar navbar-default panel panel-default">
-                  <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <div class="row">
+              
+              <div class="navbar navbar-default" style="border-color: #eb4800;
+    border-left: 0 none;
+    border-radius: 0;
+    border-right: 0 none;
+    border-width: 0 0 5px;
+">
+                  <div class="navbar-collapse collapse navbar-responsive-collapse" style="padding:0px;">
                       {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
                         'slug': app.request.locale|default('en') ~ '-main',
                         'cssClass': "navbar-nav",
@@ -84,21 +103,26 @@
                         'endDepth':3} )) }}
                   
                   </div>
-                
+    
                 
               </div>
             </div>
             <div class="row">
             {% block breadcrumbs %}{% endblock %}
             </div>
-</div>
+        </div>
   
         
-        
-  <div class="modal" style="display:none;z-index:9999">{% block overlay %}{% endblock %}</div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        {% block overlay %}{% endblock %}
+    </div>
+  </div>
+</div>   
    
-    <div class="bs-docs-section">
       <div class="row">
+      <div class="col-lg-12">
       {% block flashes %}
         {% for type in ['success', 'error', 'fos_user_success'] %}
           {% for flash in app.session.flashbag.get(type) %}
@@ -109,13 +133,16 @@
           {% endfor %}
         {% endfor %}
       {% endblock %}
-      {% block body %}{% endblock %}
       </div>
-    </div>
+      </div>
+      {% block body %}{% endblock %}
+      
   
-  <div id="footer"  class="bs-docs-section">
-    <div class="row page-header" style="border-top:1px dashed #ccc; padding-top:10px;" >
-      <div class="row">
+  <div class="page-footer" style="margin-top:25px;">
+      <div class="row" style="background: none repeat scroll 0 0 #242424;
+    border-top: 5px solid #eb4800;
+    color: #fff;
+">
         <div class="col-lg-6">
           <div id="nav-foot">
             {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
@@ -125,7 +152,8 @@
 
           </div>
         </div>
-        <div class="col-lg-2" style="border-right:1px dashed #ccc; border-left: 1px dashed #ccc;">
+        <div class="col-lg-2 " style="border-right: 1px dashed #eb4800;border-left: 1px dashed #eb4800;">
+          <div class="row">
           <div class="col-lg-12">
           <h4>Follow Us</h4> 
           <ul class="nav navbar-nav">
@@ -136,18 +164,25 @@
             <li><a href="#"><i class="fa fa-linkedin fa-lg"></i></a></li>
           </ul>
           </div>
-          <div class="col-lg-12" style="border-top:1px dashed #ccc; padding-top:15px;">
+          </div>
+          <div class="row" style="border-top: 1px dashed #eb4800;">
+            <div class="col-lg-12">
             <h4>Call Us</h4>
             <p>+7(888)888888</p>
+          </div>
           </div>
         </div>
         <div class="col-lg-4">
           
-          <div id="newsletters" class="col-lg-12" style="padding-bottom:10px;">
+          <div id="newsletters" class="row">
+             <div class="col-lg-12">
             {{ render(controller('AppSiteBundle:Site:subscription',{
             'url': app.request.uri})) }}
+             <br />
+             </div>
           </div>
-          <div class="col-lg-12" style="border-top:1px dashed #ccc">
+          <div class="row" style="border-top: 1px dashed #eb4800;">
+              <div class="col-lg-12">
             <h4>We Accept</h4>
             <img src="/img/americanexpress.png" width="63" />
             <img src="/img/maestro.png" width="63" />
@@ -155,15 +190,15 @@
             <img src="/img/visa.png" width="63" />
             <img src="/img/paypal.png" width="63" />
           </div>
+            </div>
         </div>
       </div>
-    </div>  
-    <div class="text-center">
-      <div class="">© 2014 Italica </div>
+    <div class="row text-center" style="background:#000;border-radius: 0 0 10px 10px; color:#fff;">
+      <p class="col-lg-12"><br/>© 2014 Italica </p>
     </div>
-          <p>&nbsp;</p><p>&nbsp;</p>
   </div>
 </div>
+        
 <div id="cookie-div" class="nav navbar-default navbar-fixed-bottom text-center panel-default panel hide">
     <div class="row" style="padding-top:15px;">
         <div class="col-lg-9">
@@ -174,13 +209,12 @@
         <div class="col-lg-3">
             <button class="btn btn-danger acceptCookie">Accept</button>
         </div>
-    </div>
-        
+   </div>     
 </div>
   <script defer type="text/javascript">var switchTo5x=true;</script>
   <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
   <script type="text/javascript">stLight.options({publisher: "f95283f4-a8a1-48ac-85ff-d2fc2e213be5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-   <script asyn type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script asyn type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script asyn type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script asyn type="text/javascript" src="/slick/slick.min.js"></script>
   <script asyn type="text/javascript" src="/js/ion.rangeSlider.min.js"></script>

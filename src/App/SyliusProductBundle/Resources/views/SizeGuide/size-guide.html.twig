@@ -1,28 +1,34 @@
-<a class="close" data-dismiss="modal" href="#">×</a>
-<div class="title"> Size Chart</div>
-{% if size_guides|length == 0 %}
-    <p>No size guide found</p>
-{% else %}
-    {% for size_guide in size_guides %}
-        <h4>{{ size_guide.name }} {{ size_guide.gender }} </h4>
-        <table>
-            <tbody>
-            <tr>
-                {% for field in size_guide.fields %}
-                    <th>{{ field.name }}</th>
-                {% endfor %}
-            </tr>  
-                {% for row in size_guide.getValuesAsRows() %}
-                    {% if row|length > 0 %} 
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Size Guide</h4>
+      </div>
+      <div class="modal-body">
+        {% if size_guides|length == 0 %}
+            <p>No size guide found</p>
+        {% else %}
+            {% for size_guide in size_guides %}
+                <h4 class="title"><span class="text">{{ size_guide.name }} {{ size_guide.gender }}</span> </h4>
+                <table class="table table-striped table-hover">
+                    <tbody>
                     <tr>
-                        {% for value in row %}
-                            <td>{{ value }}</td>
+                        {% for field in size_guide.fields %}
+                            <th>{{ field.name }}</th>
                         {% endfor %}
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-             </tbody>
-        </table>
-    {% endfor %}
-{% endif %}
-<br style="clear:both" />
+                    </tr>  
+                        {% for row in size_guide.getValuesAsRows() %}
+                            {% if row|length > 0 %} 
+                            <tr>
+                                {% for value in row %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                     </tbody>
+                </table>
+            {% endfor %}
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+      </div>

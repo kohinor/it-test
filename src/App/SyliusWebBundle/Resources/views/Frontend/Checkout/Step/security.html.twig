@@ -1,55 +1,63 @@
 {% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h2>{{ 'sylius.checkout.security.header'|trans|raw }}</h2>
-</div>
 
-{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':1} %}
 <div class="row">
-    <div class="column grid-4"  style="border-right: 1px dashed #d1d1d1; height:250px;">
+    <div class="col-lg-3">
+        <div class="panel panel-custom">
+        <div class="panel-body">
         <form action="{{ path('fos_user_security_check') }}" method="post" class="form-horizontal">
                 <fieldset>
-                    <h5>{{ 'sylius.checkout.security.existing_customer'|trans }}</h5>
+                    <h4 class="title"><span class="text">{{ 'sylius.checkout.security.existing_customer'|trans }}</span></h4>
                     <div class="form-group">
-                        <label for="username" class="control-label col-lg-3">{{ 'sylius.form.login.email'|trans }}</label>
-                        <div class="controls col-lg-9">
+                        <label for="username" class="control-label col-lg-4">{{ 'sylius.form.login.email'|trans }}</label>
+                        <div class="controls col-lg-8">
                             <input type="text" id="username" name="_username" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
-                    <label for="password" class="control-label col-lg-3">{{ 'sylius.form.login.password'|trans }}</label>
-                        <div class="controls col-lg-9">
+                    <label for="password" class="control-label col-lg-4">{{ 'sylius.form.login.password'|trans }}</label>
+                        <div class="controls col-lg-8">
                             <input type="password" id="password" name="_password" class="form-control" />
                         </div>
                     </div>
                 </fieldset>
-                <div class="form-actions">
-                    <input type="submit" class="button" name="login" value="{{ 'sylius.checkout.security.login'|trans }}" />
-                </div>
+                <div class="form-group">
+                    <div class="col-lg-8 col-lg-offset-4">
+                      <input type="hidden" name="_target_path" value="{{app.request.uri}}"/>
+                      <button type="submit" class="btn btn-default btn-sm">{{ 'Login'|trans() }}</button>
+                    </div>
+                  </div>
             </form>
+       </div>
+       </div>
     </div>
-    <div class="column grid-4">
+    <div class="col-lg-5">
+        <div class="panel panel-custom">
+            <div class="panel-body">
         <form action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" method="post" novalidate class="form-horizontal">
             <fieldset>
-                <h5>{{ 'sylius.checkout.security.new_customer'|trans }}</h5>
+                <h4 class="title"><span class="text">{{ 'sylius.checkout.security.new_customer'|trans }}</span></h4>
                 {{ form_widget(registration_form) }}
             </fieldset>
-            <div class="form-actions">
-                <input type="submit" class="button" value="{{ 'sylius.checkout.security.register'|trans }}" />
-            </div>
+            <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">
+                 <input type="submit" class="btn btn-default btn-sm" value="{{ 'sylius.checkout.security.register'|trans }}" />
+              </div>
+          </div>
+            
         </form>
+        </div>
+        </div>
     </div>
-    <div class="column grid-4">
-    <div class="highlight">
-        <p>{{ 'italica.required.fields'|trans({}, 'messages') }}</p>
+    <div class="col-lg-4">
+    <div class="panel panel-custom">
+    <div class="panel-body">
+    <h4 class="title"><span class="text">{{ 'italica.forgot.password'|trans({}, 'messages') }}</span></h4>
+    <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
+    <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
     </div>
-    <div class="highlight">
-        <h3>{{ 'italica.why.to.register'|trans({}, 'messages') }}</h3>
-        <ul>
-            <li><p>{{ 'italica.why.to.register.benefit1'|trans({}, 'messages') }}</p></li>
-            <li><p>{{ 'italica.why.to.register.benefit2'|trans({}, 'messages') }}</p></li>
-        </ul>
     </div>
 </div>
 </div>

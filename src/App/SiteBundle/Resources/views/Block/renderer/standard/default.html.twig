@@ -7,7 +7,7 @@
         {% if data.root.image_url|default('') %}</a>{% endif %}
     {% endif %}
         
-    <div class="cms-text">
+    <div >
     {% if data.root.title|default('') %}<h2>{{data.root.title}}</h2>{% endif %}
     {% if data.root.subtitle|default('') %}<h3>{{data.root.subtitle}}</h3>{% endif %}
     {% if data.root.mainContent|default('') %}{{data.root.mainContent}}{%endif%}

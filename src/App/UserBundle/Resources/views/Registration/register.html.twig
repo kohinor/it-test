@@ -1,9 +1,9 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 {% block breadcrumbs %}
-<ul class="breadcrumb" style="margin-bottom: 0px;">
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_registration_register") }}">{{ 'Register'|trans({}, 'messages') }}</a> </li>
+    <li><a href="{{ path("fos_user_registration_register") }}">{{ 'Register'|trans({}, 'messages') }}</a> </li>
 </ul>
 {% endblock %}
 {% block fos_user_content %}
@@ -11,7 +11,7 @@
 <div class="col-lg-6">
 <form class="form-horizontal" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
     <fieldset>
-        <legend>{{ 'Registration'|trans }}</legend>
+        <h4 class="title"><span class="text">{{ 'Registration'|trans }}</span></h4>
     <div class="form-group">
         {{ form_row(form.firstName) }}
     </div>
@@ -26,9 +26,9 @@
     </div>
     {{ form_rest(form) }}
     <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
+        <div class="col-lg-9 col-lg-offset-3">
         <input type="hidden" name="_target_path" value="{{targetPath|default('')}}"/>
-        <button type="submit" class="btn btn-primary">{{ 'registration.submit'|trans }}</button>
+        <button type="submit" class="btn btn-default btn-sm">{{ 'registration.submit'|trans }}</button>
       </div>
     </div>
     </fieldset>
@@ -38,8 +38,9 @@
     <div class="panel panel-default">
         <div class="panel-body"><p>{{ 'italica.required.fields'|trans({}, 'messages') }}</p></div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-body"><h3>{{ 'italica.why.to.register'|trans({}, 'messages') }}</h3>
+    <div class="panel panel-custom">
+        <div class="panel-body">
+            <h4 class="title"><span class="text">{{ 'italica.why.to.register'|trans({}, 'messages') }}</span></h4>
         <ul>
             <li><p>{{ 'italica.why.to.register.benefit1'|trans({}, 'messages') }}</p></li>
             <li><p>{{ 'italica.why.to.register.benefit2'|trans({}, 'messages') }}</p></li>

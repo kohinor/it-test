@@ -57,8 +57,8 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.main.cart', array(
                 '%items%' => $cartTotals['items'],
                 '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
-            )), 'class' => 'btn btn-danger'),
-            'labelAttributes' => array('icon' => 'fa fa-shopping-cart')
+            )), 'class' => 'btn btn-warning navbar-btn'),
+            'labelAttributes' => array('icon' => 'fa fa-shopping-cart fa-lg')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],
             '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
@@ -77,31 +77,31 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
         $menu->addChild('account', array(
             'route' => 'sylius_account_homepage',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.homepage')),
-            'labelAttributes' => array('icon' => 'icon-home', 'iconOnly' => false)
+            'labelAttributes' => array('icon' => 'fa fa-home', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.homepage'));
 
         $menu->addChild('profile', array(
             'route' => 'fos_user_profile_edit',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.profile')),
-            'labelAttributes' => array('icon' => 'icon-info-sign', 'iconOnly' => false)
+            'labelAttributes' => array('icon' => 'fa fa-info', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.profile'));
 
         $menu->addChild('password', array(
             'route' => 'fos_user_change_password',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.password')),
-            'labelAttributes' => array('icon' => 'icon-lock', 'iconOnly' => false)
+            'labelAttributes' => array('icon' => 'fa fa-lock', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.password'));
 
         $menu->addChild('orders', array(
             'route' => 'sylius_account_order_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.orders')),
-            'labelAttributes' => array('icon' => 'icon-briefcase', 'iconOnly' => false)
+            'labelAttributes' => array('icon' => 'fa fa-briefcase', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.orders'));
 
         $menu->addChild('addresses', array(
             'route' => 'sylius_account_address_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.addresses')),
-            'labelAttributes' => array('icon' => 'icon-envelope', 'iconOnly' => false)
+            'labelAttributes' => array('icon' => 'fa fa-envelope', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.addresses'));
 
         return $menu;

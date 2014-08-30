@@ -11,43 +11,43 @@
     {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
 {% endblock %}
 {% block breadcrumbs %}  
-<ul class="breadcrumb" style="margin-bottom:0">
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
-        <li><i class="icon-triangle-right"></i>
+        <li>
         {% set genders = app.request.get('gender')|split(',') %}
         {% for gender in genders %}
             <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> 
         {% endfor %}
         </li> 
-        <li><i class="icon-triangle-right"></i> {{ app.request.get('promotion')|trans({}, 'messages')|title  }} </li>
+        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title  }} </li>
     {% elseif app.request.get('brand') and  app.request.get('gender') %}
-        <li><i class="icon-triangle-right"></i>
+        <li>
         {% set genders = app.request.get('gender')|split(',') %}
         {% for gender in genders %}
             <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> 
         {% endfor %}
         </li> 
-        <li><i class="icon-triangle-right"></i> {{ app.request.get('brand')|trans({}, 'messages')|title  }} </li>
+        <li>{{ app.request.get('brand')|trans({}, 'messages')|title  }} </li>
     {% elseif app.request.get('category') and  app.request.get('gender') %}
-        <li><i class="icon-triangle-right"></i>
+        <li>
         {% set genders = app.request.get('gender')|split(',') %}
         {% for gender in genders %}
             <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a>  
         {% endfor %}
         </li> 
-        <li> <i class="icon-triangle-right"></i>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+        <li>{{ app.request.get('category')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('promotion') %}
-        <li> <i class="icon-triangle-right"></i>{{ app.request.get('promotion')|trans({}, 'messages')|title }} </li>
+        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('brand') %}
-        <li><i class="icon-triangle-right"></i> {{ app.request.get('brand')|trans({}, 'messages')|title }} </li>
+        <li> {{ app.request.get('brand')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('gender')%}
-        <li><i class="icon-triangle-right"></i> {{ app.request.get('gender')|trans({}, 'messages')|title }} </li>
+        <li>{{ app.request.get('gender')|trans({}, 'messages')|title }} </li>
     {% elseif app.request.get('category')%}
-        <li><i class="icon-triangle-right"></i> {{ app.request.get('category')|trans({}, 'messages')|title }} </li>
+        <li> {{ app.request.get('category')|trans({}, 'messages')|title }} </li>
     {% else %}
-        <li><i class="icon-triangle-right"></i> {{ 'Search'|trans({}, 'messages') }} </li>    
+        <li>{{ 'Search'|trans({}, 'messages') }} </li>    
     {% endif %}
 </ul>
 {% endblock %}
@@ -55,10 +55,8 @@
 
 {% block body %}
 <div class="row">
-    <div class="column grid-3">
-        <div class="summary" style="padding-bottom: 12px; padding-top: 12px;">
-            <span class="summary-total" style="margin-left:10px;">Refactor by</span>
-        </div>
+    <div class="col-lg-3">
+            <h4 class="title"><span class="text">Refactor <b>by</b></span></h4>
         <div class="filter">
             {{ gender | raw }}
             {{ promotion | raw }}
@@ -83,22 +81,20 @@
 </div>
             
         </div>
-</div>
-        
-       
+</div>       
  
-<div class="column grid-9">
-  <div style="margin-left:10px;">
-    <div class="row" style="margin-bottom:5px; padding:10px;">
+<div class="col-lg-9">
+    <div class="row">
         {{ render(controller('KitpagesCmsBundle:Block:widget', 
                     {'slug': app.request.locale|default('en') ~ '-'~app.request.get('promotion')~'-'~app.request.get('gender')~'-'~app.request.get('category')~'-'~app.request.get('brand')}
                   )) }}
     </div>
-    <div class="summary row">
-	<div class="column grid-3">
-        <div class="sort-by">
-        Sort By
-          <select class="done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
+    <div class="row">
+	<div class="col-lg-3">
+        <div class="sort-by form-group">
+        <div class="input-group input-group-sm">
+      <div class="input-group-addon">Sort By</div>
+          <select class="form-control  done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
             <option value="none" >none</option>
             <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Price High To Low'|trans({}, 'messages') }}</option>
             <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'Price Low To High'|trans({}, 'messages') }}</option>
@@ -107,11 +103,12 @@
 	  </select>
          </div>
          </div>
-        <div class="column grid-4 summary-total">
+        </div>
+        <div class="col-lg-4 summary-total text-center">
             <strong>Found {{ pagination.getTotalItemCount }} item(s)</strong>
 	</div>
 	
-<div class="column grid-5 " style="text-align:right;">
+<div class="col-lg-5 text-right">
 
          {{ knp_pagination_render(pagination) }} 
 
@@ -123,9 +120,9 @@
     {% set item = 0 %}
     {% for article in pagination %}
         {% if item == 0 %}
-            <div class="row" >
+            <div class="row" style="margin-bottom:25px;">
         {% endif %}
-        <div class="product-box grid-3" >
+        <div class="col-lg-3 text-center" >
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
         </div>
         {% set item = item+1 %}
@@ -134,15 +131,14 @@
             {% set item = 0 %}
         {% endif %}
     {% endfor %}
-    <div class="row summary">
-        <div class="column grid-12" style="text-align:center">
+    <div >
+        <div class="col-lg-12 text-center" >
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
     {% else %}
-        <p style="text-align:center;">{{ 'italica.no.products.found'|trans({}, 'messages') }}</p>
+        <p class="text-center">{{ 'italica.no.products.found'|trans({}, 'messages') }}</p>
     {% endif %}
-    </div>
    </div>
  </div>
 <p>&nbsp;</p>

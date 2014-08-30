@@ -1,32 +1,57 @@
 {% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h2>{{ 'sylius.checkout.shipping.header'|trans|raw }}</h2>
-</div>
 
-{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':3} %}
 
 {{ form_errors(form) }}
 <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
 
 <div class="row">
+    <div class="col-lg-8">
+        {% for group in itemGroups %}
+            {% set delivery = group.first.product.shippingCategory.name| default('Standard') %}
+            {% set description = group.first.product.shippingCategory.description| default('') %}
+            <h4 class="title"><span class="text">{{ 'Delivery'|trans }} <b>{{ delivery|trans }}</b></span> </h4>
+            <p>{{ description }}</p>
+            <ul>
+                {% for variant in group %}
+                    <li>{{ variant.product.name }}</li>
+                    {% if variant.presentation is not empty %}
+                        {{ variant.presentation }}
+                    {% elseif variant.product.hasOptions %}
+                    <ul>
+                    {% for option in variant.options %}
+                        <li><label>{{ option.presentation }}</label>: {{ option.value }}</li>
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        </div>
+    <div class="col-lg-4">
+        <div class="panel panel-custom">
+            <div class="panel-body">
+                <h4 class="title"><span class="text">{{ 'Delivery Method'|trans }}</span></h4>
+                <fieldset>
+                {% for shipment in order.shipments %}
 
-<fieldset>
-{% for shipment in order.shipments %}
+                {% set shipmentForm = form.shipments[loop.index0] %}
 
-{% set shipmentForm = form.shipments[loop.index0] %}
+                {{ form_widget(shipmentForm.method) }}
 
-{{ form_row(shipmentForm.method) }}
+                {% endfor %}
+                </fieldset>
 
-{% endfor %}
-</fieldset>
-
-{{ form_widget(form._token) }}
+                {{ form_widget(form._token) }}
+              </div>
+        </div>
+       </div>
 </div>
 <div class="form-actions">
-    <a href="{{ path('sylius_checkout_display', {'stepName': context.previousStep.name}) }}" class="button"><i class="icon-chevron-left"></i> {{ 'sylius.checkout.back'|trans }}</a> &nbsp;
-    <button type="submit" class="button">{{ 'sylius.checkout.forward'|trans }} <i class="icon-chevron-right"></i></button>
+    <a href="{{ path('sylius_checkout_display', {'stepName': context.previousStep.name}) }}" class="pull-left btn btn-default btn-sm"><i class="fa fs-white fa-chevron-left"></i> {{ 'sylius.checkout.back'|trans }}</a> &nbsp;
+    <button type="submit" class="pull-right btn btn-default btn-sm">{{ 'sylius.checkout.forward'|trans }} <i class="fa fa-white fa-chevron-right"></i></button>
 </div>
 
 </form>

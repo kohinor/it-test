@@ -2,7 +2,7 @@
 <form action="{{ path('app_site_subscription') }}" method="post" >
     <div class="input-group">
     {{ form_widget(form.email) }}
-    <span class="input-group-btn"><input type="submit" class="btn btn-default" value="{{ 'subscribe'|trans }}" /></span>
+    <span class="input-group-btn "><input type="submit" class="btn btn-default btn-sm" value="{{ 'subscribe'|trans }}" /></span>
     </div>
    <div class=" checkboxes">
         <div class="checkbox-inline">  {{ form_widget(form.men) }} {{ 'Men'|trans }}</div>

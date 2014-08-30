@@ -1,33 +1,43 @@
 {% set product = item.variant.product %}
 {% set variant = item.variant %}
 <tr>
-    <td>
-        <a href="{{ path('app_site_product', {'slug':product.slug}) }}" class="thumbnail pull-left" style="margin-right: 15px;">
-            <img src="{{ product.image ? product.image.path|imagine_filter('sylius_small', true) : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
+    <td class="col-lg-3">
+        <a href="{{ path('app_site_product', {'slug':product.slug}) }}" class="img-thumbnail">
+            <img src="{{ product.image ? product.image.path|imagine_filter('sylius_medium', true) : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
         </a>
     </td>
-    <td>
+    <td class="col-lg-5">
         <div>
-            <a href="{{ path('app_site_product', {'slug':product.slug}) }}"><strong>{{ product.name }}</strong></a>
+            <p><a href="{{ path('app_site_product', {'slug':product.slug}) }}">{{ product.name }}</a></p>
             {% if variant.presentation is not empty %}
-                <strong>{{ variant.presentation }}</strong>
+                {{ variant.presentation }}
             {% elseif product.hasOptions %}
+            <ul>
             {% for option in variant.options %}
-                <div><strong>{{ option.presentation }}</strong>: {{ option.value }}</div>
+                <li><label>{{ option.presentation }}</label>: {{ option.value }}</li>
             {% endfor %}
+            </ul>
             {% endif %}
-            <div>
-            <a href="{{ path('sylius_cart_item_remove', {'id': item.id}) }}" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
-            </div>
+            {% if product.shippingCategory %}
+            <p><label>Delivery</label>: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
+            {% endif %}
+
+            
+            <p>
+            <a href="{{ path('sylius_cart_item_remove', {'id': item.id}) }}" class="btn btn-default btn-sm"><i class="fa fa-trash-o fa-white"></i> {{ 'Delete'|trans }}</a>
+            </p>
         </div>
     </td>
     <td class="col-md-2">
-        {{ form_row(form.items[loop.index0].quantity, {'label': false}) }}
+        <div class="input-group input-group-sm">
+        {{ form_widget(form.items[loop.index0].quantity, {'label': false}) }}
+                <span class="input-group-btn">
+                <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-refresh fa-white"></i></button>
+                </span>
+        </div>
     </td>
-    <td class="col-md-1">
-        {{ item.unitPrice|sylius_price }}
+    <td class="col-md-2 text-center">
+        <b>{{ item.unitPrice|sylius_price }}</b>
     </td>
-    <td class="col-md-1" style="text-align: right">
-        {{ item.total|sylius_price }}
-    </td>
+    
 </tr>

@@ -1,40 +1,42 @@
 {# default Sliding pagination control implementation #}
 
 {% if pageCount > 1 %}
-<div class="pagination">
+<ul class="pagination pagination-sm">
     {% if previous is defined %}
-        <span class="previous">
-            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}"><i class="icon-circle-arrow-left"></i></a> |
-        </span>
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}"><i class="fa fa-arrow-left"></i></a>
+        </li>
     {% endif %}
     {% if first is defined and current >= first+5 %}
-        <span class="first">
-            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">{{ first }} ...</a>
-        </span>
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">{{ first }}</a>
+        </li>
+        <li>...</li>
     {% endif %}
     {% for page in pagesInRange %}
         {% if page != current %}
-            <span class="page">
+            <li>
                 <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
-            </span>
+            </li>
         {% else %}
-            <span class="current">{{ page }}</span>
+            <li class="active"><a href="#">{{ page }}</a></li>
         {% endif %}
 
     {% endfor %}
 
     {% if last is defined and current <= last-5 %}
-        <span class="last">
-            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">... {{ last }} </a>
-        </span>
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">... </a>
+        </li>
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">{{ last }}</a>
+        </li>
     {% endif %}
             
     {% if next is defined %}
-        <span class="next">
-          | <a href="{{ path(route, query|merge({(pageParameterName): next})) }}"><i class="icon-circle-arrow-right"></i></a>
-        </span>
+        <li class="next">
+           <a href="{{ path(route, query|merge({(pageParameterName): next})) }}"><i class="fa fa-arrow-right"></i></a>
+        </li>
     {% endif %}
-
-    
-</div>
+</ul>
 {% endif %}

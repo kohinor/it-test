@@ -1,10 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block breadcrumbs %} 
-<ul class="breadcrumb" style="margin-bottom:0">
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_resetting_request") }}">{{ 'resetting.request.submit'|trans }}</a> </li>
+    <li><a href="{{ path("fos_user_resetting_request") }}">{{ 'resetting.request.submit'|trans }}</a> </li>
 </ul>
 {% endblock %}
 

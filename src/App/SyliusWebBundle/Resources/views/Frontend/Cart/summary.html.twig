@@ -6,17 +6,16 @@
 {% if not cart.empty %}
 <form action="{{ path('sylius_cart_save') }}" method="post" novalidate>
 <div class="row">
-    <div class="column grid-8">
-        <h4>{{ 'sylius.cart.summary_header'|trans|raw }}</h4>
+    <div class="col-lg-8">
+        <h4 class="title"><span class="text">{{ 'Cart'|trans|raw }} <b>{{ 'Summary'|trans|raw }}</b></span></h4>
         {{ form_errors(form) }}
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th></th>
-                    <th>{{ 'sylius.cart.summary.product'|trans }}</th>
-                    <th>{{ 'sylius.cart.summary.quantity'|trans }}</th>
-                    <th>{{ 'sylius.cart.summary.unit_price'|trans }}</th>
-                    <th style="text-align: right;">{{ 'sylius.cart.summary.total'|trans }}</th>
+                    <th class="text-center">{{ 'sylius.cart.summary.product'|trans }}</th>
+                    <th class="text-center">{{ 'sylius.cart.summary.quantity'|trans }}</th>
+                    <th class="text-center">{{ 'sylius.cart.summary.unit_price'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,36 +24,45 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="well">
-            <button type="submit"><i class="icon-save"></i> {{ 'sylius.cart.summary.save'|trans }}</button>
-            <div class="pull-right">
-            <a href="{{ path('sylius_cart_clear') }}" class="button"><i class="icon-remove"></i> {{ 'sylius.cart.summary.clear'|trans }}</a>
-            </div>
+           
+        <div >
+            <a href="{{ path('sylius_cart_clear') }}" class="btn btn-sm btn-default"><i class="fa fa-remove fa-white"></i> {{ 'sylius.cart.summary.clear'|trans }}</a>
+            
+            <p class="pull-right">
+                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b>{{ cart.total|sylius_price }}</b>
+                </p> 
         </div>
     </div>
-    <div class="column grid-4">
-        <h4>{{ 'Cart Totals'|trans }}</h4>
-        <div class="cart-totals label-long">
-            <div class="promotion-box">
-                <p>{{ 'Promotion Code'|trans }}</p>
-                {{ form_widget(form.promotionCoupon) }}
-                <button type="submit" >{{ 'sylius.cart.summary.add_coupon'|trans }}</button>
-            </div>
+    <div class="col-lg-4">
+        <div class="panel panel-custom">
+        <div class="panel-body">
+            <h4 class="title"><span class="text">{{ 'Promotion'|trans }} <b>{{ 'Code'|trans }}</b></span></h4>
+                <div class="input-group input-group-sm">
+                      {{ form_widget(form.promotionCoupon) }}
+                      <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">{{ 'sylius.cart.summary.add_coupon'|trans }}</button>
+            </span>
+                  </div>
+            <hr />
+
+            <h4 class="title"><span class="text">{{ 'Cart'|trans }} <b>{{ 'Total'|trans }}</b></span></h4>
+                {% if cart.promotionTotal %}
+               <p><label>{{ 'sylius.order.promotion_total'|trans }}</label>: <b>{{ cart.promotionTotal|sylius_price }}</b></p>
+            {% endif %}
+               <p>
+                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b>{{ cart.total|sylius_price }}</b>
+                </p>     
+                <div>
+                    <a href="{{ path('sylius_checkout_start') }}" class="btn btn- btn-danger btn-block "><i class="fa fa-white fa-shopping-cart"></i> {{ 'sylius.cart.summary.checkout'|trans }}</a>
+                </div>
 
             {{ form_rest(form) }}
-            {% if cart.promotionTotal %}
-                <p><label>{{ 'sylius.order.promotion_total'|trans }}</label>: {{ cart.promotionTotal|sylius_price }}
-            {% endif %}
-            <p><label>{{ 'sylius.order.shipping_total'|trans }}</label>: {{ cart.shippingTotal|sylius_price }}</p>
-            <p><label>{{ 'sylius.order.tax_total'|trans }}</label>: {{ cart.taxTotal|sylius_price }}</p>
-            <p><label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: {{ cart.total|sylius_price }}</p>       
-            <div class="pull-right">
-                <a href="{{ path('sylius_checkout_start') }}" class="btn btn-success btn-lg"><i class="icon-shopping-cart"></i> {{ 'sylius.cart.summary.checkout'|trans }}</a>
-            </div>
+        </div>
         </div>
     </div>
 </div>
 </form>
+{{ render(controller( 'AppSyliusProductBundle:Product:getLastVisited', {'request': app.request} )) }}
 {% else %}
     {{ 'sylius.cart.empty'|trans }}
 {% endif %}

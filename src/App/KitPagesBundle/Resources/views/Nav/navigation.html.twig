@@ -6,7 +6,7 @@
         {% if navigationElem.children|length > 0 and navigationElem.level == 3 %}    
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 {{navigationElem.title}}
-                <b class="caret"></b>
+                <i class="fa fa-caret-down"></i>
             </a>
         {% else %}
             {% if navigationElem.url == '' %}

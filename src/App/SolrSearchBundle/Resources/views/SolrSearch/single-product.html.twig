@@ -3,9 +3,10 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-<a class="product-image" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
-<div style="text-transform:uppercase;"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
-<div><span class="online-title">{{ title }}</span></div>
+<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
+<div class="text-uppercase"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
+<div><span >{{ title }}</span></div>
+<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >
 {% if article.rrp|default(0) > article.price %}
     <div>
     <span class="" ><strike>{{article.rrp|sylius_price }}</strike></span>
@@ -14,5 +15,6 @@
 {% else %}
     <div class="text-primary" ><strong>{{article.price|sylius_price }}</strong></div>
 {% endif %}
-<div><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="btn btn-sm btn-primary">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
+</a>
+<div style="margin-top:5px;"><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="btn btn-sm btn-danger btn-block">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
     

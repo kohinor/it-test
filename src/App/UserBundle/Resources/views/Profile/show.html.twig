@@ -3,15 +3,17 @@
 <ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
-    <li><i class="icon-triangle-right"></i> <a href="{{ path("sylius_account_homepage") }}">{{ 'sylius.account.title'|trans }}</a> </li>
+    <li><a href="{{ path("sylius_account_homepage") }}">{{ 'sylius.account.title'|trans }}</a> </li>
 </ul>
 {% endblock %}
 {% block content %}
+<div class="row">
 <div class="col-lg-12">
 <h3>{{ 'sylius.account.home.welcome'|trans }}</h3>
 <p>{{ app.user.lastName }} {{ app.user.firstName }}</p>
 <p>{{ 'sylius.account.home.since'|trans }} {{ app.user.createdAt|date('d M, Y') }}</p>
 <p>{{ 'sylius.account.home.outline'|trans }}</p>
 <p>{{ 'sylius.account.home.email'|trans }} {{ app.user.email }}</p>
+</div>
 </div>
 {% endblock content %}

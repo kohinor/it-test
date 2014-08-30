@@ -1,10 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block breadcrumbs %} 
-<ul class="breadcrumb" style="margin-bottom:0">
+<ul class="breadcrumb">
     <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><i class="icon-triangle-right"></i> <a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
+    <li><a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
 </ul>
 {% endblock %}
 
@@ -12,7 +12,7 @@
 <div class="col-lg-6">
     <form class="form-horizontal" method="post" action="{{ path("fos_user_security_check") }}" >
   <fieldset>
-    <legend>{{ 'italica.login'|trans({}, 'messages') }}</legend>
+    <h4 class="title"><span class="text">{{ 'italica.login'|trans({}, 'messages') }}</span></h4>
     {% if error %}
         <div class="error">{{ error|trans }}</div>
     {% endif %}
@@ -39,23 +39,23 @@
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <input type="hidden" name="_target_path" value="{{targetPath|default('')}}"/>
-        <button type="submit" class="btn btn-primary">{{ 'Login'|trans() }}</button>
+        <button type="submit" class="btn btn-default btn-sm">{{ 'Login'|trans() }}</button>
       </div>
     </div>
   </fieldset>
 </form>
     </div>
 <div class="col-lg-6">
-    <div class="panel panel-default">
+    <div class="panel panel-custom">
     <div class="panel-body">
-    <h3>{{ 'italica.forgot.password'|trans({}, 'messages') }}</h3>
+    <h4 class="title"><span class="text">{{ 'italica.forgot.password'|trans({}, 'messages') }}</span></h4>
     <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
     <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
     </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-custom">
     <div class="panel-body">
-    <h3>{{ 'italica.new.customer'|trans({}, 'messages') }}</h3>
+        <h4 class="title"><span class="text">{{ 'italica.new.customer'|trans({}, 'messages') }}</span></h4>
     <p>{{ 'italica.new.customer.experience'|trans({}, 'messages') }}</p>
     <p>
     <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.create.account'|trans({}, 'messages') }}</a>
