@@ -1,5 +1,5 @@
 {% if products|length > 0 %}
-<h3 class="title"><span class="text">Recently Viewed <b>Products</b></span></h3>
+<h3 class="title"><span class="text">{{ 'italica.recently.viewed.products'|trans }}</span></h3>
 <div class="row">
     {% for product in products %}
         {% if loop.index < 7 %}

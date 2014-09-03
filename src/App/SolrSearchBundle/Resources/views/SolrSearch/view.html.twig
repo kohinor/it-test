@@ -12,8 +12,8 @@
 {% endblock %}
 {% block breadcrumbs %}  
 <ul class="breadcrumb">
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
         <li>
         {% set genders = app.request.get('gender')|split(',') %}
@@ -47,7 +47,7 @@
     {% elseif app.request.get('category')%}
         <li> {{ app.request.get('category')|trans({}, 'messages')|title }} </li>
     {% else %}
-        <li>{{ 'Search'|trans({}, 'messages') }} </li>    
+        <li>{{ 'italica.search'|trans({}, 'messages') }} </li>    
     {% endif %}
 </ul>
 {% endblock %}
@@ -55,8 +55,8 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-lg-3">
-            <h4 class="title"><span class="text">Refactor <b>by</b></span></h4>
+    <div class="col-lg-3 col-md-2 col-sm-2">
+            <h4 class="title"><span class="text">{{ 'italica.refactor.by'| trans }}</span></h4>
         <div class="filter">
             {{ gender | raw }}
             {{ promotion | raw }}
@@ -71,7 +71,7 @@
             
   <div class = "filter-box">
     <div class="filter-header open" data-key="price">
-        <i class="icon-arrow-right"></i> {{ 'Price'|trans}}
+        <i class="icon-arrow-right"></i> {{ 'italica.price'|trans}}
     </div>
     <div id="filters-price" >
     <form>
@@ -83,28 +83,28 @@
         </div>
 </div>       
  
-<div class="col-lg-9">
+<div class="col-lg-9 col-md-10 col-sm-10">
     <div class="row">
         {{ render(controller('KitpagesCmsBundle:Block:widget', 
                     {'slug': app.request.locale|default('en') ~ '-'~app.request.get('promotion')~'-'~app.request.get('gender')~'-'~app.request.get('category')~'-'~app.request.get('brand')}
                   )) }}
     </div>
     <div class="row">
-	<div class="col-lg-3">
+	<div class="col-lg-3 col-md-6 col-sm-6">
         <div class="sort-by form-group">
         <div class="input-group input-group-sm">
       <div class="input-group-addon">Sort By</div>
           <select class="form-control  done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
-            <option value="none" >none</option>
-            <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Price High To Low'|trans({}, 'messages') }}</option>
-            <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'Price Low To High'|trans({}, 'messages') }}</option>
-            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'Title A To Z'|trans({}, 'messages') }}</option>
-            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'Title Z To A'|trans({}, 'messages') }}</option>	
+            <option value="none" >{{ 'italica.none'|trans }}</option>
+            <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.price.high.to.low'|trans({}, 'messages') }}</option>
+            <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'italica.price.low.to.high'|trans({}, 'messages') }}</option>
+            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'italica.title.a.to.z'|trans({}, 'messages') }}</option>
+            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.title.z.to.a'|trans({}, 'messages') }}</option>	
 	  </select>
          </div>
          </div>
         </div>
-        <div class="col-lg-4 summary-total text-center">
+        <div class="col-lg-4 col-md-6 col-sm-6 summary-total text-center">
             <strong>Found {{ pagination.getTotalItemCount }} item(s)</strong>
 	</div>
 	
@@ -122,7 +122,7 @@
         {% if item == 0 %}
             <div class="row" style="margin-bottom:25px;">
         {% endif %}
-        <div class="col-lg-3 text-center" >
+        <div class="col-lg-3 col-md-6 col-sm-6 text-center" >
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
         </div>
         {% set item = item+1 %}

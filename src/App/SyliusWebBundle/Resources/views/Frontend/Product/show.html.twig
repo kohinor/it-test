@@ -28,10 +28,10 @@
 {% endblock %}
     
 {% block breadcrumbs %}
-    <div class="col-lg-10">
+    <div class="col-lg-10 col-md-10 col-sm-10">
     <ul class="breadcrumb">
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     {% if gender %}
         <li><a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> </li>
         <li><a href="{{ path('app_solr_search_gender_brand', {'gender':gender, 'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>
@@ -41,8 +41,8 @@
     <li>{{ product.translate(app.request.locale).name|default(product.name)|title  }} </li>
     </ul>
     </div>
-    <div class="col-lg-2" style="padding-top:5px;">
-        <a href="javascript:void(0);" class="back">{{ 'Back to the search'| trans({}, 'messages') }} <i class="fa fa-arrow-right"></i></a>
+    <div class="col-lg-2 col-md-2 col-sm-2" style="padding-top:5px;">
+        <a href="javascript:void(0);" class="back">{{ 'italica.back.to.the.search'| trans({}, 'messages') }} <i class="fa fa-arrow-right"></i></a>
     </div>
 {% endblock %}
 {% block overlay %}
@@ -54,7 +54,7 @@
 <div class="row">
     <div class="col-lg-5">   
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-sm-2 col-md-2">
             {% if product.images|length > 0 %}
             <div class="tmb-caption">
                 {% for image in product.images %}
@@ -65,14 +65,14 @@
             </div>
             {% endif %}
         </div>
-        <div class="col-lg-10">
+        <div class="col-lg-10 col-sm-10 col-md-10">
             <img class="container" style="padding:0; margin:0; width:300px;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <h4 class="title">
-                <span class="text">{{ 'Other'|trans({}, 'messages') }} <b>{{ 'Options'|trans({}, 'messages') }}</b></span>
+                <span class="text">{{ 'italica.other.options'|trans({}, 'messages') }}</span>
             </h4>
             {{ render(controller( 'AppSyliusProductBundle:Product:getProductsByGroup', {
             'request': app.request,
@@ -88,12 +88,12 @@
             <div class="row">
                 <div class="col-lg-7"></div>
             <div class="col-lg-5">
-                <p >
+                <p class="lead text-uppercase">
                 {% if product.rrp > product.price %}
-                    <div >{{ 'RRP'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
-                    <div>{{ 'Shop Price'|trans({}, 'messages') }}: <span><b>{{product.price|sylius_price }}</b></span></div>
+                    <div >{{ 'italicarrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
+                    <div>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }}</b></span></div>
                 {% else %}
-                    {{ 'Shop Price'|trans({}, 'messages') }}: <span><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
+                    {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
                 {% endif %}
             </p>
             </div>

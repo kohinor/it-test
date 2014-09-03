@@ -2,8 +2,8 @@
 {% block breadcrumbs %} 
 {% trans_default_domain 'menu' %}
 <ul class="breadcrumb">
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     <li><a href="{{ path("fos_user_profile_edit") }}">{{ 'sylius.frontend.menu.account.profile'|trans }}</a> </li>
 </ul>
 {% endblock %}

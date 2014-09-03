@@ -89,13 +89,14 @@ class ProductController extends Controller
                     } else if($variant->getOnHand() == 1) {
                         $html = $this->get('translator')->trans('Only one item left');
                     }
+                    $html = '<span class="text-success">'.$html.'</span>';
                     if ($variant->getOnHand() > 0) {
                         return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 200, 'html' => $html), 200);
                     }
                 }
             }
         }
-        $html = '<span style="color:#c60105;">'.$this->get('translator')->trans('The item is sold out').'</span>';
+        $html = '<span class="text-danger">'.$this->get('translator')->trans('The item is sold out').'</span>';
         if ($availableOnDemand) {
             $html .= '<br /><br />'. $this->get('translator')->trans('You still can pre-order this item');
         }

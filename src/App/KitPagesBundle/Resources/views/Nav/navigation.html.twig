@@ -4,7 +4,7 @@
     {% for navigationElem in navigation %}
         <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
         {% if navigationElem.children|length > 0 and navigationElem.level == 3 %}    
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle {% if navigationCssClass == 'navbar-nav header' %}text-uppercase {% endif %}" data-toggle="dropdown" href="#">
                 {{navigationElem.title}}
                 <i class="fa fa-caret-down"></i>
             </a>
@@ -12,7 +12,7 @@
             {% if navigationElem.url == '' %}
                 <div >{{navigationElem.title}}</div>
             {% else %}
-                <a href="{{navigationElem.url}}" >{{navigationElem.title}}</a>
+                <a href="{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{{navigationElem.title}}</a>
             {% endif %}
         {% endif %}
             {% if navigationElem.level < 4 %}

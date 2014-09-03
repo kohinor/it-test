@@ -2,9 +2,9 @@
 {% block breadcrumbs %}
 <div class="breadcrumbs">
     <ul>
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans({}, 'messages') }}</a> </li>
-    <li><i class="icon-triangle-right"></i> {{ 'Brands'|trans({}, 'messages') }} </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><i class="icon-triangle-right"></i> {{ 'italica.brands'|trans({}, 'messages') }} </li>
     </ul>
     </div>
 {% endblock %}
@@ -12,7 +12,7 @@
 
 {% block body %}
 {% set numberInColumn = brands|length / 4 %} 
-<div><h3>{{ 'List of Brands'|trans({}, 'messages') }}</h3></div>
+<div><h3>{{ 'italica.list.of.brands'|trans({}, 'messages') }}</h3></div>
 <div class="row">
     <div class="column grid-4">
     {% set currentNumber = 0 %}

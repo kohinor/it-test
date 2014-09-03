@@ -9,11 +9,11 @@
 <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >
 {% if article.rrp|default(0) > article.price %}
     <div>
-    <span class="" ><strike>{{article.rrp|sylius_price }}</strike></span>
-    <span class="text-primary" ><strong>{{article.price|sylius_price }}</strong></span>
+    <span class="" ><strike>{{ article.rrp|sylius_price }}</strike></span>
+    <span class="text-danger" ><strong>{{ article.price|sylius_price }}</strong></span>
     </div>
 {% else %}
-    <div class="text-primary" ><strong>{{article.price|sylius_price }}</strong></div>
+    <div class="text-danger" ><strong>{{ article.price|sylius_price }}</strong></div>
 {% endif %}
 </a>
 <div style="margin-top:5px;"><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="btn btn-sm btn-danger btn-block">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>

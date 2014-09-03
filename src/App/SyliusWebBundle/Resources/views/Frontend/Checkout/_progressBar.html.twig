@@ -2,15 +2,15 @@
 <div class="col-lg-11 checkout-wrap">
   <ul class="checkout-bar">
 
-    <li class="{% if tab ==1 %} active {% elseif tab > 1 %} visited {% endif %} first">Login</li>
+    <li class="{% if tab ==1 %} active {% elseif tab > 1 %} visited {% endif %} first">{{ 'italica.progress.login'|trans }}</li>
 
-    <li class="{% if tab == 2 %} active {% elseif tab > 2 %} previous visited {% elseif tab < 2 %} next {% endif %}">Shipping & Billing</li>
+    <li class="{% if tab == 2 %} active {% elseif tab > 2 %} previous visited {% elseif tab < 2 %} next {% endif %}">{{ 'italica.progress.shipping.and.billing'|trans }}</li>
 
-    <li class="{% if tab == 3 %} active {% elseif tab > 3 %} previous visited {% elseif tab < 3 %} next {% endif %}">Shipping Options</li>
+    <li class="{% if tab == 3 %} active {% elseif tab > 3 %} previous visited {% elseif tab < 3 %} next {% endif %}">{{ 'italica.progress.shipping.options'|trans }}</li>
 
-    <li class="{% if tab == 4 %} active {% elseif tab > 4 %} previous visited {% elseif tab < 4 %} next {% endif %}">Review & Payment</li>
+    <li class="{% if tab == 4 %} active {% elseif tab > 4 %} previous visited {% elseif tab < 4 %} next {% endif %}">{{ 'italica.progress.review.and.payment'|trans }}</li>
 
-    <li class="">Complete</li>
+    <li class="">{{ 'progress.complete'|trans }}</li>
 
   </ul>
 </div>

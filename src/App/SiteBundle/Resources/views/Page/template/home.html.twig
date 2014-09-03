@@ -6,23 +6,23 @@
 {% block body %}
 
 <div class="row">
-  <div class="col-lg-5">
+  <div class="col-lg-5 col-md-5 col-sm-5">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
   </div>
-  <div class="col-lg-2 text-center" >
+  <div class="col-lg-2 col-md-2 col-sm-2 text-center" >
       <div >
       <div><img src="/img/hugo-boss-logo.png" width="100px"></div>
       <div><img src="/img/hermes-logo.png" width="100px"></div>
       <div><img src="/img/versace-jeans-logo.png" width="100px"></div>
       </div>
   </div>
-  <div class="col-lg-5">
+  <div class="col-lg-5 col-md-5 col-sm-5">
    {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
   </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
-    <h4 class="title"><span class="text">New Arrivals for <b>Women</b></span></h4>
+    <h4 class="title"><span class="text">{{ 'italica.new.arrivals.women'|trans({}, 'messages') }}</span></h4>
     </div>
     <div class="col-lg-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
@@ -34,18 +34,18 @@
         <div class=" lead text-center title" style="background-image:none;">
             
             <a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">
-               <hr /> Shop <br /><b>New Arrivals</b><br /> for<br /> <b>Women</b><hr /></a>
+               <hr /> {{ 'italica.shop.new.arrivals.women'|trans({}, 'messages')|raw }}<hr /></a>
         </div>
     </div>
 </div>
 <div class="row" style="margin-top: 25px;">
     <div class="col-lg-12" >
-    <h4 class="title"><span class="text">New Arrivals for <b>Men</b></span></h4>
+    <h4 class="title"><span class="text">{{ 'italica.new.arrivals.men'|trans({}, 'messages') }}</span></h4>
     </div>
     <div class="col-lg-3">
     <div class="text-center lead title" style="background-image:none;">
         <a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">
-            <hr />Shop <br /><b>New Arrivals</b><br /> for <br /><b>Men</b></a><hr />
+            <hr />{{ 'italica.shop.new.arrivals.men'|trans({}, 'messages')|raw }}</a><hr />
     </div>
     </div>
     <div class="col-lg-9">

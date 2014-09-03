@@ -22,43 +22,8 @@
     {% block stylesheets %}{% endblock %}
     {% block kitpages_cms_stylesheets %}{% endblock %}
 </head>
-
 <body>
-  {% block kitpages_cms_toolbar %}{% endblock %}
-  <header class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <div class="col-lg-3 col-md-4 col-sm-4">
-            <ul class="nav nav navbar-nav">
-            {% if app.user %}
-                <li> <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> {{ 'italica.account'|trans({}, 'messages') }}</a> </li>
-                <li> <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> {{ 'italica.logout'|trans({}, 'messages') }}</a></li>
-              {% else %}
-                <li> <a href="{{ path('fos_user_security_login', {'_target_path': app.request.requestUri} ) }}"><i class="fa fa-sign-in"></i> {{ 'italica.login'|trans({}, 'messages') }}</a></li>
-                <li> <a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user"></i> {{ 'italica.register'|trans({}, 'messages') }}</a></li>
-              {% endif %}
-            </ul>
-          </div>
-          <div class="col-lg-5 col-md-3 col-sm-3">
-            <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:2px">
-              <div class="input-group">
-                <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text">
-              <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
-            </div>
-            </form>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
-          </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
-            <ul class="nav navbar-nav">
-              <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
-              <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
-            </ul>
-          </div>        
-        </div>
-      </div>
-    </header>          
+  {% block kitpages_cms_toolbar %}{% endblock %}        
     <div class="page-header" >
       <div class="container">   
         <div class="row" >
@@ -67,52 +32,19 @@
             <h5 class="text-center  text-uppercase" >{{ 'welcome.message'|trans }}</h5>
             </div>
             <hr />
-            <div class="row text-center">
-            <span class='st_facebook_hcount' displayText='Facebook'></span>
-            <span class='st_twitter_hcount' displayText='Tweet'></span>
-            </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
             <h1 class="text-uppercase text-danger" style="margin-bottom:0px;letter-spacing: 3px;"><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
             <p class="lead text-uppercase" style="letter-spacing: 1px;">{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</p>
           </div>
           <div class="col-lg-4 col-sm-4 col-md-4">
-            {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}   
-            <hr />
           </div>
         </div>
-        <div class="row">
-          <div class="navbar navbar-default" style="border-color: rgb(68, 68, 68);
-            border-left: 0 none;
-            border-radius: 0;
-            border-right: 0 none;
-            border-width: 0 0 3px;
-            ">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-              <div class="navbar-collapse collapse navbar-responsive-collapse" style="padding:0px;">
-                  {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                    'slug': app.request.locale|default('en') ~ '-main',
-                    'cssClass': "navbar-nav header",
-                    'currentPageSlug':kitCmsPage.slug|default(''),
-                    'startDepth':1 ,
-                    'endDepth':3} )) }}
-              </div>
-              </div>
-            </div>
           </div>
-        <div class="row">
-          {% block breadcrumbs %}{% endblock %}
-        </div>
+        
         </div>
   </div>
-        
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        {% block overlay %}{% endblock %}
-      </div>
-    </div>
-  </div> 
+ 
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -146,7 +78,7 @@
         <div class="col-lg-2 col-md-3 col-sm-3 " style="border-right: 1px dashed #d1d1d1;border-left: 1px dashed #d1d1d1;">
           <div class="row">
             <div class="col-lg-12">
-          <h4>{{ 'italica.follow.us'|trans }}</h4> 
+              <h4>{{ 'italica.follow .us'|trans }}</h4> 
           <ul class="nav navbar-nav">
             <li><a href="#"><i class="fa fa-twitter fa-lg"></i></a></li>
             <li><a href="#"><i class="fa fa-facebook fa-lg"></i></a></li>

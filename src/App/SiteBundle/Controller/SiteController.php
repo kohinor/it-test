@@ -34,9 +34,7 @@ class SiteController extends Controller
                 $this->getDoctrine()->getManager()->flush();
                 $this->get('session')->getFlashBag()->add('success', 'newsletter.subscribed');
             } else {
-                foreach ($form->getErrors() as $error){
-                    $this->get('session')->getFlashBag()->add('error', $error->getMessage());
-                }
+                $this->get('session')->getFlashBag()->add('error', 'newsletter.error');
             }
             $url = $request->request->get('path') ? $request->request->get('path') : $this->generateUrl('default');
             return $this->redirect($url, 301);

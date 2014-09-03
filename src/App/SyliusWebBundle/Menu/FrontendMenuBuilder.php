@@ -57,7 +57,7 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.main.cart', array(
                 '%items%' => $cartTotals['items'],
                 '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
-            )), 'class' => 'btn btn-warning navbar-btn'),
+            )), 'class' => 'pull-right panel panel-default'),
             'labelAttributes' => array('icon' => 'fa fa-shopping-cart fa-lg')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],

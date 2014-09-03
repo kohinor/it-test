@@ -2,9 +2,9 @@
 
 {% block breadcrumbs %} 
 <ul class="breadcrumb">
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><a href="{{ path("fos_user_security_login") }}">{{ 'Login'|trans }}</a> </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans }}</a> </li>
+    <li><a href="{{ path("fos_user_security_login") }}">{{ 'italica.login'|trans }}</a> </li>
 </ul>
 {% endblock %}
 
@@ -39,7 +39,7 @@
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <input type="hidden" name="_target_path" value="{{targetPath|default('')}}"/>
-        <button type="submit" class="btn btn-default btn-sm">{{ 'Login'|trans() }}</button>
+        <button type="submit" class="btn btn-default btn-sm">{{ 'italica.login'|trans() }}</button>
       </div>
     </div>
   </fieldset>

@@ -1,9 +1,9 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 {% block breadcrumbs %}
 <ul class="breadcrumb">
-    <li>{{ 'You are here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'Home'|trans }}</a> </li>
-    <li><a href="{{ path("fos_user_registration_register") }}">{{ 'Register'|trans({}, 'messages') }}</a> </li>
+    <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
+    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="{{ path("fos_user_registration_register") }}">{{ 'italica.register'|trans({}, 'messages') }}</a> </li>
 </ul>
 {% endblock %}
 {% block fos_user_content %}
@@ -11,7 +11,7 @@
 <div class="col-lg-6">
 <form class="form-horizontal" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
     <fieldset>
-        <h4 class="title"><span class="text">{{ 'Registration'|trans }}</span></h4>
+        <h4 class="title"><span class="text">{{ 'italica.registration'|trans({}, 'messages') }}</span></h4>
     <div class="form-group">
         {{ form_row(form.firstName) }}
     </div>

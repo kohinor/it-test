@@ -8,9 +8,9 @@
 <div class = "filter-box">
     <div class="filter-header open" data-key="{{ idname }}">
     {% if idname == 'category2' or idname == 'category1' %}
-        <h5><i class="fa fa-arrow-right"></i> {{ 'category'|capitalize|trans({}, 'messages')}}</h5>
+        <h5><i class="fa fa-arrow-right"></i> {{ 'category'|trans({}, 'messages')|capitalize }}</h5>
     {% else %}
-       <h5><i class="fa fa-arrow-right"></i> {{ idname|capitalize|trans({}, 'messages')}}</h5>
+       <h5><i class="fa fa-arrow-right"></i> {{ idname|trans({}, 'messages')|capitalize }}</h5>
     {% endif %}
         {% set clearFilters = false %}
         {% for facetTag in facets %}
@@ -29,7 +29,7 @@
                 {% if facet is not null and facet != '' and facet|length > 0 and idname != 'material' or facet|length > 2 %}
             <div class="col-lg-6">        
         <input type="checkbox" name="{{ idname }}" value="{{ facet }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" {% for facetTag in facets %}{% if facetTag.facet == facet %} checked="checked" {% endif %}{% endfor %}>           
-       {{ facet|capitalize|trans({}, 'messages') }}
+       {{ facet|trans({}, 'messages')|capitalize }}
            </div>         
                 {% endif %}
             {% endfor %}

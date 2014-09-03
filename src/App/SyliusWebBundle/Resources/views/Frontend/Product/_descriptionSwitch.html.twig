@@ -9,25 +9,25 @@
                 <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
             {% endfor %}
         {% endif %}
-        <p><label>{{ 'Barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }} - {{ product.getMasterVariant().barcode }}</p>
+        <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }} - {{ product.getMasterVariant().barcode }}</p>
     </li>
     {% if product.shippingCategory %}
     <li class="slide-header list-group-item disabled">
-        <span class="text-uppercase"><strong>Delivery</strong></span>
+        <span class="text-uppercase"><strong>{{ 'italica.delivery'|trans({}, 'messages') }}</strong></span>
     </li>
     <li class="slide-body list-group-item" style="display:none;">
-        <p>Delivery: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
+        <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
         <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
     </li>
     {% endif %}
     <li class="slide-header list-group-item disabled">
-        <span class="text-uppercase"><strong>Returns</strong></span>
+        <span class="text-uppercase"><strong>{{ 'italica.returns'|trans({}, 'messages') }}</strong></span>
     </li>
     <li class="slide-body list-group-item " style="display:none;">
-        {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-return', 'authorizedBlockTemplateList': ['standard']} )) }}
+        {{ 'italica.return.policy'|trans({}, 'messages') }}
     </li>
     <li class="share list-group-item disabled">
-        <span class="text-uppercase"><strong>Share: </strong></span>
+        <span class="text-uppercase"><strong>{{ 'italica.share'|trans({}, 'messages') }}: </strong></span>
         <span class='st_facebook'></span>
         <span class='st_twitter'></span>
         <span class='st_pinterest' ></span>

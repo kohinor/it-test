@@ -13,15 +13,6 @@ $(document).ready(function(){
     
     
 });
-$(document).ready(function(){
-        $('.brand-slider').slick({
-  slidesToShow: 5,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 2000,
-  arrows:true
-});
-});
 
 function showsubmenu(element, menutabnumber){
     $(element).mouseover(function(){ 

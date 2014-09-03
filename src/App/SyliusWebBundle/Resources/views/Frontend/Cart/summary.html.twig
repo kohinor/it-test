@@ -7,7 +7,7 @@
 <form action="{{ path('sylius_cart_save') }}" method="post" novalidate>
 <div class="row">
     <div class="col-lg-8">
-        <h4 class="title"><span class="text">{{ 'Cart'|trans|raw }} <b>{{ 'Summary'|trans|raw }}</b></span></h4>
+        <h4 class="title"><span class="text">{{ 'italica.cart.summary'|trans|raw }}</span></h4>
         {{ form_errors(form) }}
         <table class="table table-striped">
             <thead>
@@ -28,15 +28,15 @@
         <div >
             <a href="{{ path('sylius_cart_clear') }}" class="btn btn-sm btn-default"><i class="fa fa-remove fa-white"></i> {{ 'sylius.cart.summary.clear'|trans }}</a>
             
-            <p class="pull-right">
-                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b>{{ cart.total|sylius_price }}</b>
+            <p class="pull-right lead">
+                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b class="text-danger">{{ cart.total|sylius_price }}</b>
                 </p> 
         </div>
     </div>
     <div class="col-lg-4">
         <div class="panel panel-custom">
         <div class="panel-body">
-            <h4 class="title"><span class="text">{{ 'Promotion'|trans }} <b>{{ 'Code'|trans }}</b></span></h4>
+            <h4 class="title"><span class="text">{{ 'italica.promotion.code'|trans }}</span></h4>
                 <div class="input-group input-group-sm">
                       {{ form_widget(form.promotionCoupon) }}
                       <span class="input-group-btn">
@@ -45,12 +45,12 @@
                   </div>
             <hr />
 
-            <h4 class="title"><span class="text">{{ 'Cart'|trans }} <b>{{ 'Total'|trans }}</b></span></h4>
+            <h4 class="title"><span class="text">{{ 'italica.cart.total'|trans }}</span></h4>
                 {% if cart.promotionTotal %}
                <p><label>{{ 'sylius.order.promotion_total'|trans }}</label>: <b>{{ cart.promotionTotal|sylius_price }}</b></p>
             {% endif %}
-               <p>
-                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b>{{ cart.total|sylius_price }}</b>
+               <p class="lead">
+                    <label>{{ 'sylius.cart.summary.grand_total'|trans }}</label>: <b class="text-danger">{{ cart.total|sylius_price }}</b>
                 </p>     
                 <div>
                     <a href="{{ path('sylius_checkout_start') }}" class="btn btn- btn-danger btn-block "><i class="fa fa-white fa-shopping-cart"></i> {{ 'sylius.cart.summary.checkout'|trans }}</a>
