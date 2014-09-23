@@ -42,7 +42,7 @@
           <div class="col-lg-5 col-md-3 col-sm-3">
             <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:2px">
               <div class="input-group">
-                <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text">
+                <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text" style="width:250px;">
               <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
             </div>
             </form>
@@ -58,6 +58,22 @@
           </div>        
         </div>
       </div>
+      </header>
+      <header>
+          <div>
+              <div class="container">
+                  <div class="col-lg-4 col-md-4 col-sm-4 text-center text-uppercase">
+                  
+                  </div>
+                      
+                  <div class="col-lg-4 col-md-4 col-sm-4 text-center text-uppercase">
+                      <span style="padding:10px; display:block;"> Free delivery and returns </span>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                  
+                  </div>
+              </div>
+          </div>
     </header>          
     <div class="page-header" >
       <div class="container">   
@@ -66,10 +82,8 @@
             <div class="row">
             <h5 class="text-center  text-uppercase" >{{ 'welcome.message'|trans }}</h5>
             </div>
-            <hr />
             <div class="row text-center">
             <span class='st_facebook_hcount' displayText='Facebook'></span>
-            <span class='st_twitter_hcount' displayText='Tweet'></span>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
@@ -78,7 +92,6 @@
           </div>
           <div class="col-lg-4 col-sm-4 col-md-4">
             {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}   
-            <hr />
           </div>
         </div>
         <div class="row">

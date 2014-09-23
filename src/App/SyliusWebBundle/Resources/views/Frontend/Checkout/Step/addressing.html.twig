@@ -1,5 +1,5 @@
 {% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
-
+{% import 'SyliusWebBundle:Frontend/Macros:buttons.html.twig' as buttons %}
 {% block javascripts %}
 {{ parent() }}
 {% javascripts output='assets/compiled/frontend_province.js'
@@ -12,6 +12,26 @@
 {% block content %}
 
 {% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':2} %}
+    
+<div class="row">
+    {% for address in addresses %}
+        <div class="col-lg-4">
+            <div class="panel panel-custom">
+                <div class="panel-body">
+                    {{ include('SyliusWebBundle:Frontend/Address:_show.html.twig') }}
+                        {{ buttons.patch(
+                            path('sylius_checkout_addressing', {'id_billing': address.id}),
+                            'sylius.checkout.address.use.billing', 'star') }}
+                        <br>
+                      {{ buttons.patch(
+                            path('sylius_checkout_addressing', {'id_shipping': address.id}),
+                            'sylius.checkout.address.use.shipping', 'star') }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+    
 <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
 <div class="layout-flash">
 {{ form_errors(form) }}
