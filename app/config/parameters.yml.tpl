@@ -48,3 +48,4 @@ parameters:
     google_analytics_ua: ''
     google_api_key: ''
     locale: en
+    solr.dsn: %(SolrDsn)s

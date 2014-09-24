@@ -113,7 +113,7 @@ a2lix_translation_form:
 nelmio_solarium:
     endpoints:
         default:
-            dsn: http://solarium-italianew.rhcloud.com/italica-live
+            dsn: %solr.dsn%
             timeout: 5
     clients:
         default:

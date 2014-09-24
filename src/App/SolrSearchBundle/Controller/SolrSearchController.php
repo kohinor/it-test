@@ -18,13 +18,13 @@ class SolrSearchController extends Controller
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         $query->setRows($limit);
         
-        $key =  implode('-', $facets).$limit;
-        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
-        $resultset = $cache->fetch($key);
-        if (!$resultset) {
+        //$key =  implode('-', $facets).$limit;
+        //$cache   = $this->container->get('doctrine_cache.providers.file_cache');
+       // $resultset = $cache->fetch($key);
+        //if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset);
-        }
+        //    $cache->save($key, $resultset);
+       // }
         $bindings = array('results' => $resultset, 'locale' => $request->attributes->get('_locale'));
         
         return $this->render('AppSolrSearchBundle:SolrSearch:new-in.html.twig', $bindings);
@@ -102,12 +102,12 @@ class SolrSearchController extends Controller
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
         
         $key = 'facets-'.implode('-', $facets);
-        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
-        $resultset = $cache->fetch($key);
-        if (!$resultset) {
+        //$cache   = $this->container->get('doctrine_cache.providers.file_cache');
+        //$resultset = $cache->fetch($key);
+        //if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset);
-        }
+         //   $cache->save($key, $resultset);
+        //}
   
         $facets = $this->getFacetsFromRequest($request);
         $bindings = array(
@@ -140,13 +140,13 @@ class SolrSearchController extends Controller
         foreach($facets as $facet) {
             $keyFacets[] = $facet->facet;
         }
-        $key = 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice;
-        $cache   = $this->container->get('doctrine_cache.providers.file_cache');
-        $paginator = $cache->fetch($key);
-        if (!$paginator) {
+        //$key = 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice;
+        //$cache   = $this->container->get('doctrine_cache.providers.file_cache');
+        //$paginator = $cache->fetch($key);
+       // if (!$paginator) {
             $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
-            $cache->save($key, $paginator);
-        }
+       //     $cache->save($key, $paginator);
+       // }
         $solrRequest = $client->createRequest($query);
         if (count($initialFacets) == count($facets)) {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;
