@@ -3,7 +3,7 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img src="{{article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
+<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-medium" src="{{article.image ? article.image|imagine_filter('italica_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
 <div class="text-uppercase"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
 <div><span >{{ title }}</span></div>
 <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >

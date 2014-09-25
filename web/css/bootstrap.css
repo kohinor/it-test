@@ -6637,3 +6637,20 @@ ul.checkout-bar a {
     top: 11px;
     left: -6px;
 }
+
+.img-home {
+    height: 156px;
+    width: 130px;
+}
+.img-small {
+    width: 58px;
+    height: 70px;
+}
+.img-medium {
+    width: 160px;
+    height: 192px;
+}
+.img-large {
+    width: 300px;
+    height: 320px;
+}

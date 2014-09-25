@@ -44,6 +44,7 @@ class SolrProductUpdateCommand extends ContainerAwareCommand
                    $output->writeln('<error>error</error> '. $e->getMessage());
                 }            
         };
+        $buffer->addCommit();
         $buffer->flush();
         $output->writeln('done');
     }

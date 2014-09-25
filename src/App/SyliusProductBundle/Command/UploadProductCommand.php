@@ -48,7 +48,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $output->writeln('Update model '.$data[13]);
         $productId = $data[1];
         $modelId = $data[13];
-        $modelBarcode = $data[14];
+        $modelBarcode = $data[14] ? $data[14] : 'n/a';
         $modelSize= trim($data[15]);
         $modelOnHand = $data[16];
         
@@ -60,8 +60,10 @@ class UploadProductCommand extends ContainerAwareCommand
         $optionRepository = $this->getContainer()->get('sylius.repository.product_option');
         if (in_array($modelSize, array('S', 'M', 'L', 'XL', 'XXL', 'XXXL'))) {
             $option = $optionRepository->findOneBy(array('name' => 'Leter Size'));
+            $product->addOption($option);
         } else {
             $option = $optionRepository->findOneBy(array('name' => 'Number size'));
+            $product->addOption($option);
         }
 
         $variantRepository = $this->getContainer()->get('sylius.repository.product_variant');
@@ -90,7 +92,7 @@ class UploadProductCommand extends ContainerAwareCommand
         
         $variant->addOption($optionValue);
         $variant->setPrice($product->getMasterVariant()->getPrice());
-
+        $variant->setRrp($product->getMasterVariant()->getPrice());
         $variantManager = $this->getContainer()->get('sylius.manager.product_variant');
         $variantManager->persist($variant);
         $manager = $this->getContainer()->get('sylius.manager.product');
@@ -233,6 +235,8 @@ class UploadProductCommand extends ContainerAwareCommand
         $variant->setSku('none');
         $variant->setAvailableOn(new \DateTime());
         $variant->setOnHand(0);
+        $variant->setBarcode($data[14] ? $data[14] : 'n/a');
+        $variant->setRrp($productPrice*100);
 
         $uploader = $this->getContainer()->get('sylius.image_uploader');
         foreach ($variant->getImages() as $image ) {

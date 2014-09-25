@@ -1,7 +1,7 @@
 <div class="other-products">
     {% for product in products %}
         <a href="{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}">
-        <img class="pull-left thumbnail {% if slug == product.slug %} current{% endif %}" src="{{ product.image ? product.image.path|imagine_filter('sylius_small'): 'http://placehold.it/60x60' }}" alt="{{ product.name }}" />   
+        <img class="img-small pull-left thumbnail {% if slug == product.slug %} current{% endif %}" src="{{ product.image ? product.image.path|imagine_filter('italica_small'): 'http://placehold.it/60x60' }}" alt="{{ product.name }}" />   
         </a>
     {% endfor %}
 </div>
