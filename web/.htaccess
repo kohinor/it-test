@@ -8,6 +8,17 @@ AddType text/javascript .js
 # 
 # URL: http://httpd.apache.org/docs/2.2/mod/mod_expires.html
 # 
+
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault "access plus 1 seconds"
@@ -28,7 +39,7 @@ AddType text/javascript .js
 # URL: http://httpd.apache.org/docs/2.2/mod/mod_headers.html
 # 
 <IfModule mod_headers.c>
-    <FilesMatch "\\.(ico|jpe?g|png|gif|swf|css|js)$">
+    <FilesMatch "\\.(ico|jpe?g|png|gif|swf|css|js|woff)$">
         Header set Cache-Control "max-age=2692000, public"
     </FilesMatch>
     <FilesMatch "\\.(x?html?|php)$">
