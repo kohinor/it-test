@@ -4,6 +4,7 @@
     {% set title = article.name_en %}
 {% endif %}
 <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-medium" src="{{article.image ? article.image|imagine_filter('italica_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
+<p>
 <div class="text-uppercase"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
 <div><span >{{ title }}</span></div>
 <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >
@@ -17,4 +18,4 @@
 {% endif %}
 </a>
 <div style="margin-top:5px;"><a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" class="btn btn-sm btn-danger btn-block">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
-    
+</p>    

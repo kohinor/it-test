@@ -1,7 +1,8 @@
 <div class="col-lg-2 col-md-4 col-sm-4 text-center" >    
     <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
         <img  class="img-home" src="{{ product.image ? product.image.path|imagine_filter('italica_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
-    </a>       
+    </a> 
+    <p>    
     <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><span >{{ product.translate(locale|default('en')).name|default(product.name) }}</span></a></div>
     <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
         {% if product.rrp > product.price %}
@@ -14,4 +15,5 @@
         {% endif %}
     </a>
     <div style="margin-top:5px;"><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}" class="btn btn-danger btn-sm btn-block">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
+    </p>
 </div>

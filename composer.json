@@ -40,7 +40,8 @@
         "a2lix/translation-form-bundle":        "1.*@dev",
         "nelmio/solarium-bundle":               "2.*",
         "knplabs/knp-paginator-bundle":         "2.4.*@dev",
-        "symfony/icu":                          "1.1.*"
+        "symfony/icu":                          "1.1.*",
+        "aws/aws-sdk-php":                      "dev-master"
     },
     "require-dev": {
         "behat/behat":                       "~3.0",

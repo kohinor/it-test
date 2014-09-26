@@ -98,8 +98,10 @@ $(document).ready(function(){
         $('.sylius-different-billing-address-trigger').click(function() {
             if ($(this).is(':checked')) {
                 $('#sylius-billing-address-container').show();
+                $('.billing-address-choice').show();
             }else {
                 $('#sylius-billing-address-container').hide();
+                $('.billing-address-choice').hide();
             }
         });
         
