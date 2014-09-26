@@ -1,14 +1,10 @@
 <h4>{{ 'site.subscription.header'|trans({}, 'messages') }}</h4>
 <form action="{{ path('app_site_subscription') }}" method="post" >
     <div class="input-group">
+    <span class="input-group-btn "><input type="submit" class="btn btn-default btn-sm" name="subscribe" style="width:100px;" value="Men" /></span>
     {{ form_widget(form.email) }}
-    <span class="input-group-btn "><input type="submit" class="btn btn-default btn-sm" value="{{ 'subscribe'|trans }}" /></span>
-    </div>
-   <div class=" checkboxes">
-        <div class="checkbox-inline">  {{ form_widget(form.men) }} {{ 'italica.men'|trans }}</div>
-        <div class="checkbox-inline"> {{ form_widget(form.women) }} {{ 'italica.women'|trans }}</div>
-    </div>
+    <span class="input-group-btn "><input type="submit" class="btn btn-default btn-sm" name="subscribe" style="width:100px;" value="Women" /></span>
+    </div>   
     <input type="hidden" name='path' value='{{ path }}' />
-    {{ form_rest(form) }}
-    
+    {{ form_rest(form) }}    
 </form>

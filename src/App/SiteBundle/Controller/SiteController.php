@@ -30,6 +30,13 @@ class SiteController extends Controller
         if ($request->getMethod() === 'POST' && $request->request->has($form->getname())) {
             $form->bind($request);
             if ($form->isValid()) {
+                if ($_POST['subscribe'] == 'Men') {
+                    $newsletter->setMen(true);
+                    $newsletter->setWomen(false);
+                } elseif ($_POST['subscribe'] == 'Women') {
+                    $newsletter->setWomen(true);
+                    $newsletter->setMen(false);
+                }
                 $this->getDoctrine()->getManager()->persist($newsletter);
                 $this->getDoctrine()->getManager()->flush();
                 $this->get('session')->getFlashBag()->add('success', 'newsletter.subscribed');

@@ -24,6 +24,7 @@ class SolrUpdateService
             $update = $this->client->createUpdate();
             $document = $this->getSolrDocument($update->createDocument(), $product);
             $update->addDocument($document);
+            $update->addCommit();
             $this->client->update($update);
     }
     

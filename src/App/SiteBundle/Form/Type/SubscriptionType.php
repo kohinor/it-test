@@ -18,14 +18,6 @@ class SubscriptionType extends AbstractType
                 'required' => true,
                 'attr' => array('placeholder'=> "Provide your email")
             ))
-        ->add('men', 'checkbox', array(
-            'label' => 'Men',
-            'required' => false
-            ))
-        ->add('women', 'checkbox', array(
-            'label' => 'Women',
-            'required' => false
-            ))
         ;
     }
     

@@ -119,6 +119,9 @@
                 <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
                 <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
+                    <div class="panel text-uppercase">
+                    <div class="panel-body">{{ 'italica.product.free.delivery'|trans }}</div>
+                    </div>
         </div>  
         {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}        
     </div>
