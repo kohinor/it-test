@@ -6654,3 +6654,7 @@ ul.checkout-bar a {
     width: 300px;
     height: 320px;
 }
+.promo-nav li {
+    border-bottom: 1px dashed #666;
+    font-weight: bold;
+}

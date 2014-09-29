@@ -31,11 +31,12 @@
         'limit':4 } )) }}
     </div>
     <div class="col-lg-3">
-        <div class=" lead text-center title" style="background-image:none;">
-            
-            <a href="{{ path('app_solr_search_gender_promotion', {'gender':'women', 'promotion':'new in'}) }}">
-               <hr /> {{ 'italica.shop.new.arrivals.women'|trans({}, 'messages')|raw }}<hr /></a>
-        </div>
+        {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+            'slug': app.request.locale|default('en') ~ '-new-in-women',
+            'cssClass': "text-center promo-nav",
+            'currentPageSlug':kitCmsPage.slug|default(''),
+            'startDepth':1 ,
+            'endDepth':1} )) }}
     </div>
 </div>
 <div class="row" style="margin-top: 25px;">
@@ -43,10 +44,12 @@
     <h4 class="title"><span class="text">{{ 'italica.new.arrivals.men'|trans({}, 'messages') }}</span></h4>
     </div>
     <div class="col-lg-3">
-    <div class="text-center lead title" style="background-image:none;">
-        <a href="{{ path('app_solr_search_gender_promotion', {'gender':'men', 'promotion':'new in'}) }}">
-            <hr />{{ 'italica.shop.new.arrivals.men'|trans({}, 'messages')|raw }}</a><hr />
-    </div>
+          {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+            'slug': app.request.locale|default('en') ~ '-new-in-men',
+            'cssClass': "text-center promo-nav",
+            'currentPageSlug':kitCmsPage.slug|default(''),
+            'startDepth':1 ,
+            'endDepth':1} )) }}
     </div>
     <div class="col-lg-9">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {
