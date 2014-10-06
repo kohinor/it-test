@@ -101,25 +101,31 @@ class SolrSearchController extends Controller
         $facetsCollection = $this->getFacets($facets);
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
         
-        $key = 'facets-'.implode('-', $facets);
+        //$solrRequest = $client->createRequest($query);
+        //print $solrRequest->getUri();
+        //$key = 'facets-'.implode('-', $facets);
         //$cache   = $this->container->get('doctrine_cache.providers.file_cache');
         //$resultset = $cache->fetch($key);
         //if (!$resultset) {
             $resultset = $client->select($query);
          //   $cache->save($key, $resultset);
         //}
-  
+        
         $facets = $this->getFacetsFromRequest($request);
+        if ($resultset->getFacetSet()->getFacet('categories')->count() > 0) {
+            $category = $this->getFacetTemplate('categories', $resultset, $facets);
+        } else {
+            $category = $this->getFacetTemplate('category1', $resultset, $facets);
+        }
         $bindings = array(
-                'size' => $this->getFacetTemplate('size', 'size', $resultset, $facets),
-                'color' => $this->getFacetTemplate('color', 'color', $resultset, $facets),
-                'brand' => $this->getFacetTemplate('brand', 'brand', $resultset, $facets),
-                'material' => $this->getFacetTemplate('material', 'material', $resultset, $facets),
-                'gender' => $this->getFacetTemplate('gender', 'gender', $resultset, $facets),
-                'delivery' => $this->getFacetTemplate('delivery', 'delivery', $resultset, $facets),
-                'promotion' => $this->getFacetTemplate('promotion', 'promotion', $resultset, $facets),
-                'category1' => $this->getFacetTemplate('category1', 'category1', $resultset, $facets),
-                'category2' => $this->getFacetTemplate('category2', 'category2', $resultset, $facets),
+                'size' => $this->getFacetTemplate('size', $resultset, $facets),
+                'color' => $this->getFacetTemplate('color', $resultset, $facets),
+                'brand' => $this->getFacetTemplate('brand', $resultset, $facets),
+                'material' => $this->getFacetTemplate('material', $resultset, $facets),
+                'gender' => $this->getFacetTemplate('gender', $resultset, $facets),
+                'delivery' => $this->getFacetTemplate('delivery', $resultset, $facets),
+                'promotion' => $this->getFacetTemplate('promotion', $resultset, $facets),
+                'category' => $category
                 );
         return $bindings;
     }
@@ -148,6 +154,7 @@ class SolrSearchController extends Controller
        //     $cache->save($key, $paginator);
        // }
         $solrRequest = $client->createRequest($query);
+        // print $solrRequest->getUri();
         if (count($initialFacets) == count($facets)) {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;
         } else {
@@ -294,24 +301,20 @@ class SolrSearchController extends Controller
 
     /**
      * @param string $idname
-     * @param string $facetkey
      * @param string $term
      * @param int $radius
      * @param array $resultset
      * @param array $facets
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getFacetTemplate($idname, $facetkey, $resultset, $facets)
+    public function getFacetTemplate($idname, $resultset, $facets)
     {
-       // die(var_dump($resultset->getFacetSet()->getFacet('size')));
+        //die(var_dump($resultset->getFacetSet()->getFacet('categories')));
         $bindings = array(
             'results' => $resultset,
             'facets' => $facets?$facets:array(),
-            'idname' => $idname,
-            'facetkey' => $facetkey,
-
+            'idname' => $idname
         );
-        //die(var_dump($bindings));
         return $this->renderView('AppSolrSearchBundle:SolrSearch:facet-results.html.twig',$bindings);
     }
     

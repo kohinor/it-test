@@ -134,18 +134,23 @@ liip_imagine:
     data_root: %kernel.root_dir%/../web/media/image
     filter_sets:
         italica_home:
+           quality: 75
            filters:
                 thumbnail: { size: [260, 312], mode: outbound } 
         italica_small:
+            quality: 75
             filters:
                 thumbnail: { size: [116, 140], mode: outbound }
         italica_medium:
+            quality: 75
             filters:
                 thumbnail: { size: [320, 384], mode: outbound }
         italica_large:
+            quality: 75
             filters:
                 thumbnail: { size: [600, 720], mode: outbound }
         sylius_x_large:
+            quality: 75
             filters:
                 thumbnail: { size: [1024, 1228], mode: outbound }
 

@@ -1,5 +1,38 @@
-{% if idname != 'category2' or (results.facetSet.facet('category1')|length <= 1) %}
-{% if results and results.facetSet.facet(idname)|length > 1 %}
+{% import _self as filterBox %}
+{% if idname == 'gender' and results and results.facetSet.facet(idname)|length > 1 %}
+    <div class = "filter-box">
+        <div class="row">
+            {% for facet, value in results.facetSet.facet(idname) %}
+                <div class="col-lg-6">        
+                    <a href="{{ path('app_solr_search_gender', app.request.query.all|merge({'gender': facet, 'page':1})) }}" class="btn btn-block btn-default btn-sm">          
+                   {{ facet|trans({}, 'messages')|capitalize }}</a>
+               </div>         
+            {% endfor %}
+        </div>
+    </div> 
+    <hr />
+{% elseif idname == 'categories' %}
+    <div class = "filter-box">
+        <div class="filter-header open" data-key="{{ idname }}">
+            <h5><i class="fa fa-arrow-right"></i> {{ 'category'|trans({}, 'messages')|capitalize }}</h5>
+            {% set clearFilters = false %}
+            {% for facetTag in facets %}
+                {% if facetTag.field == 'category1' or facetTag.field == 'category2'  %}
+                    {% set clearFilters = true %}
+                {% endif %}
+            {% endfor %}
+            {% if clearFilters %}
+                <span class="clear-filters" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">&nbsp;&nbsp;({{ 'clear all'|trans({}, 'messages') }})</span>
+            {% endif %}
+        </div>    
+        <ul class="nav">
+        {% for pivot in results.facetSet.facet(idname) %}
+            {{ filterBox.pivot(pivot.getField(), 'label-long', pivot, facets) }}
+        {% endfor %}
+        </ul>
+    </div>
+    <hr />
+{% elseif results and results.facetSet.facet(idname)|length > 1 %}
 {% if idname == 'gender' or idname == 'promotion' or idname == 'color' or idname == 'size' %}
     {% set class = 'label-short' %}
 {% else %}
@@ -7,22 +40,28 @@
 {% endif %}
 <div class = "filter-box">
     <div class="filter-header open" data-key="{{ idname }}">
-    {% if idname == 'category2' or idname == 'category1' %}
+    {% if idname == 'category1' %}
         <h5><i class="fa fa-arrow-right"></i> {{ 'category'|trans({}, 'messages')|capitalize }}</h5>
     {% else %}
        <h5><i class="fa fa-arrow-right"></i> {{ idname|trans({}, 'messages')|capitalize }}</h5>
     {% endif %}
-        {% set clearFilters = false %}
-        {% for facetTag in facets %}
-            {% if facetTag.field == idname %}
-                {% set clearFilters = true %}
-            {% endif %}
-        {% endfor %}
-        {% if clearFilters %}
-            <span class="clear-filters" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">&nbsp;&nbsp;({{ 'clear all'|trans({}, 'messages') }})</span>
+    {% set clearFilters = false %}
+    {% for facetTag in facets %}
+        {% if facetTag.field == idname %}
+            {% set clearFilters = true %}
         {% endif %}
+    {% endfor %}
+    {% if clearFilters %}
+        <span class="clear-filters" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-key="{{ idname }}">&nbsp;&nbsp;({{ 'clear all'|trans({}, 'messages') }})</span>
+    {% endif %}
     </div>
-    <div id="filters-{{ idname }}" class='{{ class }}'>
+    {{ filterBox.filters(idname, class, results, facets) }}
+</div>
+<hr />
+{% endif %}
+
+{% macro filters(idname, class, results, facets) %}
+   <div id="filters-{{ idname }}" class='{{ class }}'>
         <div class="row{% if idname != 'gender' and idname != 'promotion' and idname != 'delivery'  %} filter-option {% endif %}">
            
             {% for facet, value in results.facetSet.facet(idname) %}
@@ -35,7 +74,17 @@
             {% endfor %}
         </div>
     </div>
-</div>
-<hr />
-{% endif %}
-{% endif %}
+{% endmacro %}
+
+{% macro pivot(idname, class, pivot, facets) %}
+    <li>        
+        <input type="checkbox" name="{{ pivot.getField() }}" value="{{ pivot.getValue() }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" {% for facetTag in facets %}{% if facetTag.facet == pivot.getValue() %} checked="checked" {% endif %}{% endfor %}>           
+        {{ pivot.getValue()|trans({}, 'messages')|capitalize }}
+    </li>         
+                
+   {% for nextPivot in pivot.getPivot() %}
+        <ul style="list-style: none outside none;">
+        {{ _self.pivot(pivot.getField(), 'label-long', nextPivot, facets) }}
+        </ul>
+    {% endfor %}
+{% endmacro %}

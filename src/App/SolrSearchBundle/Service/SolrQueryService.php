@@ -27,7 +27,7 @@ class SolrQueryService
      * @param string $sort
      * @return type
      */
-    public function getSolrQuery(Client $client, $term = '*', $startPrice = 0, $endPrice = 10000)
+    public function getSolrQuery(Client $client, $term = '*', $startPrice = 0, $endPrice = 1000000)
     {
         $term = str_replace(' ', '', $term);
         $client->getPlugin('postbigrequest');
@@ -57,7 +57,7 @@ class SolrQueryService
         $facetSet->createFacetField('delivery')->setField('delivery')->setSort('index');
         $facetSet->createFacetField('promotion')->setField('promotion')->setSort('index')->setLimit(200);
         $facetSet->createFacetField('category1')->setField('category1')->setSort('index');
-        $facetSet->createFacetField('category2')->setField('category2')->setSort('index');
+        $facetSet->createFacetPivot('categories')->addFields('category1,category2')->setMinCount(0);
 
         if (!empty($facets)) {
             $groupedFacets = array();
