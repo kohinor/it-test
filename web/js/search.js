@@ -34,6 +34,14 @@ var italica = {
                 $('input[name=' + key + ']').each(function() {
                     italica.search.removeFacet(key, $(this).val());
                 });
+                if (key == 'categories') {
+                    $('input[name=category1]').each(function() {
+                        italica.search.removeFacet(key, $(this).val());
+                    });
+                    $('input[name=category2]').each(function() {
+                        italica.search.removeFacet(key, $(this).val());
+                    });
+                }
                 italica.redirect(url);
                 return false;
             }
@@ -205,10 +213,13 @@ $('.filter input[type=checkbox]').click(function(e) {
    var value = $(this).attr('value');
    if($(this).is(":checked")) {
      italica.search.addFacet(value, name);
+     if (name == 'category2') {
+        var parent = $(this).closest('ul').siblings('input:checkbox');
+        italica.search.addFacet(parent.attr('value'), parent.attr('name'));
+     }
      italica.redirect(url);
    }else{
      italica.search.removeFacet(name, value);
-     console.log(italica.search.facets);
      italica.redirect(url);
    }
 

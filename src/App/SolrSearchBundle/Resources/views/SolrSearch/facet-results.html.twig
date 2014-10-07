@@ -80,11 +80,12 @@
     <li>        
         <input type="checkbox" name="{{ pivot.getField() }}" value="{{ pivot.getValue() }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" {% for facetTag in facets %}{% if facetTag.facet == pivot.getValue() %} checked="checked" {% endif %}{% endfor %}>           
         {{ pivot.getValue()|trans({}, 'messages')|capitalize }}
-    </li>         
+             
                 
    {% for nextPivot in pivot.getPivot() %}
         <ul style="list-style: none outside none;">
         {{ _self.pivot(pivot.getField(), 'label-long', nextPivot, facets) }}
         </ul>
     {% endfor %}
+    </li>
 {% endmacro %}
