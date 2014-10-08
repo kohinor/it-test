@@ -213,10 +213,6 @@ $('.filter input[type=checkbox]').click(function(e) {
    var value = $(this).attr('value');
    if($(this).is(":checked")) {
      italica.search.addFacet(value, name);
-     if (name == 'category2') {
-        var parent = $(this).closest('ul').siblings('input:checkbox');
-        italica.search.addFacet(parent.attr('value'), parent.attr('name'));
-     }
      italica.redirect(url);
    }else{
      italica.search.removeFacet(name, value);

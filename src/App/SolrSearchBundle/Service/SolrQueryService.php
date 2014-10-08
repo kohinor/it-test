@@ -62,7 +62,11 @@ class SolrQueryService
         if (!empty($facets)) {
             $groupedFacets = array();
             foreach($facets as $facet){
-                $groupedFacets[$facet->field][] = $facet->field.':"'.$facet->facet.'"';
+                if($facet->field == 'category1' || $facet->field == 'category2') {
+                    $groupedFacets['categories'][] = $facet->field.':"'.$facet->facet.'"';
+                } else {
+                    $groupedFacets[$facet->field][] = $facet->field.':"'.$facet->facet.'"';
+                }
             }
             foreach ($groupedFacets as $field => $facets) {;
                     $fq = $query->createFilterQuery($field)->setQuery(implode(' OR ', $facets));
