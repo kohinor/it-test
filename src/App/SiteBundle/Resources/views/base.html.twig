@@ -52,8 +52,13 @@
           </div>
           <div class="col-lg-2 col-md-3 col-sm-3">
             <ul class="nav navbar-nav">
-              <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
-              <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
+              {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
+                <li><a href="/en">{{ 'English'|trans }}</a></li>
+                <li><a href="/fr">{{ 'French'|trans({}, 'messages') }}</a></li>
+              {% else %}
+                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
+                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
+              {% endif %}
             </ul>
           </div>        
         </div>
