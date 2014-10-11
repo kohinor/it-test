@@ -36,20 +36,21 @@ function visible(menutabnumber){
 
 $(document).ready(function(){ 
 
-	$(".container").imagezoomsl({ 
+	$(".image-container").imagezoomsl({ 
 		
 		descarea: ".big-caption", 				
 		zoomrange: [1.68, 10],
 		zoomstart: 5,
 		cursorshadeborder: "5px solid black",
-		magnifiereffectanimate: "fadeIn",	
+		magnifiereffectanimate: "fadeIn",
+                magnifiersize: [500,435]
 	});
   
 
 	$(".tmb-caption img").click(function(){
 
 	    var that = this;
-		$(".container").fadeOut(600, function(){
+		$(".image-container").fadeOut(600, function(){
 		
 			$(this).attr("src", 	   $(that).attr("data-src"))
                                .attr("data-large", $(that).attr("data-tmb-large"))

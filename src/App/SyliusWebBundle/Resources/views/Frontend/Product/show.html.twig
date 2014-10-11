@@ -66,7 +66,7 @@
             {% endif %}
         </div>
         <div class="col-lg-10 col-sm-10 col-md-10">
-            <img class="img-large container" style="padding:0; margin:0; width:300px;" src="{{ product.image ? product.image.path|imagine_filter('italica_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+            <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('italica_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
         </div>
     </div>
     <div class="row">
@@ -86,16 +86,18 @@
                
                 <p>{{ product.translate(app.request.locale).shortDescription|default(product.shortDescription)|raw }}</p>
             <div class="row">
-                <div class="col-lg-7"></div>
-            <div class="col-lg-5">
-                <p class="lead text-uppercase">
+            <div class="col-lg-12">
+                <p class="lead text-uppercase pull-right">
                 {% if product.rrp > product.price %}
                     <div >{{ 'italicarrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
                     <div>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }}</b></span></div>
                 {% else %}
                     {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
                 {% endif %}
-            </p>
+                </p>
+            </div>
+            <div class="col-lg-12">
+                <p class="lead pull-right">{{ 'italica.product.free.delivery'|trans }}</p>
             </div>
             </div>
             <div class="well panel panel-default">
@@ -119,9 +121,6 @@
                 <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
                 <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
-                    <div class="panel text-uppercase">
-                    <div class="panel-body">{{ 'italica.product.free.delivery'|trans }}</div>
-                    </div>
         </div>  
         {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}        
     </div>
