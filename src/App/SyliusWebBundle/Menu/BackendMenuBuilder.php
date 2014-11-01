@@ -100,7 +100,7 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             ->addChild('content', $childOptions)
             ->setLabel($this->translate(sprintf('sylius.backend.menu.%s.content', $section)))
         ;
-
+        
         $child->addChild('translations', array(
             'route' => 'lexik_translation_grid',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-large'),

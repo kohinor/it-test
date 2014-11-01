@@ -11,28 +11,6 @@
     <script type="text/javascript" src="{{ asset ("bundles/kitpagescms/js/jQuery/kitCmsModal.js") }}" ></script>
     {{ parent() }}
     <div class="kit-cms-tree kit-cms" >
-        
-        <script>
-            (function() {
-
-                $(document).ready(function() {
-                    $('.kit-cms-modal-open > a').kitCmsModal({closable:false});
-                    $('a.kit-cms-modal-open').kitCmsModal({closable:false});
-                });
-
-                $('.kit-cms-publish-all').click(function(e) {
-                    var response = confirm("Do you confirm you want to publish all pages and the navigation ?");
-                    if (!response) {
-                        e.preventDefault();
-                        $('.kit-cms-modal-open > a').kitCmsModal("close");
-                        $('a.kit-cms-modal-open').kitCmsModal("close");
-                    }
-                });
-
-
-            })();
-        </script>
-
         {% set cycle = 0 %}
     <img class="kit-cms-tree-collapse-all" src="{{asset("bundles/kitpagescms/icon/collapse_all.gif")}}"  data-cms-tree-action-url="{{ path('kitpages_cms_nav_userpreference_tree', { 'action': 'collapse', 'target': 'tree' }) }}" />
     <img class="kit-cms-tree-expand-all" src="{{asset("bundles/kitpagescms/icon/expand_all.gif")}}"  data-cms-tree-action-url="{{ path('kitpages_cms_nav_userpreference_tree', { 'action': 'expand', 'target': 'tree' }) }}" />

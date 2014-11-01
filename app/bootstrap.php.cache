@@ -2199,11 +2199,11 @@ protected $booted;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.3.21-DEV';
-const VERSION_ID ='20321';
+const VERSION ='2.3.22-DEV';
+const VERSION_ID ='20322';
 const MAJOR_VERSION ='2';
 const MINOR_VERSION ='3';
-const RELEASE_VERSION ='21';
+const RELEASE_VERSION ='22';
 const EXTRA_VERSION ='DEV';
 public function __construct($environment, $debug)
 {

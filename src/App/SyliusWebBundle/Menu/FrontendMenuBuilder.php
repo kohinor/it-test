@@ -11,17 +11,10 @@
 
 namespace App\SyliusWebBundle\Menu;
 
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Sylius\Bundle\MoneyBundle\Twig\MoneyExtension;
-use Sylius\Component\Cart\Provider\CartProviderInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\Component\Taxonomy\Model\TaxonInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+
 
 /**
  * Frontend menu builder.
@@ -56,12 +49,12 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             'route' => 'sylius_cart_summary',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.main.cart', array(
                 '%items%' => $cartTotals['items'],
-                '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
-            )), 'class' => 'pull-right panel panel-default'),
-            'labelAttributes' => array('icon' => 'fa fa-shopping-cart fa-lg')
+                '%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])
+            ))),
+            'labelAttributes' => array('icon' => 'icon-shopping-cart icon-large')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],
-            '%total%' => $this->moneyExtension->formatPrice($cartTotals['total'])
+            '%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])
         )));
 
         return $menu;
@@ -74,31 +67,34 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
                 'class' => 'nav'
             )
         ));
-        $menu->addChild('account', array(
+
+        $child = $menu->addChild($this->translate('sylius.account.title'));
+
+        $child->addChild('account', array(
             'route' => 'sylius_account_homepage',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.homepage')),
             'labelAttributes' => array('icon' => 'fa fa-home', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.homepage'));
 
-        $menu->addChild('profile', array(
+        $child->addChild('profile', array(
             'route' => 'fos_user_profile_edit',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.profile')),
             'labelAttributes' => array('icon' => 'fa fa-info', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.profile'));
 
-        $menu->addChild('password', array(
+        $child->addChild('password', array(
             'route' => 'fos_user_change_password',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.password')),
             'labelAttributes' => array('icon' => 'fa fa-lock', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.password'));
 
-        $menu->addChild('orders', array(
+        $child->addChild('orders', array(
             'route' => 'sylius_account_order_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.orders')),
             'labelAttributes' => array('icon' => 'fa fa-briefcase', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.orders'));
 
-        $menu->addChild('addresses', array(
+        $child->addChild('addresses', array(
             'route' => 'sylius_account_address_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.addresses')),
             'labelAttributes' => array('icon' => 'fa fa-envelope', 'iconOnly' => false)
@@ -120,12 +116,14 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             )
         ));
 
-        foreach ($this->exchangeRateRepository->findAll() as $exchangeRate) {
-            $menu->addChild($exchangeRate->getCurrency(), array(
+        foreach ($this->currencyProvider->getAvailableCurrencies() as $currency) {
+            $code = $currency->getCode();
+
+            $menu->addChild($code, array(
                 'route' => 'sylius_currency_change',
-                'routeParameters' => array('currency' => $exchangeRate->getCurrency()),
-                'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.currency', array('%currency%' => $exchangeRate->getCurrency()))),
-            ))->setLabel(Intl::getCurrencyBundle()->getCurrencySymbol($exchangeRate->getCurrency()));
+                'routeParameters' => array('currency' => $code),
+                'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.currency', array('%currency%' => $code))),
+            ))->setLabel(Intl::getCurrencyBundle()->getCurrencySymbol($code));
         }
 
         return $menu;

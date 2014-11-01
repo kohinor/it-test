@@ -17,24 +17,5 @@
         $('.datepicker').datepicker({});
     });
 })( jQuery );
-
-(function($) {
-
-                $(document).ready(function() {
-                    $('.kit-cms-modal-open > a').kitCmsModal({closable:false});
-                    $('a.kit-cms-modal-open').kitCmsModal({closable:false});
-                });
-                $(document).ready(function() {
-                $('.kit-cms-publish-all').click(function(e) {
-                    var response = confirm("Do you confirm you want to publish all pages and the navigation ?");
-                    if (!response) {
-                        e.preventDefault();
-                        $('.kit-cms-modal-open > a').kitCmsModal("close");
-                        $('a.kit-cms-modal-open').kitCmsModal("close");
-                    }
-                });
-                });
-
-            })( jQuery );
             
   
