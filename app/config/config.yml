@@ -56,8 +56,8 @@ doctrine:
         entity_managers:
             default:
                 metadata_cache_driver: memcached
-                query_cache_driver:memcached
-                result_cache_driver:memcached
+                query_cache_driver: memcached
+                result_cache_driver: memcached
                 auto_mapping: true
                 mappings:
                     gedmo_loggable:
