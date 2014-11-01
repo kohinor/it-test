@@ -49,3 +49,8 @@ parameters:
     google_api_key: ''
     locale: en
     solr.dsn: %(SolrDsn)s
+    
+    sylius.order.allow_guest_order: false
+    sylius.uploader.filesystem: sylius_image
+    sylius.currency_importer.open_exchange_rates: 
+                  EUR: 1.0
