@@ -55,13 +55,9 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         entity_managers:
             default:
-                metadata_cache_driver: array
-                query_cache_driver:
-                    type: service
-                    id: doctrine_cache.providers.file_cache_doctrine
-                result_cache_driver:
-                    type: service
-                    id: doctrine_cache.providers.file_cache_doctrine
+                metadata_cache_driver: memcached
+                query_cache_driver:memcached
+                result_cache_driver:memcached
                 auto_mapping: true
                 mappings:
                     gedmo_loggable:
@@ -164,4 +160,10 @@ doctrine_cache:
             file_system:
                 extension: ch
                 directory: %kernel.cache_dir%/site_doctrine
+        memcached:
+            memcached:
+                servers:
+                    memcached01.ss: 11211
+                    memcached02.ss: 
+                        port: 11211
 

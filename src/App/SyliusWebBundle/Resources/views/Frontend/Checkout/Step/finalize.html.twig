@@ -1,5 +1,9 @@
 {% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
 
+{% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
+{% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
+{% set promotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::PROMOTION_ADJUSTMENT') %}
+
 {% block content %}
 
 {% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':3} %}
@@ -47,24 +51,13 @@
         <div class="panel-body">
         <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
 
-        {{ form_errors(form) }}
-
-            <h4 class="title"><span class="text">{{ 'Payment Method'|trans }}</span></h4>
-        <fieldset>
-            {% for paymentMethodForm in form.paymentMethod %}
-                {{ form_row(paymentMethodForm) }}
-            {% endfor %}
-        </fieldset>
-
-        {{ form_widget(form._token) }}
-
         
          <hr />
          <p><label>{{ 'sylius.checkout.finalize.order.items_total'|trans }}</label>: {{ order.itemsTotal|sylius_price }}</p>
-         <p><label>{{ 'sylius.checkout.finalize.order.tax_total'|trans }}</label>: {{ order.taxTotal|sylius_price }}</p>      
-         <p><label>{{ 'sylius.checkout.finalize.order.shipping_total'|trans }}</label>: {{ order.shippingTotal|sylius_price }}</p>
-         {% if order.promotionAdjustments|length > 0 %}
-            <p><label>{{ 'sylius.checkout.finalize.order.promotion_total'|trans }}</label>: {{ order.promotionTotal|sylius_price }}</p>
+         <p><label>{{ 'sylius.checkout.finalize.order.tax_total'|trans }}</label>: {{ order.adjustmentsTotal(taxAdjustment)|sylius_price }}</p>      
+         <p><label>{{ 'sylius.checkout.finalize.order.shipping_total'|trans }}</label>: {{ order.adjustmentsTotal(shippingAdjustment)|sylius_price }}</p>
+         {% if not order.adjustments(promotionAdjustment).isEmpty() %}
+            <p><label>{{ 'sylius.checkout.finalize.order.promotion_total'|trans }}</label>: {{ order.adjustmentsTotal(promotionAdjustment)|sylius_price }}</p>
          {% endif %}
             <p><label>{{ 'sylius.checkout.finalize.order.total'|trans }}</label>: {{ order.total|sylius_price }}</p>
             <button type="submit" class="btn btn-danger btn-block">{{ 'sylius.checkout.forward'|trans }} <i class="icon-chevron-right"></i></button>
