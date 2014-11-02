@@ -4,8 +4,6 @@ parameters:
   sylius.checkout_scenario.class: App\SyliusCoreBundle\Checkout\CheckoutProcessScenario
   sylius.checkout_step.security.class: App\SyliusCoreBundle\Checkout\Step\SecurityStep
   sylius.checkout_step.addressing.class: App\SyliusCoreBundle\Checkout\Step\AddressingStep
-  sylius.checkout_step.shipping.class: App\SyliusCoreBundle\Checkout\Step\ShippingStep
-  sylius.checkout_step.payment.class: App\SyliusCoreBundle\Checkout\Step\PaymentStep
   sylius.checkout_step.purchase.class: App\SyliusCoreBundle\Checkout\Step\PurchaseStep
   sylius.checkout_step.finalize.class: App\SyliusCoreBundle\Checkout\Step\FinalizeStep
   sylius.cart_item_resolver.default.class: App\SyliusCoreBundle\Cart\ItemResolver

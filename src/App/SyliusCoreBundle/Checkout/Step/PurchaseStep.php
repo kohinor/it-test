@@ -41,7 +41,7 @@ class PurchaseStep extends Base
             'sylius_checkout_forward',
             array('stepName' => $this->getName())
         );
-
+die(var_dump($captureToken));
         return new RedirectResponse($captureToken->getTargetUrl());
     }
 

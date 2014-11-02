@@ -51,7 +51,16 @@
         <div class="panel-body">
         <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
 
-        
+        {{ form_errors(form) }}
+
+            <h4 class="title"><span class="text">{{ 'Payment Method'|trans }}</span></h4>
+        <fieldset>
+            {% for paymentMethodForm in form.paymentMethod %}
+                {{ form_row(paymentMethodForm) }}
+            {% endfor %}
+        </fieldset>
+
+        {{ form_widget(form._token) }}
          <hr />
          <p><label>{{ 'sylius.checkout.finalize.order.items_total'|trans }}</label>: {{ order.itemsTotal|sylius_price }}</p>
          <p><label>{{ 'sylius.checkout.finalize.order.tax_total'|trans }}</label>: {{ order.adjustmentsTotal(taxAdjustment)|sylius_price }}</p>      

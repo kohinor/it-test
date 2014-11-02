@@ -49,7 +49,7 @@ class FinalizeStep extends Base
         $request = $this->getRequest();
         $order = $this->getCurrentCart();
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_INITIALIZE, $order);
-        
+
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::FINALIZE_INITIALIZE, $order);
 
         $form = $this->createCheckoutPaymentForm($order);
@@ -65,7 +65,7 @@ class FinalizeStep extends Base
             $order->setUser($this->getUser());
 
             $this->completeOrder($order);
-
+                      
             return $this->complete();
         }
         return $this->renderStep($context, $order, $form);

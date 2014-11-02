@@ -160,10 +160,7 @@ doctrine_cache:
             file_system:
                 extension: ch
                 directory: %kernel.cache_dir%/site_doctrine
-        memcached:
             memcached:
                 servers:
-                    memcached01.ss: 11211
-                    memcached02.ss: 
-                        port: 11211
+                    127.0.0.1: 11211
 
