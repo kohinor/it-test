@@ -16,6 +16,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\SyliusCheckoutEvents;
 use Symfony\Component\Form\FormInterface;
 use Sylius\Bundle\CoreBundle\Checkout\Step\AddressingStep as Base;
+use Sylius\Component\Core\Model\UserInterface;
 
 /**
  * The addressing step of checkout.
@@ -39,19 +40,15 @@ class AddressingStep extends Base
             $shippingAddress = $this->get('sylius.repository.address')->find($shippingId);
             if ($shippingAddress) {
                 $order->setShippingAddress($shippingAddress);
-                $this->getManager()->persist($order);
-                $this->getManager()->flush();
             }
         }
         if ($billingId) {
             $billingAddress = $this->get('sylius.repository.address')->find($billingId);
-            if($billingAddress) {
+            if ($billingAddress) {
                 $order->setBillingAddress($billingAddress);
-                $this->getManager()->persist($order);
-                $this->getManager()->flush();
             }
         }
-        $form = $this->createCheckoutAddressingForm($order);
+        $form = $this->createCheckoutAddressingForm($order, $this->getUser());
 
         return $this->renderStep($context, $order, $form);
     }
@@ -66,7 +63,7 @@ class AddressingStep extends Base
         $order = $this->getCurrentCart();
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_INITIALIZE, $order);
         
-        $form = $this->createCheckoutAddressingForm($order);
+        $form = $this->createCheckoutAddressingForm($order, $this->getUser());
 
         if ($form->handleRequest($request)->isValid()) {            
             $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
@@ -102,8 +99,8 @@ class AddressingStep extends Base
         ));
     }
 
-    protected function createCheckoutAddressingForm(OrderInterface $order)
+    protected function createCheckoutAddressingForm(OrderInterface $order, UserInterface $user = null)
     {
-        return $this->createForm('sylius_checkout_addressing', $order);
+        return $this->createForm('sylius_checkout_addressing', $order, array('user' => $user, 'validation_groups' => array('sylius')));
     }
 }

@@ -1,0 +1,24 @@
+parameters:
+  sylius.payum.postpay.action.payment_status.class: App\PaymentBundle\Payum\Postpay\Action\PaymentStatusAction
+  sylius.payum.postpay.action.capture_payment.class: App\PaymentBundle\Payum\Postpay\Action\CapturePaymentAction
+  sylius.payum.postpay.action.status.class: App\PaymentBundle\Payum\Postpay\Action\StatusAction
+        
+services:     
+    sylius.repository.payment.method:
+        class: App\SyliusProductBundle\Entity\PaymentMethodRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - Sylius\Component\Payment\Model\PaymentMethod
+            
+    sylius.payum.postpay.action.capture_payment:
+        class: "%sylius.payum.postpay.action.capture_payment.class%"
+        calls:
+            - [setOptions, ["%postpay.options%"]]
+        
+    sylius.payum.postpay.action.status:
+          class: "%sylius.payum.postpay.action.status.class%"
+             
+    sylius.payum.postpay.action.payment_status:
+          class: "%sylius.payum.postpay.action.payment_status.class%"
+          arguments: ['@sylius.repository.payment', '@event_dispatcher', '@sylius.manager.payment', '@sm.factory']

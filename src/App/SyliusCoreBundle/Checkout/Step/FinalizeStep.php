@@ -18,6 +18,7 @@ use Sylius\Component\Core\SyliusOrderEvents;
 use Sylius\Component\Order\OrderTransitions;
 use Symfony\Component\Form\FormInterface;
 use Sylius\Bundle\CoreBundle\Checkout\Step\FinalizeStep as Base;
+use Sylius\Component\Core\Model\Payment;
 
 /**
  * Final checkout step.
@@ -34,11 +35,23 @@ class FinalizeStep extends Base
         $order = $this->getCurrentCart();
         
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_INITIALIZE, $order);
+        $paymentMethod = $this->get('sylius.repository.payment.method')->find(7);
+        if (!$order->getPayments()->last()) {
+            $payment = new Payment();
+            $payment->setOrder($order);
+            $order->addPayment($payment);
+        } else {
+            $order->getPayments()->last()->setMethod($paymentMethod);
+        }
+        
+        $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_PRE_COMPLETE, $order);
+        $this->getManager()->persist($order);
+        $this->getManager()->flush();
+
+        $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_COMPLETE, $order);
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::FINALIZE_INITIALIZE, $order);
         
-        $form = $this->createCheckoutPaymentForm($order);
-        
-        return $this->renderStep($context, $order, $form);
+        return $this->renderStep($context, $order);
     }
 
     /**
@@ -46,36 +59,19 @@ class FinalizeStep extends Base
      */
     public function forwardAction(ProcessContextInterface $context)
     {
-        $request = $this->getRequest();
         $order = $this->getCurrentCart();
-        $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_INITIALIZE, $order);
 
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::FINALIZE_INITIALIZE, $order);
-
-        $form = $this->createCheckoutPaymentForm($order);
-
-        if ($form->handleRequest($request)->isValid()) {
-            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_PRE_COMPLETE, $order);
-
-            $this->getManager()->persist($order);
-            $this->getManager()->flush();
-
-            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PAYMENT_COMPLETE, $order);
-
-            $order->setUser($this->getUser());
-
-            $this->completeOrder($order);
+        $order->setUser($this->getUser());
+        $this->completeOrder($order);
                       
-            return $this->complete();
-        }
-        return $this->renderStep($context, $order, $form);
+        return $this->complete();
     }
 
-    protected function renderStep(ProcessContextInterface $context, OrderInterface $order, FormInterface $form)
+    protected function renderStep(ProcessContextInterface $context, OrderInterface $order)
     {
         return $this->render('SyliusWebBundle:Frontend/Checkout/Step:finalize.html.twig', array(
             'order'   => $order,
-            'form'    => $form->createView(),
             'context' => $context
         ));
     }

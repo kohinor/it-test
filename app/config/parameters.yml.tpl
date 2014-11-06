@@ -54,3 +54,10 @@ parameters:
     sylius.uploader.filesystem: sylius_image
     sylius.currency_importer.open_exchange_rates: 
                   EUR: 1.0
+                  
+    postpay.options:
+          pspid: '%(PspId)s'
+          userId: '%(UserId)s'
+          cartUrl: '%(CartUrl)s'
+          homeUrl: '%(BaseUrl)s'
+          redirectUrl: '%(PostPayUrl)s'

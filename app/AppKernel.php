@@ -23,6 +23,7 @@ class AppKernel extends Kernel
 
             new App\KitPagesBundle\AppKitPagesBundle(),
             new App\SiteBundle\AppSiteBundle(),
+            new App\PaymentBundle\AppPaymentBundle(),
             new App\UserBundle\AppUserBundle(),
             new App\LexikTranslationBundle\AppLexikTranslationBundle(),
             new App\SyliusWebBundle\AppSyliusWebBundle(),

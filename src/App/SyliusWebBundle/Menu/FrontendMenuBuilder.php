@@ -68,33 +68,31 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             )
         ));
 
-        $child = $menu->addChild($this->translate('sylius.account.title'));
-
-        $child->addChild('account', array(
+        $menu->addChild('account', array(
             'route' => 'sylius_account_homepage',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.homepage')),
             'labelAttributes' => array('icon' => 'fa fa-home', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.homepage'));
 
-        $child->addChild('profile', array(
+        $menu->addChild('profile', array(
             'route' => 'fos_user_profile_edit',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.profile')),
             'labelAttributes' => array('icon' => 'fa fa-info', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.profile'));
 
-        $child->addChild('password', array(
+        $menu->addChild('password', array(
             'route' => 'fos_user_change_password',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.password')),
             'labelAttributes' => array('icon' => 'fa fa-lock', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.password'));
 
-        $child->addChild('orders', array(
+        $menu->addChild('orders', array(
             'route' => 'sylius_account_order_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.orders')),
             'labelAttributes' => array('icon' => 'fa fa-briefcase', 'iconOnly' => false)
         ))->setLabel($this->translate('sylius.frontend.menu.account.orders'));
 
-        $child->addChild('addresses', array(
+        $menu->addChild('addresses', array(
             'route' => 'sylius_account_address_index',
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.account.addresses')),
             'labelAttributes' => array('icon' => 'fa fa-envelope', 'iconOnly' => false)

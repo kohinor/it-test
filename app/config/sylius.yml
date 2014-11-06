@@ -7,6 +7,7 @@ parameters:
   sylius.checkout_step.purchase.class: App\SyliusCoreBundle\Checkout\Step\PurchaseStep
   sylius.checkout_step.finalize.class: App\SyliusCoreBundle\Checkout\Step\FinalizeStep
   sylius.cart_item_resolver.default.class: App\SyliusCoreBundle\Cart\ItemResolver
+        
   
          
 sylius_product:
@@ -32,3 +33,59 @@ sylius_cart:
 sylius_inventory:
     backorders: false
     track_inventory: true
+    
+sylius_payment:
+    classes:
+        payment:
+            model: Sylius\Component\Core\Model\Payment
+            controller: Sylius\Bundle\CoreBundle\Controller\PaymentController
+    gateways:
+        postpay: Postpay
+        
+payum:
+    storages:
+        Sylius\Component\Core\Model\Order: { doctrine: orm }
+        Sylius\Component\Core\Model\Payment: { doctrine: orm }
+
+    security:
+        token_storage:
+            Sylius\Bundle\PayumBundle\Model\PaymentSecurityToken: { doctrine: orm }
+
+    contexts:
+        paypal_express_checkout:
+            paypal_express_checkout_nvp:
+                username:  %paypal.express_checkout.username%
+                password:  %paypal.express_checkout.password%
+                signature: %paypal.express_checkout.signature%
+                sandbox:   %paypal.express_checkout.sandbox%
+
+        stripe:
+            omnipay:
+                type: Stripe
+                options:
+                    apiKey:   %stripe.secret_key%
+                    testMode: %stripe.test_mode%
+
+        be2bill:
+            be2bill:
+                identifier: %be2bill.identifier%
+                password:   %be2bill.password%
+                sandbox:    %be2bill.sandbox%
+
+        be2bill_onsite:
+            be2bill_onsite:
+                identifier: %be2bill.identifier%
+                password:   %be2bill.password%
+                sandbox:    %be2bill.sandbox%
+
+        dummy:
+            custom:
+                actions:
+                    - sylius.payum.dummy.action.capture_payment
+                    - sylius.payum.dummy.action.payment_status
+                    
+        postpay:
+            custom:
+                actions:
+                    - sylius.payum.postpay.action.capture_payment
+                    - sylius.payum.postpay.action.payment_status
