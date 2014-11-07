@@ -4,7 +4,7 @@
 
 {% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':1} %}
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-5">
         <div class="panel panel-custom">
         <div class="panel-body">
         <form action="{{ path('fos_user_security_check') }}" method="post" class="form-horizontal">
@@ -32,8 +32,15 @@
             </form>
        </div>
        </div>
+        <div class="panel panel-custom">
+            <div class="panel-body">
+                <h4 class="title"><span class="text">{{ 'italica.forgot.password'|trans({}, 'messages') }}</span></h4>
+                <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
+                <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-5">
+    <div class="col-lg-7">
         <div class="panel panel-custom">
             <div class="panel-body">
         <form action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" method="post" novalidate class="form-horizontal">
@@ -51,14 +58,5 @@
         </div>
         </div>
     </div>
-    <div class="col-lg-4">
-    <div class="panel panel-custom">
-    <div class="panel-body">
-    <h4 class="title"><span class="text">{{ 'italica.forgot.password'|trans({}, 'messages') }}</span></h4>
-    <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
-    <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
-    </div>
-    </div>
-</div>
 </div>
 {% endblock %}

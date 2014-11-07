@@ -56,6 +56,34 @@ security:
                     service: sylius.oauth.user_provider
             logout: true
             anonymous: true
+        checkout:
+            switch_user: { role: ROLE_SYLIUS_ADMIN }
+            context:     user
+            pattern:     /.*            
+            form_login:
+                provider: fos_userbundle
+                login_path: /en/checkout/security
+                check_path: /login_check
+                failure_path: null
+                default_target_path: /
+                use_forward:  false
+            remember_me:
+                key: %sylius.secret%
+                name: APP_REMEMBER_ME
+                lifetime: 31536000
+                always_remember_me: true
+                remember_me_parameter: _remember_me
+            oauth:
+                resource_owners:
+                    amazon:   "/login/check-amazon"
+                    facebook: "/login/check-facebook"
+                    google:   "/login/check-google"
+                login_path:   /connect
+                failure_path: /connect
+                oauth_user_provider:
+                    service: sylius.oauth.user_provider
+            logout: true
+            anonymous: true
 
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -63,6 +91,7 @@ security:
 
     access_control:
         - { path: ^/login.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/security.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -61,3 +61,4 @@ parameters:
           cartUrl: '%(CartUrl)s'
           homeUrl: '%(BaseUrl)s'
           redirectUrl: '%(PostPayUrl)s'
+          password: '%(PostPayPassword)s'

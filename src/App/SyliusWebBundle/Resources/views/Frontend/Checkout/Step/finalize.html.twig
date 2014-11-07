@@ -58,8 +58,7 @@
             <p><label>{{ 'sylius.checkout.finalize.order.promotion_total'|trans }}</label>: {{ order.adjustmentsTotal(promotionAdjustment)|sylius_price }}</p>
          {% endif %}
             <p><label>{{ 'sylius.checkout.finalize.order.total'|trans }}</label>: {{ order.total|sylius_price }}</p>
-            <button type="submit" class="btn btn-danger btn-block">{{ 'sylius.checkout.forward'|trans }} <i class="icon-chevron-right"></i></button>
- <a href="{{ path(context.process.forwardRoute, {'stepName': context.currentStep.name}) }}" class="btn btn-lg btn-success"><i class="icon-ok"></i> {{ 'sylius.checkout.finalize.place_order'|trans }}</a> &nbsp;
+            <a class="btn btn-danger btn-block" href="{{ path(context.process.forwardRoute, {'stepName': context.currentStep.name}) }}" > {{ 'sylius.checkout.finalize.place_order'|trans }}</a> &nbsp;
    
        </div>
        </div>

@@ -8,7 +8,7 @@
 {% endblock %}
 {% block fos_user_content %}
 {% trans_default_domain 'FOSUserBundle' %}
-<div class="col-lg-6">
+<div class="col-lg-5">
 <form class="form-horizontal" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
     <fieldset>
         <h4 class="title"><span class="text">{{ 'italica.registration'|trans({}, 'messages') }}</span></h4>
@@ -33,6 +33,8 @@
     </div>
     </fieldset>
 </form>
+</div>
+<div class="col-lg-1">
 </div>
 <div class="col-lg-6">
     <div class="panel panel-default">

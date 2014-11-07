@@ -14,7 +14,10 @@
   <fieldset>
     <h4 class="title"><span class="text">{{ 'italica.login'|trans({}, 'messages') }}</span></h4>
     {% if error %}
-        <div class="error">{{ error|trans }}</div>
+      <div class="alert alert-danger">
+              <a class="close" data-dismiss="alert" href="#">×</a>
+              {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
     {% endif %}
     <div class="form-group">            
       <label for="_username" class="col-lg-2 control-label">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>

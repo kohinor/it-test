@@ -15,6 +15,7 @@ services:
         class: "%sylius.payum.postpay.action.capture_payment.class%"
         calls:
             - [setOptions, ["%postpay.options%"]]
+            - [setVerifier, ['@payum.security.http_request_verifier']]
         
     sylius.payum.postpay.action.status:
           class: "%sylius.payum.postpay.action.status.class%"

@@ -23,11 +23,18 @@ use Payum\Core\Request\GetHttpQueryRequest;
 class CapturePaymentAction extends PaymentAwareAction 
 {
     protected $options;
+    
+    protected $securityVerifier;
 
 
     public function setOptions($options = array())
     {
         $this->options = $options;
+    }
+    
+    public function setVerifier($verifier)
+    {
+        $this->securityVerifier = $verifier;
     }
     
     /**
@@ -49,7 +56,8 @@ class CapturePaymentAction extends PaymentAwareAction
         if ($payment->getDetails() && isset($getHttpQuery['status'])) {
             return;
         } else {
-            $this->composeDetails($payment, $request->getToken());        
+            $this->composeDetails($payment, $request->getToken());
+            $this->securityVerifier->invalidate($request->getToken());
             throw new PostRedirectUrlInteractiveRequest(
                 $this->options['redirectUrl'],
                 $payment->getDetails()
@@ -68,7 +76,7 @@ class CapturePaymentAction extends PaymentAwareAction
     protected function composeDetails(PaymentInterface $payment, TokenInterface $token)
     {
         $order = $payment->getOrder();
-
+        
         $details = array();
         
         $details['PSPID'] = $this->options['pspid'];
@@ -99,10 +107,10 @@ class CapturePaymentAction extends PaymentAwareAction
         //$details['LOGO'] = '';
         //$details['TP'] = '';
         
-        $details['ACCEPTURL'] = $token->getAfterUrl().'&status=5';
-        $details['DECLINEURL'] = $token->getAfterUrl().'&status=2';
-        $details['EXCEPTIONURL'] = $token->getAfterUrl().'&status=2';
-        $details['CANCELURL'] = $token->getAfterUrl().'&status=2';
+        $details['ACCEPTURL'] = $token->getAfterUrl();
+        $details['DECLINEURL'] = $token->getAfterUrl();
+        $details['EXCEPTIONURL'] = $token->getAfterUrl();
+        $details['CANCELURL'] = $token->getAfterUrl();
         $details['BACKURL'] = $this->options['cartUrl'];
         $details['HOMEURL'] = $this->options['homeUrl'];
         $details['CATALOGURL'] = $this->options['homeUrl'];
@@ -112,7 +120,7 @@ class CapturePaymentAction extends PaymentAwareAction
         $details['WIN3DS'] = 'MAINW';
         $details['OPERATION'] = 'SAL';
         
-        $details['SHASIGN'] = '';
+        $details['SHASIGN'] = $this->calculateHash($details);
         //$details['ALIAS'] = '';
         //$details['ALIASUSAGE'] = '';
         //$details['ALIASOPERATION'] = '';
@@ -123,6 +131,20 @@ class CapturePaymentAction extends PaymentAwareAction
         //$details['CREDITCODE'] = '';
 
         $payment->setDetails($details);
+    }
+    
+
+    private function calculateHash(array $params)
+    {
+        #Alpha sort
+        ksort($params);
+
+        $clearString = $this->options['password'];
+        foreach ($params as $key => $value) {
+            $clearString .= $key . '=' . $value . $this->options['password'];
+        }
+
+        return hash('sha256', $clearString);
     }
 
     /**
