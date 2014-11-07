@@ -62,3 +62,7 @@ parameters:
           homeUrl: '%(BaseUrl)s'
           redirectUrl: '%(PostPayUrl)s'
           password: '%(PostPayPassword)s'
+          
+    email.to.exception: '%(EmailToException)s'
+    email.from.exception: '%(EmailFromException)s'
+    

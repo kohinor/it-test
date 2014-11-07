@@ -1,0 +1,30 @@
+{% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
+{% block content %}
+
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':5} %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <p>
+        {{ 'order.complete.message'|trans  }} 
+        </p>
+        <p>{{ 'order.number'|trans  }}: {{ order.getNumber() }}</p>
+        <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'sylius.checkout.finalize.product.name'|trans }}</th>
+                <th>{{ 'sylius.checkout.finalize.order_item.quantity'|trans }}</th>
+                <th><span class="pull-right">{{ 'sylius.checkout.finalize.order_item.unit_price'|trans }}</span></th>
+                <th><span class="pull-right">{{ 'sylius.checkout.finalize.order_item.total'|trans }}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items %}
+                {% include 'SyliusWebBundle:Frontend/Checkout/Step/Finalize:_item.html.twig' %}
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

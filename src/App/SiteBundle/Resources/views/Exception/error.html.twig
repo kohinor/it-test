@@ -1,0 +1,61 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+
+    <title>Italica: {{ status_code }} : {{ status_text }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">     
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css" />
+                
+    <link rel="stylesheet" type="text/css" href="/bundles/kitpagescms/css/common.css"  media="screen" />
+    </head>
+
+<body>  
+    <div class="page-header" >
+      <div class="container">   
+        <div class="row" >
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
+            <h1 class="text-uppercase text-danger" style="margin-bottom:0px;letter-spacing: 3px;"><a href="/en/" title="" rel="home">Italica</a></h1>
+            <p class="lead text-uppercase" style="letter-spacing: 1px;">Online outlet shop</p>
+          </div>
+          <div class="col-lg-4 col-sm-4 col-md-4">
+          </div>
+        </div>
+  </div>
+</div>        
+ 
+  <div class="container">
+    <div class="col-lg-8">
+    <div class="panel panel-custom">
+        <div class="panel-body">
+            <h4 class="title"><span class="text">{{ status_code }} : {{ status_text }}</span></h4>
+            <div>{{ 'error.message'|trans }}</div>
+            <div>{{ 'error.contact'|trans }}</div>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="panel panel-custom">
+        <div class="panel-body">
+            <h4 class="title"><span class="text">{{ 'error.links.title'|trans({}, 'messages') }}</span></h4>
+            <p>{{ 'error.links.message'|trans }}</p>
+        </div>
+    </div>
+    </div>
+  </div>
+
+<p>&nbsp;</p>
+  <div class="footer-separator"></div>
+  <div class="page-footer">
+    <div class="container">
+    <div class="row text-center">
+      <p class="col-lg-12"><br/>© 2014 Italica </p>
+    </div>
+  </div>
+</div>           
+</body>
+</html>

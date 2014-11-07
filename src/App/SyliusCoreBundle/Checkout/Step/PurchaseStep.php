@@ -85,6 +85,8 @@ class PurchaseStep extends Base
             return $event->getResponse();
         }
 
-        return $this->redirect($this->generateUrl('sylius_account_order_show', array('number'=> $order->getNumber())));
+        return $this->render('SyliusWebBundle:Frontend/Checkout/Step:complete.html.twig', array(
+            'order'   => $order
+        ));
     }
 }

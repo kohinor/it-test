@@ -40,7 +40,7 @@ class ExceptionController extends ContainerAware
 
         $templating = $this->container->get('templating');
         $code = $exception->getStatusCode();
-
+        
         $response = $templating->renderResponse(
             $this->findTemplate($templating, $format, $code, $this->container->get('kernel')->isDebug()),
             array(
@@ -51,11 +51,26 @@ class ExceptionController extends ContainerAware
                 'currentContent' => $currentContent,
             )
         );
-
+        $this->sendException($exception);
         $response->setStatusCode($code);
         $response->headers->replace($exception->getHeaders());
 
         return $response;
+    }
+    
+    public function sendException(FlattenException $exception)
+    {
+        $internalEmail = $this->container->getParameter('email.to.exception');
+        $fromEmail = $this->container->getParameter('email.from.address');
+        $subject = sprintf('Exception on italica:%s',$this->container->get('kernel')->getEnvironment());
+        $body = sprintf('%s : %s: %s', $exception->getStatusCode(), Response::$statusTexts[$exception->getStatusCode()], $exception->getMessage());
+        $mailer = \Swift_Message::newInstance();
+        $message = $mailer->setSubject($subject)
+                          ->setFrom($fromEmail)
+                          ->setTo($internalEmail)
+                          ->setBody($body)
+                          ->setContentType($this->container->getParameter('content.type.html'));
+        return $this->container->get('mailer')->send($message);
     }
 
     protected function findTemplate($templating, $format, $code, $debug)
@@ -74,7 +89,7 @@ class ExceptionController extends ContainerAware
         }
 
         // try to find a template for the given format
-        $template = new TemplateReference('AppSiteBundle', 'Exception', $name, $format, 'twig');
+        $template = new TemplateReference('TwigBundle', 'Exception', $name, $format, 'twig');
         if ($templating->exists($template)) {
             return $template;
         }
