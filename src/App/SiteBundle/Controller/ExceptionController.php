@@ -61,7 +61,7 @@ class ExceptionController extends ContainerAware
     public function sendException(FlattenException $exception)
     {
         $internalEmail = $this->container->getParameter('email.to.exception');
-        $fromEmail = $this->container->getParameter('email.from.address');
+        $fromEmail = $this->container->getParameter('email.from.exception');
         $subject = sprintf('Exception on italica:%s',$this->container->get('kernel')->getEnvironment());
         $body = sprintf('%s : %s: %s', $exception->getStatusCode(), Response::$statusTexts[$exception->getStatusCode()], $exception->getMessage());
         $mailer = \Swift_Message::newInstance();
@@ -69,7 +69,7 @@ class ExceptionController extends ContainerAware
                           ->setFrom($fromEmail)
                           ->setTo($internalEmail)
                           ->setBody($body)
-                          ->setContentType($this->container->getParameter('content.type.html'));
+                          ->setContentType('text/html');
         return $this->container->get('mailer')->send($message);
     }
 

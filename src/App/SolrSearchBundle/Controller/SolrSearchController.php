@@ -210,7 +210,7 @@ class SolrSearchController extends Controller
 
     public function searchPromotionAction(Request $request, $promotion)
     {
-        $facets['promotion'] = $promotion;
+        $facets['promotion'] = str_replace('_',' ', $promotion);
        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -221,7 +221,7 @@ class SolrSearchController extends Controller
 
     public function searchBrandAction(Request $request, $brand)
     {
-        $facets['brand'] = $brand;
+        $facets['brand'] = str_replace('_',' ', $brand);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -231,7 +231,7 @@ class SolrSearchController extends Controller
     public function searchGenderBrandAction(Request $request, $gender, $brand)
     {
         $facets['gender'] = $gender;
-        $facets['brand'] = $brand;
+        $facets['brand'] = str_replace('_',' ', $brand);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -250,7 +250,7 @@ class SolrSearchController extends Controller
     public function searchGenderCategoryAction(Request $request, $gender, $category)
     {
         $facets['gender'] = $gender;
-        $facets['category1'] = $category;
+        $facets['category1'] = str_replace('_',' ', $category);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -259,7 +259,7 @@ class SolrSearchController extends Controller
 
     public function searchCategoryAction(Request $request, $category)
     {
-        $facets['category1'] = $category;
+        $facets['category1'] = str_replace('_',' ', $category);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -277,7 +277,7 @@ class SolrSearchController extends Controller
     public function searchGenderPromotionAction(Request $request, $gender, $promotion)
     {
         $facets['gender'] = $gender;
-        $facets['promotion'] = $promotion;
+        $facets['promotion'] = str_replace('_',' ', $promotion);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -287,8 +287,8 @@ class SolrSearchController extends Controller
     public function searchGenderPromotionCategoryAction(Request $request, $gender, $promotion, $category)
     {
         $facets['gender'] = $gender;
-        $facets['promotion'] = $promotion;
-        $facets['category1'] = $category;
+        $facets['promotion'] = str_replace('_',' ', $promotion);
+        $facets['category1'] = str_replace('_',' ', $category);
  
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
