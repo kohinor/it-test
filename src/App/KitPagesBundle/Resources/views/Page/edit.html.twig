@@ -1,0 +1,24 @@
+{% extends 'KitpagesCmsBundle:Page:cms-edit-layout.html.twig' %}
+{% block kitpages_cms_body %}
+<div class="kit-cms-edit kit-cms">
+
+<h1>Edit page</h1>
+
+<form class="kit-cms-form form-horizontal" action="{{ path('kitpages_cms_page_edit', { 'id': id , 'kitpages_target': kitpages_target } ) }}" method="post" {{ form_enctype(form) }}>
+  <div>
+    {{ form_errors(form) }}
+
+    {{ form_row(form.slug) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.menuTitle) }}
+    {{ form_row(form.parent_id) }}
+    {{ form_row(form.language) }}
+
+    {% block editData %}{% endblock %}
+
+    {{ form_rest(form) }}
+    <input type="submit" class="btn btn-sm btn-primary" />
+    </div>
+</form>
+</div>
+{% endblock kitpages_cms_body %}

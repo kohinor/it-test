@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    
+       <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <div class="kit-cms kit-cms-toolbar">
         {#{% render 'KitpagesCmsBundle:Toolbar:widgetToolbar'%}#}
         {{ render(controller('KitpagesCmsBundle:Toolbar:widgetToolbar')) }}
@@ -29,6 +29,7 @@
                 });
             });
         </script>
+        {% block kitpages_cms_body %}{% endblock %}
     
 {% endblock content %}
 

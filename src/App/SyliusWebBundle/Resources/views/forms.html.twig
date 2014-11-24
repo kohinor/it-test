@@ -1,12 +1,12 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block choice_widget_collapsed %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control input-sm'}) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
 {{ parent() }}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control input-sm'}) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
 {{ parent() }}
 {% endblock textarea_widget %}
 
@@ -91,6 +91,11 @@
         {{ form_label(form) }}
         <div class="col-lg-9">
         {{ form_widget(form) }}
+        {% if help is defined %}
+            <span class="help-block">
+                {{ help|raw }}
+            </span>
+        {% endif %}
         {% for error in errors %}
             <span class="help-block form-error">
                 {{

@@ -9,9 +9,8 @@
 
 {% block kitpages_cms_toolbar %}
     {% if is_granted('ROLE_CMS_ADMIN') %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
-    <script>window.jQuery || document.write("<script src='{{ asset('boiler/js/libs/jquery-1.6.2.min.js') }}'>\x3C/script>")</script>
-        <div class="kit-cms kit-cms-toolbar">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+           <div class="kit-cms kit-cms-toolbar">
         {{ render(controller('KitpagesCmsBundle:Toolbar:widgetToolbar')) }}
         {% if (kitCmsViewMode is defined) and ( (kitCmsViewMode == 2) or (kitCmsViewMode == 3) ) %}
             {{ render(controller('KitpagesCmsBundle:Page:widgetToolbar', { 'page':kitCmsPage } )) }}
