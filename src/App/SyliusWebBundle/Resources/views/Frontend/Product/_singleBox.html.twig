@@ -14,6 +14,5 @@
             <div  class="text-danger"><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></div>
         {% endif %}
     </a>
-    <div style="margin-top:5px;"><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}" class="btn btn-danger btn-sm btn-block">{{ 'sylius.add_to_cart'|trans({}, 'messages') }}</a></div>
     </p>
 </div>

@@ -34,10 +34,6 @@ kitpages_cms:
                     main:
                         renderer: 'default'
                         authorized_block_template_list : ['standard']
-            home:
-                renderer_twig: 'AppSiteBundle:Page:template/home.html.twig'
-                data_form_class: '\App\SiteBundle\Form\Page\PageLayoutEditDefault'
-                data_form_twig: 'AppSiteBundle:Page:form/page-layout-edit-default.html.twig'
         default_twig: '::base.html.twig'
 
 kitpages_file:
@@ -60,11 +56,3 @@ kitpages_file_system:
 parameters:
     base.url: %base_url%
     kitpages_cms.cms.blockManager:  App\KitPagesBundle\Model\BlockManager
-    kitpages_cms.pageListener.class: App\KitPagesBundle\EventListener\PageListener
-
-services:
-    kitpages_locale.locale_listener:
-        class: App\KitPagesBundle\EventListener\LocaleListener
-        arguments: ["%kernel.default_locale%"]
-        tags:
-            - { name: kernel.event_subscriber }

@@ -37,7 +37,7 @@ class PageController extends BaseController
         $pageLayout = $page->getLayout();
         $forcedUrl = $page->getForcedUrl();
         $data = array();
-
+    
         if ($context->getViewMode() == Context::VIEW_MODE_PROD) {
             $pagePublish = $em->getRepository('KitpagesCmsBundle:PagePublish')->findByPage($page);
             if ($pagePublish == null ) {

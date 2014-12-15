@@ -1,15 +1,18 @@
 <!doctype html>
+{% set settings = sylius_settings_all('general') %}
 <!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ app.request.locale }}"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-
-    <title>{{ kitCmsPageData.root.metaTitle|default(kitMeta.title|default("Italica")) }}{% block title %}{% endblock %}</title>
-    <meta name="description" content="{{ kitCmsPageData.root.metaDescription|default(kitMeta.description|default("")) }}{% block description %}{% endblock %}">
+    <title>
+    {% block title %}
+        {{ kitCmsPageData.root.metaTitle|default(settings.title|default('sylius.meta.frontend_title'|trans)) }}
+    {% endblock %}</title>
+    <meta name="description" content="{{ settings.meta_description|default(kitCmsPageData.root.metaDescription|default(kitMeta.description|default(""))) }}{% block description %}{% endblock %}">
     <meta name="author" content="{{ kitCmsPageData.root.author|default("") }}">
-    <meta name="keywords" content="{{ kitCmsPageData.root.metaKeywords|default("") }}{% block keywords %}{% endblock %}">
+    <meta name="keywords" content="{{ settings.meta_keywords|default(kitCmsPageData.root.metaKeywords|default("")) }}{% block keywords %}{% endblock %}">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">     

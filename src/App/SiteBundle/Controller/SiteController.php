@@ -8,12 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SiteController extends Controller
 {
-
-    public function indexAction()
-    {
-        return $this->redirect('/en/');
-    }
-    
     public function brandListAction()
     {
         $repository = $this->container->get('sylius.repository.taxonomy');

@@ -74,19 +74,19 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
             throw new BadRequestHttpException('Order id cannot be guessed');
         }       
 
-        if ($details['amount'] != $payment->getOrder()->getTotal()) {
+        if ($details['amount']*100 != $payment->getOrder()->getTotal()) {
             throw new BadRequestHttpException('Request amount cannot be verified against payment amount.');
         }
         
         if (empty($payment->getDetails())) {
             $request->markNew();
-        } elseif (isset($details['status']) && (in_array($details['status'], array(5, 9, 4)))) {
+        } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(5, 9, 4)))) {
             $request->markSuccess();
-        } elseif (isset($details['status']) && (in_array($details['status'], array(2, 93, 52, 92)) )) {   
+        } elseif (isset($details['status']) && (in_array($details['STATUS'], array(2, 93, 52, 92)) )) {   
             $request->markFailed();
-        } elseif (isset($details['status']) && (in_array($details['status'], array(41, 51, 91)) )) {   
+        } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(41, 51, 91)) )) {   
             $request->markPending();
-        } elseif (isset($details['status']) && (in_array($details['status'], array(1)) )) {   
+        } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(1)) )) {   
             $request->markCanceled();
         } else {
             $request->markUnknown();

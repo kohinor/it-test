@@ -80,12 +80,12 @@ class CapturePaymentAction extends PaymentAwareAction
         $details = array();
         
         $details['PSPID'] = $this->options['pspid'];
-        $details['USERID'] = $this->options['userId'];
+        //$details['USERID'] = $this->options['userId'];
         
         $details['ORDERID'] = $order->getNumber();
         $details['AMOUNT'] = $order->getTotal();
         $details['CURRENCY'] = $payment->getCurrency();
-        $details['LANGUAGE'] = 'EN';
+        $details['LANGUAGE'] = 'en_US';
         
         $details['CN'] = $order->getBillingAddress()->getFirstName().' '.$order->getBillingAddress()->getLastName();
         $details['EMAIL'] = $order->getEmail();
@@ -96,13 +96,13 @@ class CapturePaymentAction extends PaymentAwareAction
         $details['OWNERTELNO'] = $order->getBillingAddress()->getPhoneNumber();
         //$details['COM'] = '';
         
-        $details['TITLE'] = 'Italica Online Store';
-        //$details['BGCOLOR'] = '';
-        //$details['TXTCOLOR'] = '';
-        //$details['TBLBGCOLOR'] = '';
-        //$details['TBLTXTCOLOR'] = '';
-        //$details['BUTTONBGCOLOR'] = '';
-        //$details['BUTTONTXTCOLOR'] = '';
+        $details['TITLE'] = 'Italica';
+        $details['BGCOLOR'] = '#FFFFFF';
+        $details['TXTCOLOR'] = '#000000';
+        $details['TBLBGCOLOR'] = '#FFFFFF';
+        $details['TBLTXTCOLOR'] = '#666666';
+        $details['BUTTONBGCOLOR'] = '#3d3f3f';
+        $details['BUTTONTXTCOLOR'] = '#FFFFFF';
         //$details['FONTTYPE'] = '';
         //$details['LOGO'] = '';
         //$details['TP'] = '';
@@ -117,8 +117,8 @@ class CapturePaymentAction extends PaymentAwareAction
         
         //$details['PM'] = '';
         //$details['BRAND'] = '';
-        $details['WIN3DS'] = 'MAINW';
-        $details['OPERATION'] = 'SAL';
+        //$details['WIN3DS'] = 'MAINW';
+        //$details['OPERATION'] = 'SAL';
         
         $details['SHASIGN'] = $this->calculateHash($details);
         //$details['ALIAS'] = '';
@@ -139,11 +139,13 @@ class CapturePaymentAction extends PaymentAwareAction
         #Alpha sort
         ksort($params);
 
-        $clearString = $this->options['password'];
+        $clearString = '';
         foreach ($params as $key => $value) {
-            $clearString .= $key . '=' . $value . $this->options['password'];
+            if ($value) {
+                $clearString .= $key . '=' . $value . $this->options['password'];
+            }
         }
-
+        //die(var_dump($clearString));
         return hash('sha256', $clearString);
     }
 
