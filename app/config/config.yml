@@ -32,13 +32,14 @@ twig:
     form:
         resources:
             - 'SyliusWebBundle::forms.html.twig'
+            - SyliusResourceBundle::forms.html.twig
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['SyliusWebBundle']
+    bundles:        ['SyliusWebBundle', 'SyliusResourceBundle']
     filters:
         cssrewrite: ~
 
@@ -95,6 +96,7 @@ doctrine_phpcr:
         password: ''
     odm:
         auto_mapping: true
+        auto_generate_proxy_classes: %kernel.debug%
 
 swiftmailer:
     transport: %sylius.mailer.transport%
@@ -131,7 +133,10 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig 
     
 liip_imagine:
-    data_root: %kernel.root_dir%/../web/media/image
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../web/media/image
     filter_sets:
         italica_home:
            quality: 75

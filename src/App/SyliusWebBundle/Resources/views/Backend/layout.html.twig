@@ -17,6 +17,7 @@
                 'bundles/syliusweb/css/select2.css'
                 'bundles/syliusweb/css/datepicker3.css'
                 'bundles/syliusweb/css/backend.css'
+                'bundles/syliusresource/css/form-collection.css'
             %}
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
@@ -73,17 +74,7 @@
         {% block javascripts %}
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
             <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-            {% javascripts output='assets/compiled/backend.js'
-                'bundles/syliusweb/js/jquery.blueimp-gallery.min.js'
-                'bundles/syliusweb/js/confirm-modal.js'
-                'bundles/syliusweb/js/form-collection.js'
-                'bundles/syliusweb/js/form-spinner.js'
-                'bundles/syliusweb/js/select2.js'
-                'bundles/syliusweb/js/bootstrap-datepicker.js'
-                'bundles/syliusweb/js/backend.js'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script type="text/javascript" src="/assets/compiled/backend.js"></script>
         {% endblock %}
         {% block kitpages_cms_javascripts %}{% endblock %}
     </body>

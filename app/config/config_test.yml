@@ -11,7 +11,7 @@ swiftmailer:
     disable_delivery: true
 
 sylius_money:
-    currency: EUR
+    currency: CHF
     locale: en_US
 
 sylius_payments:

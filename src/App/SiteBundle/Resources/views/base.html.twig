@@ -42,7 +42,7 @@
               {% endif %}
             </ul>
           </div>
-          <div class="col-lg-5 col-md-3 col-sm-3">
+          <div class="col-lg-6 col-md-4 col-sm-4">
             <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:2px">
               <div class="input-group">
                 <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text" style="width:250px;">
@@ -50,10 +50,7 @@
             </div>
             </form>
           </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            {{ knp_menu_render('sylius.frontend.currency', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
-          </div>
-          <div class="col-lg-2 col-md-3 col-sm-3">
+          <div class="col-lg-3 col-md-4 col-sm-4">
             <ul class="nav navbar-nav">
               {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
                 <li><a href="/en">{{ 'English'|trans }}</a></li>
