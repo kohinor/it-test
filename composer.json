@@ -21,7 +21,7 @@
     ],
     "require": {
         "php":                                  ">=5.3.3",
-        "sylius/sylius":                        "0.11.*@dev",
+        "sylius/sylius":                        "0.12.*@dev",
         "symfony/symfony":                      "2.3.*@dev",
         "doctrine/doctrine-bundle":             "@dev",
         "doctrine/migrations":                  "@dev",
@@ -42,7 +42,11 @@
         "knplabs/knp-paginator-bundle":         "2.4.*@dev",
         "symfony/icu":                          "1.1.*",
         "aws/aws-sdk-php":                      "dev-master",
-        "friendsofsymfony/oauth-server-bundle": "1.4.*@dev"
+        "friendsofsymfony/oauth-server-bundle": "1.4.*@dev",
+        "friendsofsymfony/rest-bundle":         "~1.5@dev",
+        "willdurand/hateoas-bundle":            "1.0.*@dev",
+        "imagine/imagine":                      "0.6.2 as 0.4.1",
+        "jms/serializer-bundle":                "0.13.*@dev"
     },
     "require-dev": {
         "behat/behat":                       "~3.0",

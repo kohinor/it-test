@@ -13,19 +13,18 @@ namespace App\PaymentBundle\Payum\Postpay\Action;
 
 
 use Payum\Core\Exception\RequestNotSupportedException;
-use Payum\Core\Request\CaptureRequest;
+use Payum\Core\Request\Capture;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Payum\Core\Action\PaymentAwareAction;
-use Payum\Core\Request\PostRedirectUrlInteractiveRequest;
+use Sylius\Bundle\PayumBundle\Payum\Action\AbstractPaymentStateAwareAction;
 use Payum\Core\Security\TokenInterface;
-use Payum\Core\Request\GetHttpQueryRequest;
+use Payum\Core\Request\GetHttpRequest;
+use Payum\Core\Reply\HttpPostRedirect;
 
-class CapturePaymentAction extends PaymentAwareAction 
+class CapturePaymentAction extends AbstractPaymentStateAwareAction 
 {
     protected $options;
     
     protected $securityVerifier;
-
 
     public function setOptions($options = array())
     {
@@ -50,15 +49,15 @@ class CapturePaymentAction extends PaymentAwareAction
 
         $payment = $request->getModel();
         
-        $getHttpQuery = new GetHttpQueryRequest();
-        $this->payment->execute($getHttpQuery);
+        $httpRequest = new GetHttpRequest;
+        $this->payment->execute($httpRequest);
         
-        if ($payment->getDetails() && isset($getHttpQuery['status'])) {
+        if ($payment->getDetails() && isset($httpRequest->query['STATUS'])) {
             return;
         } else {
             $this->composeDetails($payment, $request->getToken());
             $this->securityVerifier->invalidate($request->getToken());
-            throw new PostRedirectUrlInteractiveRequest(
+            throw new HttpPostRedirect(
                 $this->options['redirectUrl'],
                 $payment->getDetails()
             );
@@ -82,7 +81,7 @@ class CapturePaymentAction extends PaymentAwareAction
         $details['PSPID'] = $this->options['pspid'];
         //$details['USERID'] = $this->options['userId'];
         
-        $details['ORDERID'] = $order->getNumber();
+        $details['ORDERID'] = $payment->getId();
         $details['AMOUNT'] = $order->getTotal();
         $details['CURRENCY'] = $payment->getCurrency();
         $details['LANGUAGE'] = 'en_US';
@@ -155,7 +154,7 @@ class CapturePaymentAction extends PaymentAwareAction
     public function supports($request)
     {
         return
-            $request instanceof CaptureRequest &&
+            $request instanceof Capture &&
             $request->getModel() instanceof PaymentInterface
         ;
     }

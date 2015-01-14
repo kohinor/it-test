@@ -77,7 +77,7 @@ payum:
                 identifier: %be2bill.identifier%
                 password:   %be2bill.password%
                 sandbox:    %be2bill.sandbox%
-
+                    
         dummy:
             custom:
                 actions:

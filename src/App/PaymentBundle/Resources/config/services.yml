@@ -13,6 +13,7 @@ services:
             
     sylius.payum.postpay.action.capture_payment:
         class: "%sylius.payum.postpay.action.capture_payment.class%"
+        arguments: ['@sm.factory']
         calls:
             - [setOptions, ["%postpay.options%"]]
             - [setVerifier, ['@payum.security.http_request_verifier']]

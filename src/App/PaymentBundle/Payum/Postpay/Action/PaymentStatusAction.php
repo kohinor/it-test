@@ -12,16 +12,18 @@
 namespace App\PaymentBundle\Payum\Postpay\Action;
 
 use Payum\Core\Exception\RequestNotSupportedException;
-use Payum\Core\Request\StatusRequestInterface;
+use Payum\Core\Request\GetStatusInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Payum\Core\Request\GetHttpQueryRequest;
+use Payum\Core\Request\GetHttpRequest;
 use Sylius\Bundle\PayumBundle\Payum\Action\AbstractPaymentStateAwareAction;
 use Doctrine\Common\Persistence\ObjectManager;
-
+use Sylius\Bundle\PayumBundle\Payum\Request\GetStatus;
 use SM\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Payum\Core\Bridge\Symfony\Reply\HttpResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentStatusAction extends AbstractPaymentStateAwareAction
 {
@@ -62,27 +64,33 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
         if (!$this->supports($request)) {
             throw RequestNotSupportedException::createActionNotSupported($this, $request);
         }
+        
+        $this->payment->execute($httpRequest = new GetHttpRequest());
+        $details = $httpRequest->query;
 
-        /** @var $payment PaymentInterface */
-        $payment = $request->getModel();
-        
-        $details = new GetHttpQueryRequest();
-        $this->payment->execute($details);
-        
-        
-        if (empty($details['orderID']) || $payment->getOrder()->getNumber() != $details['orderID']) {
+        if (empty($details['orderID'])) {
             throw new BadRequestHttpException('Order id cannot be guessed');
-        }       
+        }
 
-        if ($details['amount']*100 != $payment->getOrder()->getTotal()) {
+        $payment = $this->paymentRepository->findOneBy(array('id' => $details['orderID']));
+
+        if (null === $payment) {
+            throw new BadRequestHttpException('Paymenet cannot be retrieved.');
+        }
+
+        if ((int) $details['amount']*100 !== $payment->getAmount()) {
             throw new BadRequestHttpException('Request amount cannot be verified against payment amount.');
         }
-        
+
+        // Actually update payment details
+        $details = array_merge($payment->getDetails(), $details);
+        $payment->setDetails($details);
+
         if (empty($payment->getDetails())) {
             $request->markNew();
         } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(5, 9, 4)))) {
-            $request->markSuccess();
-        } elseif (isset($details['status']) && (in_array($details['STATUS'], array(2, 93, 52, 92)) )) {   
+            $request->markCaptured();
+        } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(2, 93, 52, 92)) )) {   
             $request->markFailed();
         } elseif (isset($details['STATUS']) && (in_array($details['STATUS'], array(41, 51, 91)) )) {   
             $request->markPending();
@@ -91,14 +99,6 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
         } else {
             $request->markUnknown();
         }
-        $payment->setDetails($request->getModel()->getDetails(), $details);
-
-        $nextState = $request->getStatus();
-        $this->updatePaymentState($payment, $nextState);
-
-        $this->objectManager->flush();
-
-        //throw new ResponseInteractiveRequest(new Response('OK', 200));  
         
     }
 
@@ -108,8 +108,8 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
     public function supports($request)
     {
         return
-            $request instanceof StatusRequestInterface &&
-            $request->getModel() instanceof PaymentInterface
+            $request instanceof GetStatusInterface &&
+            $request->getModel() instanceof \ArrayAccess
         ;
     }
 }

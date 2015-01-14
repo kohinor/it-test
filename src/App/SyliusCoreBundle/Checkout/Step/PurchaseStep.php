@@ -13,7 +13,7 @@ namespace App\SyliusCoreBundle\Checkout\Step;
 
 use Sylius\Bundle\CoreBundle\Event\PurchaseCompleteEvent;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
-use Sylius\Bundle\PayumBundle\Payum\Request\StatusRequest;
+use Sylius\Bundle\PayumBundle\Payum\Request\GetStatus;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\SyliusCheckoutEvents;
 use Sylius\Component\Payment\PaymentTransitions;
@@ -34,25 +34,22 @@ class PurchaseStep extends Base
 
         /** @var $payment PaymentInterface */
         $payment = $order->getPayments()->last();
-
+        $payment->setState(PaymentInterface::STATE_PROCESSING);
         $captureToken = $this->getTokenFactory()->createCaptureToken(
             $payment->getMethod()->getGateway(),
             $payment,
-            'sylius_checkout_forward',
+            $context->getProcess()->getForwardRoute(),
             array('stepName' => $this->getName())
         );
         return new RedirectResponse($captureToken->getTargetUrl());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function forwardAction(ProcessContextInterface $context)
     {
         $token = $this->getHttpRequestVerifier()->verify($this->getRequest());
         $this->getHttpRequestVerifier()->invalidate($token);
 
-        $status = new StatusRequest($token);
+        $status = new GetStatus($token);
         $this->getPayum()->getPayment($token->getPaymentName())->execute($status);
 
         /** @var $payment PaymentInterface */
@@ -66,7 +63,7 @@ class PurchaseStep extends Base
 
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::PURCHASE_INITIALIZE, $order);
 
-        $nextState = $status->getStatus();
+        $nextState = $status->getValue();
 
         $stateMachine = $this->get('sm.factory')->get($payment, PaymentTransitions::GRAPH);
 
