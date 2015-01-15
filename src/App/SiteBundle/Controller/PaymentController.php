@@ -10,6 +10,9 @@ class PaymentController extends Controller
 {
     public function postpayTemplateAction()
     {
-        return $this->render('AppSiteBundle:payment:payment.html.twig', array());
+        $params = array(
+            'baseUrl' => $this->container->getParameter('base_url')
+        );
+        return $this->render('AppSiteBundle:payment:payment.html.twig', $params);
     }
 }
