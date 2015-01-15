@@ -1,0 +1,10 @@
+{% extends 'SyliusWebBundle:Frontend:checkout-layout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ 'sylius.checkout.payment.header'|trans|raw }}</h2>
+</div>
+
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' with {'tab':4} %}
+$$$PAYMENT ZONE$$$
+{% endblock %}

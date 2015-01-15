@@ -1,0 +1,3 @@
+app_payment_template:
+    pattern:  /postpay/payment
+    defaults: { _controller: AppPaymentBundle:postpayTemplate }

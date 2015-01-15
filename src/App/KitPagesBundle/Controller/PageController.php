@@ -42,7 +42,7 @@ class PageController extends BaseController
             $pagePublish = $em->getRepository('KitpagesCmsBundle:PagePublish')->findByPage($page);
             if ($pagePublish == null ) {
                 throw new NotFoundHttpException('The page does not exist.');
-            }
+}
             $pageType = $pagePublish->getPageType();
             $pageLanguage = $pagePublish->getLanguage();
             $pageUrlTitle = $pagePublish->getUrlTitle();
