@@ -178,16 +178,15 @@
     from: italica.search.priceTo,
     to: italica.search.priceFrom,
     type: 'double',
-    step: 5,
-    postfix: " €",
+    step: 15,
+    postfix: " CHF",
     hasGrid: true
 });
 
 $('.irs-slider').on("mouseup", function (e) {
     var url = $('#fromPrice').attr('data-url');
     italica.search.price = $('#fromPrice').val();
-    italica.redirect(url);
-    return false;                   
+    italica.redirect(url);                 
 });
 });
 </script>

@@ -220,12 +220,6 @@ $('.filter input[type=checkbox]').click(function(e) {
    }
 
 });
-$('#fromPrice').change(function() {
-    var url = $(this).attr('data-url');
-    italica.search.price = $(this).val();
-    italica.redirect(url);
-    return false;
- });
  
 $('.filter').on('click',italica.general.clickHandler);
 $('.sort-by').on('change',italica.general.clickHandler);
