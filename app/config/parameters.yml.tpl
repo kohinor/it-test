@@ -21,6 +21,7 @@ parameters:
     paypal.express_checkout.sandbox: true
     stripe.secret_key: EDITME
     stripe.test_mode: true
+    stripe.publishable_key: asdasd
     be2bill.identifier: EDITME
     be2bill.password: EDITME
     be2bill.sandbox: true
