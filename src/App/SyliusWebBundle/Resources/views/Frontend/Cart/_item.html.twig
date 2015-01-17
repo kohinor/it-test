@@ -3,7 +3,7 @@
 <tr>
     <td class="col-lg-3">
         <a href="{{ path('app_site_product', {'slug':product.slug}) }}" class="img-thumbnail">
-            <img class="img-medium" src="{{ product.image ? product.image.path|imagine_filter('italica_medium') : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
+            <img class="img-medium" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
         </a>
     </td>
     <td class="col-lg-5">

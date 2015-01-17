@@ -59,14 +59,14 @@
             <div class="tmb-caption">
                 {% for image in product.images %}
                     <div class="wp-caption">
-                        <img class="img-small thumbnail" src="{{ image.path|imagine_filter('italica_small') }}" data-src="{{ image.path|imagine_filter('italica_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
+                        <img class="img-small thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
                     </div>
                 {% endfor %}
             </div>
             {% endif %}
         </div>
         <div class="col-lg-10 col-sm-10 col-md-10">
-            <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('italica_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+            <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
         </div>
     </div>
     <div class="row">

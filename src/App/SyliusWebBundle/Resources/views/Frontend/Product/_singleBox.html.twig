@@ -1,6 +1,6 @@
 <div class="col-lg-2 col-md-4 col-sm-4 text-center" >    
     <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
-        <img  class="img-home" src="{{ product.image ? product.image.path|imagine_filter('italica_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
+        <img  class="img-home" src="{{ product.image ? product.image.path|imagine_filter('sylius_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
     </a> 
     <p>    
     <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><span >{{ product.translate(locale|default('en')).name|default(product.name) }}</span></a></div>

@@ -136,19 +136,19 @@ liip_imagine:
     cache: 'amazon_s3'
     data_loader: stream.profile
     filter_sets:
-        italica_home:
+        sylius_home:
            quality: 75
            filters:
                 thumbnail: { size: [260, 312], mode: outbound } 
-        italica_small:
+        sylius_small:
             quality: 75
             filters:
                 thumbnail: { size: [116, 140], mode: outbound }
-        italica_medium:
+        sylius_medium:
             quality: 75
             filters:
                 thumbnail: { size: [320, 384], mode: outbound }
-        italica_large:
+        sylius_large:
             quality: 75
             filters:
                 thumbnail: { size: [600, 720], mode: outbound }
