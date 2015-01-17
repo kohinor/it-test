@@ -56,13 +56,9 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         entity_managers:
             default:
-                metadata_cache_driver: array
-                query_cache_driver:
-                    type: service
-                    id: doctrine_cache.providers.file_cache_doctrine
-                result_cache_driver:
-                    type: service
-                    id: doctrine_cache.providers.file_cache_doctrine
+                metadata_cache_driver: memcached
+                query_cache_driver: memcached
+                result_cache_driver: memcached
                 auto_mapping: true
                 mappings:
                     gedmo_loggable:
@@ -134,9 +130,11 @@ knp_paginator:
     
 liip_imagine:
     loaders:
-        default:
-            filesystem:
-                data_root: %kernel.root_dir%/../web/media/image
+        stream.profile:
+            stream:
+                wrapper: gaufrette://sylius_image/
+    cache: 'amazon_s3'
+    data_loader: stream.profile
     filter_sets:
         italica_home:
            quality: 75
@@ -162,15 +160,38 @@ liip_imagine:
 doctrine_cache:
     providers:
         memcached:
-            file_system:
-                extension: ch
-                directory: %kernel.cache_dir%/site_cache
-        file_cache_doctrine:
-            file_system:
-                extension: ch
-                directory: %kernel.cache_dir%/site_doctrine
-        memcached_old:
             memcached:
                 servers:
                     127.0.0.1: 11211
+  
+knp_gaufrette:
+    stream_wrapper:
+        protocol: gaufrette
+        filesystems:
+            sylius_image: sylius_image
+    adapters:
+        sylius_image:
+            amazon_s3:
+                amazon_s3_id: amazonS3 #this needs to match the "service" you defined above
+                bucket_name: %amazon_s3.bucket%
+                options:
+                    create: true
+    filesystems:
+        sylius_image:
+            adapter:    sylius_image
+             
+services:
+    amazonS3:
+        class: AmazonS3
+        arguments:
+            options:
+                key:      '%amazon_s3.key%'
+                secret:   '%amazon_s3.secret%'
 
+    acme.imagine.cache.resolver.amazon_s3:
+        class: Liip\ImagineBundle\Imagine\Cache\Resolver\AmazonS3Resolver
+        arguments:
+            - "@amazonS3"
+            - "%amazon_s3.bucket%"
+        tags:
+            - { name: 'liip_imagine.cache.resolver', resolver: 'amazon_s3' }

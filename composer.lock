@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eb73c301218fb6065dd0f81d8f33fee1",
+    "hash": "85fb52713986156ee515c8817969f53b",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -102,6 +102,59 @@
             "time": "2013-02-11 21:09:06"
         },
         {
+            "name": "amazonwebservices/aws-sdk-for-php",
+            "version": "1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amazonwebservices/aws-sdk-for-php.git",
+                "reference": "0507424b05bd191f043375b787640bd1eb4f692b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amazonwebservices/aws-sdk-for-php/zipball/0507424b05bd191f043375b787640bd1eb4f692b",
+                "reference": "0507424b05bd191f043375b787640bd1eb4f692b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "You should consider upgrading to version 2 of the AWS SDK for PHP"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "authentication/",
+                    "extensions/",
+                    "lib/",
+                    "services/",
+                    "utilities/",
+                    "sdk.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp/",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "s3",
+                "sdk"
+            ],
+            "time": "2014-10-15 20:05:19"
+        },
+        {
             "name": "avalanche123/imagine-bundle",
             "version": "v2.1.2",
             "target-dir": "Avalanche/Bundle/ImagineBundle",
@@ -157,12 +210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1ec3fb885a891d337540dcd26e33d01ed7f82f1a"
+                "reference": "7dd429f8916eb384fcaf43c6510c519eaf3b900e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1ec3fb885a891d337540dcd26e33d01ed7f82f1a",
-                "reference": "1ec3fb885a891d337540dcd26e33d01ed7f82f1a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7dd429f8916eb384fcaf43c6510c519eaf3b900e",
+                "reference": "7dd429f8916eb384fcaf43c6510c519eaf3b900e",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +269,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-01-09 19:31:57"
+            "time": "2015-01-16 01:44:42"
         },
         {
             "name": "doctrine/annotations",
@@ -288,16 +341,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7"
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/cf483685798a72c93bf4206e3dd6358ea07d64e7",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/2346085d2b027b233ae1d5de59b07440b9f288c8",
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8",
                 "shasum": ""
             },
             "require": {
@@ -308,6 +361,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7",
+                "predis/predis": "~0.8",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
@@ -353,7 +407,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-09-17 14:24:04"
+            "time": "2015-01-15 20:38:55"
         },
         {
             "name": "doctrine/collections",
@@ -578,12 +632,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "751709de4a5001aa21521308d25430e23e173b54"
+                "reference": "53974672f036c73908cb715f14901152b8bc1b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/751709de4a5001aa21521308d25430e23e173b54",
-                "reference": "751709de4a5001aa21521308d25430e23e173b54",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/53974672f036c73908cb715f14901152b8bc1b46",
+                "reference": "53974672f036c73908cb715f14901152b8bc1b46",
                 "shasum": ""
             },
             "require": {
@@ -649,7 +703,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2015-01-09 14:13:39"
+            "time": "2015-01-17 16:38:20"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1496,12 +1550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "fbb3c6d0d74f7cc75639f969b686e87ad580f595"
+                "reference": "6bcb4352955e4d29311c7058bf2e4bb74b39e5df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/fbb3c6d0d74f7cc75639f969b686e87ad580f595",
-                "reference": "fbb3c6d0d74f7cc75639f969b686e87ad580f595",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/6bcb4352955e4d29311c7058bf2e4bb74b39e5df",
+                "reference": "6bcb4352955e4d29311c7058bf2e4bb74b39e5df",
                 "shasum": ""
             },
             "require": {
@@ -1565,7 +1619,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-01-12 18:00:15"
+            "time": "2015-01-16 10:56:09"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -2724,12 +2778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kitpages/KitpagesCmsBundle.git",
-                "reference": "0263263f4ed4f60491b6171e99b4e14d6af10b6f"
+                "reference": "b943c35d902f5f311d9259a73026ec292548e949"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesCmsBundle/zipball/0263263f4ed4f60491b6171e99b4e14d6af10b6f",
-                "reference": "0263263f4ed4f60491b6171e99b4e14d6af10b6f",
+                "url": "https://api.github.com/repos/kitpages/KitpagesCmsBundle/zipball/b943c35d902f5f311d9259a73026ec292548e949",
+                "reference": "b943c35d902f5f311d9259a73026ec292548e949",
                 "shasum": ""
             },
             "require": {
@@ -2774,7 +2828,7 @@
                 "Content management system",
                 "cms"
             ],
-            "time": "2015-01-12 13:46:23"
+            "time": "2015-01-16 08:42:20"
         },
         {
             "name": "kitpages/file-bundle",
@@ -6253,55 +6307,6 @@
             "time": "2015-01-03 08:01:59"
         },
         {
-            "name": "symfony/icu",
-            "version": "v1.1.2",
-            "target-dir": "Symfony/Component/Icu",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Icu.git",
-                "reference": "229730a14ccac63bb3c5d9f0494fcd27140c0dd3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/229730a14ccac63bb3c5d9f0494fcd27140c0dd3",
-                "reference": "229730a14ccac63bb3c5d9f0494fcd27140c0dd3",
-                "shasum": ""
-            },
-            "require": {
-                "ext-intl": "*",
-                "lib-icu": ">=3.8",
-                "php": ">=5.3.3",
-                "symfony/intl": "~2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Icu\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "Contains an excerpt of the ICU data and classes to load it.",
-            "homepage": "http://symfony.com",
-            "keywords": [
-                "icu",
-                "intl"
-            ],
-            "time": "2014-07-25 10:00:11"
-        },
-        {
             "name": "symfony/monolog-bundle",
             "version": "v2.7.1",
             "source": {
@@ -6423,12 +6428,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "760ad3306fefdcbd6508fd13edf97a2aa57edd39"
+                "reference": "ec1cae8b146960343302ff878bf3822e291681bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/760ad3306fefdcbd6508fd13edf97a2aa57edd39",
-                "reference": "760ad3306fefdcbd6508fd13edf97a2aa57edd39",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ec1cae8b146960343302ff878bf3822e291681bf",
+                "reference": "ec1cae8b146960343302ff878bf3822e291681bf",
                 "shasum": ""
             },
             "require": {
@@ -6522,7 +6527,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-01-13 10:52:51"
+            "time": "2015-01-16 21:23:29"
         },
         {
             "name": "twig/extensions",
@@ -8361,6 +8366,7 @@
         "friendsofsymfony/rest-bundle": 20,
         "willdurand/hateoas-bundle": 20,
         "jms/serializer-bundle": 20,
+        "amazonwebservices/aws-sdk-for-php": 20,
         "behat/symfony2-extension": 20,
         "behat/mink-extension": 20,
         "behat/mink-browserkit-driver": 20,

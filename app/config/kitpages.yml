@@ -22,6 +22,13 @@ kitpages_cms:
                     twig: 'AppSiteBundle:Block:renderer/image/default.html.twig'
                 banner:
                     type: 'twig'
+                    twig: 'AppSiteBundle:Block:renderer/standard/default.html.twig'
+            image:
+                default:
+                    type: 'twig'
+                    twig: 'AppSiteBundle:Block:renderer/image/default.html.twig'
+                banner:
+                    type: 'twig'
                     twig: 'AppSiteBundle:Block:renderer/image/banner.html.twig'
 
     page:
@@ -49,10 +56,10 @@ kitpages_file:
 kitpages_file_system:
     file_system_list:
         kitpagesFile:
-            local:
-                directory_public: %kernel.root_dir%/../web
-                directory_private: %kernel.root_dir%/../web
-                base_url: %base_url%
+            amazon_s3:
+                bucket_name:  %amazon_s3.bucket%
+                key:  %amazon_s3.key%
+                secret_key:  %amazon_s3.secret%
 parameters:
     base.url: %base_url%
     kitpages_cms.cms.blockManager:  App\KitPagesBundle\Model\BlockManager

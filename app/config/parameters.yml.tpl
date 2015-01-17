@@ -67,3 +67,6 @@ parameters:
     email.to.exception: '%(EmailToException)s'
     email.from.exception: '%(EmailFromException)s'
     
+    amazon_s3.key: '%(AmazonKey)s'
+    amazon_s3.secret: '%(AmazonSecretKey)s'
+    amazon_s3.bucket: '%(AmazonBucketName)s'

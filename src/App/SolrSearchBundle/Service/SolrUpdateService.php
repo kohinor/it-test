@@ -94,7 +94,7 @@ class SolrUpdateService
         $doc->slug = $product->getSlug();
         $doc->price = $product->getPrice();
         $doc->rrp = $product->getRrp() ? $product->getRrp() : $product->getPrice();
-        $doc->image = $product->getImage()->getPath();
+        $doc->image = $product->getImage()? $product->getImage()->getPath(): null;
         $doc->brand =$this->getTaxons($product, 'Brand', true);
         $doc->color = $this->getAttribute($product, 'Color');
         $doc->size = $this->getOptions($product, 'Size');

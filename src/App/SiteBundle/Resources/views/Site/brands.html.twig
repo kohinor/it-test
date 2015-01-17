@@ -1,27 +1,27 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-    <ul>
+  <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     <li><i class="icon-triangle-right"></i> {{ 'italica.brands'|trans({}, 'messages') }} </li>
-    </ul>
-    </div>
+  </ul>
 {% endblock %}
 
 
 {% block body %}
 {% set numberInColumn = brands|length / 4 %} 
-<div><h3>{{ 'italica.list.of.brands'|trans({}, 'messages') }}</h3></div>
 <div class="row">
-    <div class="column grid-4">
+    <div class="col-lg-12">
+        <h4 class="title"><span class="text">{{ 'italica.list.of.brands'|trans({}, 'messages') }}</span></h4>
+    </div>
+    <div class="col-lg-4 col-md-2 col-sm-1">
     {% set currentNumber = 0 %}
     {% for brand in brands %}
-        <p><a href="{{ path('app_solr_search_brand', {'_locale': app.request.locale, 'brand': brand.name}) }}">{{ brand.name|trans({}, 'messages') }}</a></p>
+        <p><i class="fa fa-square-o"></i> <a href="{{ path('app_solr_search_brand', {'_locale': app.request.locale, 'brand': brand.name}) }}">{{ brand.name|trans({}, 'messages') }}</a></p>
         {% set currentNumber = currentNumber+1 %}
         {% if currentNumber >= numberInColumn %}
             </div>
-            <div class="column grid-4">
+            <div class="col-lg-4 col-md-2 col-sm-1">
         {% endif %}
     {% endfor %}
     </div>
