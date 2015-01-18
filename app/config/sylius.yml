@@ -9,7 +9,13 @@ parameters:
   sylius.cart_item_resolver.default.class: App\SyliusCoreBundle\Cart\ItemResolver
         
   
-         
+sylius_core:
+    emails:
+        enabled: true
+        from_email:
+            address: %emails.address%
+            sender_name: 'Italica Shop'            
+          
 sylius_product:
     driver: doctrine/orm
     classes:
