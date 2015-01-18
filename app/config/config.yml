@@ -56,7 +56,7 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         entity_managers:
             default:
-                metadata_cache_driver: memcached
+                metadata_cache_driver: array
                 query_cache_driver: memcached
                 result_cache_driver: memcached
                 auto_mapping: true
