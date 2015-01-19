@@ -187,6 +187,7 @@ services:
             options:
                 key:      '%amazon_s3.key%'
                 secret:   '%amazon_s3.secret%'
+                default_cache_config: "%kernel.root_dir%/cache"
 
     acme.imagine.cache.resolver.amazon_s3:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\AmazonS3Resolver

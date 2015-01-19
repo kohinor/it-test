@@ -14,7 +14,11 @@ sylius_core:
         enabled: true
         from_email:
             address: %emails.address%
-            sender_name: 'Italica Shop'            
+            sender_name: 'Italica Shop'   
+        order_confirmation:
+            enabled: true
+        customer_welcome:
+            enabled: true
           
 sylius_product:
     driver: doctrine/orm

@@ -1,7 +1,7 @@
 <?php
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-
+define('AWS_DISABLE_CONFIG_AUTO_DISCOVERY', true);
 $loader = require __DIR__.'/../vendor/autoload.php';
 
 // Intl stubs.
