@@ -170,12 +170,21 @@ knp_gaufrette:
         filesystems:
             sylius_image: sylius_image
     adapters:
-        sylius_image:
+        media_amazon:
             amazon_s3:
                 amazon_s3_id: amazonS3 #this needs to match the "service" you defined above
                 bucket_name: %amazon_s3.bucket%
                 options:
                     create: true
+        media_apc:
+            apc:
+                prefix: APC 'namespace' prefix
+                ttl: 0
+        sylius_image:
+            cache:
+                source: media_amazon
+                cache: media_apc
+                ttl: 21600
     filesystems:
         sylius_image:
             adapter:    sylius_image
