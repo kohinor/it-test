@@ -9,7 +9,7 @@
 </ul>
 {% endblock %}
 {% block content %}
-    <h4>{{ 'sylius.account.order.details'|trans }}</h4>
+    <h4 class="title"><span class="text">{{ 'sylius.account.order.details'|trans }}</span></h4>
     {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
      
     {% if order.isInvoiceAvailable %}

@@ -8,18 +8,22 @@
 </ul>
 {% endblock %}
 {% block content %}
+    <h4 class="title"><span class="text">{{ 'sylius.form.frontend.profile.title'|trans }}</span></h4>
+    <div class="row">
+    <div class="col-lg-9 col-md-10 col-sm-12"> 
 <form class="form-horizontal" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
     <fieldset>
-        <legend>{{ 'sylius.form.frontend.profile.title'|trans }}</legend>
         {{ form_widget(form) }}
     </fieldset>
     {{ form_rest(form) }}
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         {% trans_default_domain 'FOSUserBundle' %}
-        <button type="submit" class="btn btn-primary btn-sm">{{ 'profile.edit.submit'|trans }}</button>
+        <button type="submit" class="btn btn-default btn-sm">{{ 'profile.edit.submit'|trans }}</button>
       </div>
     </div>
         
 </form>
+    </div>
+    </div>
 {% endblock content %}

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <h4>{{ 'sylius.account.address.list'|trans }}</h4>
+    <h4 class="title"><span class="text">{{ 'sylius.account.address.list'|trans }}</span></h4>
 
     {% if app.user.billingAddress is empty or app.user.shippingAddress is empty %}
         <p>
