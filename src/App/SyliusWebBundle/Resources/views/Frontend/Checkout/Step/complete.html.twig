@@ -5,26 +5,22 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <p>
-        {{ 'order.complete.message'|trans  }} 
-        </p>
-        <p>{{ 'order.number'|trans  }}: {{ order.getNumber() }}</p>
-        <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{ 'sylius.checkout.finalize.product.name'|trans }}</th>
-                <th>{{ 'sylius.checkout.finalize.order_item.quantity'|trans }}</th>
-                <th><span class="pull-right">{{ 'sylius.checkout.finalize.order_item.unit_price'|trans }}</span></th>
-                <th><span class="pull-right">{{ 'sylius.checkout.finalize.order_item.total'|trans }}</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.items %}
-                {% include 'SyliusWebBundle:Frontend/Checkout/Step/Finalize:_item.html.twig' %}
-            {% endfor %}
-        </tbody>
-        </table>
+        <div class="row panel panel-default">
+        <div class="panel-body">
+            <div class ="col-lg-7 col-md-7 col-sm-7">
+            <p>{{ 'order.complete.message'|trans  }}</p>
+            <p><strong>{{ 'order.number'|trans  }}</strong>: {{ order.getNumber() }}</p>
+            </div>
+            <div class ="col-lg-5 col-md-5 col-sm-5">
+             <ul class="nav nav-pills nav-stacked">
+                 <li><a href="{{ path('root') }}"><i class="fa fa-arrow-right"></i> {{ 'italica.homepage'|trans }}</a></li>
+                 <li><a href="{{ path('app_solr_search') }}"><i class="fa fa-arrow-right"></i> {{ 'italica.continue.shopping'|trans }}</a></li>
+                 <li><a href="{{ path('sylius_account_order_index') }}"><i class="fa fa-arrow-right"></i> {{ 'italica.view.orders'|trans }}</a></li>
+             </ul>
+            </div>
+        </div>  
+          </div>
+        {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
     </div>
 </div>
 {% endblock %}

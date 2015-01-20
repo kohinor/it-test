@@ -11,7 +11,7 @@ app_sylius_product:
     requirements:
         _locale: en|fr
 
-app_solr_search:
+app_solr_search_main:
     resource: "@AppSolrSearchBundle/Resources/config/routing.yml"
     prefix: /{_locale}/
     requirements:
