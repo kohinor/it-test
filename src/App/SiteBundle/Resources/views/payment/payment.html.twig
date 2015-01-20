@@ -14,8 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ baseUrl }}/css/font-awesome.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ baseUrl }}/css/bootstrap.css" type="text/css"/>
-         
-    </head>
+    <style type="text/css">
+        table.ncoltable1 small, table.ncoltable2 small, table.ncoltable3 small { font-size: 100%}       
+        table.ncoltable1, table.ncoltable2, table.ncoltable3 { margin: 5px;}
+        table.ncoltable2 {border-bottom: 1px dashed #ccc;}
+    </style>
+</head>
 <body>               
     <div class="page-header">
       <div class="container">   
@@ -32,27 +36,24 @@
           </div>
         
         </div>
-  </div>
  
   <div class="container">
 <div class="row">
 <div class="col-lg-11 checkout-wrap">
   <ul class="checkout-bar">
-
     <li class=" visited  first">Login</li>
-
     <li class=" previous visited ">Addresses</li>
-
-    <li class=" previous visited ">Review</li>
-    
-    <li class=" active ">Payment</li>
-    
-    <li class=" next ">Confirmation</li>
-   
+    <li class=" previous visited ">Review</li>   
+    <li class=" active ">Payment</li>   
+    <li class=" next ">Confirmation</li>  
   </ul>
 </div>
 </div>
+<div class="panel panel-custom">
+    <div class="panel-body">
 $$$PAYMENT ZONE$$$
+    </div>
+</div>
   </div>   
   <div class="footer-separator"></div>
   <div class="page-footer">
