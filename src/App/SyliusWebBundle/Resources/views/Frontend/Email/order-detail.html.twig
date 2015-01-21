@@ -37,12 +37,12 @@
             {% set product = item.variant.product %}
             <tr>
               <td>
-                <a href="{{ path('app_site_product', {'slug':product.slug}, true) }}" class="pull-left" style="margin-right: 15px;">
+                <a href="{{ path('app_site_product', {'slug':product.slug}) }}" class="pull-left" style="margin-right: 15px;">
                   <img class="img-small thumbnail" src="{{ product.image ? product.image.path|imagine_filter('sylius_small') : 'http://placehold.it/90x60' }}" alt="{{ product.name }}" />
                 </a>
               </td>
               <td>
-                <a href="{{ path('app_site_product', {'slug':product.slug}, true) }}"><strong>{{ product.name }}</strong></a>
+                <a href="{{ path('app_site_product', {'slug':product.slug}) }}"><strong>{{ product.name }}</strong></a>
                 {% if variant.presentation is not empty %}
                   <strong>{{ variant.presentation }}</strong>
                 {% elseif product.hasOptions %}
