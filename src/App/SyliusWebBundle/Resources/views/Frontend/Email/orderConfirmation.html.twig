@@ -1,12 +1,96 @@
 {% block subject %}
     {% autoescape false %}
-    {{ 'email.customer_welcome.salut'|trans }} {{ order.user.firstName }} {{ order.user.firstName }}
+    {{ 'email.order_confirmation.subject'|trans }}
     {% endautoescape %}
 {% endblock %}
 {% block body_text %}{% endblock %}
 {% block body_html %}
-    <div>
-      <p>{{ 'email.order_confirmation.body'|trans }} </p>
-      {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
-    </div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Italica store</title>
+</head>
+
+<body bgcolor="#8d8e90">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#8d8e90">
+  <tr>
+    <td>
+      <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
+        <tr>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>   
+              <tr>
+                <td>&nbsp;</td>
+              </tr> 
+              <tr>
+                <td width="144" style="text-align:center;letter-spacing: 3px; margin-bottom: 0;">
+                  <a href= "{{ app.request.getBaseURL() }}" target="_blank" style="text-decoration: none;">
+                    <font style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; color:#010101; font-size:30px; text-transform: uppercase;font-weight: 500; line-height: 1.1;">
+                      Italica
+                    </font>
+                  </a>
+                  <p style="letter-spacing: 1px;text-transform: uppercase;font-size: 15px;font-weight: 300;line-height: 1.4;color: #666666; font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; margin:0;">
+                      {{ 'italica.online.outlet.shop'|trans }}
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="10%">&nbsp;</td>
+                <td width="80%" align="left" valign="top">
+                  <div style="font-family: Georgia, 'Times New Roman', Times, serif; color:#010101; font-size:24px">
+                    <strong>
+                      <em>
+                        {{ 'email.customer_welcome.salut'|trans }} {{ order.user.firstName }} {{ order.user.firstName }}
+                      </em>
+                    </strong>
+                  </div>
+                  <br /><br />
+                  <div style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px">
+                    <p>{{ 'email.order_confirmation.body'|trans }} </p>
+                    {% include "SyliusWebBundle:Frontend/Email:order-detail.html.twig" %}
+                  </div>
+                  <div style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px">
+                    {{ 'italica.sincerely.yours' |trans }} <br />
+                    {{ 'italica.team' |trans }}
+                  </div>
+                </td>
+                <td width="10%">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
 {% endblock %}
