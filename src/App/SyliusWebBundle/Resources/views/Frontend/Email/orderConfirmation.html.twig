@@ -1,11 +1,12 @@
 {% block subject %}
     {% autoescape false %}
-    {{ 'email.order_confirmation.subject'|trans }}
+    {{ 'email.customer_welcome.salut'|trans }} {{ order.user.firstName }} {{ order.user.firstName }}
     {% endautoescape %}
 {% endblock %}
 {% block body_text %}{% endblock %}
 {% block body_html %}
     <div>
-    {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
+      <p>{{ 'email.order_confirmation.body'|trans }} </p>
+      {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
     </div>
 {% endblock %}

@@ -1,13 +1,12 @@
+{% extends 'AppSyliusWebBundle:Frontend/Email:emailLayout.html.twig' %}
 {% block subject %}
     {% autoescape false %}
-    {{ 'email.customer_welcome.subject'|trans }}
+    {{ 'email.customer_welcome.salut'|trans }} {{ user.firstName }} {{ user.firstName }}
     {% endautoescape %}
 {% endblock %}
 {% block body_text %}{% endblock %}
 {% block body_html %}
     <div>
-        <p><strong>{{ 'email.customer_welcome.salut'|trans }} {{ user.firstName }} {{ user.firstName }},</strong></p>
-        <p>{{ 'email.customer_welcome.body'|trans }}</p>
-        <p>{{ 'email.customer_welcome.footer'|trans }}</p>
+        {{ 'email.customer_welcome.body'|trans }}
     </div>
 {% endblock %}

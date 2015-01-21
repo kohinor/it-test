@@ -1,3 +1,4 @@
+{% extends 'AppSyliusWebBundle:Frontend/Email:emailLayout.html.twig' %}
 {% block subject %}
     {% autoescape false %}
     {{ 'email.order_comment.subject'|trans }}
@@ -12,5 +13,5 @@
         <h3>{{ comment.comment }}</h3>
     {% endif %}
 
-    {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
+    {% include "SyliusWebBundle:Frontend/Email:order-detail.html.twig" %}
 {% endblock %}
