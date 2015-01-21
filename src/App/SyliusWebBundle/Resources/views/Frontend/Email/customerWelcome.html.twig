@@ -16,6 +16,9 @@
 <body bgcolor="#8d8e90">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#8d8e90">
   <tr>
+    <td>&nbsp;</td>
+  </tr>   
+  <tr>
     <td>
       <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
         <tr>
@@ -57,11 +60,10 @@
                   <div style="font-family: Georgia, 'Times New Roman', Times, serif; color:#010101; font-size:24px">
                     <strong>
                       <em>
-                        {{ 'email.customer_welcome.salut'|trans }} {{ user.firstName }} {{ user.firstName }}
+                        {{ 'email.customer_welcome.salut'|trans }} {{ user.firstName }} {{ user.firstName }},
                       </em>
                     </strong>
                   </div>
-                  <br /><br />
                   <div style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px">
                     <p>{{ 'email.customer_welcome.body'|trans }}</p>
                   </div>
@@ -90,6 +92,9 @@
       </table>
     </td>
   </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>  
 </table>
 </body>
 </html>
