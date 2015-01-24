@@ -11,9 +11,31 @@
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 text-center" >
       <div >
-      <div><img src="/img/hugo-boss-logo.png" width="100px"></div>
-      <div><img src="/img/hermes-logo.png" width="100px"></div>
-      <div><img src="/img/versace-jeans-logo.png" width="100px"></div>
+          <div>
+              <a href="{{ path('app_solr_search_brand', {'brand':'calvin_klein'}) }}">
+              <img src="/img/calvin-klein-logo.png" width="150px">
+              </a>
+          </div>
+          <div>
+              <a href="{{ path('app_solr_search_brand', {'brand':'michael_kors'}) }}">
+              <img src="/img/michael-kors-logo.png" width="150px">
+              </a>
+          </div>
+      <div>
+          <a href="{{ path('app_solr_search_brand', {'brand':'gucci'}) }}">
+          <img src="/img/gucci-logo.png" width="140px">
+          </a>
+      </div>
+      <div>
+          <a href="{{ path('app_solr_search_brand', {'brand':'versace'}) }}">
+          <img src="/img/versace-logo.png" width="140px">
+          </a>
+      </div><br><br>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <a href="{{ path('app_site_brand') }}"><strong>{{ 'italica.more'|trans }} </strong> <i class="fa fa-arrow-right"></i></a>
+          </div>
+      </div>
       </div>
   </div>
   <div class="col-lg-5 col-md-5 col-sm-5">

@@ -17,15 +17,20 @@ class SolrUpdateService
     }
     
     /**
-     * @param Branch $branch
+     * @param Product $product
      */
     public function updateSolrProduct(\Sylius\Component\Core\Model\Product $product)
     {
-            $update = $this->client->createUpdate();
+        $update = $this->client->createUpdate();
+        if ($product->isDeleted()) {
+            $update->addDeleteById($product->getId());
+        } else {
             $document = $this->getSolrDocument($update->createDocument(), $product);
             $update->addDocument($document);
-            $update->addCommit();
-            $this->client->update($update);
+            
+        }
+        $update->addCommit();
+        $this->client->update($update);
     }
     
     private function getImages(\Sylius\Component\Core\Model\Product $product)
