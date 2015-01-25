@@ -17,7 +17,7 @@
     <div class="col-lg-4 col-md-2 col-sm-1">
     {% set currentNumber = 0 %}
     {% for brand in brands %}
-        <p><i class="fa fa-square-o"></i> <a href="{{ path('app_solr_search_brand', {'_locale': app.request.locale, 'brand': brand.name}) }}">{{ brand.name|trans({}, 'messages') }}</a></p>
+        <p><i class="fa fa-arrow-right"></i> <a href="{{ path('app_solr_search_brand', {'_locale': app.request.locale, 'brand': brand.name}) }}">{{ brand.name|trans({}, 'messages') }}</a></p>
         {% set currentNumber = currentNumber+1 %}
         {% if currentNumber >= numberInColumn %}
             </div>

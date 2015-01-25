@@ -90,30 +90,30 @@ security:
             security: false
 
     access_control:
-#        - { path: ^/en/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/en/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/security.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
- #       - { path: ^/en/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
- #       - { path: ^/en/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/en/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/en/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: ^/en/administration/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en/administration/login-check, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/en/administration/cms/block.*", role: ROLE_SYLIUS_ADMIN, requires_channel: http }
-#        - { path: ^/en/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
+        - { path: ^/en/administration/cms/block.*", role: ROLE_SYLIUS_ADMIN, requires_channel: http }
+        - { path: ^/en/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
 
-#        - { path: ^/en/account.*, role: ROLE_USER, requires_channel: https }
-#        - { path: ^/en/cart.*, role: ROLE_USER, requires_channel: https }
-#        - { path: ^/en/checkout.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/en/account.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/en/cart.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/en/checkout.*, role: ROLE_USER, requires_channel: https }
 
-#        - { path: ^/fr/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-#        - { path: ^/fr/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-#        - { path: ^/fr/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/fr/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/fr/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/fr/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: ^/fr/administration/cms/block.*", role: ROLE_SYLIUS_ADMIN, requires_channel: http }
-#        - { path: ^/fr/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
+        - { path: ^/fr/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
 
-#        - { path: ^/fr/account.*, role: ROLE_USER, requires_channel: https }
-#        - { path: ^/fr/cart.*, role: ROLE_USER, requires_channel: https }
-#        - { path: ^/fr/checkout.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/fr/account.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/fr/cart.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/fr/checkout.*, role: ROLE_USER, requires_channel: https }
 
         - { path: "/_partial.*", ip: 127.0.0.1 }
