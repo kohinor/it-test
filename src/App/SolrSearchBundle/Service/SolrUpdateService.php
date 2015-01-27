@@ -21,16 +21,18 @@ class SolrUpdateService
      */
     public function updateSolrProduct(\Sylius\Component\Core\Model\Product $product)
     {
-        $update = $this->client->createUpdate();
-        if ($product->isDeleted()) {
-            $update->addDeleteById($product->getId());
-        } else {
-            $document = $this->getSolrDocument($update->createDocument(), $product);
-            $update->addDocument($document);
-            
-        }
-        $update->addCommit();
-        $this->client->update($update);
+        try {
+            $update = $this->client->createUpdate();
+            if ($product->isDeleted()) {
+                $update->addDeleteById($product->getId());
+            } else {
+                $document = $this->getSolrDocument($update->createDocument(), $product);
+                $update->addDocument($document);
+
+            }
+            $update->addCommit();
+            $this->client->update($update);
+        } catch(\Solarium\Exception\HttpException $e) {}
     }
     
     private function getImages(\Sylius\Component\Core\Model\Product $product)
@@ -99,7 +101,7 @@ class SolrUpdateService
         $doc->slug = $product->getSlug();
         $doc->price = $product->getPrice();
         $doc->rrp = $product->getRrp() ? $product->getRrp() : $product->getPrice();
-        $doc->image = $product->getImage()? $product->getImage()->getPath(): null;
+        $doc->image = $product->getImage()? $product->getImage()->getPath(): '';
         $doc->brand =$this->getTaxons($product, 'Brand', true);
         $doc->color = $this->getAttribute($product, 'Color');
         $doc->size = $this->getOptions($product, 'Size');

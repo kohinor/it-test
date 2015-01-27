@@ -127,7 +127,7 @@ knp_paginator:
     template:
         pagination: AppSolrSearchBundle:SolrSearch:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig 
-    
+        
 liip_imagine:
     loaders:
         stream.profile:

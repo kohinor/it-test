@@ -1,0 +1,174 @@
+<?php
+
+namespace App\SyliusProductBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\SyliusProductBundle\Entity\ProductDropshipRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="sylius_product_dropship")
+ */
+class DropshipProduct
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    protected $productType;
+    
+    /**
+     * @ORM\Column(name="partner_product_id", type="string", length=255)
+     */
+    protected $partnerProductId;
+    
+    /**
+     * @ORM\Column(name="brand", type="string", length=255)
+     */
+    protected $brand;
+    
+    /**
+     * @ORM\Column(name="name_en", type="string", length=255)
+     */
+    protected $nameEn;
+    /**
+     * @ORM\Column(name="name_fr", type="string", length=255)
+     */
+    protected $nameFr;
+    
+    /**
+     * sku
+     * @ORM\Column(name="code", type="string", length=255)
+     */
+    protected $code;
+    /**
+     * @ORM\Column(name="quantity", type="string", length=255)
+     */
+    protected $quantity;
+    /**
+     * @ORM\Column(name="rrp", type="string", length=255)
+     */
+    protected $rrp;
+    /**
+     * @ORM\Column(name="actual_price", type="string", length=255)
+     */
+    protected $actualPrice;
+    
+    /**
+     * @ORM\Column(name="description_en", type="text")
+     */
+    protected $descriptionEn;
+    
+    /**
+     * @ORM\Column(name="description_fr", type="text")
+     */
+    protected $descriptionFr;
+    
+    /**
+     * @ORM\Column(name="weight", type="string", length=255)
+     */
+    protected $weight;
+    
+    /**
+     * @ORM\Column(name="picture1", type="string", length=255)
+     */
+    protected $picture1;
+    
+    /**
+     * @ORM\Column(name="picture2", type="string", length=255)
+     */
+    protected $picture2;
+    
+    /**
+     * @ORM\Column(name="picture3", type="string", length=255)
+     */
+    protected $picture3;
+    
+    /**
+     * @ORM\Column(name="firm", type="string", length=255)
+     */
+    protected $firm;
+    
+    /**
+     * @ORM\Column(name="category", type="string", length=255)
+     */
+    protected $category;
+    
+    /**
+     * @ORM\Column(name="sub_category", type="string", length=255)
+     */
+    protected $subCategory;
+    
+    /**
+     * @ORM\Column(name="partner_model_id", type="string", length=255)
+     */
+    protected $partnerModelId;
+    
+    /**
+     * @ORM\Column(name="color", type="string", length=255)
+     */
+    protected $color;
+    
+    /**
+     * @ORM\Column(name="gender", type="string", length=255)
+     */
+    protected $gender;
+    // barcode
+    
+    /**
+     * @ORM\Column(name="barcode", type="string", length=255)
+     */
+    protected $barcode;
+    
+    /**
+     * @ORM\Column(name="size", type="string", length=255)
+     */
+    protected $size;
+    
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+    
+     /**
+     * Set createdAt
+     *
+     * @ORM\PrePersist
+     * @return LiveAccessCategory
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+}

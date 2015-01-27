@@ -16,7 +16,8 @@ class UploadProductCommand extends ContainerAwareCommand
     {
         $this->setName('shop-product:import-products')
             ->setDescription('Imports products from csv file.')
-            ->addArgument('file');
+            ->addArgument('file')
+            ->addArgument('language');
     }
 
 
@@ -28,140 +29,224 @@ class UploadProductCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $file = $input->getArgument('file');
+        $language = $input->getArgument('language');
         $output->writeln("<info>starting updating</info>");
-       // $file = '/home/nkapralova/Downloads/products.csv';
-        if (($handle = fopen($file, "r")) !== false) {
-            $data = fgetcsv($handle, 5000, ",");
-            while (($data = fgetcsv($handle, 5000, ",")) !== false) {
-                if ($data[0] == 'PRODUCT') {
-                    $this->updateProduct($data, $output);
+       /* if (($handle = fopen($file, "r")) !== false) {
+            $sql = "TRUNCATE sylius_product_dropship";
+            $this->getEM()->getConnection()->exec($sql);
+            $i = 0;
+            while (($data = fgetcsv($handle)) !== false) {
+                $i++;
+                if ($i < 4) continue;
+                $productDropship = new \App\SyliusProductBundle\Entity\ProductDropship();
+                $productDropship->setProductType($data[0]);
+                $productDropship->setPartnerProductId($data[1]);
+                $productDropship->setBrand($data[2]);
+                if ($language == 'fr') {
+                    $productDropship->setNameFr($data[3]);
+                } else {
+                    $productDropship->setNameEn($data[3]);
                 }
-                if ($data[0] == 'MODEL') {
-                    $this->updateModel($data, $output);
+                $productDropship->setCode($data[4]);
+                if ($data[5]) {
+                    $productDropship->setQuantity($data[5]);
                 }
+                $productDropship->setRrp($data[6]*100);
+                $productDropship->setActualPrice($data[8]*100);
+                if ($language == 'fr') {
+                    $productDropship->setDescriptionFr($data[9]);
+                } else {
+                    $productDropship->setDescriptionEn($data[9]);
+                }
+                $productDropship->setPicture1($data[11]);
+                $productDropship->setPicture2($data[12]);
+                $productDropship->setPicture3($data[13]);
+                $productDropship->setFirm($data[14]);
+                if ($data[15] == 'Men') {
+                    $productDropship->setCategory("Men's Clothing");
+                } elseif ($data['15'] == 'Women') {
+                    $productDropship->setCategory("Women's Clothing");
+                } elseif ($data['15'] == 'Kids') {
+                    $productDropship->setCategory("Kid's Clothing");
+                } else {
+                    $productDropship->setCategory(ucfirst($data['15']));
+                }
+                $productDropship->setSubCategory(ucfirst($data[16]));
+                $productDropship->setColor($data[20]);
+                $productDropship->setGender($data[28]);
+                $productDropship->setPartnerModelId($data[30]);
+                $productDropship->setBarcode($data[31]);
+                $productDropship->setSize($data[32]);
+                if ($data[33]) {
+                    $productDropship->setQuantity($data[33]);
+                }
+                
+                $this->getEM()->persist($productDropship);
+                if ($i >= 200) {
+                    $this->getEM()->flush();
+                    $this->getEM()->clear();
+                }
+                
             }
+            
         }
+        $this->getEM()->flush();
+        $this->getEM()->clear();
+*/
+        $this->updateProducts($output);
         $output->writeln('done');
     } 
-    protected function updateModel($data, $output)
+    protected function updateProducts($output)
     {
-        $output->writeln('Update model '.$data[13]);
-        $productId = $data[1];
-        $modelId = $data[13];
-        $modelBarcode = $data[14] ? $data[14] : 'n/a';
-        $modelSize= trim($data[15]);
-        $modelOnHand = $data[16];
+        $allowedBrands = array('Alexander McQueen', 'Bottega Veneta',
+                                'Burberry', 'Calvin Klein', 'Cavalli B.',
+                                'Cerruti', 'Chloe', 'Christian Lacroix',
+                                'D&G', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
+                                'Gas', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss',
+                                'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
+                                'Nina Ricci', 'Prada', 'Roberto Cavalli', 'Royal Polo',
+                                'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
+                                'V 1969', 'Versace', 'Versace Jeans');
+        
+        $qb = $this->getEM()->createQueryBuilder();
+        $qb->add('select', 'p')->add('from', '\App\SyliusProductBundle\Entity\ProductDropship p');
+        $qb->where('p.brand IN (:brands)')->setParameter('brands', $allowedBrands);
+            
+        $query = $qb->getQuery();
+        $products = $query->getResult();
+        foreach ($products as $product) {
+            $this->updateProduct($product, $output);
+            $qb = $this->getEM()->createQueryBuilder();
+            $qb->add('select', 'p')->add('from', '\App\SyliusProductBundle\Entity\ProductDropship p');
+            $qb->where('p.partnerProductId = :partnerId')->setParameter('partnerId', $product->getPartnerProductId());
+            $models = $qb->getQuery()->getResult();
+            foreach ($models as $model) {
+                if ($model->getProductType() == 'MODEL') {
+                    $this->updateModel($model, $output);
+                }
+            } 
+        }
+    }
+    
+    protected function updateModel(\App\SyliusProductBundle\Entity\ProductDropship $model, $output)
+    {
+        $output->writeln('Update model '.$model->getPartnerModelId());
         
         $repository = $this->getContainer()->get('sylius.repository.product');
-        $product = $repository->findOneBy(array('partnerId' => $productId)); 
+        $product = $repository->findOneBy(array('partnerId' => $model->getPartnerProductId())); 
         if (!$product) {
             return null;
         }
-        $optionRepository = $this->getContainer()->get('sylius.repository.product_option');
-        if (in_array($modelSize, array('S', 'M', 'L', 'XL', 'XXL', 'XXXL'))) {
-            $option = $optionRepository->findOneBy(array('name' => 'Leter Size'));
-            $product->addOption($option);
-        } else {
-            $option = $optionRepository->findOneBy(array('name' => 'Number size'));
-            $product->addOption($option);
-        }
+        $optionValueRepository = $this->getContainer()->get('sylius.repository.product_option_value'); 
+        
+        $qb = $this->getEM()->createQueryBuilder();
+        $qb->add('select', 'p')->add('from', '\App\SyliusProductBundle\Entity\ProductDropship p');
+        $qb->where('p.partnerProductId = :partnerId')->andWhere('p.productType = :partnerType')
+            ->setParameter('partnerId', $model->getPartnerProductId())
+            ->setParameter('partnerType', 'PRODUCT');
+        $query = $qb->getQuery();
+        $productDropship = $query->getSingleResult();
 
         $variantRepository = $this->getContainer()->get('sylius.repository.product_variant');
-        $variant = $variantRepository->findOneBy(array('sku' => $modelId));
+        $variant = $variantRepository->findOneBy(array('sku' => $model->getPartnerModelId()));
         if (!$variant) {
+            //sozdat option
+            $optionRepository = $this->getContainer()->get('sylius.repository.product_option');
+            $option = $optionRepository->findOneBy(array('name' => $productDropship->getCategory().':'.$productDropship->getSubCategory()));
+            $optionValue = null;
+            if (!$option) {
+                $option = new \Sylius\Component\Product\Model\Option();
+                $option->setName($productDropship->getCategory().':'.$productDropship->getSubCategory());
+                $option->setPresentation('Size');
+                $this->getEM()->persist($option);
+            } else {
+                $optionValue = $optionValueRepository->findOneBy(array('value' => $model->getSize(), 'option' => $option));
+            }
+
+            $product->addOption($option);
+        
             $variant = new \App\SyliusProductBundle\Entity\ProductVariant();
             $variant->setProduct($product);
             $product->addVariant($variant);
+            $variant->setAvailableOnDemand(false);
+            $variant->setBarcode($model->getBarcode());
+            $variant->setSku($model->getPartnerModelId());
+
+            if (!$optionValue) {
+                $optionValue = $optionValueRepository->createNew();
+                $optionValue->setValue($model->getSize());
+                $option->addValue($optionValue);
+                $optionValueManager = $this->getContainer()->get('sylius.manager.product_option_value'); 
+                $optionValueManager->persist($optionValue);
+            }
+
+            $variant->addOption($optionValue);
         }
         
-        $variant->setBarcode($modelBarcode);
-        $variant->setSku($modelId);
-        $variant->setOnHand($modelOnHand);
-        
-        $optionValueRepository = $this->getContainer()->get('sylius.repository.product_option_value'); 
-        $optionValue = $optionValueRepository->findOneBy(array('value' => $modelSize));
-        
-        if (!$optionValue) {
-            $optionValue = $optionValueRepository->createNew();
-            $optionValue->setValue($modelSize);
-            $option->addValue($optionValue);
-            $optionValueManager = $this->getContainer()->get('sylius.manager.product_option_value'); 
-            $optionValueManager->persist($optionValue);
-            $optionValueManager->flush();
-        }
-        
-        $variant->addOption($optionValue);
+        $variant->setOnHand($model->getQuantity());
         $variant->setPrice($product->getMasterVariant()->getPrice());
-        $variant->setRrp($product->getMasterVariant()->getPrice());
+        $variant->setRrp($product->getMasterVariant()->getRrp());
+            
         $variantManager = $this->getContainer()->get('sylius.manager.product_variant');
         $variantManager->persist($variant);
         $manager = $this->getContainer()->get('sylius.manager.product');
         $manager->persist($product);
-        $manager->flush();
-        
+        $manager->flush();   
     }
-    protected function updateProduct($data, $output)
+    
+    protected function updateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship, $output)
     {
-        $output->writeln('Update product '.$data[4]);
-        $productId = $data[1];
-        $brand = $data[2];
-        $productName = $data[3];
-        $slug = $data[4];
+        $output->writeln('Update product '.$productDropship->getPartnerProductId());
+        $repository = $this->getContainer()->get('sylius.repository.product');       
 
-        if ($slug) {
-            if (strstr($slug, 'lady')) {
-                $gender = 'Women';
-                $color = explode('_', end(explode('lady', $slug)));
-            } elseif (strstr($slug, 'woman')) {
-                $gender = 'Women';
-                $color = explode('_', end(explode('woman', $slug)));
-            } elseif (strstr($slug, 'man')) {
-                $gender = 'Men';
-                $color = explode('_', end(explode('man', $slug)));
-            } else {
-                $color = end(explode('_', $slug));
-            }
-        }
-        $description = str_replace('ᐧ', '<br />', $data[8]);
-
-        $repository = $this->getContainer()->get('sylius.repository.product');
-       
-
-        $product = $repository->findOneBy(array('partnerId' => $productId));
+        $product = $repository->findOneBy(array('partnerId' => $productDropship->getPartnerProductId()));
         if (!$product) {
             $product = $repository->createNew();
-        }
-        $product->setPartnerId($productId);
-        $product->setSlug(strtolower($slug));
-        $product->setName($productName);
-        $product->setDescription($description);
-        $product->setVariantSelectionMethod(ProductInterface::VARIANT_SELECTION_MATCH);
+            $product->setPartnerId($productDropship->getPartnerProductId());
+            $product->setSlug(strtolower(str_replace(' ', '_', $productDropship->getCode())));
+            $product->setVariantSelectionMethod(ProductInterface::VARIANT_SELECTION_MATCH);
         
-        $output->writeln('Product Settings');
-        $taxons = new \Doctrine\Common\Collections\ArrayCollection();
-        $taxons->add($this->getTaxon('Brand', $brand));
-        $taxons->add($this->getTaxon('Gender', $gender));
-        $product->setTaxons($taxons);
-
-        $attributes[] = array('name' => 'Brand', 'value' => $brand);
-        if (is_array($color)) {
-            foreach ($color as $singleColor) {
-                if ($singleColor != '') {
-                    $attributes[] = array('name' => 'Color', 'value' => $singleColor);
-                }
+            $output->writeln('Product Taxons');
+            $taxons = new \Doctrine\Common\Collections\ArrayCollection();
+            if ($productDropship->getBrand()) {
+                $taxons->add($this->getTaxon('Brand', $productDropship->getBrand()));
             }
+            $taxons->add($this->getTaxon('Gender', $productDropship->getGender() ? $productDropship->getGender() : 'Unisex'));
+            $taxons->add($this->getTaxon('Category', $productDropship->getCategory()));
+            if ($productDropship->getSubCategory()) {
+                $taxons->add($this->getTaxon($productDropship->getCategory(), $productDropship->getSubCategory()));
+            }
+            $product->setTaxons($taxons);
+            $attributes[] = array('name' => 'Brand', 'value' => $productDropship->getBrand());
+            if ($productDropship->getColor()) {
+                $attributes[] = array('name' => 'Color', 'value' => $productDropship->getColor());
+            }
+            $this->addAttributes($product, $attributes);
+            $product->setTaxCategory($this->getTaxCategory());            
+            $product->setShippingCategory($this->getShippingCategory());
+            
+            $output->writeln('Adding Master product ');
+            $this->addMasterVariant($product, $productDropship);
+            $product->setName($productDropship->getNameEn());
+            $description = str_replace('ᐧ', '<br />', $productDropship->getDescriptionEn());
+            $product->setDescription($description);
         } else {
-            $attributes[] = array('name' => 'Color', 'value' => $color);
+            $variant = $product->getMasterVariant();
+            $variant->setPrice($productDropship->getRrp() - ($productDropship->getRrp()/100*5));
+            $variant->setOnHand($productDropship->getQuantity());
+            $variant->setRrp($productDropship->getRrp());
+            if ($productDropship->getNameFr()) {
+                $repository = $this->getEM()->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+                $repository->translate($product, 'name', 'fr', $productDropship->getNameFr());
+                $description = str_replace('ᐧ', '<br />', $productDropship->getDescriptionFr());
+                $repository->translate($product, 'description', 'fr', $description);
+            }
         }
         
-        $this->addAttributes($product, $attributes);
-        $product->setTaxCategory($this->getTaxCategory());            
-        $product->setShippingCategory($this->getShippingCategory());
-        
-        $this->addMasterVariant($product, $data);
         $manager = $this->getContainer()->get('sylius.manager.product');
         $manager->persist($product);
         $manager->flush();
+        $output->writeln('Flush product '.$productDropship->getPartnerProductId());
                  
     }
     
@@ -200,7 +285,7 @@ class UploadProductCommand extends ContainerAwareCommand
                 $attribute->setPresentation($attributeArr['name']);
 
                 $this->getContainer()->get('sylius.manager.product_attribute')->persist($attribute);
-                $this->getContainer()->get('sylius.manager.product_attribute')->flush($attribute);
+               // $this->getContainer()->get('sylius.manager.product_attribute')->flush($attribute);
             }
 
             $attributeValue = $this->getContainer()->get('sylius.repository.product_attribute_value')->createNew();
@@ -225,25 +310,23 @@ class UploadProductCommand extends ContainerAwareCommand
         
     }
 
-    protected function addMasterVariant(ProductInterface $product, $data)
+    protected function addMasterVariant(ProductInterface $product, \App\SyliusProductBundle\Entity\ProductDropship $productDropship)
     {
-        $productPrice = $data[6];
-        $productImages = array($data[10], $data[11], $data[12]);
+        $productImages = array($productDropship->getPicture1(), $productDropship->getPicture2(), $productDropship->getPicture3());
         $variant = $product->getMasterVariant();
         $variant->setProduct($product);
-        $variant->setPrice($productPrice*100);
-        $variant->setSku('none');
+        $variant->setPrice($productDropship->getRrp() - ($productDropship->getRrp()/100*5));
+        $variant->setSku($productDropship->getCode());
         $variant->setAvailableOn(new \DateTime());
-        $variant->setOnHand(0);
-        $variant->setBarcode($data[14] ? $data[14] : 'n/a');
-        $variant->setRrp($productPrice*100);
-
+        $variant->setOnHand($productDropship->getQuantity());
+        $variant->setBarcode('n/a');
+        $variant->setRrp($productDropship->getRrp());
+        $variant->setAvailableOnDemand(false);
         $uploader = $this->getContainer()->get('sylius.image_uploader');
         foreach ($variant->getImages() as $image ) {
             $variant->removeImage($image);
         }
         foreach ($productImages as $key => $imageLink) {
-            
             $content = file_get_contents($imageLink);
             $path = $this->getContainer()->getParameter('kernel.root_dir').'/../web/uploads/'.$product->getSlug().$key.'.jpg';
             
@@ -255,5 +338,12 @@ class UploadProductCommand extends ContainerAwareCommand
             $variant->addImage($image);
         }
         $product->setMasterVariant($variant);
+    }
+    
+    protected function getEM()
+    {
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em->getConnection()->getConfiguration()->setSQLLogger(null);
+        return $em;
     }
 }

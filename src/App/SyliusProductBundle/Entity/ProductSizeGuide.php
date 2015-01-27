@@ -49,7 +49,7 @@ class ProductSizeGuide
      * Set createdAt
      *
      * @ORM\PrePersist
-     * @return LiveAccessCategory
+     * @return ProductSizeGuide
      */
     public function setCreatedAt()
     {

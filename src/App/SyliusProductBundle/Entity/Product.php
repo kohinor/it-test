@@ -15,7 +15,7 @@ class Product extends SyliusCoreProduct
 {
     /**
      *
-     * @ORM\Column(type="string", name="partner_id", length=64)
+     * @ORM\Column(type="string", name="partner_id", length=64, nullable=true)
      */
     protected $partnerId;
     
