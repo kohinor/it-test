@@ -309,7 +309,7 @@ class SolrSearchController extends Controller
      */
     public function getFacetTemplate($idname, $resultset, $facets)
     {
-        //die(var_dump($resultset->getFacetSet()->getFacet('categories')));
+       // die(var_dump($resultset->getFacetSet()->getFacet('categories')));
         $bindings = array(
             'results' => $resultset,
             'facets' => $facets?$facets:array(),

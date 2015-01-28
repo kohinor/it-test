@@ -1,18 +1,18 @@
 {% if navigation %}
-<ul class=" nav{% if root %} {{navigationCssClass}} {% if navigation|length >0 and level is defined and level == 3 %} dropdown-menu{% endif %} {% endif %}">
+<ul class=" nav{% if root %} {{navigationCssClass}} {% if navigation|length >0 and level is defined and level == 3 and navigationCssClass == 'navbar-nav header' %} dropdown-menu{% endif %} {% endif %}">
     {# warning, don't split for and <li> in 2 lines. It removes spaces between two <li> then we can use display: inline-block;#}
     {% for navigationElem in navigation %}
-        <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
-        {% if navigationElem.children|length > 0 and navigationElem.level == 3 %}    
-            <a class="dropdown-toggle {% if navigationCssClass == 'navbar-nav header' %}text-uppercase {% endif %}" data-toggle="dropdown" href="#">
+        <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
+        {% if navigationElem.children|length > 0 and navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}    
+            <a class="dropdown-toggle text-uppercase "  data-toggle="dropdown"  href="#">
                 {{navigationElem.title}}
-                <i class="fa fa-caret-down"></i>
+                &nbsp;<i class="fa fa-caret-down"></i>
             </a>
         {% else %}
             {% if navigationElem.url == '' %}
                 <div >{{navigationElem.title}}</div>
             {% else %}
-                <a href="{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{{navigationElem.title}}</a>
+                <a href="{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{% if navigationElem.level > 3 and navigationCssClass != 'navbar-nav header' %}<i class="fa fa-circle-o"></i> {% endif %} {{navigationElem.title}}</a>
             {% endif %}
         {% endif %}
             {% if navigationElem.level < 4 %}

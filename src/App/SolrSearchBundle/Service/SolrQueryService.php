@@ -57,7 +57,7 @@ class SolrQueryService
         $facetSet->createFacetField('delivery')->setField('delivery')->setSort('index');
         $facetSet->createFacetField('promotion')->setField('promotion')->setSort('index')->setLimit(200);
         $facetSet->createFacetField('category1')->setField('category1')->setSort('index');
-        $facetSet->createFacetPivot('categories')->addFields('category1,category2')->setMinCount(0);
+        $facetSet->createFacetPivot('categories')->addFields('category1,category2');
 
         if (!empty($facets)) {
             $groupedFacets = array();

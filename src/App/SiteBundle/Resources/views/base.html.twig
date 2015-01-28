@@ -167,7 +167,9 @@
             {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
                 'slug': app.request.locale|default('en') ~ '-footer',
                 'cssClass': "navbar-nav footer",
-                'currentPageSlug':kitCmsPage.slug|default('')} )) }}
+                'currentPageSlug':kitCmsPage.slug|default(''),
+                'startDepth':1 ,
+                'endDepth':1} )) }}
 
           </div>
         </div>

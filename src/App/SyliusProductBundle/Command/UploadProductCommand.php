@@ -31,7 +31,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $file = $input->getArgument('file');
         $language = $input->getArgument('language');
         $output->writeln("<info>starting updating</info>");
-       /* if (($handle = fopen($file, "r")) !== false) {
+        if (($handle = fopen($file, "r")) !== false) {
             $sql = "TRUNCATE sylius_product_dropship";
             $this->getEM()->getConnection()->exec($sql);
             $i = 0;
@@ -62,18 +62,21 @@ class UploadProductCommand extends ContainerAwareCommand
                 $productDropship->setPicture2($data[12]);
                 $productDropship->setPicture3($data[13]);
                 $productDropship->setFirm($data[14]);
+                $productDropship->setGender(trim($data[28])?trim($data[28]):'Unisex');
                 if ($data[15] == 'Men') {
                     $productDropship->setCategory("Men's Clothing");
+                    $productDropship->setGender('Men');
                 } elseif ($data['15'] == 'Women') {
                     $productDropship->setCategory("Women's Clothing");
+                    $productDropship->setGender('Women');
                 } elseif ($data['15'] == 'Kids') {
                     $productDropship->setCategory("Kid's Clothing");
+                    $productDropship->setGender('Kids');
                 } else {
                     $productDropship->setCategory(ucfirst($data['15']));
                 }
                 $productDropship->setSubCategory(ucfirst($data[16]));
-                $productDropship->setColor($data[20]);
-                $productDropship->setGender($data[28]);
+                $productDropship->setColor(trim($data[20]));
                 $productDropship->setPartnerModelId($data[30]);
                 $productDropship->setBarcode($data[31]);
                 $productDropship->setSize($data[32]);
@@ -92,7 +95,7 @@ class UploadProductCommand extends ContainerAwareCommand
         }
         $this->getEM()->flush();
         $this->getEM()->clear();
-*/
+
         $this->updateProducts($output);
         $output->writeln('done');
     } 
@@ -209,12 +212,12 @@ class UploadProductCommand extends ContainerAwareCommand
             $output->writeln('Product Taxons');
             $taxons = new \Doctrine\Common\Collections\ArrayCollection();
             if ($productDropship->getBrand()) {
-                $taxons->add($this->getTaxon('Brand', $productDropship->getBrand()));
+                $taxons->add($this->getTaxon('Brand', $productDropship->getBrand(), 'Brand:'.$productDropship->getBrand()));
             }
-            $taxons->add($this->getTaxon('Gender', $productDropship->getGender() ? $productDropship->getGender() : 'Unisex'));
-            $taxons->add($this->getTaxon('Category', $productDropship->getCategory()));
+            $taxons->add($this->getTaxon('Gender', $productDropship->getGender(), 'Gender:'.$productDropship->getGender()));
+            $taxons->add($this->getTaxon('Category', $productDropship->getCategory(), 'Category:'.$productDropship->getCategory()));
             if ($productDropship->getSubCategory()) {
-                $taxons->add($this->getTaxon($productDropship->getCategory(), $productDropship->getSubCategory()));
+                $taxons->add($this->getTaxon('Category:'.$productDropship->getCategory(), $productDropship->getSubCategory(), 'Category:'.$productDropship->getCategory().':'.$productDropship->getSubCategory()));
             }
             $product->setTaxons($taxons);
             $attributes[] = array('name' => 'Brand', 'value' => $productDropship->getBrand());
@@ -230,7 +233,7 @@ class UploadProductCommand extends ContainerAwareCommand
             $product->setName($productDropship->getNameEn());
             $description = str_replace('ᐧ', '<br />', $productDropship->getDescriptionEn());
             $product->setDescription($description);
-        } else {
+        } else {            
             $variant = $product->getMasterVariant();
             $variant->setPrice($productDropship->getRrp() - ($productDropship->getRrp()/100*5));
             $variant->setOnHand($productDropship->getQuantity());
@@ -250,16 +253,17 @@ class UploadProductCommand extends ContainerAwareCommand
                  
     }
     
-    private function getTaxon($parent, $child)
+    private function getTaxon($parentKey, $child, $childKey)
     {
         $taxonRepository = $this->getContainer()->get('sylius.repository.taxon');
-        $taxonParent = $taxonRepository->findOneBy(array('name' => $parent));
-        $taxon = $taxonRepository->findOneBy(array('name' => $child));
+        $taxonParent = $taxonRepository->findOneBy(array('description' => $parentKey));
+        $taxon = $taxonRepository->findOneBy(array('description' => $childKey));
         
         if (!$taxon) {
             $taxon = $taxonRepository->createNew();
             $taxon->setName($child);
             $taxon->setParent($taxonParent);
+            $taxon->setDescription($childKey);
             $taxon->setTaxonomy($taxonParent->getTaxonomy());
             $manager = $this->getContainer()->get('sylius.manager.taxon');
 
