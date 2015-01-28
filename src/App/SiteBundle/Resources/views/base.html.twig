@@ -88,7 +88,7 @@
             <h5 class="text-center  text-uppercase" >{{ 'welcome.message'|trans }}</h5>
             </div>
             <div class="row text-center">
-            <span class='st_facebook_hcount' displayText='Facebook'></span>
+            <div class="fb-share-button" data-href="http://shopitalica.ch" data-layout="button_count"></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
@@ -233,7 +233,14 @@
   <script defer src="/js/common.js"></script>
   <script defer src="/js/search.js"></script>
   <script defer src="/js/bootstrap.min.js"></script>
-  
+  <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=918289354868762&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
   {% block javascripts %}{% endblock %}
   {% block kitpages_cms_javascripts %}{% endblock %}
   <script>
