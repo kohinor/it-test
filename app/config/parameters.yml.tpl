@@ -73,3 +73,12 @@ parameters:
     
     emails.enabled: '%(EmailsEnabled)s'
     emails.address: '%(EmailsAddress)s'
+    
+    api_client.base_url: '%(DropshipUrl)s'
+    api_client.config:
+        request.options:
+            auth: ['%(DropshipUsername)s', '%(DropshipPassword)s', Basic]
+            query: 
+              format: 'xml'
+        curl.options:
+            CURLOPT_PROXY: ''
