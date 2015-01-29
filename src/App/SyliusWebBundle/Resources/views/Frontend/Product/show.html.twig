@@ -96,14 +96,14 @@
         <div class="col-lg-5">
           <div class="well panel panel-default">
             <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans }}</p>
-            <p class="lead text-uppercase pull-left">
+            <div class="lead pull-left">
             {% if product.rrp > product.price %}
-            {{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span><br />
-              {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} (incl. VAT)</b></span>
+                <p><s>{{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></s></p>
+            <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small>(incl. VAT)</small></b></span></p>
             {% else %}
-              {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
+                <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small>(incl. VAT)</small></b></span> </p>
             {% endif %}
-            </p>
+            </div>
             
             <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
               <fieldset>  
