@@ -52,81 +52,83 @@
 {% endblock %}
 {% block body %}
 <div class="row">
-    <div class="col-lg-5">   
+  <div class="col-lg-4">   
     <div class="row">
-        <div class="col-lg-2 col-sm-2 col-md-2">
-            {% if product.images|length > 0 %}
-            <div class="tmb-caption">
-                {% for image in product.images %}
-                    <div class="wp-caption">
-                        <img class="img-small thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
-                    </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
-        <div class="col-lg-10 col-sm-10 col-md-10">
-            <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
-        </div>
+      <div class="col-lg-2 col-sm-2 col-md-2">
+        {% if product.images|length > 0 %}
+          <div class="tmb-caption">
+            {% for image in product.images %}
+              <div class="wp-caption">
+                <img class="img-small thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-lg-10 col-sm-10 col-md-10">
+        <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+      </div>
     </div>
     {% if product.getGroup() %}
-    <div class="row">
+      <div class="row">
         <div class="col-lg-12">
-            <h4 class="title">
-                <span class="text">{{ 'italica.other.options'|trans({}, 'messages') }}</span>
-            </h4>
-            {{ render(controller( 'AppSyliusProductBundle:Product:getProductsByGroup', {
+          <h4 class="title">
+            <span class="text">{{ 'italica.other.options'|trans({}, 'messages') }}</span>
+          </h4>
+          {{ render(controller( 'AppSyliusProductBundle:Product:getProductsByGroup', {
             'request': app.request,
             'groupId': product.getGroup().id} )) }}
         </div>
-    </div>   
+      </div>   
     {% endif %}
-    </div>    
+  </div>    
+  <div class="col-lg-8">
+    <span class="brand-label">{{ brand }}</span>
+    <div class="row">
         <div class="col-lg-7">
-            <span class="brand-label">{{ brand }}</span>
-            <h3  class="no-transform">{{ product.translate(app.request.locale).name|default(product.name) }}</h3>
-               
-                <p>{{ product.translate(app.request.locale).shortDescription|default(product.shortDescription)|raw }}</p>
-            <div class="row">
-            <div class="col-lg-12">
-                <p class="lead text-uppercase pull-right">
-                {% if product.rrp > product.price %}
-                    <div >{{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></div>
-                    <div>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }}</b></span></div>
-                {% else %}
-                    {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
-                {% endif %}
-                </p>
-            </div>
-            <div class="col-lg-12">
-                <p class="lead pull-right">{{ 'italica.product.free.delivery'|trans }}</p>
-            </div>
-            </div>
-            <div class="well panel panel-default">
+          <h3  class="no-transform">{{ product.translate(app.request.locale).name|default(product.name) }}</h3>
+          <p>{{ product.translate(app.request.locale).shortDescription|default(product.shortDescription)|raw }}</p>
+          <h4 class="title"><span class="text"></span></h4>
+          {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %} 
+          
+           
+        </div>
+        <div class="col-lg-5">
+          <div class="well panel panel-default">
+            <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans }}</p>
+            <p class="lead text-uppercase pull-left">
+            {% if product.rrp > product.price %}
+            {{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span><br />
+              {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} (incl. VAT)</b></span>
+            {% else %}
+              {{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} (incl. VAT)</b></span> 
+            {% endif %}
+            </p>
+            
             <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
-                <fieldset>  
-                    {% include 'AppSyliusWebBundle:Frontend/Product:_variantOption.html.twig' %}
-                    <div class="form-group">
-                    {% if not product.hasVariants and not sylius_inventory_is_available(product.masterVariant) %}
-                        <span class="label label-warning">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
-                    {% else %}
-                        <div class="col-lg-9 col-lg-offset-3">
-                        {% if sylius_is_restricted(product) %}
-                        <button disabled="disabled" class="btn btn-danger"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.product_not_available_in_zone'|trans({}, 'messages') }}</button>
-                        {% else %}
-                            <button type="submit" class="btn btn-danger "><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.add_to_cart'|trans({}, 'messages') }}</button>
-                        {% endif %}
-                        </div>
-                    {% endif %}
-                    </div>
-                </fieldset>
-                <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
-                <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
+              <fieldset>  
+                {% include 'AppSyliusWebBundle:Frontend/Product:_variantOption.html.twig' %} 
+              </fieldset>
+              <input type="hidden" id="product-slug" name="product-slug" value="{{ product.slug }}" />
+              <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
-        </div>  
-        {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %}        
+          </div> 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <span class="text-uppercase"><strong>{{ 'italica.share'|trans({}, 'messages') }}: </strong></span>
+                <span class='st_facebook'></span>
+                <span class='st_twitter'></span>
+                <span class='st_pinterest' ></span>
+                <span class='st_vkontakte'></span>
+                <span class='st_googleplus'></span>
+                <span class='st_email'></span>
+                </div>
+            </div>
+               
+        </div>
+      </div>           
     </div>
-    </div>
+  </div>
 {{ render(controller( 'AppSyliusProductBundle:Product:getLastVisited', {'request': app.request} )) }}
 <p>&nbsp;</p>
 {% endblock %}

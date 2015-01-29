@@ -1,38 +1,45 @@
-<ul class="list-group">
-    <li class="slide-header list-group-item disabled">
-        <span class="text-uppercase"><strong>{{ 'sylius.product.description'|trans({}, 'messages') }}</strong></span>
-    </li>
-    <li class="slide-body list-group-item">
-        <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
-        {% if product.attributes|length > 0 %}
-            {% for attribute in product.attributes %}
-                <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
-            {% endfor %}
-        {% endif %}
-        <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }} - {{ product.getMasterVariant().barcode }}</p>
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+            <span class="title"><span class="text">{{ 'sylius.product.description'|trans({}, 'messages') }}</span></span>
+        </a>
     </li>
     {% if product.shippingCategory %}
-    <li class="slide-header list-group-item disabled">
-        <span class="text-uppercase"><strong>{{ 'italica.delivery'|trans({}, 'messages') }}</strong></span>
-    </li>
-    <li class="slide-body list-group-item" style="display:none;">
-        <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
-        <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
+    <li role="presentation">
+        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+            <span class="title"><span class="text">{{ 'italica.delivery'|trans({}, 'messages') }}</span></span>
+        </a>
     </li>
     {% endif %}
-    <li class="slide-header list-group-item disabled">
-        <span class="text-uppercase"><strong>{{ 'italica.returns'|trans({}, 'messages') }}</strong></span>
+    <li role="presentation">
+        <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+            <span class="title"><span class="text">{{ 'italica.returns'|trans({}, 'messages') }}</span></span>
+        
+        </a>
     </li>
-    <li class="slide-body list-group-item " style="display:none;">
-        {{ 'italica.return.policy'|trans({}, 'messages') }}
-    </li>
-    <li class="share list-group-item disabled">
-        <span class="text-uppercase"><strong>{{ 'italica.share'|trans({}, 'messages') }}: </strong></span>
-        <span class='st_facebook'></span>
-        <span class='st_twitter'></span>
-        <span class='st_pinterest' ></span>
-        <span class='st_vkontakte'></span>
-        <span class='st_googleplus'></span>
-        <span class='st_email'></span>
-    </li>
-</ul>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content panel-body">
+      <div role="tabpanel" class="tab-pane fade in active" id="home">
+          <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
+                {% if product.attributes|length > 0 %}
+                    {% for attribute in product.attributes %}
+                        <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
+                    {% endfor %}
+                {% endif %}
+                <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }}</p>
+      </div>
+       {% if product.shippingCategory %}
+           <div role="tabpanel" class="tab-pane fade" id="profile">
+               <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
+                <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
+           </div>
+  {% endif %}
+  <div role="tabpanel" class="tab-pane fade" id="messages">
+      {{ 'italica.return.policy'|trans({}, 'messages') }}
+  </div>
+</div>
+</div>
+            

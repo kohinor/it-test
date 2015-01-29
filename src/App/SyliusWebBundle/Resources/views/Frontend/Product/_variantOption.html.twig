@@ -40,16 +40,28 @@
             {{ form_widget(form._token) }}
         {% else %}
         <div class="row">
-        <div class="col-lg-8">
-                {{ form_widget(form.variant) }}
+          <div class="col-lg-12">
+                {% if gender and brand %}
+                    <a href="javascript:void(0);" class="modal-show btn btn-default btn-xs pull-right"  data-toggle="modal" data-target="#myModal">Size Guide</a>
+                 {% endif %}
+            </div>
+        <div class="col-lg-12">
+            <div id="product-stock" ></div><div><p></p></div>
+                {{ form_widget(form.variant) }}                
                 {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
                 {{ form_widget(form._token) }}
+               
         </div>
-        <div class="col-lg-4">
-                {% if gender and brand %}
-                    <a href="javascript:void(0);" class="modal-show btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Size Guide</a>
-               {% endif %}
-               <div id="product-stock" class="panel-body"></div>
+        <div class="col-lg-12">
+            {% if not product.hasVariants and not sylius_inventory_is_available(product.masterVariant) %}
+                <span class="label label-warning pull-right">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
+            {% else %}
+                {% if sylius_is_restricted(product) %}
+                <button disabled="disabled" class="btn btn-danger pull-right"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.product_not_available_in_zone'|trans({}, 'messages') }}</button>
+                {% else %}
+                    <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.add_to_cart'|trans({}, 'messages') }}</button>
+                {% endif %}
+            {% endif %}   
         </div>
         </div>
         {% endif %}

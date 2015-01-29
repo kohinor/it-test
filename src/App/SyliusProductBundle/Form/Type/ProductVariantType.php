@@ -22,9 +22,6 @@ class ProductVariantType extends BaseVariantType
         $builder
             ->add('rrp', 'sylius_money', array(
                 'label' => 'sylius.form.variant.rrp'
-            ))
-            ->add('barcode', 'text', array(
-                'label' => 'sylius.form.variant.barcode'
             ));
     }
 }

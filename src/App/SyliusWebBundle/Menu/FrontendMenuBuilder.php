@@ -51,7 +51,7 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
                 '%items%' => $cartTotals['items'],
                 '%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])
             )), 'class' => 'pull-right panel panel-default'),
-            'labelAttributes' => array('icon' => 'icon-shopping-cart icon-large')
+            'labelAttributes' => array('icon' => 'fa fa-shopping-cart fa-lg')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],
             '%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])

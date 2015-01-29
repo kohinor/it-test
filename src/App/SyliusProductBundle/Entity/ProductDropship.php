@@ -21,9 +21,15 @@ class ProductDropship
     protected $id;
     
     /**
-     * @ORM\Column(name="type", type="string", length=255, nullable=true)
-     */
-    protected $productType;
+    * @ORM\OneToMany(targetEntity="App\SyliusProductBundle\Entity\ProductModelDropship", mappedBy="productDropship", cascade={"persist", "remove"})
+    */
+    protected $models;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="App\SyliusProductBundle\Entity\ProductPictureDropship", mappedBy="productDropship", cascade={"persist", "remove"})
+    */
+    protected $pictures;
+    
     
     /**
      * @ORM\Column(name="partner_product_id", type="string", length=255, nullable=true)
@@ -36,13 +42,9 @@ class ProductDropship
     protected $brand;
     
     /**
-     * @ORM\Column(name="name_en", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    protected $nameEn;
-    /**
-     * @ORM\Column(name="name_fr", type="string", length=255, nullable=true)
-     */
-    protected $nameFr;
+    protected $name;
     
     /**
      * sku
@@ -78,26 +80,6 @@ class ProductDropship
     protected $weight;
     
     /**
-     * @ORM\Column(name="picture1", type="string", length=255, nullable=true)
-     */
-    protected $picture1;
-    
-    /**
-     * @ORM\Column(name="picture2", type="string", length=255, nullable=true)
-     */
-    protected $picture2;
-    
-    /**
-     * @ORM\Column(name="picture3", type="string", length=255, nullable=true)
-     */
-    protected $picture3;
-    
-    /**
-     * @ORM\Column(name="firm", type="string", length=255, nullable=true)
-     */
-    protected $firm;
-    
-    /**
      * @ORM\Column(name="category", type="string", length=255, nullable=true)
      */
     protected $category;
@@ -107,15 +89,6 @@ class ProductDropship
      */
     protected $subCategory;
     
-    /**
-     * @ORM\Column(name="partner_model_id", type="string", length=255, nullable=true)
-     */
-    protected $partnerModelId;
-    
-    /**
-     * @ORM\Column(name="color", type="string", length=255, nullable=true)
-     */
-    protected $color;
     
     /**
      * @ORM\Column(name="gender", type="string", length=255, nullable=true)
@@ -124,20 +97,14 @@ class ProductDropship
     // barcode
     
     /**
-     * @ORM\Column(name="barcode", type="string", length=255, nullable=true)
-     */
-    protected $barcode;
-    
-    /**
-     * @ORM\Column(name="size", type="string", length=255, nullable=true)
-     */
-    protected $size;
-    
-    /**
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     protected $createdAt;
     
+    /**
+     * @ORM\Column(name="currency", type="string", length=255, nullable=true)
+     */
+    protected $currency;
      /**
      * Set createdAt
      *
@@ -171,35 +138,20 @@ class ProductDropship
         return $this->id;
     }
 
-
     /**
-     * Set productType
-     *
-     * @param string $productType
-     * @return DropshipProduct
+     * Constructor
      */
-    public function setProductType($productType)
+    public function __construct()
     {
-        $this->productType = $productType;
-
-        return $this;
-    }
-
-    /**
-     * Get productType
-     *
-     * @return string 
-     */
-    public function getProductType()
-    {
-        return $this->productType;
+        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pictures = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Set partnerProductId
      *
      * @param string $partnerProductId
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setPartnerProductId($partnerProductId)
     {
@@ -222,7 +174,7 @@ class ProductDropship
      * Set brand
      *
      * @param string $brand
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setBrand($brand)
     {
@@ -242,56 +194,33 @@ class ProductDropship
     }
 
     /**
-     * Set nameEn
+     * Set name
      *
-     * @param string $nameEn
-     * @return DropshipProduct
+     * @param string $name
+     * @return ProductDropship
      */
-    public function setNameEn($nameEn)
+    public function setName($name)
     {
-        $this->nameEn = $nameEn;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nameEn
+     * Get name
      *
      * @return string 
      */
-    public function getNameEn()
+    public function getName()
     {
-        return $this->nameEn;
-    }
-
-    /**
-     * Set nameFr
-     *
-     * @param string $nameFr
-     * @return DropshipProduct
-     */
-    public function setNameFr($nameFr)
-    {
-        $this->nameFr = $nameFr;
-
-        return $this;
-    }
-
-    /**
-     * Get nameFr
-     *
-     * @return string 
-     */
-    public function getNameFr()
-    {
-        return $this->nameFr;
+        return $this->name;
     }
 
     /**
      * Set code
      *
      * @param string $code
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setCode($code)
     {
@@ -314,7 +243,7 @@ class ProductDropship
      * Set quantity
      *
      * @param string $quantity
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setQuantity($quantity)
     {
@@ -337,7 +266,7 @@ class ProductDropship
      * Set rrp
      *
      * @param string $rrp
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setRrp($rrp)
     {
@@ -360,7 +289,7 @@ class ProductDropship
      * Set actualPrice
      *
      * @param string $actualPrice
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setActualPrice($actualPrice)
     {
@@ -383,7 +312,7 @@ class ProductDropship
      * Set descriptionEn
      *
      * @param string $descriptionEn
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setDescriptionEn($descriptionEn)
     {
@@ -406,7 +335,7 @@ class ProductDropship
      * Set descriptionFr
      *
      * @param string $descriptionFr
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setDescriptionFr($descriptionFr)
     {
@@ -429,7 +358,7 @@ class ProductDropship
      * Set weight
      *
      * @param string $weight
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setWeight($weight)
     {
@@ -449,102 +378,10 @@ class ProductDropship
     }
 
     /**
-     * Set picture1
-     *
-     * @param string $picture1
-     * @return DropshipProduct
-     */
-    public function setPicture1($picture1)
-    {
-        $this->picture1 = $picture1;
-
-        return $this;
-    }
-
-    /**
-     * Get picture1
-     *
-     * @return string 
-     */
-    public function getPicture1()
-    {
-        return $this->picture1;
-    }
-
-    /**
-     * Set picture2
-     *
-     * @param string $picture2
-     * @return DropshipProduct
-     */
-    public function setPicture2($picture2)
-    {
-        $this->picture2 = $picture2;
-
-        return $this;
-    }
-
-    /**
-     * Get picture2
-     *
-     * @return string 
-     */
-    public function getPicture2()
-    {
-        return $this->picture2;
-    }
-
-    /**
-     * Set picture3
-     *
-     * @param string $picture3
-     * @return DropshipProduct
-     */
-    public function setPicture3($picture3)
-    {
-        $this->picture3 = $picture3;
-
-        return $this;
-    }
-
-    /**
-     * Get picture3
-     *
-     * @return string 
-     */
-    public function getPicture3()
-    {
-        return $this->picture3;
-    }
-
-    /**
-     * Set firm
-     *
-     * @param string $firm
-     * @return DropshipProduct
-     */
-    public function setFirm($firm)
-    {
-        $this->firm = $firm;
-
-        return $this;
-    }
-
-    /**
-     * Get firm
-     *
-     * @return string 
-     */
-    public function getFirm()
-    {
-        return $this->firm;
-    }
-
-    /**
      * Set category
      *
      * @param string $category
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setCategory($category)
     {
@@ -567,7 +404,7 @@ class ProductDropship
      * Set subCategory
      *
      * @param string $subCategory
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setSubCategory($subCategory)
     {
@@ -587,56 +424,10 @@ class ProductDropship
     }
 
     /**
-     * Set partnerModelId
-     *
-     * @param string $partnerModelId
-     * @return DropshipProduct
-     */
-    public function setPartnerModelId($partnerModelId)
-    {
-        $this->partnerModelId = $partnerModelId;
-
-        return $this;
-    }
-
-    /**
-     * Get partnerModelId
-     *
-     * @return string 
-     */
-    public function getPartnerModelId()
-    {
-        return $this->partnerModelId;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     * @return DropshipProduct
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * Get color
-     *
-     * @return string 
-     */
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    /**
      * Set gender
      *
      * @param string $gender
-     * @return DropshipProduct
+     * @return ProductDropship
      */
     public function setGender($gender)
     {
@@ -656,48 +447,91 @@ class ProductDropship
     }
 
     /**
-     * Set barcode
+     * Set currency
      *
-     * @param string $barcode
-     * @return DropshipProduct
+     * @param string $currency
+     * @return ProductDropship
      */
-    public function setBarcode($barcode)
+    public function setCurrency($currency)
     {
-        $this->barcode = $barcode;
+        $this->currency = $currency;
 
         return $this;
     }
 
     /**
-     * Get barcode
+     * Get currency
      *
      * @return string 
      */
-    public function getBarcode()
+    public function getCurrency()
     {
-        return $this->barcode;
+        return $this->currency;
     }
 
     /**
-     * Set size
+     * Add models
      *
-     * @param string $size
-     * @return DropshipProduct
+     * @param \App\SyliusProductBundle\Entity\ProductModelDropship $models
+     * @return ProductDropship
      */
-    public function setSize($size)
+    public function addModel(\App\SyliusProductBundle\Entity\ProductModelDropship $models)
     {
-        $this->size = $size;
+        $this->models[] = $models;
 
         return $this;
     }
 
     /**
-     * Get size
+     * Remove models
      *
-     * @return string 
+     * @param \App\SyliusProductBundle\Entity\ProductModelDropship $models
      */
-    public function getSize()
+    public function removeModel(\App\SyliusProductBundle\Entity\ProductModelDropship $models)
     {
-        return $this->size;
+        $this->models->removeElement($models);
+    }
+
+    /**
+     * Get models
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    /**
+     * Add pictures
+     *
+     * @param \App\SyliusProductBundle\Entity\ProductPictureDropship $pictures
+     * @return ProductDropship
+     */
+    public function addPicture(\App\SyliusProductBundle\Entity\ProductPictureDropship $pictures)
+    {
+        $this->pictures[] = $pictures;
+
+        return $this;
+    }
+
+    /**
+     * Remove pictures
+     *
+     * @param \App\SyliusProductBundle\Entity\ProductPictureDropship $pictures
+     */
+    public function removePicture(\App\SyliusProductBundle\Entity\ProductPictureDropship $pictures)
+    {
+        $this->pictures->removeElement($pictures);
+    }
+
+    /**
+     * Get pictures
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
     }
 }
