@@ -262,7 +262,6 @@ class UploadProductCommand extends ContainerAwareCommand
     private function getTaxon($parentKey, $child, $childKey)
     {
         $taxonRepository = $this->getContainer()->get('sylius.repository.taxon');
-        print $parentKey;
         $taxonParent = $taxonRepository->findOneBy(array('description' => $parentKey));
         $taxon = $taxonRepository->findOneBy(array('description' => $childKey));
         
@@ -336,6 +335,7 @@ class UploadProductCommand extends ContainerAwareCommand
             $variant->removeImage($image);
         }
         foreach ($productDropship->getPictures() as $key => $picture) {
+            if ($key > 3) continue;
             $content = file_get_contents($picture->getPath());
             $path = $this->getContainer()->getParameter('kernel.root_dir').'/../web/uploads/'.$product->getSlug().$key.'.jpg';
             

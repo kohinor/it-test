@@ -104,7 +104,7 @@
                 <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small>(incl. VAT)</small></b></span> </p>
             {% endif %}
             </div>
-            
+            <div style="clear:both;"></div>
             <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
               <fieldset>  
                 {% include 'AppSyliusWebBundle:Frontend/Product:_variantOption.html.twig' %} 
