@@ -139,23 +139,23 @@ liip_imagine:
         sylius_home:
            quality: 75
            filters:
-                thumbnail: { size: [260, 312], mode: outbound } 
+                thumbnail: { size: [260, 312], mode: inset } 
         sylius_small:
             quality: 75
             filters:
-                thumbnail: { size: [116, 140], mode: outbound }
+                thumbnail: { size: [116, 140], mode: inset }
         sylius_medium:
             quality: 75
             filters:
-                thumbnail: { size: [320, 384], mode: outbound }
+                thumbnail: { size: [320, 384], mode: inset }
         sylius_large:
             quality: 75
             filters:
-                thumbnail: { size: [600, 720], mode: outbound }
+                thumbnail: { size: [600, 720], mode: inset }
         sylius_x_large:
             quality: 75
             filters:
-                thumbnail: { size: [1024, 1228], mode: outbound }
+                thumbnail: { size: [1024, 1228], mode: inset }
 
 doctrine_cache:
     providers:
