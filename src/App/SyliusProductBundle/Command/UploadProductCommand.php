@@ -143,7 +143,9 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->updateProduct($product, $output);
             foreach ($product->getModels() as $model) {
                 $this->updateModel($model, $output);
-            } 
+            }
+            $this->getEm()->flush();
+            $this->getEM()->clear();
         }
     }
     
@@ -202,7 +204,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $variantManager->persist($variant);
         $manager = $this->getContainer()->get('sylius.manager.product');
         $manager->persist($product);
-        $manager->flush();   
+        //$manager->flush();   
     }
     
     protected function updateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship, $output)
@@ -240,16 +242,17 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->addMasterVariant($product, $productDropship);
             $product->setName($productDropship->getName());
             $product->setDescription($productDropship->getDescriptionEn());
+            $this->getEm()->persist($product);
+            $this->getEm()->flush();
         } else {            
             $variant = $product->getMasterVariant();
             $variant->setPrice($this->getPrice($productDropship->getRrp()));
             $variant->setOnHand($productDropship->getQuantity());
             $variant->setRrp($productDropship->getRrp());
+            $this->getEm()->persist($product);
         }
         
-        $manager = $this->getContainer()->get('sylius.manager.product');
-        $manager->persist($product);
-        $manager->flush();
+        
         $output->writeln('Flush product '.$productDropship->getCode());
                  
     }
@@ -295,7 +298,6 @@ class UploadProductCommand extends ContainerAwareCommand
                 $attribute->setPresentation($attributeArr['name']);
 
                 $this->getContainer()->get('sylius.manager.product_attribute')->persist($attribute);
-               // $this->getContainer()->get('sylius.manager.product_attribute')->flush($attribute);
             }
 
             $attributeValue = $this->getContainer()->get('sylius.repository.product_attribute_value')->createNew();
@@ -352,7 +354,6 @@ class UploadProductCommand extends ContainerAwareCommand
     protected function getEM()
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $em->getConnection()->getConfiguration()->setSQLLogger(null);
         return $em;
     }
 }
