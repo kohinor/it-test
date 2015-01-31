@@ -7,7 +7,7 @@
     <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
         {% if product.rrp > product.price %}
             <div>
-            <span  >{{product.rrp|sylius_price }}</span>
+                <span  ><s>{{product.rrp|sylius_price }}</s></span>
             <span class="text-danger" ><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></span>
             </div>
         {% else %}

@@ -31,17 +31,17 @@ var italica = {
             if($clicked.hasClass('clear-filters')){
                 var url = $clicked.attr('data-url');
                 var key = $clicked.attr('data-key');
+                if (key == 'color') {
+                    for (i=0;i<italica.search.facets.length;i++) {
+                        if (italica.search.facets[i].field == key) {
+                            var str = italica.search.facets[i].facet;
+                            italica.search.removeFacet(key, str);
+                        }
+                    }
+                }
                 $('input[name=' + key + ']').each(function() {
                     italica.search.removeFacet(key, $(this).val());
                 });
-                if (key == 'categories') {
-                    $('input[name=category1]').each(function() {
-                        italica.search.removeFacet(key, $(this).val());
-                    });
-                    $('input[name=category2]').each(function() {
-                        italica.search.removeFacet(key, $(this).val());
-                    });
-                }
                 italica.redirect(url);
                 return false;
             }
@@ -87,8 +87,6 @@ var italica = {
         }
     },
     redirect: function(url) {
-        console.log(url);
-        console.log(italica.search);
         var param = [];
         if (italica.search.term){
             param.push('term='+italica.search.term);
@@ -120,7 +118,8 @@ var italica = {
                 if (color.hasOwnProperty(italica.search.facets[i].facet)) {
                     continue;
                  }
-                color.push(italica.search.facets[i].facet);
+                var str = italica.search.facets[i].facet;
+                color.push(str.replace('#', ''));
             }
             if (italica.search.facets[i].field == 'size') {
                 if (size.hasOwnProperty(italica.search.facets[i].facet)) {
@@ -216,6 +215,20 @@ $('.filter input[type=checkbox]').click(function(e) {
      italica.redirect(url);
    }else{
      italica.search.removeFacet(name, value);
+     italica.redirect(url);
+   }
+
+});
+
+$('#filter-color span').click(function(e) {
+   var url = $(this).attr('data-url');
+   var name = $(this).attr('name');
+   var value = $(this).attr('value');
+   if($(this).hasClass("selected")) {
+     italica.search.removeFacet(name, value);
+     italica.redirect(url);
+   }else{
+     italica.search.addFacet(value, name);
      italica.redirect(url);
    }
 

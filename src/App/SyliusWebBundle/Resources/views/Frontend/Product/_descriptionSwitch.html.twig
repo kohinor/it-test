@@ -2,19 +2,19 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
         <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-            <span class="title"><span class="text">{{ 'sylius.product.description'|trans({}, 'messages') }}</span></span>
+            <span class="text"><b>{{ 'sylius.product.description'|trans({}, 'messages') }}</b></span>
         </a>
     </li>
     {% if product.shippingCategory %}
     <li role="presentation">
         <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="title"><span class="text">{{ 'italica.delivery'|trans({}, 'messages') }}</span></span>
+            <span class="text"><b>{{ 'italica.delivery'|trans({}, 'messages') }}</b></span>
         </a>
     </li>
     {% endif %}
     <li role="presentation">
         <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
-            <span class="title"><span class="text">{{ 'italica.returns'|trans({}, 'messages') }}</span></span>
+            <span class="text"><b>{{ 'italica.returns'|trans({}, 'messages') }}</b></span>
         
         </a>
     </li>
@@ -26,7 +26,9 @@
           <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
                 {% if product.attributes|length > 0 %}
                     {% for attribute in product.attributes %}
+                        {% if attribute.presentation != 'Color' %}
                         <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
                 <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }}</p>

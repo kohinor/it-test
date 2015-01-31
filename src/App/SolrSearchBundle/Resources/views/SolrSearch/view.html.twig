@@ -14,6 +14,7 @@
 <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
     <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="{{ path('app_solr_search') }}">{{ 'italica.search'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
         <li>
         {% set genders = app.request.get('gender')|split(',') %}
@@ -70,7 +71,7 @@
             
   <div class = "filter-box">
     <div class="filter-header open" data-key="price">
-        <i class="icon-arrow-right"></i> {{ 'italica.price'|trans}}
+        <h5><i class="fa fa-arrow-right"></i> {{ 'italica.price'|trans({}, 'messages')|capitalize }}</h5>
     </div>
     <div id="filters-price" >
     <form>

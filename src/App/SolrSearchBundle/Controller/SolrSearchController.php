@@ -8,23 +8,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SolrSearchController extends Controller
 {   
-    public function searchNewInAction(Request $request, $gender, $limit = 3)
+    public function getSolrNewInResults($facets, $limit)
     {
-        $facets['gender'] = $gender;
-        $facets['promotion'] = 'new';
-                
         $client = $this->get('solarium.client');
         $query = $this->get('solr.query.service')->getSolrQuery($client, '*');
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         $query->setRows($limit);
         
-        $key =  implode('-', $facets).$limit;
+        $key =  'new-in'.implode('-', $facets).$limit;
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
         $resultset = $cache->fetch($key);
         if (!$resultset) {
             $resultset = $client->select($query);
             $cache->save($key, $resultset);
         }
+        return $resultset;
+    }
+    
+    public function searchNewInAction(Request $request, $gender, $limit = 3)
+    {
+        $facets['gender'] = $gender;
+        $facets['promotion'] = 'new';       
+        $resultset = $this->getSolrNewInResults($facets, $limit);
         $bindings = array('results' => $resultset, 'locale' => $request->attributes->get('_locale'));
         
         return $this->render('AppSolrSearchBundle:SolrSearch:new-in.html.twig', $bindings);
@@ -50,6 +55,20 @@ class SolrSearchController extends Controller
         }
         return $facetCollection;
     }
+
+    public function getFacetsWithCategory(Request $request, $facets = array())
+    {       
+        $catOne = $request->query->get('category1');
+        if ($catOne) {
+            $facets['category1'] = explode(',', $catOne);
+        }
+        $catTwo = $request->query->get('category2');
+        if ($catTwo) {
+            $facets['category2'] = explode(',', $catTwo);
+        }
+
+        return $this->getFacets($facets);                
+    }
     
     public function getFacetsFromRequest(Request $request, $facets = array())
     {
@@ -60,6 +79,9 @@ class SolrSearchController extends Controller
         $color = $request->query->get('color');
         if ($color) {
             $facets['color'] = explode(',', $color);
+            foreach ($facets['color'] as &$hashColor) {
+                $hashColor = '#'.$hashColor;
+            } 
         }
         $size = $request->query->get('size');
         if ($size) {
@@ -93,13 +115,11 @@ class SolrSearchController extends Controller
         return $this->getFacets($facets);                
     }
     
-    public function getFacetSearchResult(Request $request, $facets)
+    private function getSolrBaseResults($term, $facets )
     {
-        $term  = $request->query->get('term');
         $client = $this->get('solarium.client');            
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term);
-        $facetsCollection = $this->getFacets($facets);
-        $this->get('solr.query.service')->setFacets($query, $facetsCollection);
+        $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
@@ -110,6 +130,40 @@ class SolrSearchController extends Controller
             $resultset = $client->select($query);
             $cache->save($key, $resultset);
         }
+        return $resultset;
+    }
+    
+    private function getSolrCategoryResults($term, $facets )
+    {
+        $client = $this->get('solarium.client');            
+        $query = $this->get('solr.query.service')->getSolrQuery($client, $term);
+        
+        $facetsCollection = $this->getFacetsWithCategory($this->get('request'), $facets);
+        $this->get('solr.query.service')->setFacets($query, $facetsCollection);
+        $keyFacets = array();
+        foreach($facetsCollection as $facet) {
+            $keyFacets[] = $facet->facet;
+        }
+        $key = preg_replace('~[^-\w]+~', '', 'facets-size'.implode('-', $keyFacets));
+        $cache   = $this->container->get('doctrine_cache.providers.memcached');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
+            $resultset = $client->select($query);
+            $cache->save($key, $resultset);
+        }
+        
+        //$solrRequest = $client->createRequest($query);
+        //print $solrRequest->getUri();
+        
+        return $resultset;
+    }
+    
+    public function getFacetSearchResult(Request $request, $facets = array())
+    {
+        $term  = $request->query->get('term');           
+        $resultset = $this->getSolrBaseResults($term, $facets);
+        
+        $resultsetCategory = $this->getSolrCategoryResults($term, $facets);
         
         $facets = $this->getFacetsFromRequest($request);
         if ($resultset->getFacetSet()->getFacet('categories')->count() > 0) {
@@ -118,49 +172,58 @@ class SolrSearchController extends Controller
             $category = $this->getFacetTemplate('category1', $resultset, $facets);
         }
         $bindings = array(
-                'size' => $this->getFacetTemplate('size', $resultset, $facets),
-                'color' => $this->getFacetTemplate('color', $resultset, $facets),
-                'brand' => $this->getFacetTemplate('brand', $resultset, $facets),
-                'material' => $this->getFacetTemplate('material', $resultset, $facets),
+                'size' => $this->getFacetTemplate('size', $resultsetCategory, $facets),
+                'color' => $this->getFacetTemplate('color', $resultsetCategory, $facets),
+                'brand' => $this->getFacetTemplate('brand', $resultsetCategory, $facets),
+                'material' => $this->getFacetTemplate('material', $resultsetCategory, $facets),
                 'gender' => $this->getFacetTemplate('gender', $resultset, $facets),
-                'delivery' => $this->getFacetTemplate('delivery', $resultset, $facets),
-                'promotion' => $this->getFacetTemplate('promotion', $resultset, $facets),
+                'delivery' => $this->getFacetTemplate('delivery', $resultsetCategory, $facets),
+                'promotion' => $this->getFacetTemplate('promotion', $resultsetCategory, $facets),
                 'category' => $category
                 );
         return $bindings;
     }
     
-    public function getResultsPaginator(Request $request, $initialFacets)
+    public function getSolrPageResults($term, $startPrice, $endPrice, $page, $facets)
     {
         $client = $this->get('solarium.client');
-        $term  = $request->query->get('term');
-        $price = $request->query->get('price') ? explode(';', $request->query->get('price')) : null;
-        
-        $startPrice = $price ? $price[0] : 0;
-        $endPrice = $price ? $price[1] : 10000;
-        $page  = $request->query->get('page') ? $request->query->get('page') : 1;
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice*100, $endPrice*100);
-        $facets = $this->getFacetsFromRequest($request, $initialFacets);
         $this->get('solr.query.service')->setFacets($query, $facets);
+        $this->pageSearchUri = $client->createRequest($query)->getUri();
+        // print $solrRequest->getUri();
         $keyFacets = array();
         foreach($facets as $facet) {
             $keyFacets[] = $facet->facet;
         }
-        $key = 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice;
+        $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
         $paginator = $cache->fetch($key);
         if (!$paginator) {
             $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
             $cache->save($key, $paginator);
         }
-        $solrRequest = $client->createRequest($query);
-        // print $solrRequest->getUri();
+        return $paginator;   
+    }
+    
+    protected $pageSearchUri;
+    
+    public function getResultsPaginator(Request $request, $initialFacets)
+    {
+        $term  = $request->query->get('term');
+        $price = $request->query->get('price') ? explode(';', $request->query->get('price')) : null;
+        
+        $startPrice = $price ? $price[0] : 0;
+        $endPrice = $price ? $price[1] : 10000;
+        $page  = $request->query->get('page') ? $request->query->get('page') : 1;
+        $facets = $this->getFacetsFromRequest($request, $initialFacets);
+        $paginator = $this->getSolrPageResults($term, $startPrice, $endPrice, $page, $facets);
+        
         if (count($initialFacets) == count($facets)) {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;
         } else {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_REFINMENT;
         }
-        $this->addSearchLog($term, $solrRequest->getUri(), $page, $facets, $paginator, $type);
+        $this->addSearchLog($term, $this->pageSearchUri, $page, $facets, $paginator, $type);
         return array('pagination' => $paginator, 'facets' => $facets);
         
     }
@@ -294,9 +357,6 @@ class SolrSearchController extends Controller
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
     }
-
-    
-
 
 
     /**

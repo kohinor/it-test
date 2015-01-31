@@ -57,16 +57,13 @@ class SolrQueryService
         $facetSet->createFacetField('delivery')->setField('delivery')->setSort('index');
         $facetSet->createFacetField('promotion')->setField('promotion')->setSort('index')->setLimit(200);
         $facetSet->createFacetField('category1')->setField('category1')->setSort('index');
+        $facetSet->createFacetField('category2')->setField('category2')->setSort('index');
         $facetSet->createFacetPivot('categories')->addFields('category1,category2');
 
         if (!empty($facets)) {
             $groupedFacets = array();
             foreach($facets as $facet){
-                if($facet->field == 'category1' || $facet->field == 'category2') {
-                    $groupedFacets['categories'][] = $facet->field.':"'.$facet->facet.'"';
-                } else {
-                    $groupedFacets[$facet->field][] = $facet->field.':"'.$facet->facet.'"';
-                }
+                $groupedFacets[$facet->field][] = $facet->field.':"'.$facet->facet.'"';
             }
             foreach ($groupedFacets as $field => $facets) {;
                     $fq = $query->createFilterQuery($field)->setQuery(implode(' OR ', $facets));

@@ -99,9 +99,9 @@
             <div class="lead pull-left">
             {% if product.rrp > product.price %}
                 <p><s>{{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></s></p>
-            <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small>(incl. VAT)</small></b></span></p>
+            <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small>(incl. VAT)</small></b></span></p>
             {% else %}
-                <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small>(incl. VAT)</small></b></span> </p>
+                <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small>(incl. VAT)</small></b></span> </p>
             {% endif %}
             </div>
             <div style="clear:both;"></div>
