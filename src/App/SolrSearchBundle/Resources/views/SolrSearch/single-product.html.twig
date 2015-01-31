@@ -3,18 +3,27 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-medium" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
-<p>
-<div class="text-uppercase"><a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a></div>
+<div>
+<a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-responsive" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
+<p><br></p>
+<div class="text-uppercase">
+    <a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a>
+</div>
 <div><span >{{ title }}</span></div>
-<a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >
 {% if article.rrp|default(0) > article.price %}
     <div>
-    <span class="" ><strike>{{ article.rrp|sylius_price }}</strike></span>
-    <span class="text-danger" ><strong>{{ article.price|sylius_price }}</strong></span>
+        <span ><s>
+                <a  href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >{{ article.rrp|sylius_price }}</a>
+            </s></span>
+            <span> | </span><span ><strong>
+            <a class="text-danger" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >{{ article.price|sylius_price }}</a>
+        </strong></span>
     </div>
 {% else %}
-    <div class="text-danger" ><strong>{{ article.price|sylius_price }}</strong></div>
+    <div><strong>
+            <a  class="text-danger" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >{{ article.price|sylius_price }}</a>
+        </strong></div>
 {% endif %}
 </a>
-</p>    
+<h4 class="title"></h4>
+</div>

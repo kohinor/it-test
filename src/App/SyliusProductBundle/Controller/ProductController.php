@@ -22,7 +22,7 @@ class ProductController extends Controller
         $lastVisited = $session->get('lastVisited')?$session->get('lastVisited'):array();
         $lastVisited[] = $product->getId();
         $lastVisited = array_unique($lastVisited);
-        if (count($lastVisited) > 6 ) {
+        if (count($lastVisited) > 5 ) {
             $lastVisited = array_slice($lastVisited, 1);
         }
         $session->set('lastVisited', $lastVisited);

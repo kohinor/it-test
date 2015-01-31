@@ -199,7 +199,7 @@ class SolrSearchController extends Controller
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
         $paginator = $cache->fetch($key);
         if (!$paginator) {
-            $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 20);
+            $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 28);
             $cache->save($key, $paginator);
         }
         return $paginator;   

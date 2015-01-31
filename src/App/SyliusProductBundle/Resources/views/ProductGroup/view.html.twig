@@ -32,7 +32,7 @@
     {% for product in group.products %}
     <div class="product-box column grid-2-25" style="float:left;">
         <div>{{ buttons.delete(path('app_site_product_group_delete', {'id': group.id, 'productId':product.id})) }}</div>
-        <a class="product-image" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':product.slug}) }}"><img class="img-medium" src="{{product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" /></a>
+        <a class="product-image" href="{{ path('app_site_product', {'_locale': app.request.locale, 'slug':product.slug}) }}"><img class="img-responsive" src="{{product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" /></a>
         <div><span class="online-title">{{ product.name }}</span></div>
         <div class="online-price" >{{ product.price|sylius_price }}</div>
     </div>

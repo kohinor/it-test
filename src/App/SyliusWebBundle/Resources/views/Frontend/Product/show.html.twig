@@ -52,21 +52,21 @@
 {% endblock %}
 {% block body %}
 <div class="row">
-  <div class="col-lg-4">   
+  <div class="col-lg-5">   
     <div class="row">
-      <div class="col-lg-2 col-sm-2 col-md-2">
+      <div class="col-lg-3 col-sm-3 col-md-3">
         {% if product.images|length > 0 %}
           <div class="tmb-caption">
             {% for image in product.images %}
               <div class="wp-caption">
-                <img class="img-small thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
+                <img class="img-responsive thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
               </div>
             {% endfor %}
           </div>
         {% endif %}
       </div>
-      <div class="col-lg-10 col-sm-10 col-md-10">
-        <img class="img-large image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+      <div class="col-lg-9 col-sm-9 col-md-9">
+        <img class="img-responsive image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
       </div>
     </div>
     {% if product.getGroup() %}
@@ -82,7 +82,7 @@
       </div>   
     {% endif %}
   </div>    
-  <div class="col-lg-8">
+  <div class="col-lg-7">
     <span class="brand-label">{{ brand }}</span>
     <div class="row">
         <div class="col-lg-7">
@@ -95,13 +95,13 @@
         </div>
         <div class="col-lg-5">
           <div class="well panel panel-default">
-            <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans }}</p>
+            <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans |raw }}</p>
             <div class="lead pull-left">
             {% if product.rrp > product.price %}
-                <p><s>{{ 'italica.rrp'|trans({}, 'messages') }}: <span>{{product.rrp|sylius_price }}</span></s></p>
-            <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small>(incl. VAT)</small></b></span></p>
+                <p><small>{{ 'italica.rrp'|trans({}, 'messages') }}: {{product.rrp|sylius_price }}</small></p>
+            <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small class="text-lowercase">(incl. VAT)</small></b></span></p>
             {% else %}
-                <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small>(incl. VAT)</small></b></span> </p>
+                <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small class="text-lowercase">(incl. VAT)</small></b></span> </p>
             {% endif %}
             </div>
             <div style="clear:both;"></div>

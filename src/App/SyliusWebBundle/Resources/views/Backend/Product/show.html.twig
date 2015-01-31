@@ -146,7 +146,7 @@
             <div id="gallery">
                 {% for image in product.images %}
                 <a href="{{ image.path|imagine_filter('sylius_large') }}" title="{{ product.name }}" class="thumbnail">
-                    <img class="img-small" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" />
+                    <img class="img-responsive" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" />
                 </a>
                 {% endfor %}
             </div>

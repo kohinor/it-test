@@ -1,18 +1,28 @@
-<div class="col-lg-2 col-md-4 col-sm-4 text-center" >    
-    <a class="img-rounded" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
-        <img  class="img-home" src="{{ product.image ? product.image.path|imagine_filter('sylius_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
+ 
+    <a  href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+        <img  class="img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
     </a> 
-    <p>    
-    <div><a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><span >{{ product.translate(locale|default('en')).name|default(product.name) }}</span></a></div>
-    <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
-        {% if product.rrp > product.price %}
-            <div>
-                <span  ><s>{{product.rrp|sylius_price }}</s></span>
-            <span class="text-danger" ><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></span>
-            </div>
-        {% else %}
-            <div  class="text-danger"><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></div>
-        {% endif %}
-    </a>
-    </p>
-</div>
+    <p></p>    
+    <div>
+        <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+            <span >{{ product.translate(locale|default('en')).name|default(product.name) }}</span>
+        </a>
+    </div>
+    {% if product.rrp > product.price %}
+        <div>
+            <span  >
+                <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><s>{{product.rrp|sylius_price }}</s></a>
+            </span>
+        <span> | </span>
+        <span  >
+            <a class="text-danger" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+            <strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong>
+            </a></span>
+        </div>
+    {% else %}
+    <div >
+        <a class="text-danger" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></a>
+   </div>
+   {% endif %}
+   
+   

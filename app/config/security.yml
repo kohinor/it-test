@@ -95,7 +95,7 @@ security:
         - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/en/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-
+        
         - { path: ^/en/administration/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en/administration/login-check, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en/administration/cms/block.*", role: ROLE_SYLIUS_ADMIN, requires_channel: http }
