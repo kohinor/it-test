@@ -1,47 +1,13 @@
-<div role="tabpanel">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
-        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-            <span class="text"><b>{{ 'sylius.product.description'|trans({}, 'messages') }}</b></span>
-        </a>
-    </li>
-    {% if product.shippingCategory %}
-    <li role="presentation">
-        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="text"><b>{{ 'italica.delivery'|trans({}, 'messages') }}</b></span>
-        </a>
-    </li>
-    {% endif %}
-    <li role="presentation">
-        <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
-            <span class="text"><b>{{ 'italica.returns'|trans({}, 'messages') }}</b></span>
-        
-        </a>
-    </li>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content panel-body">
-      <div role="tabpanel" class="tab-pane fade in active" id="home">
-          <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
-                {% if product.attributes|length > 0 %}
-                    {% for attribute in product.attributes %}
-                        {% if attribute.presentation != 'Color' %}
-                        <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
-                        {% endif %}
-                    {% endfor %}
+<div >
+    <p>{{ product.translate(app.request.locale).description|default(product.description)|default('sylius.product.no_description')|trans({}, 'messages')|raw }}</p>
+        {% if product.attributes|length > 0 %}
+            {% for attribute in product.attributes %}
+                {% if attribute.presentation != 'Color' %}
+                <p><label>{{ attribute.presentation|trans({}, 'messages') }}:</label> {{ attribute.value|trans({}, 'messages') }}</p>
                 {% endif %}
-                <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }}</p>
-      </div>
-       {% if product.shippingCategory %}
-           <div role="tabpanel" class="tab-pane fade" id="profile">
-               <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
-                <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
-           </div>
-  {% endif %}
-  <div role="tabpanel" class="tab-pane fade" id="messages">
-      {{ 'italica.return.policy'|trans({}, 'messages') }}
-  </div>
+            {% endfor %}
+        {% endif %}
+        <p><label>{{ 'italica.barcode'|trans({}, 'messages') }}: </label> {{ product.getMasterVariant().sku }}</p>
 </div>
-</div>
-            
+<p class="title"></p>
+

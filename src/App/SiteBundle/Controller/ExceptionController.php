@@ -51,7 +51,7 @@ class ExceptionController extends ContainerAware
                 'currentContent' => $currentContent,
             )
         );
-        if ($code != 400) {
+        if ($code != 404) {
             $this->sendException($exception);
         }
         $response->setStatusCode($code);

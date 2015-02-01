@@ -83,7 +83,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if '#' in facet %}
-                    <span  name="{{ idname }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" value="{{ facet }}" class="thumbnail pull-left {{ class }}" ><a class="btn btn-sm" style="background-color:{{ facet }};">&nbsp;</a></span>
+                    <span  name="{{ idname }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" value="{{ facet }}" class="thumbnail pull-left {{ class }}" ><i class="btn btn-sm" style="background-color:{{ facet }};">&nbsp;</i></span>
                 {% endif %}
             {% endfor %}
           </div>
@@ -108,7 +108,7 @@
 {% endmacro %}
 
 {% macro pivot(pivot, facets, parent = null) %}
-    <li>   
+    <li>
         {% if app.request.get('gender') %}
             {% if pivot.getField() == 'category1' %}
                 {% set url = path('app_solr_search_gender',{'category1':pivot.getValue(),'gender':app.request.get('gender')}) %}
@@ -137,13 +137,15 @@
             {% set marked = 0 %}
         {% endif %}
         
-        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{{ pivot.getValue()|trans({}, 'messages')|capitalize }}{% if marked %}</strong></mark>{% endif %}</a>
-             
-                
-   {% for nextPivot in pivot.getPivot() %}
-        <ul >
-        {{ _self.pivot(nextPivot, facets, pivot ) }}
-        </ul>
+        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{% if parent is null %}<i class="fa {% if marked %}fa-caret-down{% else %}fa-caret-right{% endif %}"></i> {% endif %}{{ pivot.getValue()|trans({}, 'messages')|capitalize }}{% if marked %}</strong></mark>{% endif %}</a>
+    {% if marked %}           
+    {% for nextPivot in pivot.getPivot() %}
+        
+           <ul >
+            {{ _self.pivot(nextPivot, facets, pivot ) }}
+            </ul>
+        
     {% endfor %}
+    {% endif %}
     </li>
 {% endmacro %}

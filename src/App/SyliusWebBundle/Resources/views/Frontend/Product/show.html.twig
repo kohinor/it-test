@@ -52,7 +52,7 @@
 {% endblock %}
 {% block body %}
 <div class="row">
-  <div class="col-lg-5">   
+  <div class="col-lg-6">   
     <div class="row">
       <div class="col-lg-3 col-sm-3 col-md-3">
         {% if product.images|length > 0 %}
@@ -82,18 +82,18 @@
       </div>   
     {% endif %}
   </div>    
-  <div class="col-lg-7">
+  <div class="col-lg-6">
     <span class="brand-label">{{ brand }}</span>
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-6">
           <h3  class="no-transform">{{ product.translate(app.request.locale).name|default(product.name) }}</h3>
           <p>{{ product.translate(app.request.locale).shortDescription|default(product.shortDescription)|raw }}</p>
-          <h4 class="title"><span class="text"></span></h4>
+          <p class="title"></p>
           {% include 'AppSyliusWebBundle:Frontend/Product:_descriptionSwitch.html.twig' %} 
           
            
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
           <div class="well panel panel-default">
             <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans |raw }}</p>
             <div class="lead pull-left">
@@ -113,13 +113,47 @@
               <input type="hidden" id="locale" name="locale" value="{{ app.request.locale }}" />
             </form>
           </div> 
+            
+            
+            <div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    {% if product.shippingCategory %}
+    <li role="presentation" class="active">
+        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+            <span class="text"><b>{{ 'italica.delivery'|trans({}, 'messages') }}</b></span>
+        </a>
+    </li>
+    {% endif %}
+    <li role="presentation">
+        <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+            <span class="text"><b>{{ 'italica.returns'|trans({}, 'messages') }}</b></span>
+        
+        </a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content panel-body">
+       {% if product.shippingCategory %}
+           <div role="tabpanel" class="tab-pane fade in active" id="profile">
+               <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
+                <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
+           </div>
+  {% endif %}
+  <div role="tabpanel" class="tab-pane fade" id="messages">
+      {{ 'italica.return.policy'|trans({}, 'messages') }}
+  </div>
+</div>
+</div>
+            
+  
+  
             <div class="panel panel-default">
                 <div class="panel-body">
                 <span class="text-uppercase"><strong>{{ 'italica.share'|trans({}, 'messages') }}: </strong></span>
                 <span class='st_facebook'></span>
                 <span class='st_twitter'></span>
                 <span class='st_pinterest' ></span>
-                <span class='st_vkontakte'></span>
                 <span class='st_googleplus'></span>
                 <span class='st_email'></span>
                 </div>
@@ -137,20 +171,14 @@
 {% block javascripts %}
 <script>
     $(document).ready(function(){  
-        $("#sylius_cart_item_variant_leter-size > option").each(function() {
-            $("#sylius_cart_item_variant_leter-size option[value="+this.value+"]").attr('disabled', 'disabled');
+        $("#sylius_cart_item_variant select > option").each(function() {
+            $(this).attr('disabled', 'disabled');
         });
         {% for variant in product.getVariants() %}
-            {% if variant.isAvailableOnDemand() %}
+            {% if variant.isAvailableOnDemand() or variant.isInStock()%}
                 {% for option in variant.getOptions() %}
                     {% if option.presentation == 'Size' %}
-                        $('#sylius_cart_item_variant_leter-size option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');
-                    {% endif %}
-                {% endfor %}
-            {% elseif variant.isInStock() %}
-                {% for option in variant.getOptions() %}
-                    {% if option.presentation == 'Size' %}
-                        $('#sylius_cart_item_variant_leter-size option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');
+                        $('#sylius_cart_item_variant select > option').filter(function () { return $(this).html() == "{{option.value}}"; }).removeAttr('disabled');
                     {% endif %}
                 {% endfor %}
             {% endif %}

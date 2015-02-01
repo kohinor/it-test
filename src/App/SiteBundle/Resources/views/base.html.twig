@@ -32,7 +32,7 @@
       <div class="container">
         <div id="navbar-main">
           <div class="col-lg-3 col-md-3 col-sm-3">
-            <ul class="nav nav navbar-nav">
+            <ul class="nav nav-pills">
             {% if app.user %}
                 <li> <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> {{ 'italica.account'|trans({}, 'messages') }}</a> </li>
                 <li> <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> {{ 'italica.logout'|trans({}, 'messages') }}</a></li>
@@ -44,14 +44,14 @@
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6">
             <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:2px">
-              <div class="input-group">
-                <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text" style="width:250px;">
+              <div class="input-group col-lg-9">
+                <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text">
               <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
             </div>
             </form>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3">
-            <ul class="nav navbar-nav">
+            <ul class="nav nav-pills">
               {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
                 <li><a href="/en">{{ 'English'|trans }}</a></li>
                 <li><a href="/fr">{{ 'French'|trans({}, 'messages') }}</a></li>
@@ -177,7 +177,7 @@
           <div class="row">
             <div class="col-lg-12">
           <h4>{{ 'italica.follow.us'|trans }}</h4> 
-          <ul class="nav navbar-nav">
+          <ul class="nav nav-pills">
             <li><a href="#"><i class="fa fa-twitter fa-lg"></i></a></li>
             <li><a href="#"><i class="fa fa-facebook fa-lg"></i></a></li>
             <li><a href="#"><i class="fa fa-linkedin fa-lg"></i></a></li>

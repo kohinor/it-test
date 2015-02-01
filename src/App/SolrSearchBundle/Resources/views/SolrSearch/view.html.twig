@@ -57,6 +57,8 @@
 {% block body %}
 <div class="row">
     <div class="col-lg-3 col-md-2 col-sm-2">
+        <div><a href="{{ path('app_solr_search') }}" class="btn btn-sm btn-default pull-right">{{ 'italica.new.search'|trans }}</a></div>
+        <div class="clearfix"></div>
         <h4 class="title"><span class="text">{{ 'italica.refactor.by'| trans }}</span></h4>
         <div class="filter">
             {{ gender | raw }}
@@ -93,7 +95,7 @@
 	<div class="col-lg-3 col-md-6 col-sm-6">
         <div class="sort-by form-group">
         <div class="input-group input-group-sm">
-      <div class="input-group-addon">Sort By</div>
+      <div class="input-group-addon input-sm">{{ 'italica.sort.by'|trans }}</div>
           <select class="form-control  done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
             <option value="none" >{{ 'italica.none'|trans }}</option>
             <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.price.high.to.low'|trans({}, 'messages') }}</option>
@@ -122,7 +124,7 @@
         {% if item == 0 %}
             <div class="row">
         {% endif %}
-        <div class="col-lg-3 col-md-6 col-sm-6 text-center col-lg-height col-bottom">
+        <div class="col-lg-3 col-md-6 col-sm-6 text-center col-lg-height col-lg-width col-bottom">
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
         </div>
         {% set item = item+1 %}
@@ -134,7 +136,7 @@
     {% if item > 0 %}
         {% for key in [1,2,3,4] %}
             {% if key > item %}
-            <div class="col-lg-3 col-md-6 col-sm-6 text-center col-lg-height col-bottom"></div>
+            <div class="col-lg-3 col-md-6 col-sm-6 text-center col-lg-height col-lg-width col-bottom"></div>
             {% endif %}
         {% endfor %}
         </div>
