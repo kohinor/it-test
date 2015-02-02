@@ -3,7 +3,6 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-<div>
 <a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-responsive" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium') : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
 <p><br></p>
 <div class="text-uppercase">
@@ -26,4 +25,3 @@
 {% endif %}
 </a>
 <p class="title"></p>
-</div>
