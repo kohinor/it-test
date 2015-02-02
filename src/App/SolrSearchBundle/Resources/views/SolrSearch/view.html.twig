@@ -95,7 +95,7 @@
 	<div class="col-lg-3 col-md-6 col-sm-6">
         <div class="sort-by form-group">
         <div class="input-group input-group-sm">
-            <div class="input-group-addon"><small>{{ 'italica.sort.by'|trans }}</small></div>
+            <div class="input-group-addon" style="padding-top:4px; padding-bottom: 4px;"><small>{{ 'italica.sort.by'|trans }}</small></div>
           <select class="form-control  done-sorting" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}">
             <option value="none" >{{ 'italica.none'|trans }}</option>
             <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.price.high.to.low'|trans({}, 'messages') }}</option>
