@@ -192,15 +192,17 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           
-          <div id="newsletters" >
+          <div id="newsletters" class="row">
             {{ render(controller('AppSiteBundle:Site:subscription',{
             'url': app.request.uri})) }}
           </div>
           <hr />
           <div>
             <h4>{{ 'italica.we.accept'|trans }}</h4>
-            <img src="/img/postfinance-logo.png" height="35" />
-            <img src="/img/paypal-logo.png" height="35" />
+            <img src="/img/postfinance-logo.png" height="25" />
+            <img src="/img/mastercard-logo.jpg" height="25" />
+            <img src="/img/visa-logo.png" height="25" />
+            <img src="/img/paypal-logo.png" height="25" />
           </div>
         </div>
       </div>

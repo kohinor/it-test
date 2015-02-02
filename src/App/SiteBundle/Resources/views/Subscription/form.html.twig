@@ -1,13 +1,17 @@
 <h4>{{ 'site.subscription.header'|trans({}, 'messages') }}</h4>
 <form action="{{ path('app_site_subscription') }}" method="post" >
-    <div class="input-group">
-    <span class="input-group-addon input-sm"><i class="fa fa-envelope"></i></span>
+    <div class="input-group input-group-sm">
+    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
     {{ form_widget(form.email) }}
     </div> 
-    <div class="input-group">
-    <span class="input-group-btn  "><input style="margin-top:5px" type="submit" class="btn btn-default btn-sm col-lg-11 pull-left" name="subscribe"  value="Men" /></span>
-    <span class="input-group-btn "><input style="margin-top:5px" type="submit" class="btn btn-default btn-sm col-lg-11 pull-right" name="subscribe" value="Women" /></span>
-    </div>   
+    <div class="input-group col-lg-12">
+        <div class="col-lg-6">
+    <span class="input-group-btn  "><input style="margin-top:5px" type="submit" class="btn btn-block btn-default btn-sm pull-left" name="subscribe"  value="Men" /></span>
+        </div>
+        <div class="col-lg-6">
+    <span class="input-group-btn "><input style="margin-top:5px" type="submit" class="btn btn-block btn-default btn-sm pull-right" name="subscribe" value="Women" /></span>
+        </div>
+        </div>   
     <input type="hidden" name='path' value='{{ path }}' />
     {{ form_rest(form) }}    
 </form>
