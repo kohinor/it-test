@@ -19,9 +19,10 @@
         </strong></span>
     </div>
 {% else %}
-    <div><strong>
+    <div>
+        <strong>
             <a  class="text-danger" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}" >{{ article.price|sylius_price }}</a>
-        </strong></div>
+        </strong>
+    </div>
 {% endif %}
-</a>
 <p class="title"></p>

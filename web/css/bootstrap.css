@@ -4575,9 +4575,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .breadcrumb {
   padding: 8px 15px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   list-style: none;
-  background-color: transparent;
+  background-color: #f5f5f5;
   border-radius: 4px;
 }
 .breadcrumb > li {
@@ -6682,9 +6682,7 @@ th {
 legend {
   color: #444444;
 }
-label {
-  font-weight: normal;
-}
+
 .has-warning .help-block,
 .has-warning .control-label {
   color: #d9831f;
@@ -7117,4 +7115,23 @@ header {
 
 .thumbnail.current{
     border-color: red;
+}
+
+.panel-default-bold {
+  border-color: rgb(68, 68, 68);
+}
+.panel-default-bold > .panel-heading {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: rgb(68, 68, 68);
+}
+.panel-default-bold > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: rgb(68, 68, 68);
+}
+.panel-default-bold > .panel-heading .badge {
+  color: #f5f5f5;
+  background-color: #333333;
+}
+.panel-default-bold > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: rgb(68, 68, 68);
 }

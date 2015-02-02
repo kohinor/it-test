@@ -3,11 +3,11 @@
 <div class="text-center">
 {% if img %}
     {% if data.root.block_url|default('') %}<a href="{{data.root.block_url}}">{% endif %}
-    <img class="img-thumbnail" src="{{img.url}}"  width="420"/>
+    <img class="img-thumbnail img-responsive" src="{{img.url}}"  alt="{{ data.root.title|default('') }}"/>
     {% if data.root.block_url|default('') %}</a>{% endif %}
 {% endif %}
 {% if data.root.title|default('') %}
-    <div class="panel panel-default-bold" style="opacity: 0.85;position: absolute; top:60%; width:94%">
+    <div class="panel panel-default" style="opacity: 0.85;position: absolute;left:0; top:60%; width:100%">
         <div class="panel-body text-uppercase">
     {% if data.root.block_url|default('') %}<a href="{{data.root.block_url}}">{% endif %}
     {% if data.root.title|default('') %}<b>{{data.root.title}}</b>{% endif %}
