@@ -17,3 +17,7 @@ app_site_subscription_list:
 app_site_subscription_delete:
     pattern:  /administration/subscription/delete/{id}
     defaults: { _controller: AppSiteBundle:Subscription:deleteSubscription }
+    
+app_site_sitemap:
+    pattern:  /sitemap.xml
+    defaults: { _controller: AppSiteBundle:Sitemap:xmlSitemap }

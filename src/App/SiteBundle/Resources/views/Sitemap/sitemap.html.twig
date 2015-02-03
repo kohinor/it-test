@@ -1,0 +1,16 @@
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"  
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">  
+      {% for page in pages %} 
+      <url>       
+        <loc>{{baseurl}}{{ page.url }}</loc>  
+        <lastmod>{{ page.publishedAt|date('Y-m-d')~'T'~page.publishedAt|date('H:i:s')~'Z' }}</lastmod>  
+      </url>  
+      {% endfor %} 
+      {% for product in products %} 
+      <url>    
+        <loc>{{baseurl}}{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}</loc>  
+        <lastmod>{{ product.last_modified|default('')}}</lastmod>  
+      </url>  
+      {% endfor %} 
+    </urlset>  

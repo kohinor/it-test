@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-  {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand')|replace({'_': ' '}) }} {{ app.request.get('category')|replace({'_': ' '}) }}{{ app.request.query.get('term') }}
+  Italica: Search:{{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand')|replace({'_': ' '}) }} {{ app.request.get('category')|replace({'_': ' '}) }}{{ app.request.query.get('term') }}
 {% endblock %}
 {% block description %}
     {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
@@ -124,7 +124,7 @@
         {% if item == 0 %}
             <div class="row">
         {% endif %}
-        <div class="col-lg-3 col-md-6 col-sm-6 text-center col-xs-height col-bottom">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom">
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
         </div>
         {% set item = item+1 %}
@@ -136,7 +136,7 @@
     {% if item > 0 %}
         {% for key in [1,2,3,4] %}
             {% if key > item %}
-            <div class="col-lg-3 col-md-6 col-sm-6 text-center col-xs-height col-bottom"></div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom"></div>
             {% endif %}
         {% endfor %}
         </div>

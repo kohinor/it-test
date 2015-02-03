@@ -111,6 +111,7 @@ class SolrUpdateService
         $doc->category1 = $this->getTaxons($product, 'Category', true);
         $doc->category2 = $this->getTaxons($product, 'Category', false); 
         $doc->promotion = $this->getTaxons($product, 'Promotion', true);
+        $doc->last_modified = $product->getUpdatedAt()?$product->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'):date('Y-m-d\TH:i:s\Z');
         return $doc;
     }
 	
