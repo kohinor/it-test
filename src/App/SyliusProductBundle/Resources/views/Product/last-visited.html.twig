@@ -3,14 +3,14 @@
 <div class="row">
     {% for product in products %}
         {% if loop.index < 7 %}
-            <div class="col-lg-2 col-md-4 col-sm-4 text-center col-xs-heightcol-bottom" > 
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-center col-md-height col-bottom" > 
             {% include 'SyliusWebBundle:Frontend/Product:_singleBox.html.twig' with {'locale': locale } %}
             </div>
         {% endif %}
     {% endfor %}
     {% for key in [1,2,3,4,5,6] %}
         {% if key > products|length %}
-            <div class="col-lg-2 col-md-4 col-sm-4 text-center col-xs-height col-bottom" ></div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 text-center col-xs-height col-bottom" ></div>
         {% endif %}
     {% endfor %}
 </div>
