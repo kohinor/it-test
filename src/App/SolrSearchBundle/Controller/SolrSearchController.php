@@ -165,7 +165,7 @@ class SolrSearchController extends Controller
         
         $resultsetCategory = $this->getSolrCategoryResults($term, $facets);
         
-        $facets = $this->getFacetsFromRequest($request);
+        $facets = $this->getFacetsFromRequest($request, $facets);
         if ($resultset->getFacetSet()->getFacet('categories')->count() > 0) {
             $category = $this->getFacetTemplate('categories', $resultset, $facets);
         } else {
