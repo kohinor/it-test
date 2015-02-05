@@ -102,8 +102,8 @@ security:
         - { path: ^/en/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
 
         - { path: ^/en/account.*, role: ROLE_USER, requires_channel: https }
-        - { path: ^/en/cart.*, role: ROLE_USER, requires_channel: https }
-        - { path: ^/en/checkout.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/en/cart.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/en/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: ^/fr/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/fr/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
@@ -113,7 +113,7 @@ security:
         - { path: ^/fr/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
 
         - { path: ^/fr/account.*, role: ROLE_USER, requires_channel: https }
-        - { path: ^/fr/cart.*, role: ROLE_USER, requires_channel: https }
-        - { path: ^/fr/checkout.*, role: ROLE_USER, requires_channel: https }
+        - { path: ^/fr/cart.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/fr/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: "/_partial.*", ip: 127.0.0.1 }
