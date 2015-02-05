@@ -26,6 +26,12 @@ class SitemapController extends Controller
         return $response;
     }
     
+    public function sitemapAction ()
+    {
+        $params = array('pages' => $this->getTree(),
+                      'locale' => $this->get('request')->getLocale());
+        return $this->render('AppSiteBundle:Sitemap:sitemap_site.html.twig', $params);
+    }
        
     /**
      * @param int $pageParent

@@ -21,3 +21,7 @@ app_site_subscription_delete:
 app_site_sitemap:
     pattern:  /sitemap.xml
     defaults: { _controller: AppSiteBundle:Sitemap:xmlSitemap }
+    
+app_site_sitemap_site:
+    pattern:  /sitemap
+    defaults: { _controller: AppSiteBundle:Sitemap:sitemap }
