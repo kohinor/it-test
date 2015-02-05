@@ -3,7 +3,7 @@
 <div class="text-center">
 {% if img %}
     {% if data.root.block_url|default('') %}<a href="{{data.root.block_url}}">{% endif %}
-    <img class="img-thumbnail img-responsive" src="{{img.url}}"  alt="{{ data.root.title|default('') }}"/>
+    <img class="img-thumbnail img-responsive" src="{{ img.url|replace({'http://':'https://'}) }}"  alt="{{ data.root.title|default('') }}"/>
     {% if data.root.block_url|default('') %}</a>{% endif %}
 {% endif %}
 {% if data.root.title|default('') %}

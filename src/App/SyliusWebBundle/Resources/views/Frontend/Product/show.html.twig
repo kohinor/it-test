@@ -59,14 +59,14 @@
           <div class="tmb-caption">
             {% for image in product.images %}
               <div class="wp-caption col-lg-12 col-md-12 col-sm-4 col-xs-4">
-                <img class="img-responsive thumbnail" src="{{ image.path|imagine_filter('sylius_small') }}" data-src="{{ image.path|imagine_filter('sylius_large') }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large') }}" alt="{{ product.name }}" />
+                <img class="img-responsive thumbnail" src="{{ image.path|imagine_filter('sylius_small')|replace({'http://':'https://'}) }}" data-src="{{ image.path|imagine_filter('sylius_large')|replace({'http://':'https://'}) }}" data-tmb-large="{{ image.path|imagine_filter('sylius_x_large')|replace({'http://':'https://'}) }}" alt="{{ product.name }}" />
               </div>
             {% endfor %}
           </div>
         {% endif %}
       </div>
       <div class="col-lg-9 col-sm-12 col-xs-12 col-md-9">
-        <img class="img-responsive image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large'): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large') : 'http://placehold.it/200x200' }}"/>   
+        <img class="img-responsive image-container" style="padding:0; margin:0;" src="{{ product.image ? product.image.path|imagine_filter('sylius_large')|replace({'http://':'https://'}): 'http://placehold.it/200x200' }}" alt="{{ product.name }}" data-large="{{ product.image ? product.image.path|imagine_filter('sylius_x_large')|replace({'http://':'https://'}) : 'http://placehold.it/200x200' }}"/>   
       </div>
     </div>
     {% if product.getGroup() %}

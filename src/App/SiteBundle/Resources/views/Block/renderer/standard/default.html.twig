@@ -4,7 +4,7 @@
     {% set img = data.media.mainImage.0.default|default('') %}
     {% if img %}
         {% if data.root.image_url|default('') %}<a href="{{data.root.image_url}}">{% endif %}
-        <img src="{{img.url}}" class="thumbnail pull-left" style="margin:10px" />
+        <img src="{{img.url|replace({'http://':'https://'})}}" class="thumbnail pull-left" style="margin:10px" />
         {% if data.root.image_url|default('') %}</a>{% endif %}
     {% endif %}
         

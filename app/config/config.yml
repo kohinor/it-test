@@ -155,7 +155,7 @@ liip_imagine:
         sylius_x_large:
             quality: 75
             filters:
-                thumbnail: { size: [1024, 1228], mode: inset }
+                thumbnail: { size: [1536, 1842], mode: inset }
 
 doctrine_cache:
     providers:
@@ -194,6 +194,8 @@ services:
         arguments:
             - "@amazonS3"
             - "%amazon_s3.bucket%"
+        calls:
+             - [ setObjectUrlOption, [ 'https', true ] ]
         tags:
             - { name: 'liip_imagine.cache.resolver', resolver: 'amazon_s3' }
             

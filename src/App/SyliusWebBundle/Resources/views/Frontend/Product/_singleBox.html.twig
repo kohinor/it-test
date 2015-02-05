@@ -1,6 +1,6 @@
  
     <a  href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
-        <img  class="img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_home') : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
+        <img  class="img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_home')|replace({'http://':'https://'}) : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
     </a> 
     <p></p>    
     <div>

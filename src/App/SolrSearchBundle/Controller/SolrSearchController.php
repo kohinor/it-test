@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SolrSearchController extends Controller
 {   
+    const CACHE_TIME = 86400;
+    
     public function getSolrNewInResults($facets, $limit)
     {
         $client = $this->get('solarium.client');
@@ -20,7 +22,7 @@ class SolrSearchController extends Controller
         $resultset = $cache->fetch($key);
         if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset);
+            $cache->save($key, $resultset, self::CACHE_TIME);
         }
         return $resultset;
     }
@@ -128,7 +130,7 @@ class SolrSearchController extends Controller
         $resultset = $cache->fetch($key);
         if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset);
+            $cache->save($key, $resultset, self::CACHE_TIME);
         }
         return $resultset;
     }
@@ -149,7 +151,7 @@ class SolrSearchController extends Controller
         $resultset = $cache->fetch($key);
         if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset);
+            $cache->save($key, $resultset, self::CACHE_TIME);
         }
         
         //$solrRequest = $client->createRequest($query);
@@ -190,7 +192,9 @@ class SolrSearchController extends Controller
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice*100, $endPrice*100);
         $this->get('solr.query.service')->setFacets($query, $facets);
         $this->pageSearchUri = $client->createRequest($query)->getUri();
-        // print $solrRequest->getUri();
+        
+        //$solrRequest = $client->createRequest($query);
+        //print $solrRequest->getUri();
         $keyFacets = array();
         foreach($facets as $facet) {
             $keyFacets[] = $facet->facet;
@@ -200,7 +204,7 @@ class SolrSearchController extends Controller
         $paginator = $cache->fetch($key);
         if (!$paginator) {
             $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 28);
-            $cache->save($key, $paginator);
+            $cache->save($key, $paginator, self::CACHE_TIME);
         }
         return $paginator;   
     }
