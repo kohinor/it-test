@@ -17,13 +17,13 @@ class SolrSearchController extends Controller
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         $query->setRows($limit);
         
-        $key =  'new-in'.implode('-', $facets).$limit;
-        $cache   = $this->container->get('doctrine_cache.providers.memcached');
-        $resultset = $cache->fetch($key);
-        if (!$resultset) {
+        //$key =  'new-in'.implode('-', $facets).$limit;
+        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
+        //$resultset = $cache->fetch($key);
+        //if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset, self::CACHE_TIME);
-        }
+        //    $cache->save($key, $resultset, self::CACHE_TIME);
+        //}
         return $resultset;
     }
     
@@ -125,13 +125,13 @@ class SolrSearchController extends Controller
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
-        $key = 'facets-'.implode('-', $facets);
-        $cache   = $this->container->get('doctrine_cache.providers.memcached');
-        $resultset = $cache->fetch($key);
-        if (!$resultset) {
+        //$key = 'facets-'.implode('-', $facets);
+        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
+        //$resultset = $cache->fetch($key);
+        //if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset, self::CACHE_TIME);
-        }
+        //  $cache->save($key, $resultset, self::CACHE_TIME);
+        //}
         return $resultset;
     }
     
@@ -142,17 +142,17 @@ class SolrSearchController extends Controller
         
         $facetsCollection = $this->getFacetsWithCategory($this->get('request'), $facets);
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
-        $keyFacets = array();
-        foreach($facetsCollection as $facet) {
-            $keyFacets[] = $facet->facet;
-        }
-        $key = preg_replace('~[^-\w]+~', '', 'facets-size'.implode('-', $keyFacets));
-        $cache   = $this->container->get('doctrine_cache.providers.memcached');
-        $resultset = $cache->fetch($key);
-        if (!$resultset) {
+        //$keyFacets = array();
+        //foreach($facetsCollection as $facet) {
+        //    $keyFacets[] = $facet->facet;
+        //}
+        //$key = preg_replace('~[^-\w]+~', '', 'facets-size'.implode('-', $keyFacets));
+        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
+        //$resultset = $cache->fetch($key);
+        //if (!$resultset) {
             $resultset = $client->select($query);
-            $cache->save($key, $resultset, self::CACHE_TIME);
-        }
+        //    $cache->save($key, $resultset, self::CACHE_TIME);
+        //}
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
@@ -195,17 +195,17 @@ class SolrSearchController extends Controller
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
-        $keyFacets = array();
-        foreach($facets as $facet) {
-            $keyFacets[] = $facet->facet;
-        }
-        $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
-        $cache   = $this->container->get('doctrine_cache.providers.memcached');
-        $paginator = $cache->fetch($key);
-        if (!$paginator) {
+        //$keyFacets = array();
+        //foreach($facets as $facet) {
+        //    $keyFacets[] = $facet->facet;
+        //}
+        //$key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
+        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
+        //$paginator = $cache->fetch($key);
+        //if (!$paginator) {
             $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 28);
-            $cache->save($key, $paginator, self::CACHE_TIME);
-        }
+        //    $cache->save($key, $paginator, self::CACHE_TIME);
+        //}
         return $paginator;   
     }
     
