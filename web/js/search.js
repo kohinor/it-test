@@ -222,8 +222,8 @@ $('.filter input[type=checkbox]').click(function(e) {
 
 $('#filter-color span').click(function(e) {
    var url = $(this).attr('data-url');
-   var name = $(this).attr('name');
-   var value = $(this).attr('value');
+   var name = $(this).attr('data-name');
+   var value = $(this).attr('data-value');
    if($(this).hasClass("selected")) {
      italica.search.removeFacet(name, value);
      italica.redirect(url);

@@ -79,7 +79,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if '#' in facet %}
-                    <span  name="{{ idname }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" value="{{ facet }}" class="thumbnail pull-left {{ class }}" ><i class="btn btn-sm" style="background-color:{{ facet }};">&nbsp;</i></span>
+                    <span  data-name="{{ idname }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" data-value="{{ facet }}" class="thumbnail pull-left {{ class }}" ><i class="btn btn-sm" style="background-color:{{ facet }};">&nbsp;</i></span>
                 {% endif %}
             {% endfor %}
           </div>
