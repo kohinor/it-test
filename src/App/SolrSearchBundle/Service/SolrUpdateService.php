@@ -59,11 +59,11 @@ class SolrUpdateService
     private function getOptions(\Sylius\Component\Core\Model\Product $product, $optionName)
     {
         $options = array();
-        if (!$product->getOptions()) return $options;
-        foreach ($product->getOptions() as $option) {
-            if ($optionName == $option->getPresentation()) {
-                foreach ($option->getValues() as $value) {
-                    $options[] = $value->getValue();
+        foreach ($product->getVariants() as $variant) {
+            $variantOptions = $variant->getOptions();
+            foreach ($variantOptions as $option) {
+                if ($optionName == $option->getPresentation()) {
+                    $options[] = $option->getValue();
                 }
             }
         }
@@ -78,9 +78,9 @@ class SolrUpdateService
             if ($taxon->getTaxonomy()->getName() != $taxonomy) continue;
             if ($isRoot != ($taxon->getParent()->getName() == $taxonomy)) {
                 if ($taxon->getParent()->getName() == $taxonomy) continue;
-                $taxons[] = $taxon->getParent()->getName();
+                $taxons[] = str_replace('&', '-and-', $taxon->getParent()->getName());
             } else {
-                $taxons[] = $taxon->getName();  
+                $taxons[] = str_replace('&', '-and-', $taxon->getName());  
             }
         }
         return $taxons;
