@@ -6,7 +6,7 @@
 <a href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}"><img class="img-responsive" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium')|replace({'http://':'https://'}) : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
 <p><br></p>
 <div class="text-uppercase">
-    <a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|default('unbranded'|trans({}, 'messages')) }}</a>
+    <a title="{{ title }}" href="{{ path('app_site_product', {'_locale': locale, 'slug':article.slug}) }}">{{article.brand[0]|replace({'-and-':'&'})|default('unbranded'|trans({}, 'messages')) }}</a>
 </div>
 <div><span >{{ title }}</span></div>
 {% if article.rrp|default(0) > article.price %}
