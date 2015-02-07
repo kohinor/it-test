@@ -27,9 +27,19 @@ app_solr_search_gender_category:
     requirements:
         gender: women|men| |kids|unisex
         
+app_solr_search_gender_category_sub:
+    path:     /{gender}/category/{category}/sub/{subcategory}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderSubCategory }
+    requirements:
+        gender: women|men| |kids|unisex
+        
 app_solr_search_category:
     path:     /category/{category}
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchCategory }
+    
+app_solr_search_category_sub:
+    path:     /category/{category}/sub/{subcategory}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchSubCategory }
     
 app_solr_search_gender_promotion:
     path:     /{gender}/promotion/{promotion}

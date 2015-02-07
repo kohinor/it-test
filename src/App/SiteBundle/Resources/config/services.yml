@@ -5,3 +5,8 @@ services:
         factory_method: getRepository
         arguments:
             - App\SiteBundle\Entity\Subscription
+            
+    site.twig.extension:
+        class: App\SiteBundle\Extension\TwigExtension
+        tags:
+            -  { name: twig.extension }

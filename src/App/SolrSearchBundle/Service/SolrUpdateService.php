@@ -109,10 +109,25 @@ class SolrUpdateService
         $doc->delivery = $product->getShippingCategory() ? $product->getShippingCategory()->getName() : '';
         $doc->gender = $this->getTaxons($product, 'Gender', true);
         $doc->category1 = $this->getTaxons($product, 'Category', true);
-        $doc->category2 = $this->getTaxons($product, 'Category', false); 
+        $doc->category2 = $this->getTaxons($product, 'Category', false);
+        $docCategory = array();
+        foreach ($doc->category1 as $category) {
+            $docCategory[] = $this->getSlug($category);
+        }
+        $doc->category = $docCategory;
+        $docSubcategory = array();
+        foreach ($doc->category2 as $subcategory) {
+            $docSubcategory[] = $this->getSlug($subcategory);
+        }
+        $doc->subcategory = $docSubcategory;
         $doc->promotion = $this->getTaxons($product, 'Promotion', true);
         $doc->last_modified = $product->getUpdatedAt()?$product->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'):date('Y-m-d\TH:i:s\Z');
         return $doc;
+    }
+    
+    private function getSlug($name)
+    {
+        return strtolower(preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', trim($name))));
     }
 	
     

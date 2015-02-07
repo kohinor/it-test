@@ -132,6 +132,8 @@
    <field name="gender" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="category1" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="category2" type="facet_field" indexed="true" stored="true" multiValued="true"/>
+   <field name="category" type="facet_field" indexed="true" stored="true" multiValued="true"/>
+   <field name="subcategory" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="promotion" type="facet_field" indexed="true" stored="true" multiValued="true"/>
    <field name="image" type="string" indexed="true" stored="true" />
    <field name="delivery" type="facet_field" indexed="true" stored="true" />
@@ -154,7 +156,6 @@
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/>
    <field name="keywords" type="text_general" indexed="true" stored="true"/>
-   <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
    <field name="url" type="text_general" indexed="true" stored="true"/>
    <field name="content_type" type="string" indexed="true" stored="true" multiValued="true"/>

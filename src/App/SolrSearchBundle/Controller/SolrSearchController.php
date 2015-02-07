@@ -17,13 +17,13 @@ class SolrSearchController extends Controller
         $this->get('solr.query.service')->setFacets($query, $this->getFacets($facets));
         $query->setRows($limit);
         
-        //$key =  'new-in'.implode('-', $facets).$limit;
-        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
-        //$resultset = $cache->fetch($key);
-        //if (!$resultset) {
+        $key =  'new-in'.implode('-', $facets).$limit;
+        $cache   = $this->container->get('doctrine_cache.providers.memcached');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
             $resultset = $client->select($query);
-        //    $cache->save($key, $resultset, self::CACHE_TIME);
-        //}
+            $cache->save($key, $resultset, self::CACHE_TIME);
+        }
         return $resultset;
     }
     
@@ -60,13 +60,13 @@ class SolrSearchController extends Controller
 
     public function getFacetsWithCategory(Request $request, $facets = array())
     {       
-        $catOne = $request->query->get('category1');
+        $catOne = $request->query->get('category');
         if ($catOne) {
-            $facets['category1'] = explode(',', $catOne);
+            $facets['category'] = explode(',', $catOne);
         }
-        $catTwo = $request->query->get('category2');
+        $catTwo = $request->query->get('subcategory');
         if ($catTwo) {
-            $facets['category2'] = explode(',', $catTwo);
+            $facets['subcategory'] = explode(',', $catTwo);
         }
 
         return $this->getFacets($facets);                
@@ -105,13 +105,13 @@ class SolrSearchController extends Controller
         if ($delivery) {
             $facets['delivery'] = explode(',', $delivery);
         }
-        $catOne = $request->query->get('category1');
+        $catOne = $request->query->get('category');
         if ($catOne) {
-            $facets['category1'] = explode(',', $catOne);
+            $facets['category'] = explode(',', $catOne);
         }
-        $catTwo = $request->query->get('category2');
+        $catTwo = $request->query->get('subcategory');
         if ($catTwo) {
-            $facets['category2'] = explode(',', $catTwo);
+            $facets['subcategory'] = explode(',', $catTwo);
         }
 
         return $this->getFacets($facets);                
@@ -125,13 +125,13 @@ class SolrSearchController extends Controller
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
-        //$key = 'facets-'.implode('-', $facets);
-        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
-        //$resultset = $cache->fetch($key);
-        //if (!$resultset) {
+        $key = 'facets-'.implode('-', $facets);
+        $cache   = $this->container->get('doctrine_cache.providers.memcached');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
             $resultset = $client->select($query);
-        //  $cache->save($key, $resultset, self::CACHE_TIME);
-        //}
+          $cache->save($key, $resultset, self::CACHE_TIME);
+        }
         return $resultset;
     }
     
@@ -142,17 +142,17 @@ class SolrSearchController extends Controller
         
         $facetsCollection = $this->getFacetsWithCategory($this->get('request'), $facets);
         $this->get('solr.query.service')->setFacets($query, $facetsCollection);
-        //$keyFacets = array();
-        //foreach($facetsCollection as $facet) {
-        //    $keyFacets[] = $facet->facet;
-        //}
-        //$key = preg_replace('~[^-\w]+~', '', 'facets-size'.implode('-', $keyFacets));
-        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
-        //$resultset = $cache->fetch($key);
-        //if (!$resultset) {
+        $keyFacets = array();
+        foreach($facetsCollection as $facet) {
+            $keyFacets[] = $facet->facet;
+        }
+        $key = preg_replace('~[^-\w]+~', '', 'facets-size'.implode('-', $keyFacets));
+        $cache   = $this->container->get('doctrine_cache.providers.memcached');
+        $resultset = $cache->fetch($key);
+        if (!$resultset) {
             $resultset = $client->select($query);
-        //    $cache->save($key, $resultset, self::CACHE_TIME);
-        //}
+            $cache->save($key, $resultset, self::CACHE_TIME);
+        }
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
@@ -168,11 +168,6 @@ class SolrSearchController extends Controller
         $resultsetCategory = $this->getSolrCategoryResults($term, $facets);
         
         $facets = $this->getFacetsFromRequest($request, $facets);
-        if ($resultset->getFacetSet()->getFacet('categories')->count() > 0) {
-            $category = $this->getFacetTemplate('categories', $resultset, $facets);
-        } else {
-            $category = $this->getFacetTemplate('category1', $resultset, $facets);
-        }
         $bindings = array(
                 'size' => $this->getFacetTemplate('size', $resultsetCategory, $facets),
                 'color' => $this->getFacetTemplate('color', $resultsetCategory, $facets),
@@ -181,7 +176,7 @@ class SolrSearchController extends Controller
                 'gender' => $this->getFacetTemplate('gender', $resultset, $facets),
                 'delivery' => $this->getFacetTemplate('delivery', $resultsetCategory, $facets),
                 'promotion' => $this->getFacetTemplate('promotion', $resultsetCategory, $facets),
-                'category' => $category
+                'category' =>  $this->getFacetTemplate('categories', $resultset, $facets)
                 );
         return $bindings;
     }
@@ -195,17 +190,17 @@ class SolrSearchController extends Controller
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
-        //$keyFacets = array();
-        //foreach($facets as $facet) {
-        //    $keyFacets[] = $facet->facet;
-        //}
-        //$key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
-        //$cache   = $this->container->get('doctrine_cache.providers.memcached');
-        //$paginator = $cache->fetch($key);
-        //if (!$paginator) {
+        $keyFacets = array();
+        foreach($facets as $facet) {
+            $keyFacets[] = $facet->facet;
+        }
+        $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
+        $cache   = $this->container->get('doctrine_cache.providers.memcached');
+        $paginator = $cache->fetch($key);
+        if (!$paginator) {
             $paginator = $this->get('knp_paginator')->paginate(array($client, $query), $page, 28);
-        //    $cache->save($key, $paginator, self::CACHE_TIME);
-        //}
+            $cache->save($key, $paginator, self::CACHE_TIME);
+        }
         return $paginator;   
     }
     
@@ -277,7 +272,7 @@ class SolrSearchController extends Controller
 
     public function searchPromotionAction(Request $request, $promotion)
     {
-        $facets['promotion'] = str_replace('_',' ', $promotion);
+        $facets['promotion'] = str_replace('-',' ', $promotion);
        
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -288,7 +283,7 @@ class SolrSearchController extends Controller
 
     public function searchBrandAction(Request $request, $brand)
     {
-        $facets['brand'] = str_replace('_',' ', $brand);
+        $facets['brand'] = str_replace('-',' ', $brand);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -298,7 +293,7 @@ class SolrSearchController extends Controller
     public function searchGenderBrandAction(Request $request, $gender, $brand)
     {
         $facets['gender'] = $gender;
-        $facets['brand'] = str_replace('_',' ', $brand);
+        $facets['brand'] = str_replace('-',' ', $brand);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -317,7 +312,7 @@ class SolrSearchController extends Controller
     public function searchGenderCategoryAction(Request $request, $gender, $category)
     {
         $facets['gender'] = $gender;
-        $facets['category1'] = str_replace('_',' ', $category);
+        $facets['category'] = $category;
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -326,9 +321,30 @@ class SolrSearchController extends Controller
 
     public function searchCategoryAction(Request $request, $category)
     {
-        $facets['category1'] = str_replace('_',' ', $category);
+        $facets['category'] = $category;
         
         $bindings = $this->getFacetSearchResult($request, $facets);
+        $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
+        return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
+    }
+    
+    public function searchGenderSubCategoryAction(Request $request, $gender, $category, $subcategory)
+    {
+        $facets['gender'] = $gender;
+        $facets['category'] = $category;
+        
+        $bindings = $this->getFacetSearchResult($request, $facets);
+        $facets['subcategory'] = $subcategory;
+        $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
+        return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
+    }
+
+    public function searchSubCategoryAction(Request $request, $category, $subcategory)
+    {
+        $facets['category'] = $category;
+        
+        $bindings = $this->getFacetSearchResult($request, $facets);
+        $facets['subcategory'] = $subcategory;
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
         return $this->render('AppSolrSearchBundle:SolrSearch:view.html.twig', $bindings);
     }
@@ -344,7 +360,7 @@ class SolrSearchController extends Controller
     public function searchGenderPromotionAction(Request $request, $gender, $promotion)
     {
         $facets['gender'] = $gender;
-        $facets['promotion'] = str_replace('_',' ', $promotion);
+        $facets['promotion'] = str_replace('-',' ', $promotion);
         
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        
@@ -354,8 +370,8 @@ class SolrSearchController extends Controller
     public function searchGenderPromotionCategoryAction(Request $request, $gender, $promotion, $category)
     {
         $facets['gender'] = $gender;
-        $facets['promotion'] = str_replace('_',' ', $promotion);
-        $facets['category1'] = str_replace('_',' ', $category);
+        $facets['promotion'] = str_replace('-',' ', $promotion);
+        $facets['category'] =  $category;
  
         $bindings = $this->getFacetSearchResult($request, $facets);
         $bindings = array_merge($this->getResultsPaginator($request, $facets), $bindings);        

@@ -184,7 +184,7 @@
             {% endif %}
         {% endfor %}
         $("#sylius_cart_item_variant select > option").each(function() {
-            if ($(this).attr('disabled') == 'disabled') {
+            if ($(this).attr('disabled') == 'disabled' && $(this).val() != '') {
                 $(this).remove();
             }
         });

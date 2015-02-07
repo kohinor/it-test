@@ -111,8 +111,8 @@ var italica = {
         var delivery = [];
         var brand = [];
         var material = [];
-        var category1 = [];
-        var category2 = [];
+        var category = [];
+        var subcategory = [];
         for (i=0;i<italica.search.facets.length;i++) {
             if (italica.search.facets[i].field == 'color') {
                 if (color.hasOwnProperty(italica.search.facets[i].facet)) {
@@ -157,17 +157,17 @@ var italica = {
                  }
                 material.push(italica.search.facets[i].facet);
             }
-            if (italica.search.facets[i].field == 'category1') {
-                if (category1.hasOwnProperty(italica.search.facets[i].facet)) {
+            if (italica.search.facets[i].field == 'category') {
+                if (category.hasOwnProperty(italica.search.facets[i].facet)) {
                     continue;
                  }
-                category1.push(italica.search.facets[i].facet);
+                category.push(italica.search.facets[i].facet);
             }
-            if (italica.search.facets[i].field == 'category2') {
-                if (category2.hasOwnProperty(italica.search.facets[i].facet)) {
+            if (italica.search.facets[i].field == 'subcategory') {
+                if (subcategory.hasOwnProperty(italica.search.facets[i].facet)) {
                     continue;
                  }
-                category2.push(italica.search.facets[i].facet);
+                subcategory.push(italica.search.facets[i].facet);
             }
             
         }
@@ -195,11 +195,11 @@ var italica = {
         if (material.length > 0) {
             url = url+'&material='+material.join(',');
         }
-        if (category1.length > 0) {
-            url = url+'&category1='+category1.join(',');
+        if (category.length > 0) {
+            url = url+'&category='+category.join(',');
         }
-        if (category2.length > 0) {
-            url = url+'&category2='+category2.join(',');
+        if (subcategory.length > 0) {
+            url = url+'&subcategory='+subcategory.join(',');
         }
         window.location = url;
     }

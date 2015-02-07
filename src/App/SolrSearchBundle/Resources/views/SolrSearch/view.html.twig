@@ -30,7 +30,7 @@
             <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> 
         {% endfor %}
         </li> 
-        <li>{{ app.request.get('brand')|trans({}, 'messages')|title|replace({'_': ' '})  }} </li>
+        <li>{{ app.request.get('brand')|trans({}, 'messages')|title|replace({'-': ' '})  }} </li>
     {% elseif app.request.get('category') and  app.request.get('gender') %}
         <li>
         {% set genders = app.request.get('gender')|split(',') %}
@@ -38,15 +38,15 @@
             <a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a>  
         {% endfor %}
         </li> 
-        <li>{{ app.request.get('category')|trans({}, 'messages')|title|replace({'_': ' '}) }} </li>
+        <li>{{ app.request.get('category')|trans({}, 'messages')|title|replace({'-': ' '}) }} </li>
     {% elseif app.request.get('promotion') %}
-        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title|replace({'_': ' '}) }} </li>
+        <li>{{ app.request.get('promotion')|trans({}, 'messages')|title|replace({'-': ' '}) }} </li>
     {% elseif app.request.get('brand') %}
-        <li> {{ app.request.get('brand')|trans({}, 'messages')|title|replace({'_': ' '}) }} </li>
+        <li> {{ app.request.get('brand')|trans({}, 'messages')|title|replace({'-': ' '}) }} </li>
     {% elseif app.request.get('gender')%}
-        <li>{{ app.request.get('gender')|trans({}, 'messages')|title|replace({'_': ' '}) }} </li>
+        <li>{{ app.request.get('gender')|trans({}, 'messages')|title|replace({'-': ' '}) }} </li>
     {% elseif app.request.get('category')%}
-        <li> {{ app.request.get('category')|trans({}, 'messages')|title|replace({'_': ' '}) }} </li>
+        <li> {{ app.request.get('category')|trans({}, 'messages')|title|replace({'-': ' '}) }} </li>
     {% else %}
         <li>{{ 'italica.search'|trans({}, 'messages') }} </li>    
     {% endif %}

@@ -50,11 +50,7 @@
 {% endif %}
 <div class = "filter-box">
     <div class="filter-header open" data-key="{{ idname }}">
-    {% if idname == 'category1' %}
-        <h5 class="pull-left"><i class="fa fa-arrow-right"></i> {{ 'category'|trans({}, 'messages')|capitalize }}</h5>
-    {% else %}
        <h5 class="pull-left"><i class="fa fa-arrow-right"></i> {{ idname|trans({}, 'messages')|capitalize }}</h5>
-    {% endif %}
     {% set clearFilters = false %}
     {% for facetTag in facets %}
         {% if facetTag.field == idname %}
@@ -108,28 +104,31 @@
 {% endmacro %}
 
 {% macro pivot(pivot, facets, parent = null) %}
+    {% set value = pivot.getValue()|friendly_url()%}
     <li>
         {% if app.request.get('gender') %}
             {% if pivot.getField() == 'category1' %}
-                {% set url = path('app_solr_search_gender',{'category1':pivot.getValue(),'gender':app.request.get('gender')}) %}
+                {% set url = path('app_solr_search_gender_category',{'category':value,'gender':app.request.get('gender')}) %}
             {% else %}
-                {% set url = path('app_solr_search_gender',{'category1':parent.getValue(),'category2':pivot.getValue(),'gender':app.request.get('gender')}) %}
+                {% set parentValue = parent.getValue()|friendly_url() %}
+                {% set url = path('app_solr_search_gender_category',{'category':parentValue,'subcategory':value,'gender':app.request.get('gender')}) %}
             {% endif %}
         {% else %}
             {% if pivot.getField() == 'category1' %}
-                {% set url = path('app_solr_search',{'category1':pivot.getValue()}) %}
+                {% set url = path('app_solr_search_category',{'category':value}) %}
             {% else %}
-                {% set url = path('app_solr_search',{'category1':parent.getValue(), 'category2':pivot.getValue()}) %}
+                {% set parentValue = parent.getValue()|friendly_url() %}
+                {% set url = path('app_solr_search_category',{'category':parentValue, 'subcategory':value}) %}
             {% endif %}
         {% endif %}
         
         {% set marked = 0 %}
         {% set isParent = 0 %}
         {% for facetTag in facets %}
-            {% if facetTag.facet == pivot.getValue() %} 
+            {% if facetTag.facet == value %} 
                 {% set marked = 1 %}
             {% endif %}
-            {% if parent and facetTag.facet == parent.getValue() %}
+            {% if parent and facetTag.facet == parentValue %}
                 {% set isParent = 1 %}
             {% endif %}
         {% endfor %}
@@ -137,7 +136,7 @@
             {% set marked = 0 %}
         {% endif %}
         
-        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{% if parent is null %}<i class="fa {% if marked %}fa-caret-down{% else %}fa-caret-right{% endif %}"></i> {% endif %}{{ pivot.getValue()|replace({'womens':'women`s'})|replace({'mens':'men`s'})|replace({'kids':'kid`s'})|trans({}, 'messages')|capitalize }}{% if marked %}</strong></mark>{% endif %}</a>
+        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{% if parent is null %}<i class="fa {% if marked %}fa-caret-down{% else %}fa-caret-right{% endif %}"></i> {% endif %}{{ pivot.getValue()|trans({}, 'messages')|capitalize }}{% if marked %}</strong></mark>{% endif %}</a>
     {% if marked %}           
     {% for nextPivot in pivot.getPivot() %}
         
