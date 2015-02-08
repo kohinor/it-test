@@ -7060,7 +7060,7 @@ ul.checkout-bar a {
   color: #fff;
 }
 
-header {
+.header {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3); 
     background:rgb(245, 245, 245);
 }
