@@ -4,7 +4,7 @@
 
 <p>
   <strong>{{ 'sylius.account.order.created_at'|trans }} {{ order.createdAt|date() }}</strong><br><br>
-  {{ 'sylius.account.order.number'|trans }} <strong>{{ order.number }}</strong>
+  {{ 'sylius.account.order.number'|trans }} <strong>{{ order.getLastPayment().getId() }}</strong>
 </p>
 <table>
   <tr>
