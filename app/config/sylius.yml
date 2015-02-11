@@ -25,7 +25,7 @@ sylius_product:
     classes:
         product:
             model: App\SyliusProductBundle\Entity\Product
-            form: App\SyliusProductBundle\Form\Type\ProductType
+            #form: App\SyliusProductBundle\Form\Type\ProductType
             repository: App\SyliusProductBundle\Entity\ProductRepository
             
 sylius_variation:
@@ -40,9 +40,9 @@ sylius_cart:
         item:
             controller: App\CartBundle\Controller\CartItemController
 
-sylius_inventory:
-    backorders: false
-    track_inventory: true
+#sylius_inventory:
+ #   backorders: false
+ #   track_inventory: true
     
 sylius_payment:
     classes:

@@ -28,13 +28,15 @@ class AppKernel extends Kernel
             new App\LexikTranslationBundle\AppLexikTranslationBundle(),
             new App\SyliusWebBundle\AppSyliusWebBundle(),
             new App\SyliusCoreBundle\AppSyliusCoreBundle(),
-            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             new Nelmio\SolariumBundle\NelmioSolariumBundle(),
             new App\SolrSearchBundle\AppSolrSearchBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new App\SyliusProductBundle\AppSyliusProductBundle(),
             new App\CartBundle\AppCartBundle()
         );
+        if (in_array($this->environment, array('dev', 'test'))) {
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+        }
 
         return array_merge(parent::registerBundles(), $bundles);
     }
