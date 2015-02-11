@@ -122,7 +122,7 @@
     {% set item = 0 %}
     {% for article in pagination %}
         {% if item == 0 %}
-            <div class="row">
+            <div class="row row-md-height">
         {% endif %}
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom">
         {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
