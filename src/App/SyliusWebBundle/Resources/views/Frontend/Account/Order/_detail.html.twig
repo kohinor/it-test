@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-6">
         <br><br>
-        {{ 'sylius.account.order.number'|trans }} <strong>{{ order.getLastPayment().getId() }}</strong><br>
+        {{ 'sylius.account.order.number'|trans }} <strong>{{ order.getLastPayment('completed').getId() }}</strong><br>
         {{ 'sylius.account.order.state'|trans }}
         {% include "SyliusWebBundle:Frontend/Account:Order/_state.html.twig" %}
     </div>
