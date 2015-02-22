@@ -3,7 +3,7 @@ imports:
 
 framework:
     test: ~
-    default_locale:  "en"
+    default_locale: "en"
     session:
         storage_id: session.storage.mock_file
 
@@ -16,9 +16,7 @@ sylius_money:
 
 sylius_payments:
     gateways:
-        cc:     Credit Card
-        test:   Test
-        stripe: Stripe
+        postpay: Postpay
 
 doctrine_cache:
     providers:
@@ -31,6 +29,3 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
-        firephp:
-            type:  firephp
-            level: info

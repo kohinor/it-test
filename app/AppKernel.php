@@ -11,17 +11,10 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            #new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Lexik\Bundle\TranslationBundle\LexikTranslationBundle(),
-            new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+            #new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
             
-            new Kitpages\FileSystemBundle\KitpagesFileSystemBundle(),
-            new Kitpages\CmsBundle\KitpagesCmsBundle(),
-            new Kitpages\FileBundle\KitpagesFileBundle(),
-            new Kitpages\SimpleCacheBundle\KitpagesSimpleCacheBundle(),
-            new Kitpages\UtilBundle\KitpagesUtilBundle(),
-
-            new App\KitPagesBundle\AppKitPagesBundle(),
             new App\SiteBundle\AppSiteBundle(),
             new App\PaymentBundle\AppPaymentBundle(),
             new App\UserBundle\AppUserBundle(),

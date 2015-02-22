@@ -1,4 +1,4 @@
-{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+{% extends cms.layout %}
 
 {% block keywords %}
     {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
@@ -86,11 +86,6 @@
 </div>       
  
 <div class="col-lg-9 col-md-10 col-sm-10">
-    <div class="row">
-        {{ render(controller('KitpagesCmsBundle:Block:widget', 
-                    {'slug': app.request.locale|default('en') ~ '-'~app.request.get('promotion')~'-'~app.request.get('gender')~'-'~app.request.get('category')~'-'~app.request.get('brand')}
-                  )) }}
-    </div>
     <div class="row">
 	<div class="col-lg-3 col-md-6 col-sm-6">
         <div class="sort-by form-group">

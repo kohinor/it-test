@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "82b9eb74cd1f7fffa86b80d91bb8d59d",
+    "hash": "e0df9ec651ed7b00e27c186f49829c38",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -2933,283 +2933,6 @@
             "time": "2013-06-08 14:08:19"
         },
         {
-            "name": "kitpages/cms-bundle",
-            "version": "dev-master",
-            "target-dir": "Kitpages/CmsBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitpages/KitpagesCmsBundle.git",
-                "reference": "b943c35d902f5f311d9259a73026ec292548e949"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesCmsBundle/zipball/b943c35d902f5f311d9259a73026ec292548e949",
-                "reference": "b943c35d902f5f311d9259a73026ec292548e949",
-                "shasum": ""
-            },
-            "require": {
-                "jms/serializer-bundle": "~0.13",
-                "kitpages/file-bundle": "~3.0",
-                "kitpages/simple-cache-bundle": "~3.0",
-                "kitpages/util-bundle": "~3.0",
-                "php": ">=5.3.3",
-                "sensio/framework-extra-bundle": "~3.0",
-                "stof/doctrine-extensions-bundle": "1.1.*",
-                "symfony/framework-bundle": "~2.3",
-                "symfony/validator": "~2.3"
-            },
-            "require-dev": {
-                "symfony/browser-kit": "~2.3",
-                "symfony/class-loader": "~2.3",
-                "symfony/finder": "~2.3",
-                "symfony/yaml": "~2.3"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kitpages\\CmsBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastien Lefebvre"
-                },
-                {
-                    "name": "Philippe Le Van",
-                    "homepage": "https://twitter.com/#!/plv"
-                }
-            ],
-            "description": "Kitpages CMS",
-            "homepage": "https://github.com/kitpages/KitpagesCmsBundle",
-            "keywords": [
-                "Content management system",
-                "cms"
-            ],
-            "time": "2015-01-16 08:42:20"
-        },
-        {
-            "name": "kitpages/file-bundle",
-            "version": "v3.0.3",
-            "target-dir": "Kitpages/FileBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitpages/KitpagesFileBundle.git",
-                "reference": "0996aab49bb0064fcbbf71aa7ec39035c7df74cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesFileBundle/zipball/0996aab49bb0064fcbbf71aa7ec39035c7df74cb",
-                "reference": "0996aab49bb0064fcbbf71aa7ec39035c7df74cb",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-bundle": "~1.1",
-                "doctrine/orm": "~2.2",
-                "imagine/imagine": "~0.5",
-                "kitpages/file-system-bundle": "~3.1",
-                "kitpages/util-bundle": "~3.0",
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.1",
-                "symfony/monolog-bundle": "~2.1"
-            },
-            "require-dev": {
-                "beberlei/doctrineextensions": "dev-master",
-                "doctrine/doctrine-fixtures-bundle": "*",
-                "liip/functional-test-bundle": "dev-master",
-                "patchwork/dumper": "~1.2",
-                "phpunit/dbunit": "~1.3.1",
-                "phpunit/phpunit": "~3.7",
-                "symfony/browser-kit": "~2.1",
-                "symfony/class-loader": "~2.1",
-                "symfony/finder": "~2.1",
-                "symfony/yaml": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kitpages\\FileBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastien Lefebvre"
-                },
-                {
-                    "name": "Philippe Le Van",
-                    "homepage": "https://twitter.com/#!/plv"
-                }
-            ],
-            "description": "FileBundle manages uploads and manipulations of files for the Kitpages CMS Bundle",
-            "homepage": "https://github.com/kitpages/KitpagesFileBundle",
-            "keywords": [
-                "encoding",
-                "files",
-                "kitpages cms",
-                "resize",
-                "upload"
-            ],
-            "time": "2015-01-20 13:31:51"
-        },
-        {
-            "name": "kitpages/file-system-bundle",
-            "version": "v3.1.2",
-            "target-dir": "Kitpages/FileSystemBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitpages/KitpagesFileSystemBundle.git",
-                "reference": "8cd798b95f70f7428c1fc3d5b5231d45e2907457"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesFileSystemBundle/zipball/8cd798b95f70f7428c1fc3d5b5231d45e2907457",
-                "reference": "8cd798b95f70f7428c1fc3d5b5231d45e2907457",
-                "shasum": ""
-            },
-            "require": {
-                "kitpages/util-bundle": "~3.0",
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.1"
-            },
-            "require-dev": {
-                "symfony/browser-kit": "~2.1",
-                "symfony/class-loader": "~2.1",
-                "symfony/finder": "~2.1",
-                "symfony/yaml": "~2.1"
-            },
-            "suggest": {
-                "amazonwebservices/aws-sdk-for-php": "~1.5"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kitpages\\FileSystemBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastien Lefebvre"
-                },
-                {
-                    "name": "Philippe Le Van",
-                    "homepage": "https://twitter.com/#!/plv"
-                }
-            ],
-            "description": "Symfony Kitpages FileSystem Bundle. Abstraction layer for files (local, S3)",
-            "homepage": "https://github.com/kitpages/KitpagesFileSystemBundle",
-            "keywords": [
-                "File abstraction layer",
-                "filesystem",
-                "gaufrette"
-            ],
-            "time": "2013-09-26 09:01:31"
-        },
-        {
-            "name": "kitpages/simple-cache-bundle",
-            "version": "v3.0.0",
-            "target-dir": "Kitpages/SimpleCacheBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitpages/KitpagesSimpleCacheBundle.git",
-                "reference": "5f1289f41dd3eeaaf0ac29f924211f8cf4afa98a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesSimpleCacheBundle/zipball/5f1289f41dd3eeaaf0ac29f924211f8cf4afa98a",
-                "reference": "5f1289f41dd3eeaaf0ac29f924211f8cf4afa98a",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "~2.1",
-                "symfony/framework-bundle": "~2.1"
-            },
-            "require-dev": {
-                "beberlei/doctrineextensions": "dev-master",
-                "symfony/class-loader": "~2.1",
-                "symfony/finder": "~2.1",
-                "symfony/yaml": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kitpages\\SimpleCacheBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "authors": [
-                {
-                    "name": "Philippe Le Van",
-                    "homepage": "https://twitter.com/#!/plv"
-                }
-            ],
-            "description": "Very simple cache system for symfony2. The cache data are saved in one table in database.",
-            "homepage": "http://github.com/kitpages/KitpagesSimpleCacheBundle",
-            "keywords": [
-                "cache",
-                "doctrine"
-            ],
-            "time": "2013-09-09 12:13:05"
-        },
-        {
-            "name": "kitpages/util-bundle",
-            "version": "v3.0.2",
-            "target-dir": "Kitpages/UtilBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitpages/KitpagesUtilBundle.git",
-                "reference": "7f42662505e355449d15fea386b4d5cf7424ea4f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesUtilBundle/zipball/7f42662505e355449d15fea386b4d5cf7424ea4f",
-                "reference": "7f42662505e355449d15fea386b4d5cf7424ea4f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.1"
-            },
-            "require-dev": {
-                "symfony/class-loader": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Kitpages\\UtilBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "authors": [
-                {
-                    "name": "Philippe Le Van",
-                    "homepage": "https://twitter.com/#!/plv"
-                }
-            ],
-            "description": "Small common tools used for Kitpages bundles",
-            "homepage": "https://github.com/kitpages/KitpagesUtilBundle",
-            "keywords": [
-                "tools"
-            ],
-            "time": "2013-09-09 12:33:10"
-        },
-        {
             "name": "klarna/checkout",
             "version": "v1.2.2",
             "source": {
@@ -3871,12 +3594,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikTranslationBundle.git",
-                "reference": "bcfd0ffc4b9d8f35d17cca85ac1ae1c5fd66da2e"
+                "reference": "0882fe7544abd9a4a146aeb58d23b48c6557c25a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikTranslationBundle/zipball/bcfd0ffc4b9d8f35d17cca85ac1ae1c5fd66da2e",
-                "reference": "bcfd0ffc4b9d8f35d17cca85ac1ae1c5fd66da2e",
+                "url": "https://api.github.com/repos/lexik/LexikTranslationBundle/zipball/0882fe7544abd9a4a146aeb58d23b48c6557c25a",
+                "reference": "0882fe7544abd9a4a146aeb58d23b48c6557c25a",
                 "shasum": ""
             },
             "require": {
@@ -3885,9 +3608,11 @@
             },
             "require-dev": {
                 "doctrine/data-fixtures": "1.0.*",
+                "doctrine/doctrine-bundle": "~1.3",
                 "doctrine/mongodb-odm": "dev-master",
                 "doctrine/mongodb-odm-bundle": "dev-master",
                 "doctrine/orm": "2.4.*",
+                "phpunit/phpunit": "~4.3",
                 "propel/propel-bundle": "~1.2"
             },
             "suggest": {
@@ -3928,7 +3653,7 @@
                 "i18n",
                 "translation"
             ],
-            "time": "2015-01-19 15:19:28"
+            "time": "2015-02-12 08:43:38"
         },
         {
             "name": "liip/imagine-bundle",
@@ -6698,61 +6423,6 @@
             "time": "2015-02-01 05:39:51"
         },
         {
-            "name": "sensio/framework-extra-bundle",
-            "version": "v3.0.4",
-            "target-dir": "Sensio/Bundle/FrameworkExtraBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "b3bc3e67c8b6b68b18d727012183520d35ee762a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/b3bc3e67c8b6b68b18d727012183520d35ee762a",
-                "reference": "b3bc3e67c8b6b68b18d727012183520d35ee762a",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "~2.2",
-                "symfony/framework-bundle": "~2.3"
-            },
-            "require-dev": {
-                "symfony/expression-language": "~2.4",
-                "symfony/security-bundle": "~2.4"
-            },
-            "suggest": {
-                "symfony/expression-language": "",
-                "symfony/security-bundle": ""
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Sensio\\Bundle\\FrameworkExtraBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "This bundle provides a way to configure your controllers with annotations",
-            "keywords": [
-                "annotations",
-                "controllers"
-            ],
-            "time": "2014-12-02 09:52:52"
-        },
-        {
             "name": "sensio/generator-bundle",
             "version": "2.4.x-dev",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
@@ -8107,16 +7777,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.3.x-dev",
+            "version": "v2.3.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "5f6d235a69ba47e1403d73bcd15fdf51ba053fb9"
+                "reference": "959733dc4b1da99b9e93a1762f4217eee20fc933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/5f6d235a69ba47e1403d73bcd15fdf51ba053fb9",
-                "reference": "5f6d235a69ba47e1403d73bcd15fdf51ba053fb9",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/959733dc4b1da99b9e93a1762f4217eee20fc933",
+                "reference": "959733dc4b1da99b9e93a1762f4217eee20fc933",
                 "shasum": ""
             },
             "require": {
@@ -8210,7 +7880,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-02-11 13:35:55"
+            "time": "2015-01-30 13:55:40"
         },
         {
             "name": "twig/extensions",
@@ -10288,22 +9958,12 @@
             "time": "2014-12-15 14:25:24"
         }
     ],
-    "aliases": [
-        {
-            "alias": "0.4.1",
-            "alias_normalized": "0.4.1.0",
-            "version": "0.6.2.0",
-            "package": "imagine/imagine"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "sylius/sylius": 20,
-        "symfony/symfony": 20,
         "doctrine/migrations": 20,
-        "doctrine/doctrine-migrations-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
-        "kitpages/cms-bundle": 20,
         "sensio/generator-bundle": 20,
         "jms/security-extra-bundle": 20,
         "jms/di-extra-bundle": 20,

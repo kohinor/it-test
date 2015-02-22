@@ -1,4 +1,4 @@
-{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+{% extends cms.layout %}
 
 {% block keywords %}
     {{ product.translate(app.request.locale).metaKeywords|default(product.metaKeywords) }}

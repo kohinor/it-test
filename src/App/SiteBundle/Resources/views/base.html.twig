@@ -8,11 +8,10 @@
     <meta charset="utf-8">
     <title>
     {% block title %}
-        {{ kitCmsPageData.root.metaTitle|default(settings.title|default('sylius.meta.frontend_title'|trans)) }}
+        {{ settings.title|default('sylius.meta.frontend_title'|trans) }}
     {% endblock %}</title>
-    <meta name="description" content="{{ settings.meta_description|default(kitCmsPageData.root.metaDescription|default(kitMeta.description|default(""))) }}{% block description %}{% endblock %}">
-    <meta name="author" content="{{ kitCmsPageData.root.author|default("") }}">
-    <meta name="keywords" content="{{ settings.meta_keywords|default(kitCmsPageData.root.metaKeywords|default("")) }}{% block keywords %}{% endblock %}">
+    <meta name="description" content="{{ settings.meta_description|default("") }}{% block description %}{% endblock %}">
+    <meta name="keywords" content="{{ settings.meta_keywords|default("") }}{% block keywords %}{% endblock %}">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">     
@@ -23,11 +22,9 @@
     <link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.css"/>
             
     {% block stylesheets %}{% endblock %}
-    {% block kitpages_cms_stylesheets %}{% endblock %}
 </head>
 
 <body>
-  {% block kitpages_cms_toolbar %}{% endblock %}
   <header class="header-box navbar navbar-static-top">
       <div class="container">
         <div id="navbar-main">
@@ -51,15 +48,7 @@
             </form>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3">
-            <ul class="nav nav-pills">
-              {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
-                <li><a href="/en">{{ 'English'|trans }}</a></li>
-                <li><a href="/fr">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% else %}
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% endif %}
-            </ul>
+              {{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
           </div>        
         </div>
       </div>
@@ -115,12 +104,7 @@
                   </div>
                   <nav>
                   <div class="navbar-collapse collapse navbar-responsive-collapse">
-                  {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                    'slug': app.request.locale|default('en') ~ '-main',
-                    'cssClass': "navbar-nav header",
-                    'currentPageSlug':kitCmsPage.slug|default(''),
-                    'startDepth':1 ,
-                    'endDepth':3} )) }}
+
                   </div>
                   </nav>
               </div>
@@ -155,7 +139,6 @@
       {% endblock %}
       </div>
     </div>
-    {% block kitpages_cms_body %}{% endblock %}
     {% block body %}{% endblock %}
   </div>   
   <div class="footer-separator"></div>
@@ -165,12 +148,7 @@
       <div class="row">
         <div class="col-lg-6 col-md-5 col-sm-5">
           <div id="nav-foot">
-            {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                'slug': app.request.locale|default('en') ~ '-footer',
-                'cssClass': "navbar-nav footer",
-                'currentPageSlug':kitCmsPage.slug|default(''),
-                'startDepth':1 ,
-                'endDepth':1} )) }}
+            
 
           </div>
         </div>
@@ -244,7 +222,6 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
   {% block javascripts %}{% endblock %}
-  {% block kitpages_cms_javascripts %}{% endblock %}
   <script>
     setTimeout(function() { $('.layout-flash-error').fadeOut(); }, 8000);
     setTimeout(function() { $('.layout-flash').fadeOut(); }, 5000);

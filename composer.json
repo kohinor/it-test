@@ -22,22 +22,17 @@
     "require": {
         "php":                                  ">=5.3.3",
         "sylius/sylius":                        "0.13.*@dev",
-        "symfony/symfony":                      "2.3.*@dev",
-        "doctrine/migrations":                  "@dev",
-        "doctrine/doctrine-migrations-bundle":  "@dev",
-        "friendsofsymfony/user-bundle":         "@dev",
+        "doctrine/migrations":                  "~1.0@dev",
+        "friendsofsymfony/user-bundle":         "2.0.*@dev",
         
-        "kitpages/cms-bundle":                  "dev-master",
-        "sensio/generator-bundle":               "@dev",
-        "jms/security-extra-bundle":             "@dev",
-        "jms/di-extra-bundle":                   "@dev",
-        "lexik/translation-bundle":              "@dev",
+        "sensio/generator-bundle":              "@dev",
+        "jms/security-extra-bundle":            "@dev",
+        "jms/di-extra-bundle":                  "@dev",
+        "lexik/translation-bundle":             "@dev",
         
         "nelmio/solarium-bundle":               "2.*",
         "knplabs/knp-paginator-bundle":         "2.4.*@dev",
         "aws/aws-sdk-php":                      "dev-master",
-        
-        "imagine/imagine":                      "0.6.2 as 0.4.1",
         "amazonwebservices/aws-sdk-for-php":     "~1.5@dev"
     },
     "require-dev": {
@@ -55,12 +50,14 @@
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Symfony\\Cmf\\Bundle\\CreateBundle\\Composer\\ScriptHandler::downloadCreateAndCkeditor",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Symfony\\Cmf\\Bundle\\CreateBundle\\Composer\\ScriptHandler::downloadCreateAndCkeditor",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]

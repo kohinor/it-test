@@ -7,7 +7,7 @@
 
 <div class="row">
   <div class="col-lg-5 col-md-5 col-sm-5">
-   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
+   {{ sonata_block_render({'name': '/cms/blocks/women_banner'}) }}
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 text-center" >
       <div >
@@ -39,7 +39,7 @@
       </div>
   </div>
   <div class="col-lg-5 col-md-5 col-sm-5">
-   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
+   
   </div>
 </div>
 <div class="row">
@@ -55,12 +55,7 @@
         'limit':4 } )) }}
     </div>
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-        {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-            'slug': app.request.locale|default('en') ~ '-new-in-women',
-            'cssClass': "text-center promo-nav",
-            'currentPageSlug':kitCmsPage.slug|default(''),
-            'startDepth':1 ,
-            'endDepth':1} )) }}
+        
     </div>
 </div>
 <div class="row" style="margin-top: 25px;">
@@ -70,12 +65,7 @@
 </div>
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-            'slug': app.request.locale|default('en') ~ '-new-in-men',
-            'cssClass': "text-center promo-nav",
-            'currentPageSlug':kitCmsPage.slug|default(''),
-            'startDepth':1 ,
-            'endDepth':1} )) }}
+         
     </div>
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
     {{ render(controller( 'AppSolrSearchBundle:SolrSearch:searchNewIn', {

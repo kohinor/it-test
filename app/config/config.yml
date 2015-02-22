@@ -2,9 +2,8 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: @SyliusCoreBundle/Resources/config/app/main.yml }
-    - { resource: kitpages.yml }
     - { resource: sylius.yml }
-
+    
 framework:
     translator:      { fallback: %sylius.locale% }
     secret:          %sylius.secret%
@@ -31,18 +30,22 @@ twig:
     
     form:
         resources:
-            - 'SyliusWebBundle::forms.html.twig'
+            - SyliusWebBundle:Common:forms.html.twig
             - SyliusResourceBundle::forms.html.twig
+            - CmfMediaBundle:Form:fields.html.twig
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    paths:
+        %kernel.root_dir%/../vendor/payum/payum/src/Payum/Core/Resources/views: PayumCore
+        %kernel.root_dir%/../vendor/payum/payum/src/Payum/Stripe/Resources/views: PayumStripe
 
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ['SyliusWebBundle', 'SyliusResourceBundle']
+    bundles:        ['SyliusWebBundle', 'CmfCreateBundle', 'SyliusResourceBundle']
     filters:
         cssrewrite: ~
-
+                
 doctrine:
     dbal:
         driver:   %sylius.database.driver%
@@ -66,30 +69,20 @@ doctrine:
                         prefix: Gedmo\Loggable\Entity
                         dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
                         is_bundle: false
-                    gedmo_translatable:
-                        type: annotation
-                        prefix: Gedmo\Translatable\Entity
-                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
-                        alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
-                        is_bundle: false
-                    gedmo_translator:
-                        type: annotation
-                        prefix: Gedmo\Translator\Entity
-                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
-                        alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
-                        is_bundle: false
                 filters:
                     softdeleteable:
                         class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                         enabled: true
-           
+                dql:
+                    string_functions:
+                        MATCH: Sylius\Bundle\SearchBundle\Extension\Doctrine\MatchAgainstFunction
+          
 doctrine_phpcr:
     session:
-        backend:
-            type: doctrinedbal
-        workspace: default
-        username: ''
-        password: ''
+        backend: %sylius.phpcr.backend%
+        workspace: %sylius.phpcr.workspace%
+        username: %sylius.phpcr.user%
+        password: %sylius.phpcr.pass%
     odm:
         auto_mapping: true
         auto_generate_proxy_classes: %kernel.debug%
@@ -97,16 +90,14 @@ doctrine_phpcr:
 swiftmailer:
     transport: %sylius.mailer.transport%
     host:      %sylius.mailer.host%
+    port:      %sylius.mailer.port%
     username:  %sylius.mailer.user%
     password:  %sylius.mailer.password%
     spool:     { type: memory }
 
 lexik_translation:
     fallback_locale:      en
-    managed_locales:      [en,fr]
-
-a2lix_translation_form:
-    locales: [en,fr]      
+    managed_locales:      [en,fr]   
             
 nelmio_solarium:
     endpoints:
@@ -156,6 +147,12 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [1536, 1842], mode: inset }
+        cmf_block:
+            data_loader: cmf_media_doctrine_phpcr
+            format: jpg
+            quality: 90
+            filters:
+                thumbnail: { size: [850, 300], mode: inset }
 
 doctrine_cache:
     providers:

@@ -24,7 +24,7 @@ class CartItemController extends Controller
         } catch (ItemResolvingException $exception) {
             // Write flash message
             $eventDispatcher->dispatch(SyliusCartEvents::ITEM_ADD_ERROR, new FlashEvent($exception->getMessage()));
-            
+
             if ($request->query->get('id')) {
                 
                 return $this->redirectToItem($request->query->get('id'));

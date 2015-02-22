@@ -1187,7 +1187,7 @@ if (0 !== strpos(rawurldecode($string), $prefix)) {
 return false;
 }
 $len = strlen($prefix);
-if (preg_match(sprintf('#^(%%[[:xdigit:]]{2}|.){%d}#', $len), $string, $match)) {
+if (preg_match("#^(%[[:xdigit:]]{2}|.){{$len}}#", $string, $match)) {
 return $match[0];
 }
 return false;
@@ -2224,12 +2224,12 @@ protected $booted;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.3.26-DEV';
-const VERSION_ID ='20326';
+const VERSION ='2.3.25';
+const VERSION_ID ='20325';
 const MAJOR_VERSION ='2';
 const MINOR_VERSION ='3';
-const RELEASE_VERSION ='26';
-const EXTRA_VERSION ='DEV';
+const RELEASE_VERSION ='25';
+const EXTRA_VERSION ='';
 public function __construct($environment, $debug)
 {
 $this->environment = $environment;

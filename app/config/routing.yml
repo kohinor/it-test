@@ -22,23 +22,6 @@ app_kit_site:
     prefix: /{_locale}/
     requirements:
         _locale: en|fr
-        
-kitpages_cms:
-    resource: "@KitpagesCmsBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/administration/cms
-    requirements:
-        _locale: en|fr
-        
-kitpages_file:
-    resource: "@KitpagesFileBundle/Resources/config/routing.yml"
-    prefix: "file"
-
-kitpages_cms_page_view_lang:
-    pattern:  /{_locale}/cms/{id}/{urlTitle}
-    defaults: { _controller: KitpagesCmsBundle:Page:view, _locale: en }
-    requirements:
-        id: \d+
-        _locale: en|fr
 
 sylius_web:
     resource: @SyliusWebBundle/Resources/config/routing/main.yml
@@ -57,9 +40,6 @@ fos_user_security:
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /{_locale}/account/profile
-    requirements:
-        _locale: en|fr
 
 fos_user_register:
     resource: "@AppUserBundle/Resources/config/routing/registration.xml"
@@ -84,4 +64,41 @@ lexik_translation_edition:
     prefix: /{_locale}/administration
     requirements:
         _locale: en|fr
-        
+   
+
+sylius_api:
+    resource: "@SyliusApiBundle/Resources/config/routing/main.yml"
+    prefix: /api
+
+create:
+    resource: "@CmfCreateBundle/Resources/config/routing/rest.xml"
+
+create_image:
+    resource: "@CmfCreateBundle/Resources/config/routing/image.xml"
+
+cmf_media_file:
+    resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
+
+cmf_media_image:
+    resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /connect
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix: /login
+
+amazon_login:
+    path: /login/check-amazon
+
+facebook_login:
+    path: /login/check-facebook
+
+google_login:
+    path: /login/check-google
+

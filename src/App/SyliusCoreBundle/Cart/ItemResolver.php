@@ -36,7 +36,7 @@ class ItemResolver extends Base
         if (!$product = $this->productRepository->find($id)) {
             throw new ItemResolvingException('Requested product was not found.');
         }
-        
+
         if ($this->restrictedZoneChecker->isRestricted($product)) {
             throw new ItemResolvingException('Selected item is not available in your country.');
         }
