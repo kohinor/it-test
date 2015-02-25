@@ -64,7 +64,7 @@ class FinalizeStep extends Base
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::FINALIZE_INITIALIZE, $order);
         $order->setUser($this->getUser());
         $this->completeOrder($order);
-                      
+
         return $this->complete();
     }
 

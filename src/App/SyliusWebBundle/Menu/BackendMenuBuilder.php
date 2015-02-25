@@ -44,10 +44,10 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-list-alt'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.attributes', $section)));
 
-        $child->addChild('prototypes', array(
-            'route' => 'sylius_backend_product_prototype_index',
+        $child->addChild('product_archetypes', array(
+            'route' => 'sylius_backend_product_archetype_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-compressed'),
-        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.prototypes', $section)));
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.archetypes', $section)));
         
         $child->addChild('product_groups', array(
             'route' => 'app_site_product_group_list',
@@ -100,6 +100,29 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             ->addChild('content', $childOptions)
             ->setLabel($this->translate(sprintf('sylius.backend.menu.%s.content', $section)))
         ;
+
+        /*$child->addChild('blocks', array(
+            'route' => 'sylius_backend_block_overview',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-large'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.blocks', $section)));
+        $child->addChild('Pages', array(
+            'route' => 'sylius_backend_static_content_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.pages', $section)));
+        $child->addChild('Menus', array(
+            'route' => 'sylius_backend_menu_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-list-alt'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.menus', $section)));
+        $child->addChild('Slideshow', array(
+            'route' => 'sylius_backend_slideshow_block_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-film'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.slideshow', $section)));
+        $child->addChild('Routes', array(
+            'route' => 'sylius_backend_route_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.routes', $section)));
+         * 
+         */
         
         $child->addChild('translations', array(
             'route' => 'lexik_translation_grid',

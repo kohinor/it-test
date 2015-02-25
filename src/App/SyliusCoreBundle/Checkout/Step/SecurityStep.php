@@ -59,18 +59,13 @@ class SecurityStep extends Base
         $order = $this->getCurrentCart();
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::SECURITY_INITIALIZE, $order);
 
-        $request = $this->getRequest();
+        $request          = $this->getRequest();
+        $registrationForm = $this->getRegistrationForm();
 
-        $user = $this->get('fos_user.user_manager')->createUser();
-        $user->setEnabled(true);
+        if ($registrationForm->handleRequest($request)->isValid()) {
+            $user = $registrationForm->getData();
 
-        $form = $this->getRegistrationForm();
-        $form->setData($user);
-
-        $this->dispatchEvent(FOSUserEvents::REGISTRATION_INITIALIZE, new UserEvent($user, $request));
-
-        if ($form->handleRequest($request)->isValid()) {
-            $this->dispatchEvent(FOSUserEvents::REGISTRATION_SUCCESS, new FormEvent($form, $request));
+            $this->dispatchEvent(FOSUserEvents::REGISTRATION_SUCCESS, new FormEvent($registrationForm, $request));
             $this->dispatchEvent(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, new Response()));
 
             $this->saveUser($user);
@@ -78,7 +73,7 @@ class SecurityStep extends Base
             return $this->complete();
         }
 
-        return $this->renderStep($context, $form);
+        return $this->renderStep($context, $registrationForm);
     }
 
     /**
@@ -104,7 +99,13 @@ class SecurityStep extends Base
      */
     protected function getRegistrationForm()
     {
-        return $this->get('fos_user.registration.form.factory')->createForm();
+        $user = $this->get('fos_user.user_manager')->createUser();
+        $user->setEnabled(true);
+
+        $form = $this->get('fos_user.registration.form.factory')->createForm();
+        $form->setData($user);
+
+        return $form;
     }
 
     /**

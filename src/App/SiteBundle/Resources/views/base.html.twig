@@ -90,8 +90,13 @@
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
-            <h1 class="text-uppercase text-danger" style="margin-bottom:0px;letter-spacing: 3px;"><a href="/{{ app.request.locale }}/" title="" rel="home">Italica</a></h1>
-            <p class="lead text-uppercase" style="letter-spacing: 1px;">{{ 'italica.online.outlet.shop'|trans({}, 'messages') }}</p>
+            <div class="row">
+              <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+              <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                <img src="/img/logo-t.png" class="img-responsive" /> 
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+            </div>
           </div>
           <div class="col-lg-4 col-sm-4 col-md-4">
             {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}   

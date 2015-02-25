@@ -42,7 +42,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql2);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lubin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
                                 'Gas', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
                                 'Nina Ricci', 'Prada', 'Roberto Cavalli', 'Royal Polo',
@@ -111,6 +111,9 @@ class UploadProductCommand extends ContainerAwareCommand
                     if ($translation->localecode == 'en_US') {
                        $productDropship->setSubCategory(ucfirst(strip_tags($translation->description))); 
                     }
+                    if ($translation->localecode == 'fr_FR'){
+                        $productDropship->setSubCategoryFr(ucfirst(strip_tags($translation->description)));  
+                     }
                 }
             }
             if ($tag->name == 'category') {
@@ -139,14 +142,77 @@ class UploadProductCommand extends ContainerAwareCommand
     protected function updateProducts($output)
     {
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
+        $productIds = array();
         foreach ($products as $product) {
+            $productIds[] = $product->getPartnerProductId();
             $this->updateProduct($product, $output);
             foreach ($product->getModels() as $model) {
                 $this->updateModel($model, $output);
             }
             $this->getEm()->flush();
             $this->getEM()->clear();
+            $output->writeln("<info>translate product</info>");
+            $this->translateProduct($product);
         }
+        $output->writeln("<info>translate categories</info>");
+        $this->translateCategories();
+        
+        $output->writeln("<info>delete old products</info>");
+        $this->deleteOldProducts($productIds);
+        
+    }
+    
+    protected function translateCategories()
+    {
+        $taxonRepository = $this->getContainer()->get('sylius.repository.taxon');
+        $taxons = $taxonRepository->findAll();
+        foreach ($taxons as $taxon) {
+            $product = $this->getContainer()->get('sylius.repository.product_dropship')->findOneBy(array('subCategory' => $taxon->getName()));
+            if ($product) {
+                if (!$taxon->getTranslations()->get('fr')) {
+                    $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation();
+                    $translation->setLocale('fr');
+                    $taxon->addTranslation($translation);
+                }
+                $taxon->setCurrentLocale('fr')->setName($product->getSubCategoryFr());
+            }
+        }
+        $this->getEm()->flush();
+        $this->getEM()->clear();
+    }
+    
+    protected function translateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship)
+    {
+        $repository = $this->getContainer()->get('sylius.repository.product');       
+        $product = $repository->findOneBy(array('partnerId' => $productDropship->getPartnerProductId()));
+        $slug = $product->getSlug();
+        if (!$product) {
+            return null;
+        }
+        if (!$product->getTranslations()->get('fr')) {
+            $translation = new \Sylius\Component\Core\Model\ProductTranslation();
+            $translation->setLocale('fr');
+            $product->addTranslation($translation);
+        }
+        
+        $product->setCurrentLocale('fr');
+        $product->setName($productDropship->getName())
+                ->setDescription($productDropship->getDescriptionFr())
+                ->setSlug($slug);
+        $this->getEm()->persist($product);
+        $this->getEm()->flush();
+        $this->getEM()->clear();
+    }
+    protected function deleteOldProducts($productIds)
+    {
+        $italicaProducts = $this->getContainer()->get('sylius.repository.product')->findActiveProducts();
+        foreach ($italicaProducts as $italicaProduct) {
+            if (!in_array($italicaProduct->getPartnerId(), $productIds)) {
+                $italicaProduct->setDeletedAt(new \DateTime());
+            }
+        }
+        $this->getEm()->flush();
+        $this->getEM()->clear();
     }
     
     protected function updateModel(\App\SyliusProductBundle\Entity\ProductModelDropship $model, $output)
@@ -169,7 +235,7 @@ class UploadProductCommand extends ContainerAwareCommand
             $option = $optionRepository->findOneBy(array('name' => $productDropship->getCategory().':'.$productDropship->getSubCategory()));
             $optionValue = null;
             if (!$option) {
-                $option = new \Sylius\Component\Product\Model\Option();
+                $option = $optionRepository->createNew();
                 $option->setName($productDropship->getCategory().':'.$productDropship->getSubCategory());
                 $option->setPresentation('Size');
                 $this->getEM()->persist($option);
@@ -179,7 +245,7 @@ class UploadProductCommand extends ContainerAwareCommand
 
             $product->addOption($option);
         
-            $variant = new \App\SyliusProductBundle\Entity\ProductVariant();
+            $variant = $variantRepository->createNew();
             $variant->setProduct($product);
             $product->addVariant($variant);
             $variant->setAvailableOnDemand(false);
@@ -197,7 +263,7 @@ class UploadProductCommand extends ContainerAwareCommand
         }
         
         $variant->setOnHand($model->getQuantity());
-        $variant->setPrice($product->getMasterVariant()->getPrice());
+        $variant->setPrice((int)$product->getMasterVariant()->getPrice());
         $variant->setRrp($product->getMasterVariant()->getRrp());
             
         $variantManager = $this->getContainer()->get('sylius.manager.product_variant');
@@ -215,10 +281,21 @@ class UploadProductCommand extends ContainerAwareCommand
         $product = $repository->findOneBy(array('partnerId' => $productDropship->getPartnerProductId()));
         if (!$product) {
             $product = $repository->createNew();
+            if (!$product->getTranslations()->get('en')) {
+                $translation = new \Sylius\Component\Core\Model\ProductTranslation();
+                $translation->setLocale('en');
+                $product->addTranslation($translation);
+            }
+            if (!$product->getTranslations()->get('fr')) {
+                $translation = new \Sylius\Component\Core\Model\ProductTranslation();
+                $translation->setLocale('fr');
+                $product->addTranslation($translation);
+            }
+            $product->setCurrentLocale('en');
             $product->setPartnerId($productDropship->getPartnerProductId());
             $product->setSlug($productDropship->getCode());
             $product->setVariantSelectionMethod(ProductInterface::VARIANT_SELECTION_MATCH);
-        
+            
             $output->writeln('Product Taxons');
             $taxons = new \Doctrine\Common\Collections\ArrayCollection();
             if ($productDropship->getBrand()) {
@@ -242,11 +319,16 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->addMasterVariant($product, $productDropship);
             $product->setName($productDropship->getName());
             $product->setDescription($productDropship->getDescriptionEn());
+            
+            $product->setCurrentLocale('fr');
+            $product->setName($productDropship->getName());
+            $product->setDescription($productDropship->getDescriptionFr());
+            $product->setSlug($productDropship->getCode());
             $this->getEm()->persist($product);
             $this->getEm()->flush();
         } else {            
             $variant = $product->getMasterVariant();
-            $variant->setPrice($this->getPrice($productDropship->getRrp()));
+            $variant->setPrice((int)$this->getPrice($productDropship->getRrp()));
             $variant->setOnHand($productDropship->getQuantity());
             $variant->setRrp($productDropship->getRrp());
             $this->getEm()->persist($product);
@@ -270,10 +352,24 @@ class UploadProductCommand extends ContainerAwareCommand
         
         if (!$taxon) {
             $taxon = $taxonRepository->createNew();
+            if (!$taxon->getTranslations()->get('en')) {
+                $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation;
+                $translation->setLocale('en');
+                $taxon->addTranslation($translation);
+            }
+            if (!$taxon->getTranslations()->get('fr')) {
+                $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation;
+                $translation->setLocale('fr');
+                $taxon->addTranslation($translation);
+            }
+            $taxon->setCurrentLocale('en');
             $taxon->setName($child);
             $taxon->setParent($taxonParent);
             $taxon->setDescription($childKey);
             $taxon->setTaxonomy($taxonParent->getTaxonomy());
+            $taxon->setCurrentLocale('fr');
+            $taxon->setName($child);
+            $taxon->setDescription($childKey);
             $manager = $this->getContainer()->get('sylius.manager.taxon');
 
             $manager->persist($taxon);
@@ -326,7 +422,7 @@ class UploadProductCommand extends ContainerAwareCommand
     {
         $variant = $product->getMasterVariant();
         $variant->setProduct($product);
-        $variant->setPrice($this->getPrice($productDropship->getRrp()));
+        $variant->setPrice((int)$this->getPrice($productDropship->getRrp()));
         $variant->setSku($productDropship->getCode());
         $variant->setAvailableOn(new \DateTime());
         $variant->setOnHand($productDropship->getQuantity());

@@ -25,9 +25,8 @@ sylius_product:
     classes:
         product:
             model: App\SyliusProductBundle\Entity\Product
-            form: App\SyliusProductBundle\Form\Type\ProductType
             repository: App\SyliusProductBundle\Entity\ProductRepository
-            
+
 sylius_variation:
     classes:
         product:
@@ -99,3 +98,10 @@ payum:
                 actions:
                     - sylius.payum.postpay.action.capture_payment
                     - sylius.payum.postpay.action.payment_status
+ 
+services:
+    sylius.listener.order_confirmation_email:
+        class: %sylius.listener.order_confirmation_email.class%
+        arguments: [@sylius.mailer.order_confirmation]
+        tags:
+            - { name: kernel.event_listener, event: sylius.checkout.purchase.complete, method: processOrderConfirmation }

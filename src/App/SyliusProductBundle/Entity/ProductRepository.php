@@ -32,4 +32,26 @@ class ProductRepository extends BaseProductRepository
 
         return $result;
     }
+    
+    public function findActiveProducts()
+    {
+        $queryBuilder = parent::getCollectionQueryBuilder() 
+            ->andWhere('product.deletedAt is null');
+        $result = $queryBuilder
+            ->getQuery()
+            ->getResult();
+
+        return $result;
+    }
+    
+    public function findDeletedProducts()
+    {
+        $queryBuilder = parent::getCollectionQueryBuilder() 
+            ->andWhere('product.deletedAt is not null');
+        $result = $queryBuilder
+            ->getQuery()
+            ->getResult();
+
+        return $result;
+    }
 }

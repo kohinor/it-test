@@ -89,6 +89,11 @@ class ProductDropship
      */
     protected $subCategory;
     
+    /**
+     * @ORM\Column(name="sub_category_fr", type="string", length=255, nullable=true)
+     */
+    protected $subCategoryFr;
+    
     
     /**
      * @ORM\Column(name="gender", type="string", length=255, nullable=true)
@@ -421,6 +426,29 @@ class ProductDropship
     public function getSubCategory()
     {
         return $this->subCategory;
+    }
+    
+    /**
+     * Set subCategoryFr
+     *
+     * @param string $subCategoryFr
+     * @return ProductDropship
+     */
+    public function setSubCategoryFr($subCategoryFr)
+    {
+        $this->subCategoryFr = $subCategoryFr;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategoryFr
+     *
+     * @return string 
+     */
+    public function getSubCategoryFr()
+    {
+        return $this->subCategoryFr;
     }
 
     /**

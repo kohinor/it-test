@@ -41,7 +41,6 @@ class Product extends SyliusCoreProduct
     {
         parent::__construct();
 
-        $this->setMasterVariant(new ProductVariant());
         $this->variantSelectionMethod = self::VARIANT_SELECTION_MATCH;
     }
     

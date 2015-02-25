@@ -17,5 +17,3 @@
         $('.datepicker').datepicker({});
     });
 })( jQuery );
-            
-  
