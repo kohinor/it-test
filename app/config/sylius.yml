@@ -6,7 +6,6 @@ parameters:
   sylius.checkout_step.addressing.class: App\SyliusCoreBundle\Checkout\Step\AddressingStep
   sylius.checkout_step.purchase.class: App\SyliusCoreBundle\Checkout\Step\PurchaseStep
   sylius.checkout_step.finalize.class: App\SyliusCoreBundle\Checkout\Step\FinalizeStep
-  sylius.cart_item_resolver.default.class: App\SyliusCoreBundle\Cart\ItemResolver
         
   
 sylius_core:
@@ -38,10 +37,6 @@ sylius_cart:
     classes:
         item:
             controller: App\CartBundle\Controller\CartItemController
-
-sylius_inventory:
-    backorders: false
-    track_inventory: true
     
 sylius_payment:
     classes:
