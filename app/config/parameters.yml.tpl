@@ -8,6 +8,7 @@ parameters:
     sylius.database.password: %(DatabasePass)s
     sylius.mailer.transport: smtp
     sylius.mailer.host: 127.0.0.1
+    sylius.mailer.port: null
     sylius.mailer.user: null
     sylius.mailer.password: null
     sylius.locale: en
@@ -36,15 +37,15 @@ parameters:
     sylius.inventory.holding.duration: '15 minutes'
     sylius.promotion.item_based: false
     sylius.order.pending.duration: '3 hours'
-    phpcr_backend:
+    sylius.phpcr.backend:
         type: doctrinedbal
         connection: default
         caches:
             meta: doctrine_cache.providers.phpcr_meta
             nodes: doctrine_cache.providers.phpcr_nodes
-    phpcr_workspace: default
-    phpcr_user: admin
-    phpcr_pass: admin
+    sylius.phpcr.workspace: default
+    sylius.phpcr.user: admin
+    sylius.phpcr.pass: admin
     base_url: '%(BaseUrl)s'
     google_analytics_ua: ''
     google_api_key: ''
