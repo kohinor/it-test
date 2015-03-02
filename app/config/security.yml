@@ -103,6 +103,7 @@ security:
 
         - { path: ^/en/account.*, role: ROLE_USER, requires_channel: https }
         - { path: ^/en/cart.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/en/product.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/en/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: ^/fr/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
@@ -114,6 +115,7 @@ security:
 
         - { path: ^/fr/account.*, role: ROLE_USER, requires_channel: https }
         - { path: ^/fr/cart.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/fr/product.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/fr/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         - { path: "/_partial.*", ip: 127.0.0.1 }
