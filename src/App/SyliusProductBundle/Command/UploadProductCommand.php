@@ -121,10 +121,10 @@ class UploadProductCommand extends ContainerAwareCommand
                     if ($translation->localecode == 'en_US') {
                         if ($translation->description == 'Men') {
                             $productDropship->setGender('Men');
-                            $productDropship->setCategory("Mens Clothing"); 
+                            $productDropship->setCategory("Men's Clothing"); 
                         } elseif($translation->description == 'Women') {
                             $productDropship->setGender('Women');
-                            $productDropship->setCategory("Womens Clothing"); 
+                            $productDropship->setCategory("Women's Clothing"); 
                         } elseif ($translation->description == 'Kids') {
                             $productDropship->setCategory("Kids Clothing");
                             $productDropship->setGender('Kids');
