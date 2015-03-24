@@ -23,7 +23,7 @@ class UploadProductCommand extends ContainerAwareCommand
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("<info>starting updating</info>");
         
@@ -42,9 +42,9 @@ class UploadProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql2);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Ana Lubin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
-                                'Gas', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
+                                'Gas', 'Geographical Norway', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
                                 'Nina Ricci', 'Prada', 'Roberto Cavalli', 'Royal Polo',
                                 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
                                 'V 1969', 'Versace', 'Versace Jeans');
@@ -144,6 +144,9 @@ class UploadProductCommand extends ContainerAwareCommand
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
         $productIds = array();
         foreach ($products as $product) {
+            if ($product->getRrp() < 7900) {
+                continue;
+            }
             $productIds[] = $product->getPartnerProductId();
             $this->updateProduct($product, $output);
             foreach ($product->getModels() as $model) {
@@ -197,7 +200,7 @@ class UploadProductCommand extends ContainerAwareCommand
         
         $product->setCurrentLocale('fr');
         $product->setName($productDropship->getName())
-                ->setDescription($productDropship->getDescriptionFr())
+                ->setDescription($productDropship->getDescriptionFr()?$productDropship->getDescriptionFr():' ')
                 ->setSlug($slug);
         $this->getEm()->persist($product);
         $this->getEm()->flush();
@@ -318,11 +321,11 @@ class UploadProductCommand extends ContainerAwareCommand
             $output->writeln('Adding Master product ');
             $this->addMasterVariant($product, $productDropship);
             $product->setName($productDropship->getName());
-            $product->setDescription($productDropship->getDescriptionEn());
+            $product->setDescription($productDropship->getDescriptionEn()?$productDropship->getDescriptionEn():' ');
             
             $product->setCurrentLocale('fr');
             $product->setName($productDropship->getName());
-            $product->setDescription($productDropship->getDescriptionFr());
+            $product->setDescription($productDropship->getDescriptionFr()?$productDropship->getDescriptionFr():' ');
             $product->setSlug($productDropship->getCode());
             $this->getEm()->persist($product);
             $this->getEm()->flush();
@@ -414,7 +417,7 @@ class UploadProductCommand extends ContainerAwareCommand
     private function getShippingCategory()
     {
         $repository = $this->getContainer()->get('sylius.repository.shipping_category');
-        return $repository->findOneByName('First 1-3 days');
+        return $repository->findOneByName('Regular 3-6 days');
         
     }
 

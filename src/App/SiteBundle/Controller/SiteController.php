@@ -11,7 +11,7 @@ class SiteController extends Controller
     public function brandListAction()
     {
         $repository = $this->container->get('sylius.repository.taxonomy');
-        $taxonomy = $repository->find(2);
+        $taxonomy = $repository->findOneBy(array('name' => 'Brand'));
        
         $taxonRepository = $this->container->get('sylius.repository.taxon');
         return $this->render('AppSiteBundle:Site:brands.html.twig', array('brands' =>  $taxonRepository->getTaxonsAsList($taxonomy)));
