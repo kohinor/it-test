@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SolrSearchController extends Controller
 {   
-    const CACHE_TIME = 86400;
+    const CACHE_TIME = 21600;
     
     public function getSolrNewInResults($facets, $limit)
     {

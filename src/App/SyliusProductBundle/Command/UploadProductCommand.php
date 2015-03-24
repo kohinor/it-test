@@ -45,7 +45,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
                                 'Gas', 'Geographical Norway', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
-                                'Nina Ricci', 'Prada', 'Roberto Cavalli', 'Royal Polo',
+                                'Nina Ricci', 'Prada', 'Roberto Cavalli', 'ROCHAS', 'Royal Polo',
                                 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
                                 'V 1969', 'Versace', 'Versace Jeans');
         foreach($allowedBrands as $brand) {
