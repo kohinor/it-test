@@ -367,7 +367,7 @@ class UploadProductCommand extends ContainerAwareCommand
     private function getShippingCategory()
     {
         $repository = $this->getContainer()->get('sylius.repository.shipping_category');
-        return $repository->findOneByName('Regular 3-6 days');
+        return $repository->findOneByName('Standard');
         
     }
 
