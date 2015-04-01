@@ -15,6 +15,11 @@
     <meta name="keywords" content="{{ settings.meta_keywords|default(kitCmsPageData.root.metaKeywords|default("")) }}{% block keywords %}{% endblock %}">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="{{ kitCmsPageData.root.metaTitle|default(settings.title|default('sylius.meta.frontend_title'|trans)) }}"/>
+    <meta property="og:image" content="http://shopitalica.ch/en/img/logo-t.png"/>
+    <meta property="og:site_name" content="Shop Italica"/>
+    <meta property="og:description" content="{{ settings.meta_description|default(kitCmsPageData.root.metaDescription|default(kitMeta.description|default(""))) }}"/>
+	
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">     
     <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="/css/bootstrap.css" type="text/css" />
@@ -231,9 +236,6 @@
         </div>
    </div>     
 </div>
-  <script type="text/javascript">var switchTo5x=true;</script>
-  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-  <script type="text/javascript">stLight.options({publisher: "f95283f4-a8a1-48ac-85ff-d2fc2e213be5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
   <script  type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script  type="text/javascript" src="/js/ion.rangeSlider.min.js"></script>
   <script src="/js/zoomsl-3.0.min.js"></script>

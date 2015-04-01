@@ -136,8 +136,7 @@
   <div class="tab-content panel-body">
        {% if product.shippingCategory %}
            <div role="tabpanel" class="tab-pane fade in active" id="profile">
-               <p>{{ 'italica.delivery'|trans({}, 'messages') }}: {{ product.shippingCategory.name|trans({}, 'messages') }}</p>
-                <p>{{ product.shippingCategory.description|trans({}, 'messages') }}</p>
+               <p>{{ product.shippingCategory.description|trans({}, 'messages')|raw }}</p>
            </div>
   {% endif %}
   <div role="tabpanel" class="tab-pane fade" id="messages">
@@ -151,11 +150,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                 <span class="text-uppercase"><strong>{{ 'italica.share'|trans({}, 'messages') }}: </strong></span>
-                <span class='st_facebook'></span>
-                <span class='st_twitter'></span>
-                <span class='st_pinterest' ></span>
-                <span class='st_googleplus'></span>
-                <span class='st_email'></span>
+                <div class="fb-share-button" data-href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" data-layout="button_count"></div>
                 </div>
             </div>
                

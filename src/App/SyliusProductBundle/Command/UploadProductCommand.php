@@ -23,7 +23,7 @@ class UploadProductCommand extends ContainerAwareCommand
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      */
-        protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("<info>starting updating</info>");
         
@@ -45,7 +45,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
                                 'Gas', 'Geographical Norway', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
-                                'Nina Ricci', 'Prada', 'Roberto Cavalli', 'ROCHAS', 'Royal Polo',
+                                'Nina Ricci', 'Prada', 'Roberto Cavalli', 'Rochas', 'Royal Polo',
                                 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
                                 'V 1969', 'Versace', 'Versace Jeans');
         foreach($allowedBrands as $brand) {
@@ -63,9 +63,20 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->getEM()->flush();
             $this->getEM()->clear();        
         }
+        $this->deleteProducts();
     }
     
-    protected function createProductDropship($item)
+    protected function deleteProducts()
+    {
+        $sql4 = "UPDATE sylius_product set deleted_at = null;";
+        $this->getEM()->getConnection()->exec($sql4);
+        $sql5 = "UPDATE sylius_product set deleted_at = NOW() where partner_id not in (SELECT partner_product_id from sylius_product_dropship);";
+        $this->getEM()->getConnection()->exec($sql5);
+        $sql6 = "UPDATE sylius_product set deleted_at = NOW() where id in (select product_id from sylius_product_variant where rrp < 9500 group by product_id);";
+        $this->getEM()->getConnection()->exec($sql6);
+    }
+
+        protected function createProductDropship($item)
     {
         $productDropship = new \App\SyliusProductBundle\Entity\ProductDropship();
         $productDropship->setQuantity($item->availability);
@@ -144,7 +155,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
         $productIds = array();
         foreach ($products as $product) {
-            if ($product->getRrp() < 7900) {
+            if ($product->getRrp() < 9500) {
                 continue;
             }
             $productIds[] = $product->getPartnerProductId();
@@ -154,68 +165,7 @@ class UploadProductCommand extends ContainerAwareCommand
             }
             $this->getEm()->flush();
             $this->getEM()->clear();
-            $output->writeln("<info>translate product</info>");
-            $this->translateProduct($product);
-        }
-        $output->writeln("<info>translate categories</info>");
-        $this->translateCategories();
-        
-        $output->writeln("<info>delete old products</info>");
-        $this->deleteOldProducts($productIds);
-        
-    }
-    
-    protected function translateCategories()
-    {
-        $taxonRepository = $this->getContainer()->get('sylius.repository.taxon');
-        $taxons = $taxonRepository->findAll();
-        foreach ($taxons as $taxon) {
-            $product = $this->getContainer()->get('sylius.repository.product_dropship')->findOneBy(array('subCategory' => $taxon->getName()));
-            if ($product) {
-                if (!$taxon->getTranslations()->get('fr')) {
-                    $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation();
-                    $translation->setLocale('fr');
-                    $taxon->addTranslation($translation);
-                }
-                $taxon->setCurrentLocale('fr')->setName($product->getSubCategoryFr());
-            }
-        }
-        $this->getEm()->flush();
-        $this->getEM()->clear();
-    }
-    
-    protected function translateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship)
-    {
-        $repository = $this->getContainer()->get('sylius.repository.product');       
-        $product = $repository->findOneBy(array('partnerId' => $productDropship->getPartnerProductId()));
-        $slug = $product->getSlug();
-        if (!$product) {
-            return null;
-        }
-        if (!$product->getTranslations()->get('fr')) {
-            $translation = new \Sylius\Component\Core\Model\ProductTranslation();
-            $translation->setLocale('fr');
-            $product->addTranslation($translation);
-        }
-        
-        $product->setCurrentLocale('fr');
-        $product->setName($productDropship->getName())
-                ->setDescription($productDropship->getDescriptionFr()?$productDropship->getDescriptionFr():' ')
-                ->setSlug($slug);
-        $this->getEm()->persist($product);
-        $this->getEm()->flush();
-        $this->getEM()->clear();
-    }
-    protected function deleteOldProducts($productIds)
-    {
-        $italicaProducts = $this->getContainer()->get('sylius.repository.product')->findActiveProducts();
-        foreach ($italicaProducts as $italicaProduct) {
-            if (!in_array($italicaProduct->getPartnerId(), $productIds)) {
-                $italicaProduct->setDeletedAt(new \DateTime());
-            }
-        }
-        $this->getEm()->flush();
-        $this->getEM()->clear();
+        }        
     }
     
     protected function updateModel(\App\SyliusProductBundle\Entity\ProductModelDropship $model, $output)
@@ -273,7 +223,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $variantManager->persist($variant);
         $manager = $this->getContainer()->get('sylius.manager.product');
         $manager->persist($product);
-        //$manager->flush();   
+        $manager->flush();   
     }
     
     protected function updateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship, $output)
