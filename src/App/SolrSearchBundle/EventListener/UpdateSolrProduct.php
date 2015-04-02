@@ -31,6 +31,8 @@ class UpdateSolrProduct
         $entity = $args->getEntity();
         if ($entity instanceof \Sylius\Component\Core\Model\Product)
             $this->solrService->updateSolrProduct($entity);
+        if ($entity instanceof \Sylius\Component\Core\Model\ProductVariant)
+            $this->solrService->updateSolrProduct($entity->getProduct());
     }
 
     /**
@@ -41,5 +43,7 @@ class UpdateSolrProduct
         $entity = $args->getEntity();
         if ($entity instanceof \Sylius\Component\Core\Model\Product)
             $this->solrService->updateSolrProduct($entity);
+        if ($entity instanceof \Sylius\Component\Core\Model\ProductVariant)
+            $this->solrService->updateSolrProduct($entity->getProduct());
     }
 }
