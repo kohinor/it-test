@@ -10,3 +10,9 @@ services:
         class: App\SiteBundle\Extension\TwigExtension
         tags:
             -  { name: twig.extension }
+            
+    app.locale_listener:
+        class: App\SiteBundle\EventListener\LocaleListener
+        arguments: ["@sylius.context.locale"]
+        tags:
+            - { name: kernel.event_subscriber }

@@ -100,8 +100,8 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             ->addChild('content', $childOptions)
             ->setLabel($this->translate(sprintf('sylius.backend.menu.%s.content', $section)))
         ;
-
-        /*$child->addChild('blocks', array(
+        
+        $child->addChild('blocks', array(
             'route' => 'sylius_backend_block_overview',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-large'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.blocks', $section)));
@@ -109,6 +109,7 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             'route' => 'sylius_backend_static_content_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.pages', $section)));
+        
         $child->addChild('Menus', array(
             'route' => 'sylius_backend_menu_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-list-alt'),
@@ -121,14 +122,12 @@ class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilde
             'route' => 'sylius_backend_route_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.routes', $section)));
-         * 
-         */
         
         $child->addChild('translations', array(
             'route' => 'lexik_translation_grid',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-large'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.translations', $section)));
-        $child->addChild('Pages', array(
+        $child->addChild('Pages Kitpages', array(
             'route' => 'kitpages_cms_nav_tree',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th-list'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.pages', $section)));

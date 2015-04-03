@@ -56,15 +56,8 @@
             </form>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3">
-            <ul class="nav nav-pills">
-              {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
-                <li><a href="/en">{{ 'English'|trans }}</a></li>
-                <li><a href="/fr">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% else %}
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% endif %}
-            </ul>
+            {{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+            
           </div>        
         </div>
       </div>
