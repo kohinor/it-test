@@ -247,7 +247,6 @@ class UploadProductCommand extends ContainerAwareCommand
             $product->setCurrentLocale('en');
             $product->setPartnerId($productDropship->getPartnerProductId());
             $product->setSlug($productDropship->getCode());
-            $product->setVariantSelectionMethod(ProductInterface::VARIANT_SELECTION_MATCH);
             
             $output->writeln('Product Taxons');
             $taxons = new \Doctrine\Common\Collections\ArrayCollection();

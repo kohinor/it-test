@@ -90,6 +90,7 @@ security:
             security: false
 
     access_control:
+        - { path: ^/en/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/en/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/security.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -106,6 +107,7 @@ security:
         - { path: ^/en/product.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/en/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
+        - { path: ^/fr/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/fr/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/fr/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/fr/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

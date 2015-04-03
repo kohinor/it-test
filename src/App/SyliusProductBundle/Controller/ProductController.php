@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProductController extends Controller
 {
@@ -77,7 +78,7 @@ class ProductController extends Controller
         $repository = $this->container->get('sylius.repository.product');
         $product = $repository->findOneBy(array('slug' => $slug)); 
         if (!$product) {
-            return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 404), 404);
+            return JsonResponse::create(array('code' => 404), 404);
         }
         $availableOnDemand = false;
         foreach ($product->getVariants() as $variant) {
@@ -88,10 +89,10 @@ class ProductController extends Controller
                         $html = $variant->getOnHand().' '.$this->get('translator')->trans('items in stock');
                     } else if($variant->getOnHand() == 1) {
                         $html = $this->get('translator')->trans('Only one item left');
-                    }
+                }
                     $html = '<span class="text-success">'.$html.'</span>';
                     if ($variant->getOnHand() > 0) {
-                        return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 200, 'html' => $html), 200);
+                        return JsonResponse::create(array('code' => 200, 'html' => $html), 200);
                     }
                 }
             }
@@ -100,6 +101,13 @@ class ProductController extends Controller
         if ($availableOnDemand) {
             $html .= '<br /><br />'. $this->get('translator')->trans('You still can pre-order this item');
         }
-        return \Symfony\Component\HttpFoundation\JsonResponse::create(array('code' => 200, 'html' => $html), 200);
+        return JsonResponse::create(array('code' => 200, 'html' => $html), 200);
+    }
+    
+    public function getVariantStockAction($id)
+    {
+        $repository = $this->container->get('sylius.repository.product_variant');
+        $variant = $repository->find($id);
+        return JsonResponse::create(array('code' => 200, 'html' => $variant->getOnHand()), 200);
     }
 }

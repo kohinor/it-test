@@ -1,57 +1,76 @@
 {% if product.hasVariants %}
-    {% if product.isVariantSelectionMethodChoice %}
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for variant in product.variants if variant.available %}
-                <tr>
-                    <td>
-                        {% if variant.presentation is empty %}
-                        <ul class="unstyled">
-                            {% for option in variant.options %}
-                            <li><strong>{{ option.presentation|trans({}, 'messages') }}</strong>: {{ option.value|trans({}, 'messages') }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                            {{ variant.presentation|trans({}, 'messages') }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        <span class="label label-success">{{ sylius_calculate_price(variant)|sylius_price }}</span>
-                    </td>
-                    <td>
-                    {% if sylius_inventory_is_available(variant) %}
-                        {{ form_widget(form.variant[loop.index0]) }}
-                    {% else %}
-                        <span class="label label-warning">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
-                    {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-            {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
-            {{ form_widget(form._token) }}
-        {% else %}
+    {% set hasStock = false %}
+    {% for variant in product.variants if variant.available %} 
+      {% if sylius_inventory_is_available(variant) %}{% set hasStock = true %}{% endif %}
+    {% endfor %}
+    {% if not hasStock %}
+        <span class="label label-warning pull-right">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
+    {% elseif product.isVariantSelectionMethodChoice %}
         <div class="row">
           <div class="col-lg-12">
+            <div class="form-group">
+            <div class="col-lg-9">
+              <strong><span id="product-stock" class="text-success">{{ product.variants.first.onHand }} </span> <span class="text-success">item(s) in stock</strong></span>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class=" control-label col-sm-3 required">{{ 'Size'|trans({}, 'messages') }} </label>
+              <div class="col-sm-9">
+                <div data-toggle="buttons" id="variant-size">
+                  {% for variant in product.variants if variant.available %}    
+                    {% if sylius_inventory_is_available(variant) %}
+                          <label class="btn btn-sm btn-default {% if not loop.index0 %} active {% endif %}" style="margin-top:3px;">
+                            {% if not loop.index0 %} 
+                                {{ form_widget(form.variant[loop.index0], {'attr':{'checked':'checked' }}) }}
+                            {% else %}
+                                {{ form_widget(form.variant[loop.index0]) }}
+                            {% endif %}
+                            
+                            {% for option in variant.options %}
+                                {{ option.value|trans({}, 'messages') }}
+                            {% endfor %}
+                          </label>
+                    {% endif %}    
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row" >
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class=" control-label col-sm-4 required">{{ 'Quantity'|trans({}, 'messages') }} </label>
+              <div class="col-sm-8">
+                {{ form_widget(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+            {{ form_widget(form._token) }}
+        {% else %}
+            <div class="row">
+              <div class="col-lg-12">
                 {% if gender and brand %}
                     <a href="javascript:void(0);" class="modal-show btn btn-default btn-xs pull-right"  data-toggle="modal" data-target="#myModal">Size Guide</a>
                  {% endif %}
             </div>
-        <div class="col-lg-12">
-            <div id="product-stock" ></div><div><p></p></div>
-                {{ form_widget(form.variant) }}                
-                {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
-                {{ form_widget(form._token) }}
-               
-        </div>
+            <div class="col-lg-12">
+                <div id="product-stock" ></div><div><p></p></div>
+                    {{ form_widget(form.variant) }}                
+                    {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
+                    {{ form_widget(form._token) }}
+
+            </div>
+            </div>
+        {% endif %}
+        <div class="row">
         <div class="col-lg-12">
             {% if not product.hasVariants and not sylius_inventory_is_available(product.masterVariant) %}
                 <span class="label label-warning pull-right">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
@@ -64,7 +83,7 @@
             {% endif %}   
         </div>
         </div>
-        {% endif %}
+        
 {% endif %}
 
 {% if not product.hasVariants and sylius_inventory_is_available(product.masterVariant) %}

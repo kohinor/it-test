@@ -7138,3 +7138,6 @@ ul.checkout-bar a {
 .panel-default-bold > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: rgb(68, 68, 68);
 }
+#variant-size .active {
+    border:  2px solid #aa0100 !important;
+}
