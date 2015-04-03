@@ -10,7 +10,7 @@
           <div class="col-lg-12">
             <div class="form-group">
             <div class="col-lg-9">
-              <strong><span id="product-stock" class="text-success">{{ product.variants.first.onHand }} </span> <span class="text-success">item(s) in stock</strong></span>
+              <strong><span id="product-stock" class="text-success">{{ product.variants.first.onHand }} </span> <span class="text-success">{{ 'items.in.stock'|trans({}, 'messages') }}</strong></span>
             </div>
             </div>
           </div>
