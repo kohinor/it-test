@@ -16,3 +16,9 @@ services:
         arguments: ["@sylius.context.locale"]
         tags:
             - { name: kernel.event_subscriber }
+            
+    app.currency_listener:
+        class: App\SiteBundle\EventListener\CurrencyListener
+        arguments: ["@sylius.context.currency"]
+        tags:
+            - { name: kernel.event_subscriber }

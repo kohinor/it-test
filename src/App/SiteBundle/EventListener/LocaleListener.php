@@ -38,7 +38,7 @@ class LocaleListener implements EventSubscriberInterface
         if (!$request->hasPreviousSession()) {
            if (strstr($request->getHost(), '.it')) {
                 $default = 'it';
-            } elseif (strstr($request->getHost(), '.local')){
+            } elseif (strstr($request->getHost(), '.fr')){
                 $default = 'fr';
             }
             elseif (strstr( $request->getHost(), '.de')){
