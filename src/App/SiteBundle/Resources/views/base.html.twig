@@ -16,7 +16,7 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content="{% block og_title %}{{ kitCmsPageData.root.metaTitle|default(settings.title|default('sylius.meta.frontend_title'|trans)) }}{% endblock %}"/>
-    <meta property="og:image" content="{% block og_image %}{{ app.request.host }}/img/logo-t.png{% endblock %}"/>
+    <meta property="og:image" content="{% block og_image %}https://{{ app.request.host }}/img/logo-t.png{% endblock %}"/>
     <meta property="og:site_name" content="Shop Italica"/>
     <meta property="og:description" content="{% block og_description %}{{ settings.meta_description|default(kitCmsPageData.root.metaDescription|default(kitMeta.description|default(""))) }}{% endblock %}"/>
 	
@@ -91,14 +91,14 @@
             <h5 class="text-center  text-uppercase" >{{ 'welcome.message'|trans }}</h5>
             </div>
             <div class="row text-center">
-            <div class="fb-share-button" data-href="{{ app.request.host }}" data-layout="button_count"></div>
+            <div class="fb-share-button" data-href="https://{{ app.request.host }}" data-layout="button_count"></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-center" style='margin-bottom:0px;'>
             <div class="row">
               <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
               <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                <a href="{{ app.request.host }}" alt="shopitalica"><img src="/img/logo-t.png" class="img-responsive" /> </a>
+                <a href="https://{{ app.request.host }}" alt="shopitalica"><img src="/img/logo-t.png" class="img-responsive" /> </a>
               </div>
               <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
             </div>
