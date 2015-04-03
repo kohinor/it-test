@@ -22,13 +22,12 @@ class SolrProductUpdateCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $client = $this->getContainer()->get('solarium.client');
+        
         $update = $client->createUpdate();
-        $deletedProducts = $this->getContainer()->get('sylius.repository.product')->findDeletedProducts();
-        foreach ($deletedProducts as $product) {
-            $update->addDeleteById($product->getId());
-        }
-        $result = $client->update($update);
+        $update->addDeleteQuery('*:*');
+        $client->update($update);
 
+        
         $buffer = $client->getPlugin('bufferedadd');
         $buffer->setBufferSize(100);
 
