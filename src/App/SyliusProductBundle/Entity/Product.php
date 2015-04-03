@@ -37,13 +37,6 @@ class Product extends SyliusCoreProduct
         return $this->partnerId;
     }
     
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->variantSelectionMethod = self::VARIANT_SELECTION_MATCH;
-    }
-    
     /**
      * Set group
      *

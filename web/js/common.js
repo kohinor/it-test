@@ -126,6 +126,21 @@ $(document).ready(function(){
         });
         return false;
     });
+    $('input:radio[name="sylius_cart_item[variant]"]').change(function(){
+        var value = $(this).val();
+        var locale = $('#locale').val();
+        $.ajax({
+            type: 'get',
+            url: '/'+locale+'/variant/'+value+'/stock/',
+            dataType: 'json',
+            success: function(data) {
+                if (data.code=='200' ){
+                    $('#product-stock').html(data.html);
+                }
+            }
+        });
+        return false;
+    });
 });
 
 $(document).ready(function() {
