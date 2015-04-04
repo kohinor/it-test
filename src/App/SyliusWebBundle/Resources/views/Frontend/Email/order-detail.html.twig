@@ -43,11 +43,11 @@
               </td>
               <td>
                 <a href="http://shopitalica.ch{{ path('app_site_product', {'slug':product.slug}) }}"><strong>{{ product.name }}</strong></a>
-                {% if variant.presentation is not empty %}
-                  <strong>{{ variant.presentation }}</strong>
+                {% if item.variant.presentation is not empty %}
+                  <strong>{{ item.variant.presentation }}</strong>
                 {% elseif product.hasOptions %}
                   <ul class="list-unstyled">
-                    {% for option in variant.options %}
+                    {% for option in item.variant.options %}
                       <li><strong>{{ option.presentation }}</strong>: {{ option.value }}</li>
                     {% endfor %}
                   </ul>
