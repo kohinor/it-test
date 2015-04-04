@@ -9,6 +9,51 @@ use Kitpages\CmsBundle\Controller\NavController as BaseController;
 
 class NavController extends BaseController
 {    
+    public function widgetAction($slug, $cssClass, $currentPageSlug, $startDepth = 1, $endDepth = 10, $filterByCurrentPage = true, $renderer = 'KitpagesCmsBundle:Nav:navigation.html.twig') {
+        $em = $this->getDoctrine()->getManager();
+        $context = $this->get('kitpages.cms.controller.context');
+        $resultingHtml = '';
+        $navigation = array();
+        $selectPageSlugList = array();
+        if ($startDepth == 1) {
+           $filterByCurrentPage = false;
+        }
+        $page = $em->getRepository('KitpagesCmsBundle:Page')->findOneBySlug($slug);
+        $this->get('logger')->info('slug = '.$slug);
+        $currentPage = $em->getRepository('KitpagesCmsBundle:Page')->findOneBySlug($currentPageSlug);
+        if ( (!$filterByCurrentPage) || ($currentPage != null) ) {
+            if ($filterByCurrentPage && $currentPage != null) {
+                $page = $em->getRepository('KitpagesCmsBundle:Page')->childOfPageWithForParentOtherPage($page, $currentPage, $startDepth-1);
+                $startDepth = 1;
+            }
+            if ($page != null) {
+                $startLevel = $page->getLevel() + $startDepth;
+                $endLevel = $page->getLevel() + $endDepth;
+                $navigation = $this->navPageChildren($page, $context->getViewMode(), $startDepth, $endLevel);
+
+                if ($currentPage != null) {
+                    $selectParentPageList = $em->getRepository('KitpagesCmsBundle:Page')->parentBetweenTwoDepth($currentPage, $startLevel, $endLevel);
+                    foreach($selectParentPageList as $selectParentPage) {
+                        $selectPageSlugList[] = $selectParentPage->getSlug();
+                    }
+                }
+            }
+        }
+        return $this->render(
+            $renderer,
+            array(
+                'currentPageSlug' => $currentPageSlug,
+                'selectPageSlugList' => $selectPageSlugList,
+                'navigation' => $navigation,
+                'navigationSlug' => $slug,
+                'navigationCssClass' => $cssClass,
+                'root' => true,
+                'kitCmsViewMode' => $context->getViewMode(),
+                'kitpages_target' => $_SERVER["REQUEST_URI"]
+            )
+        );
+    }
+    
     public function treeChildren($pageParent = null){
         $em = $this->getDoctrine()->getManager();
 
@@ -90,18 +135,6 @@ class NavController extends BaseController
                     'url'  => $this->generateUrl('kitpages_cms_nav_movedown', $paramUrl),
                     'class' => ($page->getPageType() == 'technical')?'kit-cms-advanced':'',
                     'icon' => 'icon/arrow-down.png'
-                );
-                $pageTree['actionList'][] = array(
-                    'id' => '',
-                    'label' => 'add page',
-                    'url'  => $this->generateUrl('kitpages_cms_page_create', $paramUrlCreate),
-                    'icon' => 'icon/add.png'
-                );
-                $pageTree['actionList'][] = array(
-                    'id' => '',
-                    'label' => 'add page technical',
-                    'url'  => $this->generateUrl('kitpages_cms_page_create_technical', $paramUrlCreate),
-                    'class' => 'kit-cms-advanced'
                 );
                 $pageTree['actionList'][] = array(
                     'id' => '',
