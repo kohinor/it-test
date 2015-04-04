@@ -9,7 +9,7 @@
       {% endfor %} 
       {% for product in products %} 
       <url>    
-        <loc>{{baseurl}}{{ path('app_site_product', {'_locale': locale, 'slug':product.slug}) }}</loc>  
+        <loc>{{baseurl}}{{ path('app_site_product', {'slug':product.slug}) }}</loc>  
         <lastmod>{{ product.last_modified|default('')}}</lastmod>  
       </url>  
       {% endfor %} 

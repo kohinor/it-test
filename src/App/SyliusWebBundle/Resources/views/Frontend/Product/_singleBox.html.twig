@@ -1,27 +1,27 @@
  
-    <a  href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+    <a  href="{{ path('app_site_product', {'slug':product.slug}) }}">
         <img  class="img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_home')|replace({'http://':'https://'}) : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
     </a> 
     <p></p>    
     <div>
-        <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+        <a href="{{ path('app_site_product', {'slug':product.slug}) }}">
             <span >{{ product.translate(locale|default('en')).name|default(product.name) }}</span>
         </a>
     </div>
     {% if product.rrp > product.price %}
         <div>
             <span  >
-                <a href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><s>{{product.rrp|sylius_price }}</s></a>
+                <a href="{{ path('app_site_product', { 'slug':product.slug}) }}"><s>{{product.rrp|sylius_price }}</s></a>
             </span>
         <span> | </span>
         <span  >
-            <a class="text-danger" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}">
+            <a class="text-danger" href="{{ path('app_site_product', { 'slug':product.slug}) }}">
             <strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong>
             </a></span>
         </div>
     {% else %}
     <div >
-        <a class="text-danger" href="{{ path('app_site_product', {'_locale': locale|default('en'), 'slug':product.slug}) }}"><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></a>
+        <a class="text-danger" href="{{ path('app_site_product', {'slug':product.slug}) }}"><strong>{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</strong></a>
    </div>
    {% endif %}
    

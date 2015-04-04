@@ -28,7 +28,7 @@ class ProductController extends Controller
         }
         $session->set('lastVisited', $lastVisited);
 
-        return $this->render('SyliusWebBundle:Frontend/Product:show.html.twig', array('locale' => $request->attributes->get('_locale'),'product' =>  $product ));
+        return $this->render('SyliusWebBundle:Frontend/Product:show.html.twig', array('product' =>  $product ));
     }
     
     public function addProductLog($ip, $product)
@@ -55,7 +55,7 @@ class ProductController extends Controller
         }
         $productRepository = $this->container->get('sylius.repository.product');
         $products = $productRepository->findByGroupId($groupId);
-        return $this->render('AppSyliusProductBundle:Product:other.html.twig', array('locale' => $request->attributes->get('_locale'), 'slug' => $request->attributes->get('slug'),'products' =>  $products ), $response);
+        return $this->render('AppSyliusProductBundle:Product:other.html.twig', array('slug' => $request->attributes->get('slug'),'products' =>  $products ), $response);
     }
     
     public function getLastVisitedAction(Request $request)
@@ -70,7 +70,7 @@ class ProductController extends Controller
         foreach($lastVisited as $productId) {
             $products[] = $productRepository->findOneById($productId);
         }
-        return $this->render('AppSyliusProductBundle:Product:last-visited.html.twig', array('locale' => $request->attributes->get('_locale'),'products' =>  $products ));
+        return $this->render('AppSyliusProductBundle:Product:last-visited.html.twig', array('products' =>  $products ));
     }
     
     public function getProductStockAction($slug)
