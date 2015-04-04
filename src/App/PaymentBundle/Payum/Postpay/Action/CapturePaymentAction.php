@@ -104,7 +104,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['BUTTONTXTCOLOR'] = '#FFFFFF';
         //$details['FONTTYPE'] = '';
         //$details['LOGO'] = '';
-        $details['TP'] = $this->options['homeUrl'].'/en/payment/postpay';
+        $details['TP'] = $this->options['homeUrl'].'/payment/postpay';
         
         $details['ACCEPTURL'] = $token->getAfterUrl();
         $details['DECLINEURL'] = $token->getAfterUrl();

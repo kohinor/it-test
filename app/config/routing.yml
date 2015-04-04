@@ -1,33 +1,28 @@
-root:
-    path: /
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /en/
-        permanent: true
-        
+       
+create:
+    resource: "@CmfCreateBundle/Resources/config/routing/rest.xml"
+
+create_image:
+    resource: "@CmfCreateBundle/Resources/config/routing/image.xml"
+
+cmf_media_file:
+    resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
+
+cmf_media_image:
+    resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+    
 app_sylius_product:
     resource: "@AppSyliusProductBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/
-    requirements:
-        _locale: en|fr
 
 app_solr_search_main:
     resource: "@AppSolrSearchBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/
-    requirements:
-        _locale: en|fr
    
 app_kit_site:
     resource: "@AppSiteBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/
-    requirements:
-        _locale: en|fr
         
 kitpages_cms:
     resource: "@KitpagesCmsBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/administration/cms
-    requirements:
-        _locale: en|fr
+    prefix: /administration/cms
         
 kitpages_file:
     resource: "@KitpagesFileBundle/Resources/config/routing.yml"
@@ -36,15 +31,9 @@ kitpages_file:
 kitpages_cms_page_view_lang:
     pattern:  /{_locale}/cms/{id}/{urlTitle}
     defaults: { _controller: KitpagesCmsBundle:Page:view, _locale: en }
-    requirements:
-        id: \d+
-        _locale: en|fr
 
 sylius_web:
     resource: @SyliusWebBundle/Resources/config/routing/main.yml
-    prefix: /{_locale}/
-    requirements:
-        _locale: en|fr
 
 payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
@@ -57,31 +46,21 @@ fos_user_security:
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /{_locale}/account/profile
-    requirements:
-        _locale: en|fr
+    prefix: /account/profile
 
 fos_user_register:
     resource: "@AppUserBundle/Resources/config/routing/registration.xml"
-    prefix: /{_locale}/register
-    requirements:
-        _locale: en|fr
+    prefix: /register
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /{_locale}/resetting
-    requirements:
-        _locale: en|fr
+    prefix: /resetting
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /{_locale}/account
-    requirements:
-        _locale: en|fr
+    prefix: /account
         
 lexik_translation_edition:
     resource: "@LexikTranslationBundle/Resources/config/routing.yml"
-    prefix: /{_locale}/administration
-    requirements:
-        _locale: en|fr
+    prefix: /administration
         

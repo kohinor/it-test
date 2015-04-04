@@ -3,7 +3,7 @@
 {% block breadcrumbs %} 
 <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="/">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     <li><a href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }}</a> </li>
 </ul>
 {% endblock %}

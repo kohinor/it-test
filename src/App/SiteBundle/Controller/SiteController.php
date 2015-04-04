@@ -46,4 +46,9 @@ class SiteController extends Controller
         );
         return $this->render('AppSiteBundle:Subscription:form.html.twig', $bindings);
     }
+    
+    public function pageAction($key)
+    {
+        return $this->render('AppSiteBundle:Page:page.html.twig', array('key' => $key));
+    }
 }

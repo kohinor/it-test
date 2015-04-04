@@ -41,7 +41,7 @@
     <div class="col-lg-10 col-md-10 col-sm-10">
     <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="/">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     {% if gender %}
         <li><a href="{{ path('app_solr_search_gender', {'gender':gender}) }}">{{ gender|trans({}, 'messages')|title  }}</a> </li>
         <li><a href="{{ path('app_solr_search_gender_brand', {'gender':gender, 'brand':brand}) }}">{{ brand|trans({}, 'messages')|title  }} </a></li>

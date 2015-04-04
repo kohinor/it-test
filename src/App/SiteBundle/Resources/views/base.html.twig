@@ -48,7 +48,7 @@
             </ul>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6">
-            <form action="{{ url('app_solr_search', {'_locale': app.request.locale})}}" class="navbar-form" style="padding-top:2px">
+            <form action="{{ url('app_solr_search')}}" class="navbar-form" style="padding-top:2px">
               <div class="input-group col-lg-9">
                 <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text">
               <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
@@ -56,15 +56,7 @@
             </form>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3">
-            <ul class="nav nav-pills">
-              {% if app.request.get('_route') == 'kitpages_cms_page_view_lang' %}
-                <li><a href="/en">{{ 'English'|trans }}</a></li>
-                <li><a href="/fr">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% else %}
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/fr/': '/en/'}) }}">{{ 'English'|trans }}</a></li>
-                <li><a href="{{ app.request.get('path') | default(app.request.uri) |replace({'/en/': '/fr/'}) }}">{{ 'French'|trans({}, 'messages') }}</a></li>
-              {% endif %}
-            </ul>
+              {{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
           </div>        
         </div>
       </div>
@@ -126,7 +118,7 @@
                   <nav>
                   <div class="navbar-collapse collapse navbar-responsive-collapse">
                   {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                    'slug': app.request.locale|default('en') ~ '-main',
+                    'slug': 'en-main',
                     'cssClass': "navbar-nav header",
                     'currentPageSlug':kitCmsPage.slug|default(''),
                     'startDepth':1 ,
@@ -176,7 +168,7 @@
         <div class="col-lg-6 col-md-5 col-sm-5">
           <div id="nav-foot">
             {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                'slug': app.request.locale|default('en') ~ '-footer',
+                'slug': 'en-footer',
                 'cssClass': "navbar-nav footer",
                 'currentPageSlug':kitCmsPage.slug|default(''),
                 'startDepth':1 ,
@@ -228,7 +220,7 @@
     <div class="row" style="padding-top:15px;">
         <div class="col-lg-9">
         <p>
-            {{ 'app.site.cookie.message'|trans|raw }} <a href="/{{ app.request.locale }}/privacy-policy">{{ 'app.site.cookie.link'|trans }}</a>.
+            {{ 'app.site.cookie.message'|trans|raw }} <a href="/info/privacy-policy">{{ 'app.site.cookie.link'|trans }}</a>.
             </p>
         </div>
         <div class="col-lg-3">

@@ -13,7 +13,7 @@
 {% block breadcrumbs %}  
 <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="/">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     <li>{{ 'italica.sitemap'|trans({}, 'messages') }} </li>
 </ul>
 {% endblock %}
@@ -28,7 +28,7 @@
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                    'slug': app.request.locale|default('en') ~ '-main',
+                    'slug': 'en-main',
                     'cssClass': "",
                     'currentPageSlug':kitCmsPage.slug|default(''),
                     'startDepth':1 ,
@@ -36,7 +36,7 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
-                'slug': app.request.locale|default('en') ~ '-footer',
+                'slug': 'en-footer',
                 'cssClass': "",
                 'currentPageSlug':kitCmsPage.slug|default(''),
                 'startDepth':1 ,

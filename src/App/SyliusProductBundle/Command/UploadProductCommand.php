@@ -278,11 +278,12 @@ class UploadProductCommand extends ContainerAwareCommand
             $product->setSlug($productDropship->getCode());
             $this->getEm()->persist($product);
             $this->getEm()->flush();
-        } else {            
+        } else {        
+            foreach($product->getVariants() as $variant) {
+                $variant->setOnHand(0);
+            }
             $variant = $product->getMasterVariant();
-            $variant->setPrice((int)$this->getPrice($productDropship->getRrp()));
             $variant->setOnHand($productDropship->getQuantity());
-            $variant->setRrp($productDropship->getRrp());
             $this->getEm()->persist($product);
         }
         

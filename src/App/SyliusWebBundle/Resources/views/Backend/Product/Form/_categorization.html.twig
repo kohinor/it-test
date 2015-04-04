@@ -1,0 +1,7 @@
+{% form_theme form 'SyliusWebBundle:Backend:forms.html.twig' %}
+
+<div class="tab-pane" id="categorization">
+{% for taxonomyForm in form.taxons %}
+    {{ form_row(taxonomyForm, {'empty_value':'Unselect everything','attr': {'style': 'height:100px'}}) }}
+{% endfor %}
+</div>

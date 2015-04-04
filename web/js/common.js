@@ -109,10 +109,9 @@ $(document).ready(function(){
     $('#sylius_cart_item_variant select').on('change', function(event){
         var value = $('select option:selected').text();
         var slug = $('#product-slug').val();
-        var locale = $('#locale').val();
         $.ajax({
             type: 'post',
-            url: '/'+locale+'/product/'+slug+'/stock/',
+            url: '/product/'+slug+'/stock/',
             data: {
                   option: value,
                   json: 'true'
@@ -128,10 +127,9 @@ $(document).ready(function(){
     });
     $('input:radio[name="sylius_cart_item[variant]"]').change(function(){
         var value = $(this).val();
-        var locale = $('#locale').val();
         $.ajax({
             type: 'get',
-            url: '/'+locale+'/variant/'+value+'/stock/',
+            url: '/variant/'+value+'/stock/',
             dataType: 'json',
             success: function(data) {
                 if (data.code=='200' ){

@@ -25,3 +25,9 @@ app_site_sitemap:
 app_site_sitemap_site:
     pattern:  /sitemap
     defaults: { _controller: AppSiteBundle:Sitemap:sitemap }
+    
+app_site_sitemap_site:
+    pattern:  /info/{key}
+    defaults: { _controller: AppSiteBundle:Site:page }
+    requirements:
+        key: delivery|privacy-policy|faq|terms-conditions|returns-refunds|contact-us

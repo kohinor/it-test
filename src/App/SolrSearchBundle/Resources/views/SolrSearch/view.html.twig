@@ -13,7 +13,7 @@
 {% block breadcrumbs %}  
 <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
-    <li><a href="/{{ app.request.locale }}">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
+    <li><a href="/">{{ 'italica.home'|trans({}, 'messages') }}</a> </li>
     <li><a href="{{ path('app_solr_search') }}">{{ 'italica.search'|trans({}, 'messages') }}</a> </li>
     {% if app.request.get('promotion') and app.request.get('gender') %}
         <li>
@@ -124,7 +124,7 @@
             <div class="row row-md-height">
         {% endif %}
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom">
-        {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'locale': app.request.locale, 'article': article }%}
+        {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'article': article }%}
         </div>
         {% set item = item+1 %}
         {% if item == 4 %}

@@ -10,9 +10,9 @@
             </a>
         {% else %}
             {% if navigationElem.url == '' %}
-                <div >{{navigationElem.title}}</div>
+                <div >{{navigationElem.title|trans({}, 'messages')}}</div>
             {% else %}
-                <a href="{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{% if navigationElem.level > 3 and navigationCssClass != 'navbar-nav header' %}<i class="fa fa-circle-o"></i> {% endif %} {{navigationElem.title}}</a>
+                <a href="{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{% if navigationElem.level > 3 and navigationCssClass != 'navbar-nav header' %}<i class="fa fa-circle-o"></i> {% endif %} {{navigationElem.title|trans({}, 'messages')}}</a>
             {% endif %}
         {% endif %}
             {% if navigationElem.level < 4 %}
