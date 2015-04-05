@@ -8,7 +8,8 @@ class TwigExtension extends \Twig_Extension {
      */
     public function getFilters() {
         return array(
-            'friendly_url' => new \Twig_Filter_Method($this, 'friendlyUrl')
+            'friendly_url' => new \Twig_Filter_Method($this, 'friendlyUrl'),
+            'ucwords' => new \Twig_Filter_Method($this, 'ucwords')
         );
     }
     
@@ -21,6 +22,15 @@ class TwigExtension extends \Twig_Extension {
     public function friendlyUrl($sentence)
     {
         return strtolower(preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', trim($sentence))));
+    }
+    
+    /**
+     * @param type $sentence
+     * @return type
+     */
+    public function ucwords($sentence)
+    {
+        return str_replace('D&g', 'D&G', ucwords($sentence));
     }
 
 

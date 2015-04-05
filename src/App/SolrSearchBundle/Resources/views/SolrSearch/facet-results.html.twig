@@ -95,7 +95,7 @@
                 {% if facet is not null and facet != '' and facet|length > 0 and idname != 'material' or facet|length > 2 %}
                 <div class="col-lg-6">        
                 <input type="checkbox" name="{{ idname }}" value="{{ facet }}" data-url="{{ url(app.request.get('_route'), app.request.get('_route_params')) }}" {% for facetTag in facets %}{% if facetTag.facet == facet %} checked="checked" {% endif %}{% endfor %}>           
-                {{ facet|replace({'-and-':'&'})|trans({}, 'messages')|capitalize }}
+                {{ facet|replace({'-and-':'&'})|trans({}, 'messages')|ucwords }}
                 </div>
                 {% endif %}
             {% endfor %}
