@@ -58,7 +58,7 @@ doctrine:
         password: %sylius.database.password%
         charset:  UTF8
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: true
         entity_managers:
             default:
                 metadata_cache_driver: array
@@ -86,8 +86,8 @@ doctrine_phpcr:
         username: %sylius.phpcr.user%
         password: %sylius.phpcr.pass%
     odm:
-        auto_mapping: true
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: false
+        auto_generate_proxy_classes: true
 
 swiftmailer:
     transport: %sylius.mailer.transport%

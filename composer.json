@@ -36,7 +36,7 @@
         "sensio/generator-bundle":               "@dev",
         "jms/security-extra-bundle":             "@dev",
         "jms/di-extra-bundle":                   "@dev",
-        "lexik/translation-bundle":              "@dev",
+        "lexik/translation-bundle":              "~2.0",
         "nelmio/solarium-bundle":               "2.*",
         "knplabs/knp-paginator-bundle":         "2.4.*@dev",
         "aws/aws-sdk-php":                      "dev-master",
