@@ -4,7 +4,8 @@
 
 <p>
   <strong>{{ 'sylius.account.order.created_at'|trans }} {{ order.createdAt|date() }}</strong><br><br>
-  {{ 'sylius.account.order.number'|trans }} <strong>{{ order.number }}{% if order.getLastPayment('completed') %}({{ order.getLastPayment('completed').getId() }}){% endif %}</strong>
+  {{ 'sylius.account.order.number'|trans }} <strong>{{ order.number }}</strong>
+  {{ 'sylius.account.transaction.number'|trans }} <strong>{% if order.getLastPayment('completed') %}{{ order.getLastPayment('completed').getId() }}{% endif %}</strong>
 </p>
 <table>
   <tr>

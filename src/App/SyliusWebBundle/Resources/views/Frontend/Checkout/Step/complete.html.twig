@@ -10,6 +10,8 @@
             <div class ="col-lg-7 col-md-7 col-sm-7">
             <p>{{ 'order.complete.message'|trans  }}</p>
             <p><strong>{{ 'order.number'|trans  }}</strong>: {{ order.getNumber() }}</p>
+            <p><strong>{{ 'sylius.account.transaction.number'|trans }}</strong>: {% if order.getLastPayment('completed') %}{{ order.getLastPayment('completed').getId() }}{% endif %}</p>
+
             </div>
             <div class ="col-lg-5 col-md-5 col-sm-5">
              <ul class="nav nav-pills nav-stacked">
@@ -23,4 +25,46 @@
         {% include "SyliusWebBundle:Frontend/Account:Order/_detail.html.twig" %}
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+  {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
+  {% set payment = order.getLastPayment('completed') %}
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-59486178-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_addTrans',
+    '{{ payment.id }}',           // transaction ID - required
+    'Italica Shop',  // affiliation or store name
+    '{{ order.itemsTotal|sylius_money }}',          // total - required
+    '{{ order.adjustmentsTotal(taxAdjustment)|sylius_money }}',           // tax
+    '0',              // shipping
+    '{{  order.shippingAddress.city }}',       // city
+    '{{  order.shippingAddress.province }}',     // state or province
+    '{{  order.shippingAddress.country }}'             // country
+  ]);
+
+{% for item in order.items %}
+    {% set product = item.product %}
+  _gaq.push(['_addItem',
+    '{{ payment.id }}',           // transaction ID - required
+    '{{ item.variant.sku }}',           // SKU/code - required
+    '{{ product.name }}',        // product name
+    '{% if item.variant.presentation is not empty %}{{ item.variant.presentation }}{% else %}{% for option in item.variant.options %}{{ option.value }}{% endfor %}{% endif %}',   // category or variation
+    '{{ item.unitPrice|sylius_money }}',          // unit price - required
+    '{{ item.quantity }}'               // quantity - required
+  ]);
+  {% endfor %}
+  _gaq.push(['_set', 'currencyCode', '{{ payment.currency }}']);
+  _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>  
 {% endblock %}
