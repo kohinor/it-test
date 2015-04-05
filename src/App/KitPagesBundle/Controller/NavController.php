@@ -117,12 +117,6 @@ class NavController extends BaseController
                 );
                 $pageTree['actionList'][] = array(
                     'id' => '',
-                    'label' => 'publish all',
-                    'url'  => $this->generateUrl('kitpages_cms_page_publish', $paramUrlWithChild),
-                    'class' => 'kit-cms-advanced kit-cms-modal-open'
-                );
-                $pageTree['actionList'][] = array(
-                    'id' => '',
                     'label' => 'up',
                     'url'  => $this->generateUrl('kitpages_cms_nav_moveup', $paramUrl),
                     'class' => ($page->getPageType() == 'technical')?'kit-cms-advanced':'',
