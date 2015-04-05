@@ -22,3 +22,8 @@ services:
         arguments: ["@sylius.context.currency"]
         tags:
             - { name: kernel.event_subscriber }
+            
+    app.url_listener:
+        class: App\SiteBundle\EventListener\UrlListener
+        tags:
+            - { name: kernel.event_subscriber }
