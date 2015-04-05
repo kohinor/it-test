@@ -13,7 +13,7 @@ parameters:
     sylius.mailer.password: null
     sylius.locale: en
     sylius.secret: abc
-    sylius.currency: CHF
+    sylius.currency: EUR
     sylius.cache:
         type: file_system
     paypal.express_checkout.username: EDITME
@@ -55,7 +55,7 @@ parameters:
     sylius.order.allow_guest_order: false
     sylius.uploader.filesystem: sylius_image
     sylius.currency_importer.open_exchange_rates: 
-                  CHF: 1.0
+                  EUR: 1.0
                   
     postpay.options:
           pspid: '%(PspId)s'

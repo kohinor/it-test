@@ -99,8 +99,8 @@ class UploadProductCommand extends ContainerAwareCommand
             $picture->setProductDropship($productDropship);
             $productDropship->addPicture($picture);
         }
-        $productDropship->setRrp((int)$item->streetPrice*100*1.2);
-        $productDropship->setActualPrice((int)$item->taxable*100*1.2);        
+        $productDropship->setRrp((int)$item->streetPrice*100);
+        $productDropship->setActualPrice((int)$item->taxable*100);        
         $productDropship->setName($item->name);        
         
         foreach ($item->models->model as $modelItem) {
@@ -110,8 +110,8 @@ class UploadProductCommand extends ContainerAwareCommand
             $model->setColor($modelItem->color);
             $model->setPartnerModelId($modelItem->id);
             $model->setSize($modelItem->size);
-            $model->setRrp((int)$modelItem->streetPrice*100*1.2);
-            $model->setActualPrice((int)$modelItem->taxable*100*1.2);
+            $model->setRrp((int)$modelItem->streetPrice*100);
+            $model->setActualPrice((int)$modelItem->taxable*100);
             $model->setProductDropship($productDropship);
             $productDropship->addModel($model);
         }
