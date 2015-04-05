@@ -82,7 +82,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $productDropship->setQuantity($item->availability);
         $productDropship->setBrand($item->brand);
         $productDropship->setCode($item->code);  
-        $productDropship->setCurrency('CHF');
+        $productDropship->setCurrency('EUR');
         $productDropship->setPartnerProductId($item->id);
         
         foreach ($item->descriptions->description as $description) {
