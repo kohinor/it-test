@@ -5,7 +5,7 @@
         <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
         {% if navigationElem.children|length > 0 and navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}    
             <a class="dropdown-toggle text-uppercase "  data-toggle="dropdown"  href="#">
-                {{navigationElem.title}}
+                {{navigationElem.title |trans({}, 'messages') }}
                 &nbsp;<i class="fa fa-caret-down"></i>
             </a>
         {% else %}
