@@ -75,6 +75,16 @@ class ProductDropship
     protected $descriptionFr;
     
     /**
+     * @ORM\Column(name="description_it", type="text", nullable=true)
+     */
+    protected $descriptionIt;
+    
+    /**
+     * @ORM\Column(name="description_de", type="text", nullable=true)
+     */
+    protected $descriptionDe;
+    
+    /**
      * @ORM\Column(name="weight", type="string", length=255, nullable=true)
      */
     protected $weight;
@@ -93,6 +103,16 @@ class ProductDropship
      * @ORM\Column(name="sub_category_fr", type="string", length=255, nullable=true)
      */
     protected $subCategoryFr;
+    
+    /**
+     * @ORM\Column(name="sub_category_it", type="string", length=255, nullable=true)
+     */
+    protected $subCategoryIt;
+    
+    /**
+     * @ORM\Column(name="sub_category_de", type="string", length=255, nullable=true)
+     */
+    protected $subCategoryDe;
     
     
     /**
@@ -561,5 +581,97 @@ class ProductDropship
     public function getPictures()
     {
         return $this->pictures;
+    }
+
+    /**
+     * Set descriptionIt
+     *
+     * @param string $descriptionIt
+     * @return ProductDropship
+     */
+    public function setDescriptionIt($descriptionIt)
+    {
+        $this->descriptionIt = $descriptionIt;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionIt
+     *
+     * @return string 
+     */
+    public function getDescriptionIt()
+    {
+        return $this->descriptionIt;
+    }
+
+    /**
+     * Set descriptionDe
+     *
+     * @param string $descriptionDe
+     * @return ProductDropship
+     */
+    public function setDescriptionDe($descriptionDe)
+    {
+        $this->descriptionDe = $descriptionDe;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionDe
+     *
+     * @return string 
+     */
+    public function getDescriptionDe()
+    {
+        return $this->descriptionDe;
+    }
+
+    /**
+     * Set subCategoryIt
+     *
+     * @param string $subCategoryIt
+     * @return ProductDropship
+     */
+    public function setSubCategoryIt($subCategoryIt)
+    {
+        $this->subCategoryIt = $subCategoryIt;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategoryIt
+     *
+     * @return string 
+     */
+    public function getSubCategoryIt()
+    {
+        return $this->subCategoryIt;
+    }
+
+    /**
+     * Set subCategoryDe
+     *
+     * @param string $subCategoryDe
+     * @return ProductDropship
+     */
+    public function setSubCategoryDe($subCategoryDe)
+    {
+        $this->subCategoryDe = $subCategoryDe;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategoryDe
+     *
+     * @return string 
+     */
+    public function getSubCategoryDe()
+    {
+        return $this->subCategoryDe;
     }
 }

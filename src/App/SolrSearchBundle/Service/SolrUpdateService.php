@@ -94,10 +94,14 @@ class SolrUpdateService
      */
     public function getSolrDocument( $doc, \Sylius\Component\Core\Model\Product $product)
     {
-        $name = $product->translate('fr')->getName();
+        $name_fr = $product->translate('fr')->getName();
+        $name_de = $product->translate('de')->getName();
+        $name_it = $product->translate('it')->getName();
         $doc->id  = $product->getId();
         $doc->name_en = $product->getName();
-        $doc->name_fr = $name ? $name : $product->getName();
+        $doc->name_fr = $name_fr ? $name_fr : $product->getName();
+        $doc->name_de = $name_de ? $name_de : $product->getName();
+        $doc->name_it = $name_it ? $name_it : $product->getName();
         $doc->slug = $product->getSlug();
         $doc->price = $product->getPrice();
         $doc->rrp = $product->getRrp() ? $product->getRrp() : $product->getPrice();

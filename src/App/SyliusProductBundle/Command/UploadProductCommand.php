@@ -50,7 +50,7 @@ class UploadProductCommand extends ContainerAwareCommand
                                 'V 1969', 'Versace', 'Versace Jeans');
         foreach($allowedBrands as $brand) {
             $client = $this->getContainer()->get('api_client');
-            $request = $client->get('/restful/export/api/products.xml?acceptedlocales=en_US,fr_FR&tag_1='.$brand);
+            $request = $client->get('/restful/export/api/products.xml?acceptedlocales=en_US,fr_FR,it_IT,de_DE&tag_1='.$brand);
             $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYHOST, false);
             $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYPEER, false);
 
@@ -92,6 +92,12 @@ class UploadProductCommand extends ContainerAwareCommand
             if ($description->localecode == 'fr_FR'){
                $productDropship->setDescriptionFr($description->description); 
             }
+            if ($description->localecode == 'de_DE'){
+               $productDropship->setDescriptionDe($description->description); 
+            }
+            if ($description->localecode == 'it_IT'){
+               $productDropship->setDescriptionIt($description->description); 
+            }
         }
         foreach ($item->pictures->image as $pictureItem) {
             $picture = new \App\SyliusProductBundle\Entity\ProductPictureDropship();
@@ -123,8 +129,14 @@ class UploadProductCommand extends ContainerAwareCommand
                        $productDropship->setSubCategory(ucfirst(strip_tags($translation->description))); 
                     }
                     if ($translation->localecode == 'fr_FR'){
-                        $productDropship->setSubCategoryFr(ucfirst(strip_tags($translation->description)));  
-                     }
+                       $productDropship->setSubCategoryFr(ucfirst(strip_tags($translation->description)));  
+                    }
+                    if ($translation->localecode == 'it_IT'){
+                       $productDropship->setSubCategoryIt(ucfirst(strip_tags($translation->description)));  
+                    }
+                    if ($translation->localecode == 'de_DE'){
+                       $productDropship->setSubCategoryDe(ucfirst(strip_tags($translation->description)));  
+                    }
                 }
             }
             if ($tag->name == 'category') {
@@ -155,7 +167,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
         $productIds = array();
         foreach ($products as $product) {
-            if ($product->getRrp() < 9500) {
+            if ($product->getRrp() < 7900) {
                 continue;
             }
             $productIds[] = $product->getPartnerProductId();
@@ -244,6 +256,16 @@ class UploadProductCommand extends ContainerAwareCommand
                 $translation->setLocale('fr');
                 $product->addTranslation($translation);
             }
+            if (!$product->getTranslations()->get('it')) {
+                $translation = new \Sylius\Component\Core\Model\ProductTranslation();
+                $translation->setLocale('it');
+                $product->addTranslation($translation);
+            }
+            if (!$product->getTranslations()->get('de')) {
+                $translation = new \Sylius\Component\Core\Model\ProductTranslation();
+                $translation->setLocale('de');
+                $product->addTranslation($translation);
+            }
             $product->setCurrentLocale('en');
             $product->setPartnerId($productDropship->getPartnerProductId());
             $product->setSlug($productDropship->getCode());
@@ -269,13 +291,23 @@ class UploadProductCommand extends ContainerAwareCommand
             
             $output->writeln('Adding Master product ');
             $this->addMasterVariant($product, $productDropship);
+            $product->setSlug($productDropship->getCode());
+            
             $product->setName($productDropship->getName());
             $product->setDescription($productDropship->getDescriptionEn()?$productDropship->getDescriptionEn():' ');
             
             $product->setCurrentLocale('fr');
             $product->setName($productDropship->getName());
             $product->setDescription($productDropship->getDescriptionFr()?$productDropship->getDescriptionFr():' ');
-            $product->setSlug($productDropship->getCode());
+            
+            $product->setCurrentLocale('de');
+            $product->setName($productDropship->getName());
+            $product->setDescription($productDropship->getDescriptionDe()?$productDropship->getDescriptionDe():' ');
+            
+            $product->setCurrentLocale('it');
+            $product->setName($productDropship->getName());
+            $product->setDescription($productDropship->getDescriptionIt()?$productDropship->getDescriptionIt():' ');
+            
             $this->getEm()->persist($product);
             $this->getEm()->flush();
         } else {        
@@ -315,12 +347,28 @@ class UploadProductCommand extends ContainerAwareCommand
                 $translation->setLocale('fr');
                 $taxon->addTranslation($translation);
             }
+            if (!$taxon->getTranslations()->get('de')) {
+                $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation;
+                $translation->setLocale('de');
+                $taxon->addTranslation($translation);
+            }
+            if (!$taxon->getTranslations()->get('it')) {
+                $translation = new \Sylius\Component\Taxonomy\Model\TaxonTranslation;
+                $translation->setLocale('it');
+                $taxon->addTranslation($translation);
+            }
             $taxon->setCurrentLocale('en');
             $taxon->setName($child);
             $taxon->setParent($taxonParent);
             $taxon->setDescription($childKey);
             $taxon->setTaxonomy($taxonParent->getTaxonomy());
             $taxon->setCurrentLocale('fr');
+            $taxon->setName($child);
+            $taxon->setDescription($childKey);
+            $taxon->setCurrentLocale('it');
+            $taxon->setName($child);
+            $taxon->setDescription($childKey);
+            $taxon->setCurrentLocale('de');
             $taxon->setName($child);
             $taxon->setDescription($childKey);
             $manager = $this->getContainer()->get('sylius.manager.taxon');

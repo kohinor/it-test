@@ -47,15 +47,15 @@
               {% endif %}
             </ul>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="col-lg-5 col-md-5 col-sm-5">
             <form action="{{ url('app_solr_search')}}" class="navbar-form" style="padding-top:2px">
-              <div class="input-group col-lg-9">
+              <div class="input-group col-lg-12">
                 <input class="form-control  input-sm" name="term" placeholder="{{ 'find.product'|trans }}" type="text">
               <span class="input-group-btn"><button class="btn btn-default btn-sm" title="Go" type="submit"><i class="fa fa-search"></i></button></span>
             </div>
             </form>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="col-lg-4 col-md-4 col-sm-4">
               {{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
           </div>        
         </div>

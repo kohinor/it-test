@@ -99,10 +99,7 @@ swiftmailer:
 
 lexik_translation:
     fallback_locale:      en
-    managed_locales:      [en,fr]
-
-a2lix_translation_form:
-    locales: [en,fr]      
+    managed_locales:      [en,fr,it,de_de]   
             
 nelmio_solarium:
     endpoints:

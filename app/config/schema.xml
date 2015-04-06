@@ -124,6 +124,8 @@
    
    <field name="name_en" type="text_general" indexed="true" stored="true" required="true" />
    <field name="name_fr" type="text_general" indexed="true" stored="true" required="true" />
+   <field name="name_de" type="text_general" indexed="true" stored="true" required="true" />
+   <field name="name_it" type="text_general" indexed="true" stored="true" required="true" />
    <field name="slug" type="text_general" indexed="true" stored="true" required="true" />
    <field name="price" type="int" indexed="true" stored="true" />
    <field name="rrp" type="int" indexed="true" stored="true" />
