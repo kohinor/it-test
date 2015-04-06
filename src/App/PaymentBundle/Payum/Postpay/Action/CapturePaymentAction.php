@@ -55,7 +55,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         if ($payment->getDetails() && isset($httpRequest->query['STATUS'])) {
             return;
         } else {
-            $this->composeDetails($payment, $request->getToken());
+            $this->composeDetails($payment, $request->getToken(), $httpRequest);
             $this->securityVerifier->invalidate($request->getToken());
             throw new HttpPostRedirect(
                 $this->options['redirectUrl'],
@@ -72,8 +72,9 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
      *
      * @throws LogicException
      */
-    protected function composeDetails(PaymentInterface $payment, TokenInterface $token)
+    protected function composeDetails(PaymentInterface $payment, TokenInterface $token, $httpRequest)
     {
+        $host = $httpRequest->headers['host'][0];
         $order = $payment->getOrder();
         
         $details = array();
@@ -110,9 +111,9 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['DECLINEURL'] = $token->getAfterUrl();
         $details['EXCEPTIONURL'] = $token->getAfterUrl();
         $details['CANCELURL'] = $token->getAfterUrl();
-        $details['BACKURL'] = $this->options['cartUrl'];
-        $details['HOMEURL'] = $this->options['homeUrl'];
-        $details['CATALOGURL'] = $this->options['homeUrl'];
+        $details['BACKURL'] = $host.'/cart';
+        $details['HOMEURL'] = $host;
+        $details['CATALOGURL'] = $host;
         
         //$details['PM'] = '';
         //$details['BRAND'] = '';
