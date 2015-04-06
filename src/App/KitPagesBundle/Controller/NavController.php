@@ -9,6 +9,8 @@ use Kitpages\CmsBundle\Controller\NavController as BaseController;
 
 class NavController extends BaseController
 {    
+    const CACHE_TIME = 21600;
+    
     public function widgetAction($slug, $cssClass, $currentPageSlug, $startDepth = 1, $endDepth = 10, $filterByCurrentPage = true, $renderer = 'KitpagesCmsBundle:Nav:navigation.html.twig') {
         $em = $this->getDoctrine()->getManager();
         $context = $this->get('kitpages.cms.controller.context');
@@ -29,8 +31,15 @@ class NavController extends BaseController
             if ($page != null) {
                 $startLevel = $page->getLevel() + $startDepth;
                 $endLevel = $page->getLevel() + $endDepth;
-                $navigation = $this->navPageChildren($page, $context->getViewMode(), $startDepth, $endLevel);
-
+                
+                $key =  $slug.$this->getRequest()->getLocale();
+                $cache   = $this->container->get('doctrine_cache.providers.memcached');
+                $navigation = $cache->fetch($key);
+                if (!$navigation) {
+                    $navigation = $this->navPageChildren($page, $context->getViewMode(), $startDepth, $endLevel);
+                    $cache->save($key, $navigation, self::CACHE_TIME);
+                }
+                
                 if ($currentPage != null) {
                     $selectParentPageList = $em->getRepository('KitpagesCmsBundle:Page')->parentBetweenTwoDepth($currentPage, $startLevel, $endLevel);
                     foreach($selectParentPageList as $selectParentPage) {
