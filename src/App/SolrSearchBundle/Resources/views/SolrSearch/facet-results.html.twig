@@ -136,7 +136,7 @@
             {% set marked = 0 %}
         {% endif %}
         
-        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{% if parent is null %}<i class="fa {% if marked %}fa-caret-down{% else %}fa-caret-right{% endif %}"></i> {% endif %}{{ pivot.getValue()|trans({}, 'messages')|capitalize }}{% if marked %}</strong></mark>{% endif %}</a>
+        <a href="{{ url }}">{% if marked %}<mark><strong>{% endif %}{% if parent is null %}<i class="fa {% if marked %}fa-caret-down{% else %}fa-caret-right{% endif %}"></i> {% endif %}{{ pivot.getValue()|capitalize|trans({}, 'messages') }}{% if marked %}</strong></mark>{% endif %}</a>
     {% if marked %}           
     {% for nextPivot in pivot.getPivot() %}
         

@@ -65,7 +65,7 @@ class ExceptionController extends ContainerAware
         $internalEmail = $this->container->getParameter('email.to.exception');
         $fromEmail = $this->container->getParameter('email.from.exception');
         $subject = sprintf('Exception on italica:%s',$this->container->get('kernel')->getEnvironment());
-        $body = sprintf('%s on %s: %s: %s', $exception->getStatusCode(), $this->container->get('request')->get('_route') , Response::$statusTexts[$exception->getStatusCode()], $exception->getMessage());
+        $body = sprintf('%s on %s: %s: %s', $exception->getStatusCode(), $this->container->get('request')->getUri() , Response::$statusTexts[$exception->getStatusCode()], $exception->getMessage());
         $mailer = \Swift_Message::newInstance();
         $message = $mailer->setSubject($subject)
                           ->setFrom($fromEmail)
