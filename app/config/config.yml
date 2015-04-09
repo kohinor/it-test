@@ -210,6 +210,8 @@ services:
         arguments: [%api_client.base_url%, %api_client.config%]
         
 fos_user:
+    service:
+        mailer: fos_user.mailer.twig_swift
     from_email:
         address:        %emails.address%
         sender_name:    'Italica Shop'
