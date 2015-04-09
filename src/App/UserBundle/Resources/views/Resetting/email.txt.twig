@@ -4,11 +4,7 @@
 {{ 'resetting.email.subject'|trans }}
 {% endautoescape %}
 {% endblock %}
-{% block body_text %}
-{% autoescape false %}
-{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
-{% endautoescape %}
-{% endblock %}
+{% block body_text %}{% endblock %}
 {% block body_html %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

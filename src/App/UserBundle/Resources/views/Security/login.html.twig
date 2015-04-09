@@ -53,7 +53,7 @@
     <div class="panel-body">
     <h4 class="title"><span class="text">{{ 'italica.forgot.password'|trans({}, 'messages') }}</span></h4>
     <p>{{ 'italica.forgot.password.link'|trans({}, 'messages') }}</p>
-    <p><a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
+    <p><a class="btn btn-default btn-sm" href="{{ path('fos_user_resetting_request') }}">{{ 'Forgotten Password'|trans({}, 'FOSUserBundle') }}</a></p>
     </div>
     </div>
     <div class="panel panel-custom">
@@ -61,7 +61,7 @@
         <h4 class="title"><span class="text">{{ 'italica.new.customer'|trans({}, 'messages') }}</span></h4>
     <p>{{ 'italica.new.customer.experience'|trans({}, 'messages') }}</p>
     <p>
-    <a href="{{ path('fos_user_registration_register') }}">{{ 'italica.create.account'|trans({}, 'messages') }}</a>
+    <a class="btn btn-default btn-sm" href="{{ path('fos_user_registration_register') }}">{{ 'italica.create.account'|trans({}, 'messages') }}</a>
     </p>
     </div>
     </div>

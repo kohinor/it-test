@@ -208,3 +208,8 @@ services:
     api_client:
         class: Guzzle\Http\Client
         arguments: [%api_client.base_url%, %api_client.config%]
+        
+fos_user:
+    from_email:
+        address:        %emails.address%
+        sender_name:    'Italica Shop'
