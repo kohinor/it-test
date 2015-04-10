@@ -3,6 +3,7 @@
 namespace App\SyliusWebBundle\Menu;
 
 use Knp\Menu\ItemInterface;
+use Sylius\Bundle\WebBundle\Event\MenuBuilderEvent;
 
 /**
  * Main menu builder.
@@ -11,7 +12,33 @@ use Knp\Menu\ItemInterface;
  */
 class BackendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\BackendMenuBuilder
 {
-    
+    public function createSidebarMenu()
+    {
+        $menu = $this->factory->createItem('root', array(
+            'childrenAttributes' => array(
+                'class' => 'nav'
+            )
+        ));
+
+        $menu->setCurrentUri($this->request->getRequestUri());
+
+        $childOptions = array(
+            'childrenAttributes' => array('class' => 'nav'),
+            'labelAttributes'    => array('class' => 'nav-header')
+        );
+        
+        $this->addAssortmentMenu($menu, $childOptions, 'sidebar');
+        if ($this->securityContext->isGranted('ROLE_SYLIUS_ADMIN')) {
+            $this->addSalesMenu($menu, $childOptions, 'sidebar');
+            $this->addCustomersMenu($menu, $childOptions, 'sidebar');
+            $this->addContentMenu($menu, $childOptions, 'sidebar');
+            $this->addConfigurationMenu($menu, $childOptions, 'sidebar');
+        }
+
+        $this->eventDispatcher->dispatch(MenuBuilderEvent::BACKEND_SIDEBAR, new MenuBuilderEvent($this->factory, $menu));
+
+        return $menu;
+    }
     protected function addAssortmentMenu(ItemInterface $menu, array $childOptions, $section)
     {
         $child = $menu

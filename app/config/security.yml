@@ -3,7 +3,8 @@
 
 security:
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER, ROLE_CMS_ADMIN,  ROLE_SYLIUS_ADMIN]
+        ROLE_PRODUCT_MANAGER: ROLE_USER
+        ROLE_ADMIN: [ROLE_USER, ROLE_CMS_ADMIN,  ROLE_SYLIUS_ADMIN, ROLE_PRODUCT_MANAGER, ROLE_ADMINISTRATION_ACCESS]
         ROLE_SUPERADMIN: ROLE_ADMIN
     providers:
         fos_userbundle:
@@ -90,22 +91,27 @@ security:
             security: false
 
     access_control:
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/security.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/connect.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        
-        - { path: ^/administration/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration/login-check, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration/cms/block.*", role: ROLE_SYLIUS_ADMIN, requires_channel: http }
-        - { path: ^/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
 
-        - { path: ^/account.*, role: ROLE_USER, requires_channel: https }
-        - { path: ^/cart.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/product.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/checkout.*, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/administration/login, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/administration/login-check, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        
+        - { path: "/administration/taxonomies.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/products.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/inventory.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/product-options.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/product-attributes.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/product-archetypes.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/product-group.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        - { path: "/administration/size-guide.*", role: ROLE_PRODUCT_MANAGER, requires_channel: https }
+        
+        - { path: "/administration.*", role: ROLE_SYLIUS_ADMIN, requires_channel: https }
+
+        - { path: "/account.*", role: ROLE_USER, requires_channel: https }
+        - { path: "/.*", role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
 
         - { path: "/_partial.*", ip: 127.0.0.1 }
