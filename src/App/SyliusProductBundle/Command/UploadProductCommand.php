@@ -63,20 +63,21 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->getEM()->flush();
             $this->getEM()->clear();        
         }
-        $this->deleteProducts();
+        $sql = "DELETE sylius_product_dropship where rrp < 7900;";
+        $this->getEM()->getConnection()->exec($sql);
+        $sql1 = "UPDATE sylius_product set deleted_at = null;";
+        $this->getEM()->getConnection()->exec($sql1);
     }
     
     protected function deleteProducts()
     {
-        $sql4 = "UPDATE sylius_product set deleted_at = null;";
-        $this->getEM()->getConnection()->exec($sql4);
         $sql5 = "UPDATE sylius_product set deleted_at = NOW() where partner_id not in (SELECT partner_product_id from sylius_product_dropship);";
         $this->getEM()->getConnection()->exec($sql5);
         $sql6 = "UPDATE sylius_product set deleted_at = NOW() where id in (select product_id from sylius_product_variant where rrp < 9500 group by product_id);";
         $this->getEM()->getConnection()->exec($sql6);
     }
 
-        protected function createProductDropship($item)
+    protected function createProductDropship($item)
     {
         $productDropship = new \App\SyliusProductBundle\Entity\ProductDropship();
         $productDropship->setQuantity($item->availability);
@@ -164,6 +165,8 @@ class UploadProductCommand extends ContainerAwareCommand
     
     protected function updateProducts($output)
     {
+        $sql4 = "UPDATE sylius_product set deleted_at = null;";
+        $this->getEM()->getConnection()->exec($sql4);
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
         $productIds = array();
         foreach ($products as $product) {
@@ -231,11 +234,9 @@ class UploadProductCommand extends ContainerAwareCommand
         $variant->setPrice((int)$product->getMasterVariant()->getPrice());
         $variant->setRrp($product->getMasterVariant()->getRrp());
             
-        $variantManager = $this->getContainer()->get('sylius.manager.product_variant');
-        $variantManager->persist($variant);
-        $manager = $this->getContainer()->get('sylius.manager.product');
-        $manager->persist($product);
-        $manager->flush();   
+        $this->getEM()->persist($variant);
+        $this->getEM()->persist($product);
+        $this->getEM()->flush();   
     }
     
     protected function updateProduct(\App\SyliusProductBundle\Entity\ProductDropship $productDropship, $output)
