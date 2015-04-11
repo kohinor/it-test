@@ -30,6 +30,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $this->updateDatabase();
         $output->writeln("<info>database updated</info>");
         $this->updateProducts($output);
+        $this->deleteProducts();
         $output->writeln('done');
     } 
     
@@ -169,7 +170,8 @@ class UploadProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql4);
         $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
         $productIds = array();
-        foreach ($products as $product) {
+        foreach ($products as $key => $product) {
+            $output->writeln("<info>Item </info>".$key);
             if ($product->getRrp() < 7900) {
                 continue;
             }
