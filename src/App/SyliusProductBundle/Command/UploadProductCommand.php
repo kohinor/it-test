@@ -64,7 +64,7 @@ class UploadProductCommand extends ContainerAwareCommand
             $this->getEM()->flush();
             $this->getEM()->clear();        
         }
-        $sql = "DELETE sylius_product_dropship where rrp < 7900;";
+        $sql = "DELETE FROM sylius_product_dropship where rrp < 7900;";
         $this->getEM()->getConnection()->exec($sql);
         $sql1 = "UPDATE sylius_product set deleted_at = null;";
         $this->getEM()->getConnection()->exec($sql1);
