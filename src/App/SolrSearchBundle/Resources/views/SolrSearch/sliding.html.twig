@@ -11,7 +11,6 @@
         <li>
             <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">{{ first }}</a>
         </li>
-        <li>...</li>
     {% endif %}
     {% for page in pagesInRange %}
         {% if page != current %}

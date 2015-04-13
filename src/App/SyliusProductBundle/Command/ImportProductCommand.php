@@ -36,11 +36,11 @@ class ImportProductCommand extends ContainerAwareCommand
         $sql = "DELETE from sylius_product_model_dropship;";
         $sql2 = "DELETE from sylius_product_picture_dropship;";
         $sql3 = "DELETE from sylius_product_dropship;";
-        $this->getEM()->getConnection()->exec($sql);
         $this->getEM()->getConnection()->exec($sql2);
+        $this->getEM()->getConnection()->exec($sql);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
                                 'Gas', 'Geographical Norway', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
                                 'Nina Ricci', 'Prada', 'Richmond', 'Roberto Cavalli', 'Rochas', 'Royal Polo',

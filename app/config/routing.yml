@@ -13,16 +13,27 @@ cmf_media_image:
     
 app_sylius_product:
     resource: "@AppSyliusProductBundle/Resources/config/routing.yml"
-
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
+        
 app_solr_search_main:
     resource: "@AppSolrSearchBundle/Resources/config/routing.yml"
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
    
 app_kit_site:
     resource: "@AppSiteBundle/Resources/config/routing.yml"
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
         
 kitpages_cms:
     resource: "@KitpagesCmsBundle/Resources/config/routing.yml"
-    prefix: /administration/cms
+    prefix: /{_locale}/administration/cms
+    requirements:
+        _locale: en|fr|it|de
         
 kitpages_file:
     resource: "@KitpagesFileBundle/Resources/config/routing.yml"
@@ -34,33 +45,52 @@ kitpages_cms_page_view_lang:
 
 sylius_web:
     resource: @SyliusWebBundle/Resources/config/routing/main.yml
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
 
 payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
 
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
+    prefix: /{_locale}/
+    requirements:
+        _locale: en|fr|it|de
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
+        
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /account/profile
+    prefix: /{_locale}/account/profile
+    requirements:
+        _locale: en|fr|it|de
 
 fos_user_register:
     resource: "@AppUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
+    prefix: /{_locale}/register
+    requirements:
+        _locale: en|fr|it|de
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
+    prefix: /{_locale}/resetting
+    requirements:
+        _locale: en|fr|it|de
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /account
+    prefix: /{_locale}/account
+    requirements:
+        _locale: en|fr|it|de
         
 lexik_translation_edition:
     resource: "@LexikTranslationBundle/Resources/config/routing.yml"
-    prefix: /administration
+    prefix: /{_locale}/administration
+    requirements:
+        _locale: en|fr|it|de
         

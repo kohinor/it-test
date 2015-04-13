@@ -55,6 +55,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         if ($payment->getDetails() && isset($httpRequest->query['STATUS'])) {
             return;
         } else {
+            
             $this->composeDetails($payment, $request->getToken(), $httpRequest);
             $this->securityVerifier->invalidate($request->getToken());
             throw new HttpPostRedirect(
@@ -75,6 +76,8 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
     protected function composeDetails(PaymentInterface $payment, TokenInterface $token, $httpRequest)
     {
         $host = $httpRequest->headers['host'][0];
+        $locale = substr(str_replace('http://','', str_replace('https://','',str_replace($host, '', $httpRequest->uri))), 0, 3);
+        $host = $host.$locale;
         $order = $payment->getOrder();
         
         $details = array();
@@ -85,7 +88,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['ORDERID'] = $payment->getId();
         $details['AMOUNT'] = $order->getTotal();
         $details['CURRENCY'] = $payment->getCurrency();
-        $details['LANGUAGE'] = 'en_US';
+        $details['LANGUAGE'] = $locale;
         
         $details['CN'] = $order->getBillingAddress()->getFirstName().' '.$order->getBillingAddress()->getLastName();
         $details['EMAIL'] = $order->getEmail();
@@ -105,7 +108,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['BUTTONTXTCOLOR'] = '#FFFFFF';
         //$details['FONTTYPE'] = '';
         //$details['LOGO'] = '';
-        $details['TP'] = $this->options['homeUrl'].'/payment/postpay';
+        $details['TP'] = $host.'/payment/postpay';
         
         $details['ACCEPTURL'] = $token->getAfterUrl();
         $details['DECLINEURL'] = $token->getAfterUrl();

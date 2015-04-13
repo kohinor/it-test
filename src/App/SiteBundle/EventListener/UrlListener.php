@@ -14,23 +14,30 @@ class UrlListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $requestUri = $request->getRequestUri();
-        if (strstr($request, '/en/')) {
-            $response = new RedirectResponse(str_replace('/en/', '/', $requestUri));
-            $event->setResponse($response);
+        if ( !strstr($requestUri, '/it') && 
+             !strstr($requestUri, '/fr') && 
+             !strstr($requestUri, '/en') && 
+             !strstr($requestUri, '/de') && 
+             !strstr($requestUri, 'fragment') && 
+             !strstr($requestUri, 'login') && 
+             !strstr($requestUri, 'logout')) {
+            if (strstr($request->getHost(), '.it')) {
+                $response = new RedirectResponse('https://'.str_replace('.it', '.it/it', $request->getHost()).$requestUri);
+                $event->setResponse($response);
+            } elseif (strstr($request->getHost(), '.fr')){
+                $response = new RedirectResponse('https://'.str_replace('.fr', '.fr/fr', $request->getHost()).$requestUri);
+                $event->setResponse($response);
+            } elseif (strstr( $request->getHost(), '.de')){
+                $response = new RedirectResponse('https://'.str_replace('.de', '.de/de', $request->getHost()).$requestUri);
+                $event->setResponse($response);
+            } elseif (strstr( $request->getHost(), '.local')){
+                $response = new RedirectResponse('https://'.str_replace('.local', '.local/en', $request->getHost()).$requestUri);
+                $event->setResponse($response);
+            } elseif (strstr( $request->getHost(), '.ch')){
+                $response = new RedirectResponse('https://'.str_replace('.ch', '.ch/en', $request->getHost()).$requestUri);
+                $event->setResponse($response);
+            }
         }
-        if (strstr($request, '/fr/')) {
-            $response = new RedirectResponse(str_replace('/fr/', '/', $requestUri));
-            $event->setResponse($response);
-        }
-        if (strstr($request, '/it/')) {
-            $response = new RedirectResponse(str_replace('/it/', '/', $requestUri));
-            $event->setResponse($response);
-        }
-        if (strstr($request, '/de/')) {
-            $response = new RedirectResponse(str_replace('/de/', '/', $requestUri));
-            $event->setResponse($response);
-        }
-        
     }
     
     public static function getSubscribedEvents()
