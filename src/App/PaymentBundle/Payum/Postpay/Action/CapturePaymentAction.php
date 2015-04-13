@@ -75,7 +75,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
      */
     protected function composeDetails(PaymentInterface $payment, TokenInterface $token, $httpRequest)
     {
-        $host = $httpRequest->headers['host'][0];
+        $host = 'https://'.$httpRequest->headers['host'][0];
         $locale = substr(str_replace('http://','', str_replace('https://','',str_replace($host, '', $httpRequest->uri))), 0, 3);
         $host = $host.$locale;
         $order = $payment->getOrder();
@@ -88,7 +88,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['ORDERID'] = $payment->getId();
         $details['AMOUNT'] = $order->getTotal();
         $details['CURRENCY'] = $payment->getCurrency();
-        $details['LANGUAGE'] = $locale;
+        $details['LANGUAGE'] = substr($locale, 1);
         
         $details['CN'] = $order->getBillingAddress()->getFirstName().' '.$order->getBillingAddress()->getLastName();
         $details['EMAIL'] = $order->getEmail();
