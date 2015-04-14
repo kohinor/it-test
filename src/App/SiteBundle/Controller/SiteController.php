@@ -5,6 +5,7 @@ namespace App\SiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SiteController extends Controller
 {
@@ -50,5 +51,55 @@ class SiteController extends Controller
     public function pageAction($key)
     {
         return $this->render('AppSiteBundle:Page:page.html.twig', array('key' => $key));
+    }
+    
+    public function exportAction()
+    {
+        $container = $this->container;
+        $response = new StreamedResponse();
+        $response->setCallback(function() use($container){
+
+            $handle = fopen('php://output', 'w+');
+
+            fputcsv($handle, array(
+                'ID', 
+                'Item Title', 
+                'Item Subtitle', 
+                'Item Description', 
+                'Item Address', 
+                'Price', 
+                'Sale Price', 
+                'Image URL', 
+                'Destination URL'),';');
+            $results = $container->get('sylius.repository.product')->findAll();
+            $cacheManager = $container->get('liip_imagine.cache.manager');
+            foreach( $results as $row ) {
+                $brand = '';
+                foreach ($row->getTaxons() as $taxon) {
+                if ($taxon->getTaxonomy()->getName() != 'Brand') continue;
+                     $brand = $taxon->getName();  
+                }
+                $line = array(
+                    $row->getSlug(),
+                    $row->translate($container->get('request')->getLocale())->getName(),
+                    $brand,
+                    $row->translate($container->get('request')->getLocale())->getDescription(),
+                    'Avenue Claude Nobs 14 , c/o Doltec SA , CH -1820 Montreux - Switzerland',
+                    $row->getMasterVariant()->getRrp().'EUR',
+                    $row->getMasterVariant()->getPrice().'EUR',
+                    $cacheManager->getBrowserPath($row->getImage()->getPath(), 'sylius_small'),
+                    $container->get('router')->generate('app_site_product', array('slug' => $row->getSlug()), true)
+                );
+                fputcsv($handle, $line);
+            }
+
+            fclose($handle);
+        }
+        );
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="export.csv"');
+
+        return $response;
     }
 }

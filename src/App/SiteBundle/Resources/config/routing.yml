@@ -31,3 +31,8 @@ app_site_sitemap_site:
     defaults: { _controller: AppSiteBundle:Site:page }
     requirements:
         key: delivery|privacy-policy|faq|terms-conditions|returns-refunds|contact-us
+        
+app_site_export:
+    pattern:  /export
+    defaults: { _controller: AppSiteBundle:Site:export }
+
