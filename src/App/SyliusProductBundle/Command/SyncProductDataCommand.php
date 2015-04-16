@@ -26,13 +26,13 @@ class SyncProductDataCommand extends ContainerAwareCommand
             $totalAmount = 0;
             foreach ($product->getVariants() as $variant) {
                 $totalAmount+=$variant->getOnHand();
-                $variant->setPrice((int)$product->getMasterVariant()->getPrice());
+                $variant->setPrice($product->getMasterVariant()->getPrice());
+                $variant->setRrp($product->getMasterVariant()->getRrp());
             }
             $product->getMasterVariant()->setOnHand($totalAmount);
-            $this->getEM()->persist($product);
-            $this->getEM()->flush();
             $output->writeln("<info>updated</info>".$product->getId());
         }
+        $this->getEM()->flush();
     } 
     
     

@@ -205,7 +205,7 @@ class UploadProductCommand extends ContainerAwareCommand
     
     private function getPrice($price)
     {
-       return $price - ($price/100*5);
+       return $price - ($price/100*15);
     }
     
     private function getTaxon($parentKey, $child, $childKey)

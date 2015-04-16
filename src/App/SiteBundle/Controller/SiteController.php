@@ -71,7 +71,7 @@ class SiteController extends Controller
                 'Sale Price', 
                 'Image URL', 
                 'Destination URL'),';');
-            $results = $container->get('sylius.repository.product')->findBy(array('deletedAt' => null));
+            $results = $container->get('sylius.repository.product')->findActiveProducts();
             $cacheManager = $container->get('liip_imagine.cache.manager');
             foreach( $results as $row ) {
                 $brand = '';

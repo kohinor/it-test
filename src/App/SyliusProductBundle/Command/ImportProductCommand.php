@@ -40,11 +40,11 @@ class ImportProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Ana Lublin', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lublin','Avirex', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
                                 'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
-                                'Gas', 'Geographical Norway', 'Gucci', 'Guess', 'Hogan', 'Hugo Boss', 'Just Cavalli', 'Kenzo', 'Michael Kors', 'Moschino',
-                                'Nina Ricci', 'Prada', 'Richmond', 'Roberto Cavalli', 'Rochas', 'Royal Polo',
-                                'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
+                                'Gas', 'Geographical Norway', 'Gucci','Giuseppe Zanotti' ,'Guess', 'Hogan', 'Hugo Boss', 'Jessica Simpson', 'Just Cavalli', 'Kenzo', 'Made in Italia', 'Michael Kors', 'Moschino',
+                                'Nina Ricci', 'Prada', 'Rene Caovilla', 'Richmond','Rosso Fiorentino', 'Roberto Cavalli', 'Rochas', 'Royal Polo',
+                                'Sergio Rossi', 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
                                 'V 1969', 'Versace', 'Versace Jeans');
         foreach($allowedBrands as $brand) {
             $client = $this->getContainer()->get('api_client');
