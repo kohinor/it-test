@@ -1,7 +1,11 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block choice_widget_collapsed %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ 'input-sm form-control'}) %}
+    {% if multiple %}
+        {% set attr = attr|merge({'class': attr.class|default('') ~ 'form-control'}) %}
+    {% else %}
+        {% set attr = attr|merge({'class': attr.class|default('') ~ 'input-sm form-control'}) %}
+    {% endif %}
 {{ parent() }}
 {% endblock choice_widget_collapsed %}
 

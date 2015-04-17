@@ -77,9 +77,10 @@ class SolrUpdateService
         foreach ($product->getTaxons() as $taxon) {
             if ($taxon->getTaxonomy()->getName() != $taxonomy) continue;
             if ($isRoot != ($taxon->getParent()->getName() == $taxonomy)) {
-                if ($taxon->getParent()->getName() == $taxonomy) continue;
+                if ($taxon->getParent()->getName() == $taxonomy || $taxon->getParent()->getName() == 'None') continue;
                 $taxons[] = str_replace('&', '-and-', $taxon->getParent()->getName());
             } else {
+                if ($taxon->getName() == 'None') continue;
                 $taxons[] = str_replace('&', '-and-', $taxon->getName());  
             }
         }
