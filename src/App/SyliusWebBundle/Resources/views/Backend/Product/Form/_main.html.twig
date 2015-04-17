@@ -3,7 +3,7 @@
 <div class="tab-pane active" id="main">
     {{ form_row(form.translations, {'attr': {'class': 'input-lg'}}) }}
     <hr />
-    <div class="row">
+    <div class="row {% if not is_granted('ROLE_SYLIUS_ADMIN') %} hidden {% endif %}">
         <div class="col-md-6">
             {{ form_label(form.masterVariant.availableOn) }}
             {{ form_widget(form.masterVariant.availableOn, {'label': false}) }}

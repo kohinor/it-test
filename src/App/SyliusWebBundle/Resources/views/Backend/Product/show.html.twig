@@ -215,7 +215,8 @@
     </div>
 </div>
 {% endif %}
-
-{{ list_variants(product.variants) }}
+{% if is_granted('ROLE_SYLIUS_ADMIN') %}
+  {{ list_variants(product.variants) }}
+{% endif %}
 
 {% endblock %}
