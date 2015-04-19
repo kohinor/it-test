@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 {% for order in orders %}
-                    {% set payment = order.getLastPayment('completed')|order.getLastPayment('processing') %}
+                    {% set payment = order.getLastPayment('completed')|default(order.getLastPayment('processing')) %}
                     <tr class="order" id="order-{{ order.number }}">
                         <td>Placed: {{ order.createdAt|date('d M Y') }} <br/> {% include "SyliusWebBundle:Frontend/Account:Order/_state.html.twig" %}</td>
                         <td>{{ order.number }}</td>

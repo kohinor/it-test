@@ -85,8 +85,8 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $host = 'https://'.$httpRequest->headers['host'][0];
         $urlParts = explode('/', str_replace($host, '', $httpRequest->uri));
         $prefix = in_array($urlParts[1], array('italy', 'france', 'germany', 'swiss')) ? $urlParts[1].'/' : '';
-        $locale = in_array($urlParts[2], array('fr', 'it', 'de', 'en')) ? $urlParts[2].'/' : '';;
-        $host = $host.$prefix.$locale;
+        $locale = in_array($urlParts[2], array('fr', 'it', 'de', 'en')) ? $urlParts[2].'/' : '';
+        $host = $host.'/'.$prefix.$locale;
         $order = $payment->getOrder();
         
         $details = array();
@@ -117,7 +117,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['BUTTONTXTCOLOR'] = '#FFFFFF';
         //$details['FONTTYPE'] = '';
         //$details['LOGO'] = '';
-        $details['TP'] = $host.'/payment/postpay';
+        $details['TP'] = $host.'payment/postpay';
         
         $details['ACCEPTURL'] = $token->getAfterUrl();
         $details['DECLINEURL'] = $token->getAfterUrl();

@@ -14,25 +14,25 @@ class UrlListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $requestUri = $request->getRequestUri();
-        $fullUrl = $request->getHost().$requestUri();
+        $fullUrl = $request->getHost().$requestUri;
         
-        if ( strstr($fullUrl, '.com/en') ) {
-            $response = new RedirectResponse('https://'.str_replace('.com/en', '.com/swiss/en', $fullUrl));
+        if ( strstr($fullUrl, '.com/en/') ) {
+            $response = new RedirectResponse('https://'.str_replace('.com/en/', '.com/swiss/en/', $fullUrl));
             $event->setResponse($response);
         }
         
-        if ( strstr($fullUrl, '.com/it') ) {
-            $response = new RedirectResponse('https://'.str_replace('.com/it', '.com/italy/it', $fullUrl));
+        if ( strstr($fullUrl, '.com/it/') ) {
+            $response = new RedirectResponse('https://'.str_replace('.com/it/', '.com/italy/it/', $fullUrl));
             $event->setResponse($response);
         }
         
-        if ( strstr($fullUrl, '.com/de') ) {
-            $response = new RedirectResponse('https://'.str_replace('.com/de', '.com/germany/de', $fullUrl));
+        if ( strstr($fullUrl, '.com/de/') ) {
+            $response = new RedirectResponse('https://'.str_replace('.com/de/', '.com/germany/de/', $fullUrl));
             $event->setResponse($response);
         }
         
-        if ( strstr($fullUrl, '.com/fr') ) {
-            $response = new RedirectResponse('https://'.str_replace('.com/fr', '.com/france/fr', $fullUrl));
+        if ( strstr($fullUrl, '.com/fr/') ) {
+            $response = new RedirectResponse('https://'.str_replace('.com/fr/', '.com/france/fr/', $fullUrl));
             $event->setResponse($response);
         }
         
