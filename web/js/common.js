@@ -111,7 +111,7 @@ $(document).ready(function(){
         var slug = $('#product-slug').val();
         $.ajax({
             type: 'post',
-            url: '/en/product/'+slug+'/stock/',
+            url: '/swiss/en/product/'+slug+'/stock/',
             data: {
                   option: value,
                   json: 'true'
@@ -129,7 +129,7 @@ $(document).ready(function(){
         var value = $(this).val();
         $.ajax({
             type: 'get',
-            url: '/en/variant/'+value+'/stock/',
+            url: '/swiss/en/variant/'+value+'/stock/',
             dataType: 'json',
             success: function(data) {
                 if (data.code=='200' ){
