@@ -1,8 +1,5 @@
 {% if product.hasVariants %}
-    {% set hasStock = false %}
-    {% for variant in product.variants if variant.available %} 
-      {% if sylius_inventory_is_available(variant) and variant.onHand > 0 %}{% set hasStock = true %}{% endif %}
-    {% endfor %}
+    {% set hasStock = product.masterVariant.onHand %}
     {% if not hasStock %}
         <span class="label label-warning pull-right">{{ 'sylius.out_of_stock'|trans({}, 'messages') }}</span>
     {% elseif product.isVariantSelectionMethodChoice %}
@@ -87,7 +84,7 @@
             {% else %}
                 {% if sylius_is_restricted(product) %}
                 <button disabled="disabled" class="btn btn-danger pull-right"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.product_not_available_in_zone'|trans({}, 'messages') }}</button>
-                {% else %}
+                {% elseif hasStock %}
                     <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-shopping-cart fa-white fa-large"></i> {{ 'sylius.add_to_cart'|trans({}, 'messages') }}</button>
                 {% endif %}
             {% endif %}   
