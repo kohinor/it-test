@@ -1,7 +1,7 @@
 {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
 {% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
 {% set promotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::PROMOTION_ADJUSTMENT') %}
-
+{% set payment = order.getLastPayment('completed')|default(order.getLastPayment('processing')) %}
 <p>
   <strong>{{ 'sylius.account.order.created_at'|trans }} {{ order.createdAt|date() }}</strong><br><br>
   {{ 'sylius.account.order.number'|trans }} <strong>{{ order.number }}</strong>
@@ -58,8 +58,8 @@
           </table>
         </td>
         <td>{{ item.quantity }}</td>
-        <td>{{ item.unitPrice|sylius_money }}</td>
-        <td>{{ item.total|sylius_money }}</td>
+        <td>{{ item.unitPrice|sylius_price(payment.currency) }}</td>
+        <td>{{ item.total|sylius_price(payment.currency) }}</td>
       </tr>
     {% endfor %}
   </tbody>
@@ -70,7 +70,7 @@
           {{ 'sylius.order.items_total'|trans }}
         </span>
       </th>
-      <th>{{ order.itemsTotal|sylius_money }}</th>
+      <th>{{ order.itemsTotal|sylius_price(payment.currency) }}</th>
     </tr>
     <tr>
       <td colspan="3">
@@ -78,7 +78,7 @@
           {{ 'sylius.order.tax_total'|trans }}
         </span>
       </td>
-      <td>{{ order.adjustmentsTotal(taxAdjustment)|sylius_money }}</td>
+      <td>{{ order.adjustmentsTotal(taxAdjustment)|sylius_price(payment.currency) }}</td>
     </tr>
     <tr>
       <td colspan="3">
@@ -86,7 +86,7 @@
           {{ 'sylius.order.shipping_total'|trans }}
         </span>
       </td>
-      <td>{{ order.adjustmentsTotal(shippingAdjustment)|sylius_money }}</td>
+      <td>{{ order.adjustmentsTotal(shippingAdjustment)|sylius_price(payment.currency) }}</td>
     </tr>
     <tr>
       <td colspan="3">
@@ -94,7 +94,7 @@
           {{ 'sylius.order.promotion_total'|trans }}
         </span>
       </td>
-      <td>{{ order.adjustmentsTotal(promotionAdjustment)|sylius_money }}</td>
+      <td>{{ order.adjustmentsTotal(promotionAdjustment)|sylius_price(payment.currency) }}</td>
     </tr>
     <tr>
       <th colspan="3">
@@ -102,7 +102,7 @@
           {{ 'sylius.order.total'|trans }}
         </span>
       </th>
-      <th>{{ order.total|sylius_money }}</th>
+      <th>{{ order.total|sylius_price(payment.currency) }}</th>
     </tr>
   </tfoot>
 </table>

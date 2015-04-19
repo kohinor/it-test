@@ -15,7 +15,7 @@ class CartItemController extends Controller
 {
     public function addAction(Request $request)
     {
-         $cart = $this->getCurrentCart();
+        $cart = $this->getCurrentCart();
         $emptyItem = $this->createNew();
 
         $eventDispatcher = $this->getEventDispatcher();

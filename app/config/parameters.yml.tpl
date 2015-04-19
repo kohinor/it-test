@@ -32,7 +32,7 @@ parameters:
     sylius.oauth.facebook.clientsecret: '<facebook_client_secret>'
     sylius.oauth.google.clientid: '<google_client_id>'
     sylius.oauth.google.clientsecret: '<google_client_secret>'
-    sylius.inventory.backorders_enabled: true
+    sylius.inventory.backorders_enabled: false
     sylius.inventory.tracking_enabled: true
     sylius.inventory.holding.duration: '15 minutes'
     sylius.promotion.item_based: false

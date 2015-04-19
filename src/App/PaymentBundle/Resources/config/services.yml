@@ -17,10 +17,11 @@ services:
         calls:
             - [setOptions, ["%postpay.options%"]]
             - [setVerifier, ['@payum.security.http_request_verifier']]
+            - [setCurrencyHelper, ['@sylius.templating.helper.currency']]
         
     sylius.payum.postpay.action.status:
           class: "%sylius.payum.postpay.action.status.class%"
              
     sylius.payum.postpay.action.payment_status:
           class: "%sylius.payum.postpay.action.payment_status.class%"
-          arguments: ['@sylius.repository.payment', '@event_dispatcher', '@sylius.manager.payment', '@sm.factory']
+          arguments: ['@sylius.repository.payment', '@event_dispatcher', '@sylius.manager.payment', '@sm.factory', '@sylius.templating.helper.currency']

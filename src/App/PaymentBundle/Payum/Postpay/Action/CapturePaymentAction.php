@@ -25,6 +25,8 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
     protected $options;
     
     protected $securityVerifier;
+    
+    protected $currencyHelper;
 
     public function setOptions($options = array())
     {
@@ -34,6 +36,11 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
     public function setVerifier($verifier)
     {
         $this->securityVerifier = $verifier;
+    }
+    
+    public function setCurrencyHelper($currencyHelper)
+    {
+        $this->currencyHelper = $currencyHelper;
     }
     
     /**
@@ -76,8 +83,10 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
     protected function composeDetails(PaymentInterface $payment, TokenInterface $token, $httpRequest)
     {
         $host = 'https://'.$httpRequest->headers['host'][0];
-        $locale = substr(str_replace('http://','', str_replace('https://','',str_replace($host, '', $httpRequest->uri))), 0, 3);
-        $host = $host.$locale;
+        $urlParts = explode('/', str_replace($host, '', $httpRequest->uri));
+        $prefix = in_array($urlParts[1], array('italy', 'france', 'germany', 'swiss')) ? $urlParts[1].'/' : '';
+        $locale = in_array($urlParts[2], array('fr', 'it', 'de', 'en')) ? $urlParts[2].'/' : '';;
+        $host = $host.$prefix.$locale;
         $order = $payment->getOrder();
         
         $details = array();
@@ -86,7 +95,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         //$details['USERID'] = $this->options['userId'];
         
         $details['ORDERID'] = $payment->getId();
-        $details['AMOUNT'] = $order->getTotal();
+        $details['AMOUNT'] = $this->currencyHelper->convertAmount($order->getTotal(), $payment->getCurrency());
         $details['CURRENCY'] = $payment->getCurrency();
         $details['LANGUAGE'] = substr($locale, 1);
         
@@ -114,7 +123,7 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         $details['DECLINEURL'] = $token->getAfterUrl();
         $details['EXCEPTIONURL'] = $token->getAfterUrl();
         $details['CANCELURL'] = $token->getAfterUrl();
-        $details['BACKURL'] = $host.'/cart';
+        $details['BACKURL'] = $host.'cart';
         $details['HOMEURL'] = $host;
         $details['CATALOGURL'] = $host;
         

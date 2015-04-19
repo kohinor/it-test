@@ -41,19 +41,23 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
      * @var ObjectManager
      */
     protected $objectManager;
+    
+    protected $currencyHelper;
 
     
     public function __construct(
         RepositoryInterface $paymentRepository,
         EventDispatcherInterface $eventDispatcher,
         ObjectManager $objectManager,
-        FactoryInterface $factory
+        FactoryInterface $factory,
+            $currencyHelper
     ) {
         parent::__construct($factory);
 
         $this->paymentRepository = $paymentRepository;
         $this->eventDispatcher   = $eventDispatcher;
         $this->objectManager     = $objectManager;
+        $this->currencyHelper     = $currencyHelper;
     }
     /**
      * {@inheritDoc}
@@ -78,7 +82,7 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
             throw new BadRequestHttpException('Paymenet cannot be retrieved.');
         }
         $amount = $details['amount']*100;
-        if ($amount != $payment->getAmount()) {
+        if ($amount != $this->currencyHelper->convertAmount($payment->getAmount(), $payment->getCurrency())) {
             
             throw new BadRequestHttpException('Request amount '.$amount.' cannot be verified against payment amount '.$payment->getAmount().'.');
         }

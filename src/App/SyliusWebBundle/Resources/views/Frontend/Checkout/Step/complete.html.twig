@@ -29,7 +29,7 @@
 
 {% block javascripts %}
   {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
-  {% set payment = order.getLastPayment('completed') %}
+  {% set payment = order.getLastPayment('completed')|default(order.getLastPayment('processing')) %}
   <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -38,8 +38,8 @@
   _gaq.push(['_addTrans',
     '{{ payment.id }}',           // transaction ID - required
     'Italica Shop',  // affiliation or store name
-    '{{ order.itemsTotal|sylius_money }}',          // total - required
-    '{{ order.adjustmentsTotal(taxAdjustment)|sylius_money }}',           // tax
+    '{{ order.itemsTotal|sylius_price(payment.currency) }}',          // total - required
+    '{{ order.adjustmentsTotal(taxAdjustment)|sylius_price(payment.currency) }}',           // tax
     '0',              // shipping
     '{{  order.shippingAddress.city }}',       // city
     '{{  order.shippingAddress.province }}',     // state or province
@@ -53,7 +53,7 @@
     '{{ item.variant.sku }}',           // SKU/code - required
     '{{ product.name }}',        // product name
     '{% if item.variant.presentation is not empty %}{{ item.variant.presentation }}{% else %}{% for option in item.variant.options %}{{ option.value }}{% endfor %}{% endif %}',   // category or variation
-    '{{ item.unitPrice|sylius_money }}',          // unit price - required
+    '{{ item.unitPrice|sylius_price(payment.currency) }}',          // unit price - required
     '{{ item.quantity }}'               // quantity - required
   ]);
   {% endfor %}

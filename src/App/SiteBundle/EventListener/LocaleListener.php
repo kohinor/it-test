@@ -31,12 +31,12 @@ class LocaleListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         if (!$request->hasPreviousSession()) {
-           if (strstr($request->getHost(), '.it')) {
+           if (strstr($request->getHost(), '.it') || strstr($request->getBaseUrl(), 'italy')) {
                 $default = 'it';
-            } elseif (strstr($request->getHost(), '.fr')){
+            } elseif (strstr($request->getHost(), '.fr') || strstr($request->getBaseUrl(), 'france')){
                 $default = 'fr';
             }
-            elseif (strstr( $request->getHost(), '.de')){
+            elseif (strstr( $request->getHost(), '.de') || strstr($request->getBaseUrl(), 'germany')){
                 $default = 'de';
             } else {
                 $default = 'en';

@@ -29,8 +29,9 @@ class CurrencyListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
+        
         $request = $event->getRequest();
-        if (strstr($request->getHost(), '.ch')) {
+        if (strstr($request->getHost(), '.ch') || strstr($request->getBaseUrl(), 'swiss')) {
             if ($this->currencyContext->getCurrency() != 'CHF') {
                 $this->currencyContext->setCurrency('CHF');
             }
