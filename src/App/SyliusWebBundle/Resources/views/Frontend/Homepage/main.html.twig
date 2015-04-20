@@ -7,7 +7,15 @@
 
 <div class="row">
   <div class="col-lg-5 col-md-5 col-sm-5">
-   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-right-banner', 'authorizedBlockTemplateList': ['image']} )) }} 
+   <div class="text-center">
+      <a href="{{ path('app_solr_search_gender', {'gender':'women'}) }}">
+      <img class="img-thumbnail img-responsive" src="/img/women.jpg"  alt="{{ 'shop.for.women'|trans }}"/></a>
+      <div class="panel panel-default" style="opacity: 0.85;position: absolute;left:0; top:60%; width:100%">
+        <div class="panel-body text-uppercase">
+          <a href="{{ path('app_solr_search_gender', {'gender':'women'}) }}"> <b>{{ 'shop.for.women'|trans }}</b></a>
+        </div>
+      </div>
+    </div> 
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 text-center" >
       <div >
@@ -39,7 +47,15 @@
       </div>
   </div>
   <div class="col-lg-5 col-md-5 col-sm-5">
-   {{ render(controller('KitpagesCmsBundle:Block:widget', {'slug': app.request.locale|default('en') ~ '-left-banner', 'authorizedBlockTemplateList': ['image']} )) }}             
+    <div class="text-center">
+      <a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}">
+      <img class="img-thumbnail img-responsive" src="/img/men.jpg"  alt="{{ 'shop.for.men'|trans }}"/></a>
+      <div class="panel panel-default" style="opacity: 0.85;position: absolute;left:0; top:60%; width:100%">
+        <div class="panel-body text-uppercase">
+          <a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}"> <b>{{ 'shop.for.men'|trans }}</b></a>
+        </div>
+      </div>
+    </div>             
   </div>
 </div>
 <div class="row">
