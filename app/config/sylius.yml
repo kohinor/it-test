@@ -7,7 +7,7 @@ parameters:
   sylius.checkout_step.purchase.class: App\SyliusCoreBundle\Checkout\Step\PurchaseStep
   sylius.checkout_step.finalize.class: App\SyliusCoreBundle\Checkout\Step\FinalizeStep
         
- 
+
 sylius_locale: 
     classes:
         locale:

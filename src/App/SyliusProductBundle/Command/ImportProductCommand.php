@@ -40,8 +40,8 @@ class ImportProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Ana Lublin','Avirex', 'Bottega Veneta', 'Burberry', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
-                                'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lublin','Avirex', 'Bottega Veneta', 'Burberry','Carrera', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
+                                'Cerruti', 'Chloe', 'Christian Lacroix', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry', 'Fontana 2.0',
                                 'Gas', 'Geographical Norway', 'Gucci','Giuseppe Zanotti' ,'Guess', 'Hogan', 'Hugo Boss', 'Jessica Simpson', 'Just Cavalli', 'Kenzo', 'Made in Italia', 'Michael Kors', 'Moschino',
                                 'Nina Ricci', 'Prada', 'Rene Caovilla', 'Richmond','Rosso Fiorentino', 'Roberto Cavalli', 'Rochas', 'Royal Polo',
                                 'Sergio Rossi', 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',

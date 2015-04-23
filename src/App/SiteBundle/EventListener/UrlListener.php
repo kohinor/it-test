@@ -16,7 +16,7 @@ class UrlListener implements EventSubscriberInterface
         $requestUri = $request->getRequestUri();
         $fullUrl = $request->getHost().$requestUri;
 
-        if (strstr($request->getHost(), '.ch') || $requestUri == '/' || $requestUri == '' ) {
+        if (strstr($request->getHost(), '.ch')) {
             $response = new RedirectResponse('https://shopitalica.com/swiss/en/');
             $event->setResponse($response);
         } elseif (strstr($request->getHost(), '.fr')) {
@@ -27,6 +27,9 @@ class UrlListener implements EventSubscriberInterface
             $event->setResponse($response);
         } elseif (strstr($request->getHost(), '.it')) {
             $response = new RedirectResponse('https://shopitalica.com/italy/it/');
+            $event->setResponse($response);
+        } elseif( $requestUri == '/' || $requestUri == '' ) {
+            $response = new RedirectResponse('https://shopitalica.com/swiss/en/');
             $event->setResponse($response);
         } elseif ( strstr($fullUrl, '.com/en/') ) {
             $response = new RedirectResponse('https://'.str_replace('.com/en/', '.com/swiss/en/', $fullUrl));
@@ -40,7 +43,7 @@ class UrlListener implements EventSubscriberInterface
         } elseif ( strstr($fullUrl, '.com/fr/') ) {
             $response = new RedirectResponse('https://'.str_replace('.com/fr/', '.com/france/fr/', $fullUrl));
             $event->setResponse($response);
-        } elseif(in_array(substr($requestUri, -3), array('/en', '/de', '/fr', '/it'))) {
+        } elseif(!strstr($requestUri, '/locale/change') && in_array(substr($requestUri, -3), array('/en', '/de', '/fr', '/it'))) {
             $response = new RedirectResponse('https://'.$request->getHost().$requestUri.'/');
             $event->setResponse($response);
         } elseif ( !strstr($requestUri, '/it/') &&
