@@ -46,13 +46,6 @@ class ProductController extends Controller
     
     public function getProductsByGroupAction(Request $request, $groupId)
     {
-        $response = new Response();
-        $response->setETag(md5($request->getContent()));
-        $response->setLastModified(new \DateTime('today midnight'));
-        $response->setPublic();
-        if ($response->isNotModified($request)) {
-            return $response;
-        }
         $productRepository = $this->container->get('sylius.repository.product');
         $products = $productRepository->findByGroupId($groupId);
         return $this->render('AppSyliusProductBundle:Product:other.html.twig', array('slug' => $request->attributes->get('slug'),'products' =>  $products ), $response);
