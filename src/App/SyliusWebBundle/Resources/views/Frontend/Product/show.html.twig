@@ -24,6 +24,9 @@
     {% if taxon.name == 'Men' %}
         {% set gender = 'men' %}
     {% endif %}
+    {% if taxon.name == 'Kids' %}
+        {% set gender = 'kids' %}
+    {% endif %}
     {% if taxon.parent.name == 'Brand' %}
         {% set brand = taxon.name %}
     {% endif %}
@@ -57,7 +60,7 @@
 {% endblock %}
 {% block overlay %}
    {% if gender %}    
-   {{ render(controller('AppSyliusProductBundle:SizeGuide:getSizeGuide', {'request': app.request, 'brand': brand, 'gender': gender} )) }}             
+   {{ render(controller('AppSyliusProductBundle:SizeGuide:getSizeGuide', {'gender': gender} )) }}             
    {% endif %}
 {% endblock %}
 {% block body %}

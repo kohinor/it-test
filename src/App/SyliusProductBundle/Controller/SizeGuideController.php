@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SizeGuideController extends Controller
 {
-    public function getSizeGuideAction(Request $request, $brand, $gender)
+    public function getSizeGuideAction($gender)
     {
         $repository = $this->container->get('sylius.repository.product_size_guide');
-        $sizeGuide = $repository->findBy(array('brand' => $brand, 'gender' => $gender)); 
+        $sizeGuide = $repository->findBy(array('gender' => $gender)); 
         
-        return $this->render('AppSyliusProductBundle:SizeGuide:size-guide.html.twig', array('locale' => $request->attributes->get('_locale'),'size_guides' =>  $sizeGuide), $response);
+        return $this->render('AppSyliusProductBundle:SizeGuide:size-guide.html.twig', array('size_guides' =>  $sizeGuide));
     }
     
 
@@ -105,7 +105,7 @@ class SizeGuideController extends Controller
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->persist($sizeGuide);
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('app_site_product_size_guide_list', array('_locale' => $request->attributes->get('_locale'))), 301);
+                return $this->redirect($this->generateUrl('app_site_product_size_guide_list', array()), 301);
             }
         }
         $bindings = array(

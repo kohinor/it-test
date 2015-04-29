@@ -25,12 +25,6 @@ class ProductSizeGuide
     protected $name;
     
     /**
-     * @ORM\Column(name="brand", type="string", length=255)
-     */
-    
-    protected $brand;
-    
-    /**
      * @ORM\Column(name="gender", type="string", length=255)
      */
     protected $gender;

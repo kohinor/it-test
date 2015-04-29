@@ -22,17 +22,8 @@ class ProductSizeGuideType extends AbstractType
         $builder->add('name', 'text', array(
                 'label' => "sylius_product_size_guide_name"
             ))
-        ->add('brand', 'entity', array(
-                'class' => 'Sylius\Component\Core\Model\Taxon',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('o')
-                        ->join('o.taxonomy', 't')
-                        ->where('t.name = \'Brand\'')
-                        ->andWhere('o.parent IS NOT NULL');
-                },
-            ))
         ->add('gender', 'choice', array(
-                'choices'   => array('men' => 'Men', 'women' => 'Women'),
+                'choices'   => array('men' => 'Men', 'women' => 'Women', 'kids' => 'Kids'),
                 'required'  => true,
             ));
         ;

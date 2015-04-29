@@ -24,10 +24,6 @@
         <label class="sr-only control-label" for="criteria_name">Name</label>
         <input id="criteria_name" class="form-control" type="text" placeholder="Name" name="criteria[name]">
     </div>
-    <div class="form-group">
-        <label class="sr-only control-label" for="criteria_name">Brand</label>
-        <input id="criteria_name" class="form-control" type="text" placeholder="Brand" name="criteria[brand]">
-    </div>
     <button class="btn btn-primary" type="submit">
         <i class="glyphicon glyphicon-search"></i>
         Filter
@@ -43,7 +39,6 @@
         <tr>
             <th class="id">{{ sylius_resource_sort('id', '#id') }}</th>
             <th class="info">{{ sylius_resource_sort('name', 'sylius.product.size.guide.name'|trans) }}</th>
-            <th class="info">{{ sylius_resource_sort('brand', 'sylius.product.size.guide.brand'|trans) }}</th>
             <th class="info">{{ sylius_resource_sort('gender', 'sylius.product.size.guide.gender'|trans) }}</th>
             <th></th>
         </tr>
@@ -67,7 +62,6 @@
                     </div>
                 </div>
             </td>
-            <td class="info">{{ sizeGuide.brand }} </td>
             <td class="info">{{ sizeGuide.gender }} </td>
             <td class="center-text">
                 {{ buttons.edit(path('app_site_product_size_guide_edit', {'id': sizeGuide.id})) }}
