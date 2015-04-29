@@ -81,11 +81,12 @@ class PaymentStatusAction extends AbstractPaymentStateAwareAction
         if (null === $payment) {
             throw new BadRequestHttpException('Paymenet cannot be retrieved.');
         }
-        $amount = $details['amount']*100;
+        
+        /*$amount = $details['amount']*100;
         if ($amount != $this->currencyHelper->convertAmount($payment->getAmount(), $payment->getCurrency())) {
             
             throw new BadRequestHttpException('Request amount '.$amount.' cannot be verified against payment amount '.$payment->getAmount().'.');
-        }
+        }*/
 
         // Actually update payment details
         $details = array_merge($payment->getDetails(), $details);

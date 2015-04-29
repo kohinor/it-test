@@ -5,14 +5,14 @@
         <li class="{%if loop.first%} first {%endif%}{%if loop.last%} last {%endif%} {% if navigationElem.children|length > 0 %}{% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}dropdown{% endif %}{% endif %} {% if navigationCssClass =='navbar-nav footer' %}col-lg-4{% endif %}">
         {% if navigationElem.children|length > 0 and navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %}    
             <a class="dropdown-toggle text-uppercase "  data-toggle="dropdown"  href="#">
-                {{navigationElem.title |trans({}, 'messages') }}
+                {{navigationElem.title |trans({}, 'messages')|raw }}
                 &nbsp;<i class="fa fa-caret-down"></i>
             </a>
         {% else %}
             {% if navigationElem.url == '' %}
-                <div >{{navigationElem.title|trans({}, 'messages')}}</div>
+                <div >{{navigationElem.title|trans({}, 'messages')|raw}}</div>
             {% else %}
-                <a href="{{ app.request.baseUrl }}/{{ app.request.locale }}{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{% if navigationElem.level > 3 and navigationCssClass != 'navbar-nav header' %}<i class="fa fa-circle-o"></i> {% endif %} {{navigationElem.title|trans({}, 'messages')}}</a>
+                <a href="{{ app.request.baseUrl }}/{{ app.request.locale }}{{navigationElem.url}}" {% if navigationElem.level == 3 and navigationCssClass == 'navbar-nav header' %} class="text-uppercase"{% endif %}>{% if navigationElem.level > 3 and navigationCssClass != 'navbar-nav header' %}<i class="fa fa-circle-o"></i> {% endif %} {{navigationElem.title|trans({}, 'messages')|raw}}</a>
             {% endif %}
         {% endif %}
             {% if navigationElem.level < 4 %}
