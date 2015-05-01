@@ -1,4 +1,6 @@
- 
+{% if product.rrp > product.price %}
+    <div class="ribbon red"><span>{{ 100-(product.price*100/product.rrp)|round }}% {{ 'off'|trans }}</span></div>
+{% endif %} 
     <a  href="{{ path('app_site_product', {'slug':product.slug}) }}">
         <img  class="img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_home')|replace({'http://':'https://'}) : 'http://placehold.it/130x156' }}" alt="{{ product.name }}" />
     </a> 
