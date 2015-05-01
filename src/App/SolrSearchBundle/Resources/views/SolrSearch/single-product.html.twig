@@ -7,6 +7,7 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
+<div class="ribbon red"><span>{{ 100-(article.price*100/article.rrp)|round }}% {{ 'off'|trans }}</span></div>
 <a href="{{ path('app_site_product', {'slug':article.slug}) }}"><img class="img-responsive" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium')|replace({'http://':'https://'}) : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
 <p><br></p>
 <div class="text-uppercase">

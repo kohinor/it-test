@@ -110,11 +110,12 @@
           <div class="well panel panel-default">
             <p class="lead  pull-right">{{ 'italica.product.free.delivery'|trans |raw }}</p>
             <div class="lead pull-left">
+               <p class="text-uppercase"><span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small class="text-lowercase">(incl. VAT)</small></b></span> </p>
             {% if product.rrp > product.price %}
-                <p><small>{{ 'italica.rrp'|trans({}, 'messages') }}: {{product.rrp|sylius_price }}</small></p>
-            <p>{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{product.price|sylius_price }} <small class="text-lowercase">(incl. VAT)</small></b></span></p>
-            {% else %}
-                <p class="text-uppercase">{{ 'italica.shop.price'|trans({}, 'messages') }}: <span class="text-danger"><b>{{ sylius_calculate_price(product.masterVariant)|sylius_price }} <small class="text-lowercase">(incl. VAT)</small></b></span> </p>
+                <p>
+                  <small>{{ 'italica.rrp'|trans({}, 'messages') }}: <s>{{product.rrp|sylius_price }}</s></small><br />
+                  <small>{{ 'italica.you.save'|trans({}, 'messages') }}: {{ (product.rrp - product.price)|sylius_price }} ({{ 100-(product.price*100/product.rrp)|round  }}%)</small>
+                </p>
             {% endif %}
             </div>
             <div style="clear:both;"></div>
@@ -173,4 +174,23 @@
   </div>
 {{ render(controller( 'AppSyliusProductBundle:Product:getLastVisited', {'request': app.request} )) }}
 <p>&nbsp;</p>
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59486178-1', 'auto');
+  ga('require','displayfeatures'); 
+  ga('set','dimension1', '{{ product.sku }}');
+  ga('set','dimension2','item'); 
+  ga('set','dimension3','{{ product.price/100 }}'); 
+  ga('send', 'pageview');
+
+  </script>
+
+  
 {% endblock %}

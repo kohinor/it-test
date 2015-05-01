@@ -55,6 +55,7 @@ class SiteController extends Controller
     
     public function exportAction()
     {
+        ini_set('max_execution_time', 300);
         $container = $this->container;
         $response = new StreamedResponse();
         $response->setCallback(function() use($container){
@@ -70,10 +71,11 @@ class SiteController extends Controller
                 'Price', 
                 'Sale Price', 
                 'Image URL', 
-                'Destination URL'),';');
-            $results = $container->get('sylius.repository.product')->findActiveProducts();
+                'Destination URL'),',');
+            $results = $container->get('sylius.repository.product')->findActiveProductsIterate();
             $cacheManager = $container->get('liip_imagine.cache.manager');
-            foreach( $results as $row ) {
+            while (false !== ($row = $results->next())) {
+                $row = $row[0];
                 $brand = '';
                 foreach ($row->getTaxons() as $taxon) {
                 if ($taxon->getTaxonomy()->getName() != 'Brand') continue;
@@ -85,12 +87,13 @@ class SiteController extends Controller
                     $brand,
                     $row->translate($container->get('request')->getLocale())->getDescription(),
                     'Avenue Claude Nobs 14 , c/o Doltec SA , CH -1820 Montreux - Switzerland',
-                    $row->getMasterVariant()->getRrp().'EUR',
-                    $row->getMasterVariant()->getPrice().'EUR',
-                    $cacheManager->getBrowserPath($row->getImage()->getPath(), 'sylius_small'),
+                    $row->getMasterVariant()->getRrp()/100 .'EUR',
+                    $row->getMasterVariant()->getPrice()/100 .'EUR',
+                    $row->getImage()? $cacheManager->getBrowserPath($row->getImage()->getPath(), 'sylius_small') : '',
                     $container->get('router')->generate('app_site_product', array('slug' => $row->getSlug()), true)
                 );
                 fputcsv($handle, $line);
+                $container->get('doctrine')->getManager()->detach($row);
             }
 
             fclose($handle);
