@@ -129,10 +129,6 @@ liip_imagine:
     cache: 'cached_amazon_s3'
     data_loader: stream.profile
     filter_sets:
-        sylius_home:
-           quality: 75
-           filters:
-                thumbnail: { size: [330, 396], mode: inset } 
         sylius_small:
             quality: 75
             filters:
