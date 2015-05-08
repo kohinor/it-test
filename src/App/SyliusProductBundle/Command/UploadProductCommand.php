@@ -48,7 +48,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $productIds = array();
         foreach ($products as $key => $product) {
             $output->writeln("<info>Item </info>".$key);
-            if ($product->getRrp() < 7800) {
+            if ($product->getRrp() < 4900) {
                 continue;
             }
             $productIds[] = $product->getPartnerProductId();

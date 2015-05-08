@@ -1,15 +1,29 @@
 {% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
 
-{% block keywords %}
-    {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
+{% block title %}
+  {% if app.request.get('gender') == 'men' %}
+    {{ 'Affordable Mens Clothing Shop Online - Shop Italica'|trans }}
+  {% elseif app.request.get('gender') == 'women' %}
+    {{ 'Affordable Womens Clothing Shop Online - Shop Italica'|trans }}
+  {% elseif app.request.get('gender') == 'kids' %}
+    {{ 'Affordable Luxurious Kids Clothing Shop Online - Shop Italica'|trans }}
+  {% else %}
+    {{ 'Mens & Womens Shoes | Clothing & Accessories - Shop Italica'|trans }}
+  {% endif %}
 {% endblock %}
 
-{% block title %}
-  Italica: Search:{{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand')|replace({'_': ' '}) }} {{ app.request.get('category')|replace({'_': ' '}) }}{{ app.request.query.get('term') }}
-{% endblock %}
 {% block description %}
-    {{ app.request.get('gender') }} {{ app.request.get('promotion') }} {{ app.request.get('brand') }} {{ app.request.get('category') }}{{ app.request.query.get('term') }}
+    {% if app.request.get('gender') == 'men' %}
+    {{ 'Shop affordable and luxurious mens clothing online. Shop Italica is the one stop solution for mens clothing and accessories. Get best deal Now!!'|trans }}
+  {% elseif app.request.get('gender') == 'women' %}
+    {{ 'Buy cheap and lavish womens clothing online. Shop Italica is the one stop solution for womens clothing and accessories. Get best deal Now!!'|trans }}
+  {% elseif app.request.get('gender') == 'kids' %}
+    {{ 'Shop affordable and luxurious kids cloths online. Shop Italica is one of the leading online store for shirts, tops, jackets, dresses and accessories of kids.'|trans }}
+  {% else %}
+    {{ 'Buy Mens, Womens Shoes and Clothing & Accessories at affordable price at Shop Italica. We are offering a wide range of selections of cloths Accessories.'|trans }}
+  {% endif %}
 {% endblock %}
+
 {% block breadcrumbs %}  
 <ul class="breadcrumb">
     <li>{{ 'italica.you.are.here'|trans({}, 'messages') }}: </li>
