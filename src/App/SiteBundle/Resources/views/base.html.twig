@@ -94,14 +94,14 @@
                   <nav>
                   <div class="navbar-collapse collapse navbar-responsive-collapse">
                     <div class="container" style="padding-left:20%">
-                    {% if app.request.get('gender') == 'men' %}
+                    {% if app.request.get('gender') == 'men' or 'shop-men' in  app.request.Uri %}
                       {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
                     'slug': 'en-men',
                     'cssClass': "navbar-nav header",
                     'currentPageSlug':kitCmsPage.slug|default(''),
                     'startDepth':1 ,
                     'endDepth':3} )) }}
-                    {% elseif app.request.get('gender') == 'women' %}
+                    {% elseif app.request.get('gender') == 'women' or 'shop-women' in  app.request.Uri %}
                         {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
                           'slug': 'en-women',
                           'cssClass': "navbar-nav header",
