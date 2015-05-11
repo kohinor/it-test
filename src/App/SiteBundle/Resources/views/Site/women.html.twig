@@ -1,0 +1,92 @@
+{% extends 'KitpagesCmsBundle:Page:layout.html.twig' %}
+
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+    <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <a href="{{ path('app_solr_search_gender', {'gender':'women','brand':'cavalli class'}) }}">
+              <img src="/img/carousel/cavalli_class-EN.jpg" alt="Cavalli Class">
+            </a>
+          </div>
+
+          <div class="item">
+            <a href="{{ path('app_solr_search_gender', {'gender':'women','brand':'v 1969'}) }}">
+              <img src="/img/carousel/v1969-EN.jpg" alt="v1969">
+            </a>
+          </div>
+
+          <div class="item">
+            <a href="{{ path('app_solr_search_gender', {'gender':'women','brand':'versace jeans'}) }}">
+              <img src="/img/carousel/versace_jeans-EN.jpg" alt="Versace Jeans">
+            </a>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+<div class="col-lg-1 col-md-1"></div>
+<div class="col-lg-10 col-md-10">
+  <div class="row text-uppercase">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive" style="width:90%" src="/img/carousel/clothing.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_category', {'gender':'women','category':'womens-clothing'}) }}">
+      {{ 'clothing'|trans }}
+    </a></h3></p>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive" style="width:90%" src="/img/carousel/bags.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_category', {'gender':'women','category':'bags'}) }}">
+      {{ 'bags'|trans }}
+    </a></h3></p>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive"style="width:90%" src="/img/carousel/shoes.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_category', {'gender':'women','category':'shoes'}) }}">
+      {{ 'shoes'|trans }}
+    </a></h3></p>
+      
+  </div>
+</div>
+<div class="row text-uppercase">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive" style="width:90%" src="/img/carousel/accessories.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_category', {'gender':'women','category':'accessories'}) }}">
+      {{ 'accessories'|trans }}
+    </a></h3></p>     
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive" style="width:90%" src="/img/carousel/new.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_promotion', {'gender':'women','promotion':'new'}) }}">
+      {{ 'new'|trans }}
+    </a></h3></p> 
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+    <img class="img-responsive" style="width:90%" src="/img/carousel/sale.jpeg"/>
+    <p><h3><a  style="font-weight:bold" href="{{ path('app_solr_search_gender_promotion', {'gender':'women','promotion':'sale'}) }}">
+      {{ 'sale'|trans }}
+    </a></h3></p>
+  </div>
+</div>
+</div>
+<div class="col-lg-1 col-md-1"></div>
+</div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script>
+    $("#myCarousel").carousel();
+    </script>
+{% endblock %}
+
+

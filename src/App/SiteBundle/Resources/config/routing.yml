@@ -35,4 +35,7 @@ app_site_sitemap_site:
 app_site_export:
     pattern:  /export
     defaults: { _controller: AppSiteBundle:Site:export }
-
+    
+app_site_shop_women:
+    pattern:  /shop-women
+    defaults: { _controller: AppSiteBundle:Site:womenMain }

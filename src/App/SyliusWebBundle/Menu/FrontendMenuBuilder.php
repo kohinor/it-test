@@ -34,10 +34,34 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
     {
         $menu = $this->factory->createItem('root', array(
             'childrenAttributes' => array(
-                'class' => 'nav'
+                'class' => 'nav nav-pills'
             )
         ));
-
+        
+        if ($this->securityContext->getToken() && $this->securityContext->isGranted('ROLE_USER')) {
+            $menu->addChild('account', array(
+                'route' => 'fos_user_profile_show',
+                'linkAttributes' => array('title' => $this->translate('italica.account')),
+                'labelAttributes' => array('icon' => 'fa fa-user', 'iconOnly' => false)
+            ))->setLabel($this->translate('italica.account'));
+            $menu->addChild('logout', array(
+                'route' => 'fos_user_security_logout',
+                'linkAttributes' => array('title' => $this->translate('italica.logout')),
+                'labelAttributes' => array('icon' => 'fa fa-sign-out', 'iconOnly' => false)
+            ))->setLabel($this->translate('italica.logout'));
+        } else {
+            $menu->addChild('login', array(
+                'route' => 'fos_user_security_login',
+                'linkAttributes' => array('title' => $this->translate('italica.login')),
+                'labelAttributes' => array('icon' => 'fa fa-sign-in', 'iconOnly' => false)
+            ))->setLabel($this->translate('italica.login'));
+            $menu->addChild('register', array(
+                'route' => 'fos_user_registration_register',
+                'linkAttributes' => array('title' => $this->translate('italica.register')),
+                'labelAttributes' => array('icon' => 'fa fa-user', 'iconOnly' => false)
+            ))->setLabel($this->translate('italica.register'));
+        }            
+              
         if ($this->cartProvider->hasCart()) {
             $cart = $this->cartProvider->getCart();
             $cartTotals = array('items' => $cart->countItems(), 'total' => $cart->getTotal());
@@ -50,7 +74,8 @@ class FrontendMenuBuilder extends \Sylius\Bundle\WebBundle\Menu\FrontendMenuBuil
             'linkAttributes' => array('title' => $this->translate('sylius.frontend.menu.main.cart', array(
                 '%items%' => $cartTotals['items'],
                 '%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])
-            )), 'class' => 'pull-right panel panel-default'),
+            )), 'class' => 'panel',
+                'style' => 'margin:0'),
             'labelAttributes' => array('icon' => 'fa fa-shopping-cart fa-lg')
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart', array(
             '%items%' => $cartTotals['items'],

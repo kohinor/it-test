@@ -16,15 +16,15 @@ app_sylius_product:
     prefix: /{_locale}/
     requirements:
         _locale: en|fr|it|de
-        
-app_solr_search_main:
-    resource: "@AppSolrSearchBundle/Resources/config/routing.yml"
+
+app_kit_site:
+    resource: "@AppSiteBundle/Resources/config/routing.yml"
     prefix: /{_locale}/
     requirements:
         _locale: en|fr|it|de
-   
-app_kit_site:
-    resource: "@AppSiteBundle/Resources/config/routing.yml"
+        
+app_solr_search_main:
+    resource: "@AppSolrSearchBundle/Resources/config/routing.yml"
     prefix: /{_locale}/
     requirements:
         _locale: en|fr|it|de

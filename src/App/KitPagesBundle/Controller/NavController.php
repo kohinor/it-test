@@ -141,6 +141,12 @@ class NavController extends BaseController
                 );
                 $pageTree['actionList'][] = array(
                     'id' => '',
+                    'label' => 'add page technical',
+                    'url'  => $this->generateUrl('kitpages_cms_page_create_technical', $paramUrlCreate),
+                    'class' => 'kit-cms-advanced'
+                );
+                $pageTree['actionList'][] = array(
+                    'id' => '',
                     'label' => 'add page link',
                     'url'  => $this->generateUrl('kitpages_cms_page_create_link', $paramUrlCreate),
                     'class' => 'kit-cms-advanced'

@@ -7061,7 +7061,7 @@ ul.checkout-bar a {
 }
 
 .header-box {
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4); 
     background:rgb(245, 245, 245);
 }
 .footer-separator {
@@ -7193,3 +7193,55 @@ ul.checkout-bar a {
 .blue span {background: linear-gradient(#2989d8 0%, #1e5799 100%);}
 .blue span::before {border-left-color: #1e5799; border-top-color: #1e5799;}
 .blue span::after {border-right-color: #1e5799; border-top-color: #1e5799;}
+
+.overbox {
+  background-color: rgba(0,0,0,0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:100%; 
+  height:100%;
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+}
+
+.overbox .nav {
+    display:none;
+    -webkit-transition: all .25s ease;
+       -moz-transition: all .25s ease;
+        -ms-transition: all .25s ease;
+         -o-transition: all .25s ease;
+            transition: all .25s ease;
+}
+
+.overbox:hover .nav {
+    display:block;
+}
+.overbox:hover { background-color: rgba(0,0,0,0.55); }
+.overbox a {color:#fff}
+.overbox .nav > li > a:hover {background-color: transparent }
+
+.overtext {
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+  transform: translateY(40px);
+  -webkit-transform: translateY(40px);
+  position: absolute;
+  left:25%; 
+  top:20%; 
+  width:50%;
+  z-index:1000;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+      margin: auto;
+  }

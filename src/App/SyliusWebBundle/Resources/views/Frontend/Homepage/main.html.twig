@@ -1,63 +1,51 @@
 {% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
-
-{% block breadcrumbs %}
-<ul class="breadcrumb"></ul>
-{% endblock %}
+{% block class %}{% endblock %}
 {% block body %}
 
 <div class="row">
-  <div class="col-lg-5 col-md-5 col-sm-5">
-   <div class="text-center">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+   <div class="text-center row">
       <a href="{{ path('app_solr_search_gender', {'gender':'women'}) }}">
-      <img class="img-thumbnail img-responsive" src="/img/women.jpg"  alt="{{ 'shop.for.women'|trans }}"/></a>
-      <div class="panel panel-default" style="opacity: 0.85;position: absolute;left:0; top:60%; width:100%">
-        <div class="panel-body text-uppercase">
-          <a href="{{ path('app_solr_search_gender', {'gender':'women'}) }}"> <b>{{ 'shop.for.women'|trans }}</b></a>
+      <img class="img-responsive" src="/img/women.jpg"  alt="{{ 'shop.for.women'|trans }}"/></a>
+      <div class="overbox">      
+        
+        <div class="overtext">
+            <h3><a href="{{ path('app_site_shop_women') }}"> <b>{{ 'shop.for.women'|trans }}</b></a></h3>
+            <div style="border-top:2px solid #fff; border-bottom:2px solid #fff">
+            {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+                'slug': 'en-women-home',
+                'cssClass': "text-center",
+                'currentPageSlug':kitCmsPage.slug|default(''),
+                'startDepth':1 ,
+                'endDepth':1} )) }}
+            </div>
         </div>
       </div>
     </div> 
   </div>
-  <div class="col-lg-2 col-md-2 col-sm-2 text-center" >
-      <div >
-          <div>
-              <a href="{{ path('app_solr_search_brand', {'brand':'calvin-klein'}) }}">
-              <img src="/img/calvin-klein-logo.png"  class="img-responsive" alt="Calvin Klein">
-              </a>
-          </div>
-          <div>
-              <a href="{{ path('app_solr_search_brand', {'brand':'michael-kors'}) }}">
-              <img src="/img/michael-kors-logo.png" class="img-responsive" alt="Michael Kors">
-              </a>
-          </div>
-      <div>
-          <a href="{{ path('app_solr_search_brand', {'brand':'gucci'}) }}">
-          <img src="/img/gucci-logo.png" class="img-responsive" alt="Gucci">
-          </a>
-      </div>
-      <div>
-          <a href="{{ path('app_solr_search_brand', {'brand':'versace-jeans'}) }}">
-          <img src="/img/versace-logo.png" class="img-responsive" alt="Versace">
-          </a>
-      </div><br>
-      <div >
-          <div class="panel-body">
-              <a href="{{ path('app_site_brand') }}"><strong>{{ 'italica.more'|trans }} </strong> <i class="fa fa-arrow-right"></i></a>
-          </div>
-      </div>
-      </div>
-  </div>
-  <div class="col-lg-5 col-md-5 col-sm-5">
-    <div class="text-center">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="text-center row">      
       <a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}">
-      <img class="img-thumbnail img-responsive" src="/img/men.jpg"  alt="{{ 'shop.for.men'|trans }}"/></a>
-      <div class="panel panel-default" style="opacity: 0.85;position: absolute;left:0; top:60%; width:100%">
-        <div class="panel-body text-uppercase">
-          <a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}"> <b>{{ 'shop.for.men'|trans }}</b></a>
+      <img class="img-responsive" src="/img/men.jpg"  alt="{{ 'shop.for.men'|trans }}"/></a>
+      <div class="overbox">      
+        
+        <div class="overtext">
+            <h3><a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}"> <b>{{ 'shop.for.men'|trans }}</b></a></h3>
+            <div style="border-top:2px solid #fff; border-bottom:2px solid #fff">
+            {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
+                'slug': 'en-men-home',
+                'cssClass': "text-center",
+                'currentPageSlug':kitCmsPage.slug|default(''),
+                'startDepth':1 ,
+                'endDepth':1} )) }}
+            </div>
         </div>
       </div>
+     
     </div>             
   </div>
 </div>
+<div class="container">
 <div class="row">
     <div class="col-lg-12">
     <h4 class="title"><span class="text">{{ 'italica.new.arrivals.women'|trans({}, 'messages') }}</span></h4>
@@ -99,6 +87,6 @@
         'gender':'men',
         'limit':4 } )) }}
     </div>
-    
+</div>
 </div>
 {% endblock %}

@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SiteController extends Controller
 {
+    public function womenMainAction()
+    {
+       return $this->render('AppSiteBundle:Site:women.html.twig', array()); 
+    }
     public function brandListAction()
     {
         $repository = $this->container->get('sylius.repository.taxonomy');
