@@ -27,7 +27,7 @@
 </div>
 {% endblock %}
 
-{% block javascripts %}
+{% block ga_javascripts %}
   {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
   {% set payment = order.getLastPayment('completed')|default(order.getLastPayment('processing')) %}
   <script type="text/javascript">
