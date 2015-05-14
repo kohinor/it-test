@@ -40,12 +40,12 @@ class ImportProductCommand extends ContainerAwareCommand
         $this->getEM()->getConnection()->exec($sql);
         $this->getEM()->getConnection()->exec($sql3);
         
-        $allowedBrands = array('Alexander McQueen', 'Ana Lublin','Avirex', 'Bottega Veneta', 'Burberry','Carrera', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
+        $allowedBrands = array('Alexander McQueen', 'Ana Lublin','Avirex','Byblos', 'Bottega Veneta', 'Burberry','Carrera', 'Calvin Klein', 'Cavalli B.', 'Cavalli Class',
                                 'Cerruti', 'Chloe', 'Christian Lacroix','CK Jeans', 'DandG', 'Diesel', 'Fendi', 'Ferre', 'Fred Perry', 'Fontana 2.0',
                                 'Gas', 'Geographical Norway', 'Gucci','Giuseppe Zanotti' ,'Guess', 'Hogan', 'Hugo Boss', 'Jessica Simpson', 'Just Cavalli', 'Kenzo', 'Made in Italia', 'Michael Kors', 'Moschino',
                                 'Nina Ricci', 'Prada', 'Rene Caovilla', 'Richmond','Rosso Fiorentino', 'Roberto Cavalli', 'Rochas', 'Royal Polo',
                                 'Sergio Rossi', 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
-                                'V 1969', 'Versace', 'Versace Jeans');
+                                'V 1969','Vans', 'Versace', 'Versace Jeans', 'Viamaestra');
         foreach($allowedBrands as $brand) {
             $client = $this->getContainer()->get('api_client');
             $request = $client->get('/restful/export/api/products.xml?acceptedlocales=en_US,fr_FR,it_IT,de_DE&tag_1='.$brand);

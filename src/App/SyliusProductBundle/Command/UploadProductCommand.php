@@ -38,7 +38,7 @@ class UploadProductCommand extends ContainerAwareCommand
     {
         $sql5 = "UPDATE sylius_product set deleted_at = NOW() where partner_id not in (SELECT partner_product_id from sylius_product_dropship);";
         $this->getEM()->getConnection()->exec($sql5);
-        $sql6 = "UPDATE sylius_product set deleted_at = NOW() where id in (select product_id from sylius_product_variant where rrp < 7900 group by product_id);";
+        $sql6 = "UPDATE sylius_product set deleted_at = NOW() where id in (select product_id from sylius_product_variant where rrp < 4900 group by product_id);";
         $this->getEM()->getConnection()->exec($sql6);
     }
 
