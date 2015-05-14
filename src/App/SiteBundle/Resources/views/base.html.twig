@@ -75,7 +75,7 @@
           </div>
         </div>
       </div>
-        <div class="row">
+        <div class="">
           <div class="navbar navbar-default" style="border-color: rgb(68, 68, 68);
             border-left: 0 none;
             border-radius: 0;
@@ -142,7 +142,7 @@
       
       {% block flashes %}
         {% if app.session.flashbag.get('success') or app.session.flashbag.get('error') or app.session.flashbag.get('fos_user_success') %}
-        <div class="row">
+        <div class="{% block class_row %}row{% endblock %}">
         <div class="col-lg-12">
         {% for type in ['success', 'error', 'fos_user_success'] %}
           {% for flash in app.session.flashbag.get(type) %}
