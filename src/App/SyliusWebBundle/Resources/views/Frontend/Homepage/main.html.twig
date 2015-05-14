@@ -26,12 +26,12 @@
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
     <div class="text-center row">      
-      <a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}">
+      <a href="{{ path('app_site_shop_men') }}">
       <img class="img-responsive" src="/img/men.jpg"  alt="{{ 'shop.for.men'|trans }}"/></a>
       <div class="overbox">      
         
         <div class="overtext">
-            <h3><a href="{{ path('app_solr_search_gender', {'gender':'men'}) }}"> <b>{{ 'shop.for.men'|trans }}</b></a></h3>
+            <h3><a href="{{ path('app_site_shop_men') }}"> <b>{{ 'shop.for.men'|trans }}</b></a></h3>
             <div style="border-top:2px solid #fff; border-bottom:2px solid #fff">
             {{ render(controller( 'KitpagesCmsBundle:Nav:widget', {
                 'slug': 'en-men-home',

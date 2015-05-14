@@ -13,6 +13,12 @@ class SiteController extends Controller
     {
        return $this->render('AppSiteBundle:Site:women.html.twig', array()); 
     }
+    
+    public function menMainAction()
+    {
+       return $this->render('AppSiteBundle:Site:men.html.twig', array()); 
+    }
+    
     public function brandListAction()
     {
         $repository = $this->container->get('sylius.repository.taxonomy');

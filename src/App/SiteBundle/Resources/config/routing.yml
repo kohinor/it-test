@@ -39,3 +39,7 @@ app_site_export:
 app_site_shop_women:
     pattern:  /shop-women
     defaults: { _controller: AppSiteBundle:Site:womenMain }
+    
+app_site_shop_men:
+    pattern:  /shop-men
+    defaults: { _controller: AppSiteBundle:Site:menMain }
