@@ -10,6 +10,15 @@ class SolrSearchController extends Controller
 {   
     const CACHE_TIME = 21600;
     
+    public function getBrandsAction($gender = null)
+    {       
+        $facets = $gender ? array('gender' => $gender) : array();
+
+        $resultset = $this->getSolrCategoryResults('*', $facets);
+ 
+        return $this->render('AppSolrSearchBundle:SolrSearch:brands.html.twig',array('results' => $resultset));
+    }
+    
     public function getSolrNewInResults($facets, $limit)
     {
         $client = $this->get('solarium.client');

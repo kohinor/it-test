@@ -52,3 +52,14 @@ app_solr_search_gender_promotion_category:
     defaults: { _controller: AppSolrSearchBundle:SolrSearch:searchGenderPromotionCategory }
     requirements:
         gender: women|men| |kids|unisex
+        
+app_solr_search_brands:
+    path:     /brands
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:getBrands }
+    
+app_solr_search_brands_gender:
+    path:     /brands/{gender}
+    defaults: { _controller: AppSolrSearchBundle:SolrSearch:getBrands }
+    requirements:
+        gender: women|men|kids
+    

@@ -3864,7 +3864,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 20px;
+  padding: 10px 15px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -4085,7 +4085,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     visibility: visible !important;
     height: auto !important;
     padding-bottom: 0;
-    overflow: visible !important;
+    overflow: visible !important;   
+    text-align: center;
   }
   .navbar-collapse.in {
     overflow-y: visible;
@@ -7245,3 +7246,8 @@ ul.checkout-bar a {
 .carousel-inner > .item > a > img {
       margin: auto;
   }
+  
+.navbar-nav {
+  display: inline-block !important;
+  float: none !important;
+}

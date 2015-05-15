@@ -1,7 +1,3 @@
-app_site_brand:
-    pattern:  /brands
-    defaults: { _controller: AppSiteBundle:Site:brandList }
-    
 app_postpay_template:
     pattern:  /payment/postpay
     defaults: { _controller: AppSiteBundle:Payment:postpayTemplate }

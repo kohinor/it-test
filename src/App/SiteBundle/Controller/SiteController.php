@@ -19,15 +19,6 @@ class SiteController extends Controller
        return $this->render('AppSiteBundle:Site:men.html.twig', array()); 
     }
     
-    public function brandListAction()
-    {
-        $repository = $this->container->get('sylius.repository.taxonomy');
-        $taxonomy = $repository->findOneBy(array('name' => 'Brand'));
-       
-        $taxonRepository = $this->container->get('sylius.repository.taxon');
-        return $this->render('AppSiteBundle:Site:brands.html.twig', array('brands' =>  $taxonRepository->getTaxonsAsList($taxonomy)));
-    }
-    
     public function subscriptionAction(Request $request, $url = '/')
     {
         $newsletter = new \App\SiteBundle\Entity\Subscription();
