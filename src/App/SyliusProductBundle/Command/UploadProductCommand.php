@@ -194,6 +194,7 @@ class UploadProductCommand extends ContainerAwareCommand
                 $variant->setOnHand(0);
             }
             $variant = $product->getMasterVariant();
+            $variant->setPrice($this->getPrice($productDropship->getActualPrice()));
             $variant->setOnHand($productDropship->getQuantity());
             $this->getEm()->persist($product);
         }
@@ -203,9 +204,11 @@ class UploadProductCommand extends ContainerAwareCommand
                  
     }
     
-    private function getPrice($price)
+    private function getPrice($actualPrice)
     {
-       return $price - ($price/100*15);
+       $price = $actualPrice + 1000 + $actualPrice/100*22;
+       $finalPrice = $price + $price/100*40;
+       return (int)$finalPrice;
     }
     
     private function getTaxon($parentKey, $child, $childKey)
@@ -302,7 +305,7 @@ class UploadProductCommand extends ContainerAwareCommand
     {
         $variant = $product->getMasterVariant();
         $variant->setProduct($product);
-        $variant->setPrice((int)$this->getPrice($productDropship->getRrp()));
+        $variant->setPrice((int)$this->getPrice($productDropship->getActualPrice()));
         $variant->setSku($productDropship->getCode());
         $variant->setAvailableOn(new \DateTime());
         $variant->setOnHand($productDropship->getQuantity());
