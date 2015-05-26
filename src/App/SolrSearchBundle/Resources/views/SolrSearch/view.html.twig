@@ -203,7 +203,7 @@
     to: italica.search.priceFrom,
     type: 'double',
     step: 15,
-    postfix: " CHF",
+    postfix: {% if app.request.baseUrl == '/swiss' %}" EUR"{% else %}" CHF"{% endif %},
     hasGrid: true
 });
 

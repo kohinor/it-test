@@ -87,7 +87,9 @@
 
 {% block javascripts %}
     <script>
-    $("#myCarousel").carousel();
+    $("#myCarousel").carousel({
+  interval: 1000 * 2.5
+});
     </script>
 {% endblock %}
 
