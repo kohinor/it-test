@@ -3,13 +3,13 @@
 {% block class_row %}{% endblock %}
 {% block body %}
 
-<div class="row">
+<div class="">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
    <div class="text-center row">
       <a href="{{ path('app_site_shop_women') }}">
       <img class="img-responsive" src="/img/women.jpg"  alt="{{ 'shop.for.women'|trans }}"/></a>
-      <div class="overbox">      
-        
+      <div class="overbox"> 
+        <a href="{{ path('app_site_shop_women') }}"> &nbsp;</a>
         <div class="overtext">
             <h3><a href="{{ path('app_site_shop_women') }}"> <b>{{ 'shop.for.women'|trans }}</b></a></h3>
             <div style="border-top:2px solid #fff; border-bottom:2px solid #fff">
@@ -21,7 +21,7 @@
                 'endDepth':1} )) }}
             </div>
         </div>
-      </div>
+      </div>  
     </div> 
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -29,7 +29,7 @@
       <a href="{{ path('app_site_shop_men') }}">
       <img class="img-responsive" src="/img/men.jpg"  alt="{{ 'shop.for.men'|trans }}"/></a>
       <div class="overbox">      
-        
+        <a href="{{ path('app_site_shop_men') }}"> &nbsp;</a>
         <div class="overtext">
             <h3><a href="{{ path('app_site_shop_men') }}"> <b>{{ 'shop.for.men'|trans }}</b></a></h3>
             <div style="border-top:2px solid #fff; border-bottom:2px solid #fff">

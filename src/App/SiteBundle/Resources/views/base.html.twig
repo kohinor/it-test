@@ -39,7 +39,7 @@
             
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 text-uppercase .hidden-xs">
-              <span style="padding:10px; display:block;letter-spacing: 1px;"> {{ 'italica.free.delivery.return'|trans|raw }} </span>
+              <span style="padding:10px; display:block;letter-spacing: 1px;"> {% if app.request.baseUrl == '/swiss' %} {{ 'italica.free.delivery.swiss'|trans|raw }} {% else %} {{ 'italica.free.delivery.return'|trans|raw }} {% endif %}</span>
           </div>
          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             {{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}   

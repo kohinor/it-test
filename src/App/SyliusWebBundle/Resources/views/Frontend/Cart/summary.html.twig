@@ -58,6 +58,9 @@
             <hr />
 
             <h4 class="title"><span class="text">{{ 'italica.cart.total'|trans }}</span></h4>
+            {% if cart.adjustmentsTotal(shippingAdjustment) %}
+                <p><label>{{ 'sylius.checkout.finalize.order.shipping_total'|trans }}</label>: {{ cart.adjustmentsTotal(shippingAdjustment)|sylius_price }}</p>
+            {% endif %}
             {% if cart.adjustmentsTotal(promotionAdjustment) %}
                 <p><label>{{ 'sylius.order.promotion_total'|trans }}</label>: -{{ (-1 * cart.adjustmentsTotal(promotionAdjustment))|sylius_price }}
             {% endif %}            
