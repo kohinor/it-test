@@ -1,5 +1,25 @@
+<div id="myCarousel{{ gender }}" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner" role="listbox">
+{% set i=0 %}
+{% set class = 'active' %}
 {% for article in results %}
-    <div class="col-lg-3 col-sm-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom" >
-        {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'article': article }%}
-    </div>   
+    {% if i == 0 %}
+        <div class="item {{ class }}" style="margin-top:15px;">
+        {% set class = '' %}
+    {% endif %}
+                <div class="col-lg-3 col-sm-3 col-md-3 col-sm-6 col-xs-6 text-center col-md-height col-bottom" >
+                    {% include 'AppSolrSearchBundle:SolrSearch:single-product.html.twig' with {'article': article }%}
+                </div> 
+    {% set i = i+1 %}
+    {% if i == 4 %}
+        </div>
+        {% set i = 0 %}
+    {% endif %}
 {% endfor %}
+  </div>
+</div>
+    <script>
+    $("#myCarousel{{ gender }}").carousel({
+  interval: 1000 * 2.5
+});
+    </script>

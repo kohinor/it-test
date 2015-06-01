@@ -41,7 +41,7 @@ class SolrSearchController extends Controller
         $facets['gender'] = $gender;
         $facets['promotion'] = 'new';       
         $resultset = $this->getSolrNewInResults($facets, $limit);
-        $bindings = array('results' => $resultset, 'locale' => $request->attributes->get('_locale'));
+        $bindings = array('results' => $resultset, 'gender' => $gender);
         
         return $this->render('AppSolrSearchBundle:SolrSearch:new-in.html.twig', $bindings);
     }
