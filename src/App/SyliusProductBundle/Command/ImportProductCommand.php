@@ -33,6 +33,12 @@ class ImportProductCommand extends ContainerAwareCommand
     
     protected function updateDatabase()
     {       
+        try {
+            $this->getData('Vans');
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+            exit;
+        }
         $sql = "DELETE from sylius_product_model_dropship;";
         $sql2 = "DELETE from sylius_product_picture_dropship;";
         $sql3 = "DELETE from sylius_product_dropship;";
@@ -47,13 +53,7 @@ class ImportProductCommand extends ContainerAwareCommand
                                 'Sergio Rossi', 'Sparco', 'Tods', 'Tom Ford', 'Tommy Hilfiger', 'U.S. Polo',
                                 'V 1969','Vans', 'Versace', 'Versace Jeans', 'Viamaestra');
         foreach($allowedBrands as $brand) {
-            $client = $this->getContainer()->get('api_client');
-            $request = $client->get('/restful/export/api/products.xml?acceptedlocales=en_US,fr_FR,it_IT,de_DE&tag_1='.$brand);
-            $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYHOST, false);
-            $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYPEER, false);
-
-            $response = $request->send();
-            $result = $response->xml();
+            $result = $this->getData($brand);
             foreach($result->items->item as $item) {
                 $productDropship = $this->createProductDropship($item);
                 $this->getEM()->persist($productDropship);
@@ -61,6 +61,17 @@ class ImportProductCommand extends ContainerAwareCommand
             $this->getEM()->flush();
             $this->getEM()->clear();        
         }
+    }
+    
+    private function getData($brand) 
+    {
+        $client = $this->getContainer()->get('api_client');
+        $request = $client->get('/restful/export/api/products.xml?acceptedlocales=en_US,fr_FR,it_IT,de_DE&tag_1='.$brand);
+        $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYHOST, false);
+        $request->getCurlOptions()->set(CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = $request->send();
+        return $response->xml();
     }
 
     protected function createProductDropship($item)

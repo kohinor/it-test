@@ -26,7 +26,12 @@ class UploadProductCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("<info>starting updating</info>");
-        $sql = "UPDATE sylius_product set deleted_at = null;";
+        $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
+        if (count($products) == 0) {
+            throw new \Exception('no products to update');
+            exit;
+        } 
+        $sql = "UPDATE sylius_product set deleted_at = null where partner_id in (SELECT partner_product_id from sylius_product_dropship);";
         $this->getEM()->getConnection()->exec($sql);
         
         $this->updateProducts($output);
@@ -194,7 +199,7 @@ class UploadProductCommand extends ContainerAwareCommand
                 $variant->setOnHand(0);
             }
             $variant = $product->getMasterVariant();
-            $variant->setPrice($this->getPrice($productDropship->getActualPrice()));
+            $variant->setPrice((int)$this->getPrice($productDropship->getActualPrice()));
             $variant->setOnHand($productDropship->getQuantity());
             $this->getEm()->persist($product);
         }
@@ -307,7 +312,7 @@ class UploadProductCommand extends ContainerAwareCommand
         $variant->setSku($productDropship->getCode());
         $variant->setAvailableOn(new \DateTime());
         $variant->setOnHand($productDropship->getQuantity());
-        $variant->setRrp($productDropship->getRrp());
+        $variant->setRrp($productDropship->getRrp()*1.22);
         $variant->setAvailableOnDemand(false);
         $uploader = $this->getContainer()->get('sylius.image_uploader');
         foreach ($variant->getImages() as $image ) {
