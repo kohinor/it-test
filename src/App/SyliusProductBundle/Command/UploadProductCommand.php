@@ -166,7 +166,7 @@ class UploadProductCommand extends ContainerAwareCommand
             }
             $product->setTaxons($taxons);
             $attributes[] = array('name' => 'Brand', 'value' => $productDropship->getBrand());
-            if ($productDropship->getModels()->first()->getColor()) {
+            if (isset($productDropship->getModels()->first()) && $productDropship->getModels()->first()->getColor()) {
                 $attributes[] = array('name' => 'Color', 'value' => $productDropship->getModels()->first()->getColor());
             }
             $this->addAttributes($product, $attributes);

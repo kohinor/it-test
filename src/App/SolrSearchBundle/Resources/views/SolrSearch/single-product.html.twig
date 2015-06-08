@@ -7,11 +7,15 @@
 {% else %}
     {% set title = article.name_en %}
 {% endif %}
-{% if article.rrp > article.price %}
+
+<div class="col-lg-12 col-md-12 col-sm-12 {% if new is not defined %} col-xs-6{% endif %}">
+    {% if article.rrp > article.price %}
     <div class="ribbon red"><span>{{ 100-(article.price*100/article.rrp)|round }}% {{ 'off'|trans }}</span></div>
 {% endif %}
 <a href="{{ path('app_site_product', {'slug':article.slug}) }}"><img class="img-responsive" src="{{article.image is defined and article.image ? article.image|imagine_filter('sylius_medium')|replace({'http://':'https://'}) : 'http://placehold.it/200x300' }}" alt="{{ title }}" /></a>
 <p><br></p>
+</div>
+<div class="col-md-12 col-sm-12 {% if new is not defined %} col-xs-6{% endif %}">
 <div class="text-uppercase">
     <a title="{{ title }}" href="{{ path('app_site_product', {'slug':article.slug}) }}">{{article.brand[0]|replace({'-and-':'&'})|default('unbranded'|trans({}, 'messages')) }}</a>
 </div>
@@ -32,4 +36,5 @@
         </strong>
     </div>
 {% endif %}
+</div>
 <p class="title"></p>
