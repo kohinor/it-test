@@ -49,9 +49,13 @@ class UploadProductCommand extends ContainerAwareCommand
 
     protected function updateProducts($output)
     {
-        $products = $this->getContainer()->get('sylius.repository.product_dropship')->findAll();
+        $sql = "SELECT partner_product_id from sylius_product_dropship;";
+        $ids = $this->getEm()->getConnection()->fetchAll($sql);
+
         $productIds = array();
-        foreach ($products as $key => $product) {
+        foreach ($ids as $key => $id) {
+            $products = $this->getContainer()->get('sylius.repository.product_dropship')->findBy(array('partnerProductId' => $id['partner_product_id']));
+            $product = $products[0];
             $output->writeln("<info>Item </info>".$key);
             if ($product->getRrp() < 4900) {
                 continue;
@@ -211,7 +215,7 @@ class UploadProductCommand extends ContainerAwareCommand
     
     private function getPrice($actualPrice)
     {
-       return (($actualPrice+10)*1.22)*1.40;
+       return (($actualPrice+1000)*1.22)*1.40;
     }
     
     private function getTaxon($parentKey, $child, $childKey)
