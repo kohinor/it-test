@@ -205,8 +205,6 @@ class SolrSearchController extends Controller
         }
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
-        if (!$sort) $request->query->set ('sort', 'last_modified');
-        if (!$direction) $request->query->set ('direction', 'desc');
 
         $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice.$sort.$direction);
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
@@ -224,6 +222,10 @@ class SolrSearchController extends Controller
     {
         $term  = $request->query->get('term');
         $price = $request->query->get('price') ? explode(';', $request->query->get('price')) : null;
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
+        if (!$sort) $_GET['sort'] = 'last_modified';
+        if (!$direction) $_GET['sort'] = 'desc';
         
         $startPrice = $price ? $price[0] : 0;
         $endPrice = $price ? $price[1] : 10000;
