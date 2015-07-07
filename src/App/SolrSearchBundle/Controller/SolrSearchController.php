@@ -134,7 +134,7 @@ class SolrSearchController extends Controller
         
         //$solrRequest = $client->createRequest($query);
         //print $solrRequest->getUri();
-        $key = 'facets-'.implode('-', $facets);
+        $key = 'facets-'.implode('-', $facets).$term;
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
         $resultset = $cache->fetch($key);
         if (!$resultset) {
@@ -190,7 +190,7 @@ class SolrSearchController extends Controller
         return $bindings;
     }
     
-    public function getSolrPageResults($term, $startPrice, $endPrice, $page, $facets)
+    public function getSolrPageResults($term, $startPrice, $endPrice, $page, $facets, Request $request)
     {
         $client = $this->get('solarium.client');
         $query = $this->get('solr.query.service')->getSolrQuery($client, $term, $startPrice*100, $endPrice*100);
@@ -203,7 +203,12 @@ class SolrSearchController extends Controller
         foreach($facets as $facet) {
             $keyFacets[] = $facet->facet;
         }
-        $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice);
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
+        if (!$sort) $request->query->set ('sort', 'last_modified');
+        if (!$direction) $request->query->set ('direction', 'desc');
+
+        $key = preg_replace('~[^-\w]+~', '', 'paginator-'.implode('-', $keyFacets).$term.$page.$startPrice.$endPrice.$sort.$direction);
         $cache   = $this->container->get('doctrine_cache.providers.memcached');
         $paginator = $cache->fetch($key);
         if (!$paginator) {
@@ -224,7 +229,7 @@ class SolrSearchController extends Controller
         $endPrice = $price ? $price[1] : 10000;
         $page  = $request->query->get('page') ? $request->query->get('page') : 1;
         $facets = $this->getFacetsFromRequest($request, $initialFacets);
-        $paginator = $this->getSolrPageResults($term, $startPrice, $endPrice, $page, $facets);
+        $paginator = $this->getSolrPageResults($term, $startPrice, $endPrice, $page, $facets, $request);
         
         if (count($initialFacets) == count($facets)) {
             $type = \App\SolrSearchBundle\Entity\SearchLog::TYPE_MAIN;

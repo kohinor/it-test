@@ -7,6 +7,8 @@
     <!-- Indicators -->
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
         </ol>
 
     <!-- Wrapper for slides -->
@@ -15,7 +17,17 @@
             <a href="{{ path('app_solr_search_gender', {'gender':'men','brand':'sparco'}) }}">
               <img src="/img/carousel/sparco-men.jpg" alt="Sparco">
             </a>
-          </div>    
+          </div>   
+          <div class="item">
+            <a href="{{ path('app_solr_search_gender', {'gender':'men','brand':'calvin klein'}) }}">
+              <img src="/img/carousel/calvin_klein_jeans_EN.jpg" alt="calvin klein jeans">
+            </a>
+          </div> 
+          <div class="item">
+            <a href="{{ path('app_solr_search_gender', {'gender':'men','brand':'vans'}) }}">
+              <img src="/img/carousel/vans_EN.jpg" alt="vans">
+            </a>
+          </div> 
         </div>
     </div>
   </div>

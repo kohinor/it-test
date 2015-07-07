@@ -113,8 +113,8 @@
             <option value="none" >{{ 'italica.none'|trans }}</option>
             <option value="desc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.price.high.to.low'|trans({}, 'messages') }}</option>
             <option value="asc" {% if app.request.query.get('sort') == 'price' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'italica.price.low.to.high'|trans({}, 'messages') }}</option>
-            <option value="a-z" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'italica.title.a.to.z'|trans({}, 'messages') }}</option>
-            <option value="z-a" {% if app.request.query.get('sort') == 'name' and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.title.z.to.a'|trans({}, 'messages') }}</option>	
+            <option value="a-z" {% if app.request.query.get('sort') == 'name_'~app.request.locale|default('en')  and app.request.query.get('direction') == 'asc' %} selected {% endif %}>{{ 'italica.title.a.to.z'|trans({}, 'messages') }}</option>
+            <option value="z-a" {% if app.request.query.get('sort') == 'name'~app.request.locale|default('en') and app.request.query.get('direction') == 'desc' %} selected {% endif %}>{{ 'italica.title.z.to.a'|trans({}, 'messages') }}</option>	
 	  </select>
          </div>
          </div>
