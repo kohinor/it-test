@@ -225,7 +225,7 @@ class SolrSearchController extends Controller
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
         if (!$sort) $_GET['sort'] = 'last_modified';
-        if (!$direction) $_GET['sort'] = 'desc';
+        if (!$direction) $_GET['direction'] = 'desc';
         
         $startPrice = $price ? $price[0] : 0;
         $endPrice = $price ? $price[1] : 10000;
