@@ -29,7 +29,7 @@ class UrlListener implements EventSubscriberInterface
             $response = new RedirectResponse('https://shopitalica.com/italy/it/');
             $event->setResponse($response);
         } elseif( $requestUri == '/' || $requestUri == '' ) {
-            $response = new RedirectResponse('https://shopitalica.com/swiss/en/');
+            $response = new RedirectResponse('https://shopitalica.com/france/fr/');
             $event->setResponse($response);
         } elseif ( strstr($fullUrl, '.com/en/') ) {
             $response = new RedirectResponse('https://'.str_replace('.com/en/', '.com/swiss/en/', $fullUrl));

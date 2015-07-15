@@ -72,8 +72,13 @@ class AddressingStep extends Base
             $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
             
             $this->dispatchCheckoutEvent(SyliusCheckoutEvents::SHIPPING_INITIALIZE, $order);
-            $shippingMethod = $this->get('sylius.repository.shipping_method')->find(1);
-            foreach ( $order->getShipments() as $shipment) {
+            $shippingCountry = $order->getShippingAddress()->getCountry()->getIsoName();
+            if ($shippingCountry == 'CH') {
+                $shippingMethod = $this->get('sylius.repository.shipping_method')->find(6);
+            } else {
+                $shippingMethod = $this->get('sylius.repository.shipping_method')->find(1);
+            }            
+            foreach ($order->getShipments() as $shipment) {
                 $shipment->setMethod($shippingMethod);
             }
             $this->dispatchCheckoutEvent(SyliusCheckoutEvents::SHIPPING_PRE_COMPLETE, $order);
