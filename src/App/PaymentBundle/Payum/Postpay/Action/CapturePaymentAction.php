@@ -19,6 +19,9 @@ use Sylius\Bundle\PayumBundle\Payum\Action\AbstractPaymentStateAwareAction;
 use Payum\Core\Security\TokenInterface;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Reply\HttpPostRedirect;
+use Payum\Core\Bridge\Symfony\Reply\HttpResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Payum\Core\Request\RenderTemplate;
 
 class CapturePaymentAction extends AbstractPaymentStateAwareAction 
 {
@@ -61,14 +64,20 @@ class CapturePaymentAction extends AbstractPaymentStateAwareAction
         
         if ($payment->getDetails() && isset($httpRequest->query['STATUS'])) {
             return;
-        } else {
-            
+        } else {    
             $this->composeDetails($payment, $request->getToken(), $httpRequest);
-            $this->securityVerifier->invalidate($request->getToken());
-            throw new HttpPostRedirect(
-                $this->options['redirectUrl'],
-                $payment->getDetails()
-            );
+            
+            $renderTemplate = new RenderTemplate('SyliusWebBundle:Frontend/Checkout/Step:finalize.html.twig', array(
+                'order' => $payment->getOrder(),
+                'details' =>  $payment->getDetails(),
+                'action' => $this->options['redirectUrl']
+            ));
+            $this->payment->execute($renderTemplate);
+        
+            throw new HttpResponse(new Response($renderTemplate->getResult(), 200, array(
+            'Cache-Control' => 'no-store, no-cache, max-age=0, post-check=0, pre-check=0',
+            'Pragma' => 'no-cache',
+        )));
         }       
         
         

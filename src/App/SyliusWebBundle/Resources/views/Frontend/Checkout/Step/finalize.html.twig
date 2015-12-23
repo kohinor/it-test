@@ -58,13 +58,18 @@
             <p><label>{{ 'sylius.checkout.finalize.order.promotion_total'|trans }}</label>: {{ order.adjustmentsTotal(promotionAdjustment)|sylius_price }}</p>
          {% endif %}
             <p><label>{{ 'sylius.checkout.finalize.order.total'|trans }}</label>: {{ order.total|sylius_price }}</p>
-            <a class="btn btn-danger btn-block" href="{{ path(context.process.forwardRoute, {'stepName': context.currentStep.name}) }}" > {{ 'sylius.checkout.finalize.place_order'|trans }}</a> &nbsp;
-   
+            <form method="post" action="{{ action }}" >
+                {% for key, value in details %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                {% endfor %}
+                <input type="submit" class="btn btn-danger btn-block" value="{{ 'sylius.checkout.finalize.place_order'|trans }}" />
+            
+            </form>
        </div>
        </div>
     </div>
 </div>
     <div class="form-actions">
-        <a href="{{ path('sylius_checkout_display', {'stepName': context.previousStep.name}) }}" class="btn btn-sm btn-default"><i class="icon-chevron-left"></i> {{ 'sylius.checkout.back'|trans }}</a> &nbsp;
+        <a href="{{ path('sylius_checkout_display', {'stepName': 'adressing'}) }}" class="btn btn-sm btn-default"><i class="icon-chevron-left"></i> {{ 'sylius.checkout.back'|trans }}</a> &nbsp;
     </div>
 {% endblock %}

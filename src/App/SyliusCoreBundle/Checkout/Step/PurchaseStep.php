@@ -14,6 +14,7 @@ namespace App\SyliusCoreBundle\Checkout\Step;
 use Sylius\Bundle\CoreBundle\Event\PurchaseCompleteEvent;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Sylius\Bundle\PayumBundle\Payum\Request\GetStatus;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\SyliusCheckoutEvents;
 use Sylius\Component\Payment\PaymentTransitions;
@@ -34,7 +35,7 @@ class PurchaseStep extends Base
 
         /** @var $payment PaymentInterface */
         $payment = $order->getPayments()->last();
-        $payment->setState(PaymentInterface::STATE_PROCESSING);
+        
         $captureToken = $this->getTokenFactory()->createCaptureToken(
             $payment->getMethod()->getGateway(),
             $payment,
@@ -44,6 +45,14 @@ class PurchaseStep extends Base
         return new RedirectResponse($captureToken->getTargetUrl());
     }
 
+    protected function renderStep(ProcessContextInterface $context, OrderInterface $order)
+    {
+        return $this->render('SyliusWebBundle:Frontend/Checkout/Step:finalize.html.twig', array(
+            'order'   => $order,
+            'context' => $context
+        ));
+    }
+    
     public function forwardAction(ProcessContextInterface $context)
     {
         $token = $this->getHttpRequestVerifier()->verify($this->getRequest());

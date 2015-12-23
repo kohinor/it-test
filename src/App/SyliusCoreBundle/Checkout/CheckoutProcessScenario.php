@@ -31,7 +31,6 @@ class CheckoutProcessScenario extends Base
         $builder
             ->add('security', 'sylius_checkout_security')
             ->add('addressing', 'sylius_checkout_addressing')
-            ->add('finalize', 'sylius_checkout_finalize')
             ->add('purchase', 'sylius_checkout_purchase')
         ;
 
