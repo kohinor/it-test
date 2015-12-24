@@ -33,7 +33,7 @@ class UploadProductCommand extends ContainerAwareCommand
         } 
         $sql = "UPDATE sylius_product set deleted_at = null where partner_id in (SELECT partner_product_id from sylius_product_dropship);";
         $this->getEM()->getConnection()->exec($sql);
-        $sql = "UPDATE sylius_product_variant set deleted_at = null where partner_id in (SELECT partner_model_id from sylius_product_model_dropship);";
+        $sql = "UPDATE sylius_product_variant as v set v.deleted_at = null where v.product_id in (SELECT id from sylius_product p where p.deleted_at is null);";
         $this->getEM()->getConnection()->exec($sql);
         
         $this->updateProducts($output);
